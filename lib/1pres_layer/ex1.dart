@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../2app_layer/services/getdata.dart';
-import '1widgets/rowdetailpage.dart';
+import '1widgets/views/detail/rowdetailpage.dart';
 
 // A Counter example implemented with riverpod
 
@@ -12,15 +12,6 @@ import '1widgets/rowdetailpage.dart';
 //     const ProviderScope(child: MyApp()),
 //   );
 // }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: Home());
-  }
-}
 
 /// Providers are declared globally and specify how to create a state
 final counterProvider = StateProvider((ref) => 0);

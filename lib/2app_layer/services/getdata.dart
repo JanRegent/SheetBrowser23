@@ -1,6 +1,6 @@
 import '../../4data_layer/sheetget.dart';
 
-Future getSheetValues() async {
+Future<List> getSheetValues() async {
   final values = await GoogleSheets(
     sheetId: '1H5P-NbOR5ie-tQYZPIdhDsSHCvHesPVKccSmy1OI2HQ',
     sheetName: 'starred2022',

@@ -18,7 +18,7 @@ xcopy *.7z  "d:\pCloud\"  /C /Y
 echo asus
 xcopy *.7z  "C:\Asus WebStorage\jan.regent@gmail.com\MySyncFolder\backup\SheetViewer" /C /Y
 
-call powershell .\bakftp.ps1
+rem call powershell .\bakftp.ps1
 del *.7z
 
 
