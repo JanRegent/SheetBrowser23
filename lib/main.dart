@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '1pres_layer/views/grid_detailpage.dart';
 
-import '3domain_layer/localdata/appdata.dart';
+import '2app_layer/appdata.dart';
 
 void main() async {
   // Required for async calls in `main`
@@ -10,7 +10,7 @@ void main() async {
 
   // Initialize SharedPrefs instance.
   await AppDataPrefs.init();
-  await AppDataPrefs.appdataLoad();
+  await AppDataPrefs.appRootConfigLoad();
 
   runApp(
     // Adding ProviderScope enables Riverpod for the entire project

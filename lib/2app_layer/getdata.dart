@@ -1,10 +1,10 @@
-import 'package:sheetbrowse/3domain_layer/localdata/appdata.dart';
+import 'package:sheetbrowse/2app_layer/appdata.dart';
 
 import '../4data_layer/sheetget.dart';
 
 Future<List> getSheetValues() async {
   final values = await GoogleSheets(
-    sheetId: AppDataPrefs.getRootSheetId,
+    sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'starred2022',
   ).sheetValues();
 
@@ -21,7 +21,7 @@ Map rowMapGet(List<dynamic> header, List<dynamic> datarow) {
 
 Future<List<dynamic>> selectData() async {
   final values = await GoogleSheets(
-    sheetId: AppDataPrefs.getRootSheetId,
+    sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'starred2022',
   ).selectData();
 

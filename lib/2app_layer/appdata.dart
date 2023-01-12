@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDataPrefs {
@@ -6,19 +9,23 @@ class AppDataPrefs {
   static Future<SharedPreferences> init() async =>
       _instance = await SharedPreferences.getInstance();
 
-  static Future appdataLoad() async {
-    const apikey = String.fromEnvironment('apikey');
-    await setString('apikey', apikey);
+  static Future appRootConfigLoad() async {
+    String jsonString =
+        await rootBundle.loadString('appRootConfig_gitIgnore.json');
+    final dynamic jsonMap = jsonDecode(jsonString);
+    await setString('apikey', jsonMap['apikey']);
+    await setString('rootSheetId', jsonMap['rootSheetId']);
   }
 
-// ----------------------------------------------------vars
+// ----------------------------------------------------root vars
   static Future<bool> setApikey(String value) =>
       _instance.setString('apikey', value);
 
   static String? getApikey() => _instance.getString('apikey');
 
-  static String getRootSheetId = '1H5P-NbOR5ie-tQYZPIdhDsSHCvHesPVKccSmy1OI2HQ';
-  static String getRootSheetName = 'starred2022';
+  static String getRootSheetId() =>
+      _instance.getString('rootSheetId').toString();
+
   //-------------------------------------------------------string
   static String getString(String key, String defValue) {
     return _instance.getString(key) ?? defValue;

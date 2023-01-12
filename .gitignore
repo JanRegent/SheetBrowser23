@@ -1,3 +1,8 @@
+# root app Configuration
+assets/appRootConfig_gitIgnore.json
+web/assets/appRootConfig_gitIgnore.json
+
+
 # Miscellaneous
 *.class
 *.log
