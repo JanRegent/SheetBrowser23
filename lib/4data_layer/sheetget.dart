@@ -3,16 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:sheetbrowse/3domain_layer/localdata/appdata.dart';
 
 class GoogleSheets {
-  final String apiKey, sheetId, sheetName;
+  final String sheetId, sheetName;
   // obtain your api key on https://console.developers.google.com/
   GoogleSheets({
-    this.apiKey = 'AIzaSyCbzsTyeqolOiYWJo2ODjuSCbFjI46OUfU',
     required this.sheetName,
     required this.sheetId,
   });
   Future<List> sheetValues() async {
+    String? apiKey = AppDataPrefs.getApikey();
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
 

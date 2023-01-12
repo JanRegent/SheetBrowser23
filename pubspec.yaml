@@ -49,6 +49,10 @@ dependencies:
   #-----------------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
 
+  #==================================================================================BL
+  #data
+  shared_preferences: ^2.0.15         #https://pub.dev/packages/shared_preferences
+
   #====================================================uti
   http: ^0.13.5                 #https://pub.dev/packages/http
   url_launcher: ^6.1.7          #https://pub.dev/packages/url_launcher
