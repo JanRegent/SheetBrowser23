@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../2app_layer/services/getdata.dart';
+import '../../2app_layer/getdata.dart';
 import 'detail/carousel.dart';
 
 class GtridDetailPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:sheetbrowse/3domain_layer/localdata/appdata.dart';
 
-import '../../4data_layer/sheetget.dart';
+import '../4data_layer/sheetget.dart';
 
 Future<List> getSheetValues() async {
   final values = await GoogleSheets(

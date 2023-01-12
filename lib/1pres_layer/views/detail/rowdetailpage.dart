@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
 
-import '../../../alib/alib.dart';
+import '../../alib/alib.dart';
 //ccc
 
 class RowmapDetailPage extends StatefulWidget {

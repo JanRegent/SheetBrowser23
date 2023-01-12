@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import './1pres_layer/1widgets/views/grid_detailpage.dart';
+import '1pres_layer/views/grid_detailpage.dart';
 
 import '3domain_layer/localdata/appdata.dart';
 
