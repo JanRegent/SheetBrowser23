@@ -13,10 +13,8 @@ xcopy *.7z  "c:\dev\zBak\SheetViewer\" /C /Y
 xcopy *.7z  "C:\Users\janre\Dropbox\Drop2NAS\" /C /Y
 
 echo pCloud----
-xcopy *.7z  "d:\pCloud\"  /C /Y
+xcopy *.7z  "P:\backup\sheetBrowser\"  /C /Y
 
-echo asus
-xcopy *.7z  "C:\Asus WebStorage\jan.regent@gmail.com\MySyncFolder\backup\SheetViewer" /C /Y
 
 rem call powershell .\bakftp.ps1
 del *.7z
