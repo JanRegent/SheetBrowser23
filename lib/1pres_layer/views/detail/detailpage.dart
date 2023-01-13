@@ -19,7 +19,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   TextEditingController textEditingController = TextEditingController();
   List<Widget> listWidgets = [];
-  List<Widget> listWidgetsDev = [];
+
   late ScrollController _controller;
 
   @override
@@ -53,12 +53,8 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getListviewItems(BuildContext context) async {
     listWidgets.clear();
-    listWidgetsDev.clear();
 
     void key2listWidget(String key, List<Widget> list) {
-      list.add(const Text('  '));
-      list.add(const Text('  '));
-
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations
@@ -84,6 +80,7 @@ class _DetailPageState extends State<DetailPage> {
               fontSize: 20,
               decoration: TextDecoration.underline),
           trimMode: TrimMode.line,
+          textAlign: TextAlign.left,
           trimLines: 4,
           delimiter: '  ***',
           delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
@@ -93,6 +90,7 @@ class _DetailPageState extends State<DetailPage> {
           moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
           lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
         ));
+        list.add(const Text('  '));
       }
     }
 
@@ -104,23 +102,8 @@ class _DetailPageState extends State<DetailPage> {
     //     title: al.linkIconOpenDoc(sheetRowsDb.currentRow.aSheetName, context)));
 
     for (var key in widget.rowmap.keys) {
-      if (key == 'ID') {
-        listWidgetsDev.add(ListTile(
-          leading: const Text('sheetRow ID'),
-          title: Text(widget.rowmap['ID']),
-          trailing: rowItemRightPopup(context, widget.rowmap['ID']),
-        ));
-
-        continue;
-      }
       key2listWidget(key, listWidgets);
     }
-
-    listWidgetsDev.add(ListTile(
-      leading: const Text('localDb Id'),
-      title: Text(widget.rowmap['ID']),
-      trailing: rowItemRightPopup(context, widget.rowmap['ID']),
-    ));
 
     return listWidgets;
   }

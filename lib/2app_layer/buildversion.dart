@@ -1,1 +1,1 @@
-const buildVersion = 'GtridDetailSwitch---13-01-2023 11:46:13,42';      
+const buildVersion = 'detail-TextAlign---13-01-2023 11:52:56,31';      
