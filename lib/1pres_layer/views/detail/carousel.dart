@@ -9,8 +9,9 @@ import 'detailpage.dart';
 enum Status { changed, running, stopped, paused }
 
 class Carousel extends StatefulWidget {
+  final List<String> colsHeader;
   final List sheetArr;
-  const Carousel(this.sheetArr, {super.key});
+  const Carousel(this.colsHeader, this.sheetArr, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -25,25 +26,24 @@ class CarouselState extends State<Carousel> {
     setState(() {});
   }
 
-  List<int> imgList = [];
+  List<int> tabsList = [];
   late List<Widget> widgets;
   @override
   void initState() {
     super.initState();
-
-    imgList = List.generate(widget.sheetArr.length - 1, (index) {
+    tabsList = List.generate(widget.sheetArr.length - 1, (index) {
       return index;
     });
 
-    widgets = imgList
+    widgets = tabsList
         .map((rowIndex) => Container(
               margin: const EdgeInsets.all(5.0),
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   child: Stack(
                     children: <Widget>[
-                      DetailPage(row2Map(
-                          widget.sheetArr[0], widget.sheetArr[rowIndex]))
+                      DetailPage(
+                          row2Map(widget.colsHeader, widget.sheetArr[rowIndex]))
                     ],
                   )),
             ))

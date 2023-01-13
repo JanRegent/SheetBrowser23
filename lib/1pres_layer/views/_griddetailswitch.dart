@@ -18,20 +18,19 @@ class GtridDetailSwitch extends StatefulWidget {
 class _GtridDetailSwitchState extends State<GtridDetailSwitch> {
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
+  List<String> colsHeader = [];
 
-  Future<List<dynamic>> getData() async {
+  Future<String> getData() async {
     rowsArr = await getSheetValues();
-
-    plutoCols = await colsMap(rowsArr[0]);
     BLuti uti = BLuti();
-    List<String> colsHeader = uti.toListString(rowsArr[0]);
+    colsHeader = uti.toListString(rowsArr[0]);
+    rowsArr.removeAt(0);
+
+    plutoCols = await colsMap(colsHeader);
 
     gridrows = await gridRowsMap(rowsArr, colsHeader);
-    if (rowsArrSelected.isEmpty) {
-      return rowsArr;
-    } else {
-      return rowsArrSelected;
-    }
+
+    return 'ok';
   }
 
   String layout = 'detail';
@@ -66,16 +65,18 @@ class _GtridDetailSwitchState extends State<GtridDetailSwitch> {
         body: DefaultTextStyle(
           style: Theme.of(context).textTheme.displayMedium!,
           textAlign: TextAlign.center,
-          child: FutureBuilder<List>(
-            future: getData(), // a previously-obtained Future<String> or null
-            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          child: FutureBuilder<String>(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               List<Widget> children;
               if (snapshot.hasData) {
-                if (layout == 'detail') {
-                  return Carousel(snapshot.data!);
-                } else {
+                if (layout != 'detail') {
                   return GridPage(plutoCols, gridrows);
-                  // (snapshot.data!);
+                }
+                if (rowsArrFiltered.isEmpty) {
+                  return Carousel(colsHeader, rowsArr);
+                } else {
+                  return Carousel(colsHeader, rowsArrFiltered);
                 }
               } else if (snapshot.hasError) {
                 children = <Widget>[

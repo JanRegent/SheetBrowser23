@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
+import '../../../2app_layer/approotdata.dart';
+
 //import 'gtidviewopt.dart';
 
 late final PlutoGridStateManager stateManager;
-List<dynamic> rowsArrSelected = [];
+List<dynamic> rowsArrFiltered = [];
 List<dynamic> rowsArr = [];
 
 class GridPage extends StatefulWidget {
@@ -19,17 +21,40 @@ class GridPage extends StatefulWidget {
 
 class _GridPageState extends State<GridPage> {
   //late GridViewOpt gridViewOpt;
+  String currentSheetName = '';
   @override
   void initState() {
     super.initState();
+    currentSheetName = AppDataPrefs.getString('currentSheetName', '')!;
+    try {
+      stateManager.setShowColumnFilter(true);
+    } catch (_) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('fileTitle'),
+          title: Text(currentSheetName),
           actions: [
+            ElevatedButton(
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  var filteredIDs = stateManager.refRows
+                      .map((e) => e.cells['ID']!.value.toString());
+
+                  for (String filteredID in filteredIDs) {
+                    int? rowIx = int.tryParse(filteredID);
+                    rowsArrFiltered.add(rowsArr[rowIx!]);
+                  }
+                }),
+            ElevatedButton(
+                child: const Icon(Icons.clear),
+                onPressed: () {
+                  stateManager.filterRows.clear();
+                  stateManager.setFilterWithFilterRows([]);
+                  rowsArrFiltered = [];
+                }),
             ElevatedButton(
                 onPressed: () async {
                   //await gridViewOpt.save();
@@ -78,15 +103,7 @@ class _GridPageState extends State<GridPage> {
                   print(event);
                 }
               },
-              onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {
-                var filteredIDs = stateManager.refRows
-                    .map((e) => e.cells['ID']!.value.toString());
-
-                for (String filteredID in filteredIDs) {
-                  int? rowIx = int.tryParse(filteredID);
-                  rowsArrSelected.add(rowsArr[rowIx!]);
-                }
-              },
+              onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {},
               //configuration: configuration,
             )));
   }
