@@ -15,6 +15,7 @@ Future<List<PlutoRow>> gridRowsMap(
           value = '';
         } else {
           value = row[cols[colIx]];
+          if (cols[colIx] == 'ID') value = rowIx.toString();
         }
       } catch (_) {
         value = '';
@@ -25,7 +26,6 @@ Future<List<PlutoRow>> gridRowsMap(
         plutoRow.cells[cols[colIx]] = PlutoCell(value: '');
       }
     }
-    plutoRow.cells['Id'] = PlutoCell(value: rowIx.toString());
     return plutoRow;
   }
 

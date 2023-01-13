@@ -27,13 +27,13 @@ Future<List<PlutoColumn>> colsMap(List<dynamic> colsHeader) async {
     //col.frozen = setFreeze(columnName, startList, endList);
     gridCols.add(col);
   }
-  PlutoColumn col = PlutoColumn(
-      title: 'Id',
-      field: 'Id',
-      type: PlutoColumnType.number(),
-      readOnly: true,
-      hide: true);
-  gridCols.add(col);
+  // PlutoColumn col = PlutoColumn(
+  //     title: 'RowNo',
+  //     field: 'RowNo',
+  //     type: PlutoColumnType.number(),
+  //     readOnly: true,
+  //     hide: true);
+  // gridCols.add(col);
 
   return gridCols;
 }

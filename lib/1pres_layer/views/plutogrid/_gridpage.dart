@@ -5,6 +5,8 @@ import 'package:pluto_grid/pluto_grid.dart';
 //import 'gtidviewopt.dart';
 
 late final PlutoGridStateManager stateManager;
+List<dynamic> rowsArrSelected = [];
+List<dynamic> rowsArr = [];
 
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
@@ -77,17 +79,13 @@ class _GridPageState extends State<GridPage> {
                 }
               },
               onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {
-                // List<int> filteredIdsGet() {
-                //   List<int> filteredIds = [];
-                //   for (var i = 0;
-                //       i < stateManager.refRows.filteredList.length;
-                //       i++) {
-                //     int id = stateManager
-                //         .refRows.filteredList[i].cells.entries.last.value.value;
-                //     filteredIds.add(id);
-                //   }
-                //   return filteredIds;
-                // }
+                var filteredIDs = stateManager.refRows
+                    .map((e) => e.cells['ID']!.value.toString());
+
+                for (String filteredID in filteredIDs) {
+                  int? rowIx = int.tryParse(filteredID);
+                  rowsArrSelected.add(rowsArr[rowIx!]);
+                }
               },
               //configuration: configuration,
             )));

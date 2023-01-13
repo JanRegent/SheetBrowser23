@@ -18,15 +18,20 @@ class GtridDetailSwitch extends StatefulWidget {
 class _GtridDetailSwitchState extends State<GtridDetailSwitch> {
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
-  Future<List<dynamic>> getData() async {
-    List<dynamic> rowsArr = await getSheetValues();
 
-    if (plutoCols.isEmpty) plutoCols = await colsMap(rowsArr[0]);
+  Future<List<dynamic>> getData() async {
+    rowsArr = await getSheetValues();
+
+    plutoCols = await colsMap(rowsArr[0]);
     BLuti uti = BLuti();
     List<String> colsHeader = uti.toListString(rowsArr[0]);
-    //----------------------------------------------------------------------rows
-    if (gridrows.isEmpty) gridrows = await gridRowsMap(rowsArr, colsHeader);
-    return rowsArr;
+
+    gridrows = await gridRowsMap(rowsArr, colsHeader);
+    if (rowsArrSelected.isEmpty) {
+      return rowsArr;
+    } else {
+      return rowsArrSelected;
+    }
   }
 
   String layout = 'detail';
