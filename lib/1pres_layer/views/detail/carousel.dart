@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../2app_layer/getdata.dart';
-import 'rowdetailpage.dart';
+import 'detailpage.dart';
 
 enum Status { changed, running, stopped, paused }
 
@@ -42,7 +42,7 @@ class CarouselState extends State<Carousel> {
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   child: Stack(
                     children: <Widget>[
-                      RowmapDetailPage(row2Map(
+                      DetailPage(row2Map(
                           widget.sheetArr[0], widget.sheetArr[rowIndex]))
                     ],
                   )),

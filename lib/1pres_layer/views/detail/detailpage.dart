@@ -8,15 +8,15 @@ import 'package:parsed_readmore/parsed_readmore.dart';
 import '../../alib/alib.dart';
 //ccc
 
-class RowmapDetailPage extends StatefulWidget {
+class DetailPage extends StatefulWidget {
   final Map rowmap;
-  const RowmapDetailPage(this.rowmap, {Key? key}) : super(key: key);
+  const DetailPage(this.rowmap, {Key? key}) : super(key: key);
 
   @override
-  State<RowmapDetailPage> createState() => _RowmapDetailPageState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _RowmapDetailPageState extends State<RowmapDetailPage> {
+class _DetailPageState extends State<DetailPage> {
   TextEditingController textEditingController = TextEditingController();
   List<Widget> listWidgets = [];
   List<Widget> listWidgetsDev = [];

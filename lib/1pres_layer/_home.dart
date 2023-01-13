@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../2app_layer/getdata.dart';
-import 'views/detail/rowdetailpage.dart';
+import 'views/detail/detailpage.dart';
 
 // A Counter example implemented with riverpod
 
@@ -42,7 +42,7 @@ class Home extends ConsumerWidget {
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RowmapDetailPage(rowMap)),
+          MaterialPageRoute(builder: (context) => DetailPage(rowMap)),
         );
       },
       child: const Icon(Icons.add),
