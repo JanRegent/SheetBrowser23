@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowse/1pres_layer/views/plutogrid/cols.dart';
 
 import '../../2app_layer/getdata.dart';
 import 'detail/carousel.dart';
-import 'plutogrid/gridtable.dart';
+import 'plutogrid/_gridpage.dart';
+import 'plutogrid/rows.dart';
 
 class GtridDetailSwitch extends StatefulWidget {
   const GtridDetailSwitch({super.key});
@@ -12,6 +16,19 @@ class GtridDetailSwitch extends StatefulWidget {
 }
 
 class _GtridDetailSwitchState extends State<GtridDetailSwitch> {
+  List<PlutoColumn> plutoCols = [];
+  List<PlutoRow> gridrows = [];
+  Future<List<dynamic>> getData() async {
+    List<dynamic> rowsArr = await getSheetValues();
+
+    if (plutoCols.isEmpty) plutoCols = await colsMap(rowsArr[0]);
+    BLuti uti = BLuti();
+    List<String> colsHeader = uti.toListString(rowsArr[0]);
+    //----------------------------------------------------------------------rows
+    if (gridrows.isEmpty) gridrows = await gridRowsMap(rowsArr, colsHeader);
+    return rowsArr;
+  }
+
   String layout = 'detail';
   Row titleSwitch() {
     return Row(
@@ -45,15 +62,14 @@ class _GtridDetailSwitchState extends State<GtridDetailSwitch> {
           style: Theme.of(context).textTheme.displayMedium!,
           textAlign: TextAlign.center,
           child: FutureBuilder<List>(
-            future:
-                getSheetValues(), // a previously-obtained Future<String> or null
+            future: getData(), // a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               List<Widget> children;
               if (snapshot.hasData) {
                 if (layout == 'detail') {
                   return Carousel(snapshot.data!);
                 } else {
-                  return const PlutoGridExamplePage();
+                  return GridPage(plutoCols, gridrows);
                   // (snapshot.data!);
                 }
               } else if (snapshot.hasError) {

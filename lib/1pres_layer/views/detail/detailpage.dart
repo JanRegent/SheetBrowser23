@@ -68,7 +68,10 @@ class _DetailPageState extends State<DetailPage> {
 
       if (text.isNotEmpty) {
         list.add(ListTile(
-          leading: Text(key),
+          leading: Text(
+            key,
+            style: const TextStyle(fontStyle: FontStyle.italic),
+          ),
           // ignore: unnecessary_string_interpolations
           trailing: rowItemRightPopup(context, value),
         ));
@@ -90,16 +93,9 @@ class _DetailPageState extends State<DetailPage> {
           moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
           lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
         ));
-        list.add(const Text('  '));
+        //list.add(const Text('  '));
       }
     }
-
-    //listWidgetsDev.add(ListTile(
-    //     leading: const Text('userConfig'),
-    //     title: al.linkIconOpenDoc(viewSetting.getMapFileId(), context)));
-    // listWidgetsDev.add(ListTile(
-    //     leading: const Text('dataSheet'),
-    //     title: al.linkIconOpenDoc(sheetRowsDb.currentRow.aSheetName, context)));
 
     for (var key in widget.rowmap.keys) {
       key2listWidget(key, listWidgets);

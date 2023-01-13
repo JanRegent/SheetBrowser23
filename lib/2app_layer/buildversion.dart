@@ -1,1 +1,1 @@
-const buildVersion = 'detail-TextAlign---13-01-2023 11:52:56,31';      
+const buildVersion = 'GridPage---13-01-2023 14:12:37,00';      
