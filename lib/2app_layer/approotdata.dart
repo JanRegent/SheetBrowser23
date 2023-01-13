@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'getdata.dart';
+
 class AppDataPrefs {
   static late final SharedPreferences _instance;
 
@@ -15,6 +17,8 @@ class AppDataPrefs {
     final dynamic jsonMap = jsonDecode(jsonString);
     await setString('apikey', jsonMap['apikey']);
     await setString('rootSheetId', jsonMap['rootSheetId']);
+
+    await rootSheet2localStorage();
   }
 
 // ----------------------------------------------------root vars
@@ -27,8 +31,12 @@ class AppDataPrefs {
       _instance.getString('rootSheetId').toString();
 
   //-------------------------------------------------------string
-  static String getString(String key, String defValue) {
-    return _instance.getString(key) ?? defValue;
+  static String? getString(String key, String defValue) {
+    try {
+      return _instance.getString(key);
+    } catch (_) {
+      return defValue;
+    }
   }
 
   static Future<bool> setString(String key, String value) async {

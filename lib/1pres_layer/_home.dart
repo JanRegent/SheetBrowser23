@@ -38,7 +38,7 @@ class Home extends ConsumerWidget {
         ref.read(counterProvider.notifier).state++;
         await selectData();
         final values = await getSheetValues();
-        Map rowMap = rowMapGet(values[0], values[1]);
+        Map rowMap = row2Map(values[0], values[1]);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

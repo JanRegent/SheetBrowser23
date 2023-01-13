@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '1pres_layer/views/grid_detailpage.dart';
 
-import '2app_layer/appdata.dart';
+import '2app_layer/approotdata.dart';
 
 void main() async {
   // Required for async calls in `main`

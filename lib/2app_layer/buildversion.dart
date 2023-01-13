@@ -1,1 +1,1 @@
-const buildVersion = 'appRootConfig_gitIgnore---12-01-2023 18:08:53,30';      
+const buildVersion = 'rootSheet2localStorage---13-01-2023 11:11:25,90';      
