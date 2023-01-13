@@ -1,1 +1,1 @@
-const buildVersion = 'DetailPage---13-01-2023 11:20:17,24';      
+const buildVersion = 'GtridDetailSwitch---13-01-2023 11:46:13,42';      

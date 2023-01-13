@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '1pres_layer/views/grid_detailpage.dart';
+import '1pres_layer/views/_griddetailswitch.dart';
 
 import '2app_layer/approotdata.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: GtridDetailPage());
+    return const MaterialApp(home: GtridDetailSwitch());
 
     //GtridDetailPage());
   }

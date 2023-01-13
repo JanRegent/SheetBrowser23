@@ -29,80 +29,6 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
   }
 
-  Future devInfo() async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text("DevInfo"),
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (ctx, index) {
-                  return SimpleDialogOption(
-                    onPressed: () => Navigator.pop(context),
-                    child: Center(
-                      child: listWidgetsDev[index],
-                    ),
-                  );
-                },
-                itemCount: listWidgetsDev.length,
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  Future userInfo(String mode) async {
-    List<Widget> listWidgetsInfo = [
-      ListTile(leading: const Text('mode:'), title: Text(mode)),
-      const ListTile(leading: Text('filter:'), title: Text(''))
-    ];
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text("Info"),
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (ctx, index) {
-                  return SimpleDialogOption(
-                    onPressed: () => Navigator.pop(context),
-                    child: Center(
-                      child: listWidgetsInfo[index],
-                    ),
-                  );
-                },
-                itemCount: listWidgetsInfo.length,
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  ElevatedButton infoButton(String mode) {
-    return ElevatedButton.icon(
-        icon: const Icon(Icons.info),
-        label: const Text(''),
-        style: ElevatedButton.styleFrom(
-            fixedSize: const Size(60, 30), backgroundColor: Colors.lightBlue),
-        onPressed: () async {
-          await userInfo(mode);
-        },
-        onLongPress: () async {
-          await devInfo();
-        });
-  }
-
   PopupMenuButton rowItemRightPopup(BuildContext context, String clipContent) {
     return PopupMenuButton(
         // add icon, by default "3 dot" icon
@@ -286,33 +212,27 @@ class _DetailPageState extends State<DetailPage> {
   @override
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(actions: [
-          infoButton('dev'),
-          sheetRightPopup(context, widget.rowmap)
-        ]),
-        body: FutureBuilder<List<Widget>>(
-          future: getListviewItems(context), // async work
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Column(
-                  children: const [
-                    Text('Row detail loading'),
-                    Text(' '),
-                    CircularProgressIndicator()
-                  ],
-                );
+    return FutureBuilder<List<Widget>>(
+      future: getListviewItems(context), // async work
+      builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Column(
+              children: const [
+                Text('Row detail loading'),
+                Text(' '),
+                CircularProgressIndicator()
+              ],
+            );
 
-              default:
-                if (snapshot.hasError) {
-                  return Text('RowDetailPage\n\n Error: ${snapshot.error}');
-                } else {
-                  return listViewBody();
-                }
+          default:
+            if (snapshot.hasError) {
+              return Text('RowDetailPage\n\n Error: ${snapshot.error}');
+            } else {
+              return listViewBody();
             }
-          },
-        ));
+        }
+      },
+    );
   }
 }

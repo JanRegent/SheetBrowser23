@@ -52,7 +52,7 @@ dependencies:
   #==================================================================================BL
   #data
   shared_preferences: ^2.0.15         #https://pub.dev/packages/shared_preferences
-  
+  pluto_grid: ^5.4.9                  #https://pub.dev/packages/pluto_grid
 
   #====================================================uti
   http: ^0.13.5                 #https://pub.dev/packages/http
