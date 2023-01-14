@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2app_layer/approotdata.dart';
+import '../detail/carousel.dart';
 
 //import 'gtidviewopt.dart';
 
 late final PlutoGridStateManager stateManager;
 List<dynamic> rowsArrFiltered = [];
 List<dynamic> rowsArr = [];
+List<String> colsHeader = [];
 
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
@@ -46,6 +48,24 @@ class _GridPageState extends State<GridPage> {
                   for (String filteredID in filteredIDs) {
                     int? rowIx = int.tryParse(filteredID);
                     rowsArrFiltered.add(rowsArr[rowIx!]);
+                  }
+                }),
+            ElevatedButton(
+                child: const Icon(Icons.list),
+                onPressed: () async {
+                  if (rowsArrFiltered.isEmpty) {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => Carousel(colsHeader, rowsArr),
+                        ));
+                  } else {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) =>
+                              Carousel(colsHeader, rowsArrFiltered),
+                        ));
                   }
                 }),
             ElevatedButton(

@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../../2app_layer/approotdata.dart';
 import '../../../2app_layer/getdata.dart';
 import 'detailpage.dart';
 
@@ -26,11 +27,13 @@ class CarouselState extends State<Carousel> {
     setState(() {});
   }
 
+  String currentSheetName = '';
   List<int> tabsList = [];
   late List<Widget> widgets;
   @override
   void initState() {
     super.initState();
+    currentSheetName = AppDataPrefs.getString('currentSheetName', '')!;
     tabsList = List.generate(widget.sheetArr.length - 1, (index) {
       return index;
     });
@@ -53,43 +56,45 @@ class CarouselState extends State<Carousel> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        CarouselSlider(
-          items: widgets,
-          options: CarouselOptions(
-            enlargeCenterPage: true,
-            height: MediaQuery.of(context).size.height - 100,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          carouselController: _controller,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+        appBar: AppBar(title: Text(currentSheetName)),
+        body: Column(
           children: <Widget>[
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () => _controller.previousPage(),
-                child: const Text('←'),
+            CarouselSlider(
+              items: widgets,
+              options: CarouselOptions(
+                enlargeCenterPage: true,
+                height: MediaQuery.of(context).size.height - 100,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
               ),
+              carouselController: _controller,
             ),
-            Text(
-              '$_currentIndex/${widget.sheetArr.length}',
-              style: const TextStyle(fontSize: 15),
-            ),
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () => _controller.nextPage(),
-                child: const Text('→'),
-              ),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () => _controller.previousPage(),
+                    child: const Text('←'),
+                  ),
+                ),
+                Text(
+                  '$_currentIndex/${widget.sheetArr.length}',
+                  style: const TextStyle(fontSize: 15),
+                ),
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () => _controller.nextPage(),
+                    child: const Text('→'),
+                  ),
+                ),
+              ],
+            )
           ],
-        )
-      ],
-    );
+        ));
   }
 }

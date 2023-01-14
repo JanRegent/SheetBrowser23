@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '1pres_layer/views/_griddetailswitch.dart';
+import 'package:sheetbrowse/routerswitch.dart';
 
 import '2app_layer/approotdata.dart';
 
@@ -8,7 +8,6 @@ void main() async {
   // Required for async calls in `main`
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize SharedPrefs instance.
   await AppDataPrefs.init();
   await AppDataPrefs.appRootConfigLoad();
 
@@ -23,8 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: GtridDetailSwitch());
-
-    //GtridDetailPage());
+    return const MaterialApp(home: RouterSwitch());
   }
 }
