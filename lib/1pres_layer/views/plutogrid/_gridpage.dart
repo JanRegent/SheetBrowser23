@@ -33,6 +33,49 @@ class _GridPageState extends State<GridPage> {
     } catch (_) {}
   }
 
+  PopupMenuButton appbarRightPopup() {
+    return PopupMenuButton(
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem<int>(
+              value: 0,
+              child: ElevatedButton(
+                  child: const Icon(Icons.clear),
+                  onPressed: () {
+                    stateManager.filterRows.clear();
+                    stateManager.setFilterWithFilterRows([]);
+                    rowsArrFiltered = [];
+                  }),
+            ),
+            PopupMenuItem<int>(
+              value: 0,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    //await gridViewOpt.save();
+                  },
+                  onLongPress: () async {
+                    //await gridViewOpt.filterClear();
+                    setState(() {});
+                  },
+                  child: const Icon(Icons.filter)),
+            ),
+            PopupMenuItem<int>(
+              value: 0,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    //await gridViewOpt.hidedColumnsSave();
+                  },
+                  onLongPress: () async {
+                    //await gridViewOpt.hidedColumnsReset();
+                    setState(() {});
+                  },
+                  child: const Icon(Icons.hide_source)),
+            ),
+          ];
+        },
+        onSelected: (value) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,31 +111,7 @@ class _GridPageState extends State<GridPage> {
                         ));
                   }
                 }),
-            ElevatedButton(
-                child: const Icon(Icons.clear),
-                onPressed: () {
-                  stateManager.filterRows.clear();
-                  stateManager.setFilterWithFilterRows([]);
-                  rowsArrFiltered = [];
-                }),
-            ElevatedButton(
-                onPressed: () async {
-                  //await gridViewOpt.save();
-                },
-                onLongPress: () async {
-                  //await gridViewOpt.filterClear();
-                  setState(() {});
-                },
-                child: const Icon(Icons.filter)),
-            ElevatedButton(
-                onPressed: () async {
-                  //await gridViewOpt.hidedColumnsSave();
-                },
-                onLongPress: () async {
-                  //await gridViewOpt.hidedColumnsReset();
-                  setState(() {});
-                },
-                child: const Icon(Icons.hide_source)),
+            appbarRightPopup()
           ],
         ),
         body: Container(
