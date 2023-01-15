@@ -28,7 +28,6 @@ class _RouterSwitchState extends State<RouterSwitch> {
     rowsArr.removeAt(0);
 
     plutoCols = await colsMap(colsHeader);
-
     gridrows = await gridRowsMap(rowsArr, colsHeader);
 
     route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
@@ -82,7 +81,8 @@ class _RouterSwitchState extends State<RouterSwitch> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text(
+                    'Error: [RouterSwitch]\n ${snapshot.error}\n\n${colsHeader.join(',')}'),
               ),
             ];
           } else {

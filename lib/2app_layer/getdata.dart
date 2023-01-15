@@ -28,7 +28,11 @@ Future<List<dynamic>> selectData() async {
 Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
   Map row = {};
   for (var i = 0; i < keys.length; i++) {
-    row[keys[i]] = datarow[i];
+    try {
+      row[keys[i]] = datarow[i];
+    } catch (_) {
+      row[keys[i]] = ''; //datarow.length < keys.length
+    }
   }
   return row;
 }

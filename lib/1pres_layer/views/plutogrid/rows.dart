@@ -7,9 +7,11 @@ Future<List<PlutoRow>> gridRowsMap(
   PlutoRow gridRow(List<dynamic> dynRow, int rowIx) {
     PlutoRow plutoRow = PlutoRow(cells: {});
     Map row = row2Map(cols, dynRow);
+
     for (var colIx = 0; colIx < cols.length; colIx++) {
       // ignore: unused_local_variable
       String value = '';
+
       try {
         if (row[cols[colIx]] == null) {
           value = '';

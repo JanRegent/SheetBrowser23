@@ -1,1 +1,1 @@
-const buildVersion = 'grid-appbarRightPopup---14-01-2023 11:04:01,30';      
+const buildVersion = 'getNews-backendBackup---15-01-2023 19:21:45,43';      
