@@ -12,6 +12,24 @@ class GoogleSheets {
     required this.sheetName,
     required this.sheetId,
   });
+
+  Future<List> getAllSheet() async {
+    String? apiKey = AppDataPrefs.getApikey();
+    final url =
+        'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      return extractedData['values'];
+    } catch (e) {
+      debugPrint(e.toString());
+
+      return [];
+      // you can show any error widgets for your users here.
+    }
+  }
+
   Future<List> sheetValues() async {
     String? apiKey = AppDataPrefs.getApikey();
     final url =

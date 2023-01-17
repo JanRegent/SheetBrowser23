@@ -1,9 +1,16 @@
 
 
 
-
-
 function getNews() {
+  Tamotsu.initialize();
+  getRootValues()
+   var getNewsSheet = SpreadsheetApp.getActive().getSheetByName('getNews');
+
+  return ContentService.createTextOutput(JSON.stringify(getNewsSheet.getDataRange().getValues()));
+
+}
+
+function getNewsBuild() {
   var filelistAgent = Tamotsu.Table.define({ sheetName: rootValues['currentFileList'], idColumn: 'ID' });
   var filelistRows = filelistAgent.all();
 
@@ -15,11 +22,7 @@ function getNews() {
     select_dateinsert(filelistRows[rowIx], dateinsert, getNewsAgent);   
   }
 }
-function getNews__test() {
-  Tamotsu.initialize();
-  getRootValues()
-  getNews();
-}
+
 
 function targetAgentPrepare(targetSheetName, dateinsert, header) {
   var targetSheet = SpreadsheetApp.getActive().getSheetByName(targetSheetName);

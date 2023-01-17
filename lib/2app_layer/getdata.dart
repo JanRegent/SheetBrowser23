@@ -16,6 +16,15 @@ Future<List> getSheetValues() async {
   return values;
 }
 
+Future<List<dynamic>> getNewsData() async {
+  final values = await GoogleSheets(
+    sheetId: AppDataPrefs.getRootSheetId(),
+    sheetName: 'getNews',
+  ).getAllSheet();
+
+  return values;
+}
+
 Future<List<dynamic>> selectData() async {
   final values = await GoogleSheets(
     sheetId: AppDataPrefs.getRootSheetId(),

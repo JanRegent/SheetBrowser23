@@ -21,8 +21,12 @@ class _RouterSwitchState extends State<RouterSwitch> {
   List<PlutoRow> gridrows = [];
 
   String route2Page = 'detail';
+  String action = 'getNews';
   Future<String> getData() async {
-    rowsArr = await getSheetValues();
+    rowsArr = [];
+    if (action == 'getNews') rowsArr = await getNewsData();
+    if (rowsArr.isEmpty) rowsArr = await getSheetValues();
+
     BLuti uti = BLuti();
     colsHeader = uti.toListString(rowsArr[0]);
     rowsArr.removeAt(0);

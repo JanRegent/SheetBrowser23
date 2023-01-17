@@ -1,1 +1,1 @@
-const buildVersion = 'backend-tagsIndex---17-01-2023 11:38:23,06';      
+const buildVersion = 'AL-getNewsData---17-01-2023 13:56:32,44';      
