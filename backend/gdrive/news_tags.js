@@ -1,15 +1,5 @@
 
 
-
-function getNews() {
-  Tamotsu.initialize();
-  getRootValues()
-   var getNewsSheet = SpreadsheetApp.getActive().getSheetByName('getNews');
-
-  return ContentService.createTextOutput(JSON.stringify(getNewsSheet.getDataRange().getValues()));
-
-}
-
 function getNewsBuild() {
   var filelistAgent = Tamotsu.Table.define({ sheetName: rootValues['currentFileList'], idColumn: 'ID' });
   var filelistRows = filelistAgent.all();
@@ -35,7 +25,7 @@ function targetAgentPrepare(targetSheetName, dateinsert, header) {
 
 //-----------------------------------------------------------------------------------------------getTags
 
-function tagsIndex() {
+function tagsIndexBuild() {
   var filelistAgent = Tamotsu.Table.define({ sheetName: rootValues['currentFileList'], idColumn: 'ID' });
   var filelistRows = filelistAgent.all();
 
@@ -108,11 +98,9 @@ function tagsAppend(filelistRow, getTagsSheet, rowIxStart) {
 }
 
 
-
-
 function tagsIndex__test() {
   Tamotsu.initialize();
   getRootValues()
-  tagsIndex();
+  tagsIndexBuild();
 }
 

@@ -6,7 +6,6 @@ function doGet(e) {
   getRootValues() ;
 
   try {
-    if (e.parameter.action=='getNews') return getNews();
     if (e.parameter.action=='selectWhere') return selectWhere(e);
   }catch(e) {
     return ContentService.createTextOutput( 'Error: runtime error \n\n' + querystring + '\n\n'  +  JSON.stringify(e));

@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
+import '../1pres_layer/alib/keysselectpage.dart';
+import '../1pres_layer/views/detail/carousel.dart';
 import '../4data_layer/sheetget.dart';
 
 Future<List> getSheetValues() async {
@@ -16,6 +19,7 @@ Future<List> getSheetValues() async {
   return values;
 }
 
+//------------------------------------------------------------------------news
 Future<List<dynamic>> getNewsData() async {
   final values = await GoogleSheets(
     sheetId: AppDataPrefs.getRootSheetId(),
@@ -25,6 +29,69 @@ Future<List<dynamic>> getNewsData() async {
   return values;
 }
 
+//-----------------------------------------------------------------------tags
+Future<List<dynamic>> getTagsData() async {
+  final values = await GoogleSheets(
+    sheetId: AppDataPrefs.getRootSheetId(),
+    sheetName: 'getTags',
+  ).getAllSheet();
+
+  return values;
+}
+
+List<dynamic> getTagsSheet = [];
+List<String> tagsList = [];
+Future<List<dynamic>> tagsPrepare() async {
+  {
+    getTagsSheet = await getTagsData();
+  }
+  Set<String> tagsSet = {};
+  for (var rowIx = 0; rowIx < getTagsSheet.length; rowIx++) {
+    tagsSet.add(getTagsSheet[rowIx][0].toString());
+  }
+  tagsList = tagsSet.toList();
+  tagsList.sort();
+  return getTagsSheet;
+}
+
+Future tagsFlow(BuildContext context) async {
+  String keySelected = '';
+  try {
+    keySelected = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => KeySelectPage(tagsList, 'Select tag!'),
+        ));
+  } catch (_) {
+    keySelected = '';
+  }
+
+  if (keySelected.isEmpty) return;
+  await rowsOfTag(keySelected);
+
+  // ignore: use_build_context_synchronously
+  await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => Carousel(const [
+          'tag',
+          'sourceSheetName',
+          'targetSheetID',
+          'targetFileUrl',
+          'ID'
+        ], tagRows),
+      ));
+}
+
+List<dynamic> tagRows = [];
+Future rowsOfTag(String tagSelected) async {
+  tagRows = [];
+  for (var rowIx = 0; rowIx < getTagsSheet.length; rowIx++) {
+    if (getTagsSheet[rowIx][0] == tagSelected) tagRows.add(getTagsSheet[rowIx]);
+  }
+}
+
+//-------------------------------------------------------------------selects
 Future<List<dynamic>> selectData() async {
   final values = await GoogleSheets(
     sheetId: AppDataPrefs.getRootSheetId(),

@@ -21,10 +21,15 @@ class _RouterSwitchState extends State<RouterSwitch> {
   List<PlutoRow> gridrows = [];
 
   String route2Page = 'detail';
-  String action = 'getNews';
-  Future<String> getData() async {
+  String action = 'getTags'; // 'getNews';
+  Future<String> getData(BuildContext context) async {
     rowsArr = [];
     if (action == 'getNews') rowsArr = await getNewsData();
+    if (action == 'getTags') {
+      rowsArr = await tagsPrepare();
+      // ignore: use_build_context_synchronously
+      await tagsFlow(context);
+    }
     if (rowsArr.isEmpty) rowsArr = await getSheetValues();
 
     BLuti uti = BLuti();
@@ -64,13 +69,14 @@ class _RouterSwitchState extends State<RouterSwitch> {
       style: Theme.of(context).textTheme.displayMedium!,
       textAlign: TextAlign.center,
       child: FutureBuilder<String>(
-        future: getData(),
+        future: getData(context),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             if (route2Page != 'detail') {
               return GridPage(plutoCols, gridrows);
             }
+
             if (rowsArrFiltered.isEmpty) {
               return Carousel(colsHeader, rowsArr);
             } else {
