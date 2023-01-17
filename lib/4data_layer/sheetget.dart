@@ -61,5 +61,20 @@ class GoogleSheets {
       // you can show any error widgets for your users here.
     }
   }
-}//class
+} //class
 
+Future getTagQuote(String sourceSheetName, String id, String fileId) async {
+  String? url = AppDataPrefs.getString('selectServiceUrl', '');
+  url =
+      '$url?action=getTagQuote&sourceSheetName=$sourceSheetName&ID=$id&fileId=$fileId';
+
+  try {
+    final response = await http.get(Uri.parse(url));
+    return jsonDecode(response.body);
+  } catch (e) {
+    debugPrint(e.toString());
+
+    return [];
+    // you can show any error widgets for your users here.
+  }
+}

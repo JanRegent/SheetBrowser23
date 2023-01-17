@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
-import '../1pres_layer/alib/keysselectpage.dart';
-import '../1pres_layer/views/detail/carousel.dart';
 import '../4data_layer/sheetget.dart';
 
 Future<List> getSheetValues() async {
@@ -83,6 +80,8 @@ Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
   }
   return row;
 }
+
+//-----------------------------------------------------------------------rootSheet
 
 Future rootSheet2localStorage() async {
   final values = await GoogleSheets(

@@ -103,4 +103,17 @@ function tagsIndex__test() {
   getRootValues()
   tagsIndexBuild();
 }
+//-----------------------------------------------------------------------------------------getTagComment
+function getTagQuote(sourceSheetName, ID,fileId) {
+  Tamotsu.initialize(SpreadsheetApp.openById(fileId));
+  var sourceAgent =    Tamotsu.Table.define({ sheetName: sourceSheetName, idColumn: 'ID' });
+  var quoteRow = sourceAgent.find(parseInt(ID))
+  Logger.log(JSON.stringify(quoteRow));
+  return ContentService.createTextOutput(JSON.stringify(quoteRow));
+}
+
+function getTagQuote__test() {
+  getTagQuote('Nisargadatta__tgQuotes','46','1JJk7OMlA3_qp0re6H_15ugYUj5KP8x3319GUNHEZ0zo');
+
+}
 
