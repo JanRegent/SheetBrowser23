@@ -8,6 +8,7 @@ import 'package:sheetbrowse/1pres_layer/views/plutogrid/rows.dart';
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../2app_layer/getdata.dart';
+import '1pres_layer/gettags/tagselectpage.dart';
 
 class RouterSwitch extends StatefulWidget {
   const RouterSwitch({super.key});
@@ -25,11 +26,8 @@ class _RouterSwitchState extends State<RouterSwitch> {
   Future<String> getData(BuildContext context) async {
     rowsArr = [];
     if (action == 'getNews') rowsArr = await getNewsData();
-    if (action == 'getTags') {
-      rowsArr = await tagsPrepare();
-      // ignore: use_build_context_synchronously
-      await tagsFlow(context);
-    }
+    if (action == 'getTags') rowsArr = await tagsPrepare();
+
     if (rowsArr.isEmpty) rowsArr = await getSheetValues();
 
     BLuti uti = BLuti();
@@ -75,6 +73,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
           if (snapshot.hasData) {
             if (route2Page != 'detail') {
               return GridPage(plutoCols, gridrows);
+            }
+            if (route2Page != 'getTags') {
+              return TagSelectPage(tagsList, 'Tags');
             }
 
             if (rowsArrFiltered.isEmpty) {

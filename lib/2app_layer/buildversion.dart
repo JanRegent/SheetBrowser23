@@ -1,1 +1,1 @@
-const buildVersion = 'AL-tagsFlow---17-01-2023 16:12:10,88';      
+const buildVersion = 'AL-getTags---17-01-2023 18:25:25,37';      

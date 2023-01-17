@@ -54,35 +54,6 @@ Future<List<dynamic>> tagsPrepare() async {
   return getTagsSheet;
 }
 
-Future tagsFlow(BuildContext context) async {
-  String keySelected = '';
-  try {
-    keySelected = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (ctx) => KeySelectPage(tagsList, 'Select tag!'),
-        ));
-  } catch (_) {
-    keySelected = '';
-  }
-
-  if (keySelected.isEmpty) return;
-  await rowsOfTag(keySelected);
-
-  // ignore: use_build_context_synchronously
-  await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (ctx) => Carousel(const [
-          'tag',
-          'sourceSheetName',
-          'targetSheetID',
-          'targetFileUrl',
-          'ID'
-        ], tagRows),
-      ));
-}
-
 List<dynamic> tagRows = [];
 Future rowsOfTag(String tagSelected) async {
   tagRows = [];
