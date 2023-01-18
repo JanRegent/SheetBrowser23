@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
+import '../../2app_layer/getdata.dart';
 import '../gettags_getnews/newsselectpage.dart';
+import '../views/plutogrid/_gridpage.dart';
 
 class SidebarXApp extends StatelessWidget {
   SidebarXApp({Key? key}) : super(key: key);
@@ -131,7 +133,7 @@ class ExampleSidebarX extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('SheetsViewer'),
+            child: Text('SheetsBrowser'),
           ),
         );
       },
@@ -168,9 +170,16 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.star,
             label: 'Starred',
             onTap: () async {
-              // List<String> sheetNames =
-              //     await sheetRowsDb.readStarredSheetnames();
-              // await starredTagsFlow(context, sheetNames, 'Starred');
+              rowsArr = await getAllSheet('starred2022');
+              await gridPrepare();
+              // ignore: use_build_context_synchronously
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => GridPage(
+                            plutoCols,
+                            gridrows,
+                          )));
             }),
         SidebarXItem(
             icon: Icons.label,

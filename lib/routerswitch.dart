@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pluto_grid/pluto_grid.dart';
-import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
+
 import 'package:sheetbrowse/1pres_layer/views/detail/carousel.dart';
 import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
-import 'package:sheetbrowse/1pres_layer/views/plutogrid/cols.dart';
-import 'package:sheetbrowse/1pres_layer/views/plutogrid/rows.dart';
+
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../2app_layer/getdata.dart';
@@ -19,9 +17,6 @@ class RouterSwitch extends StatefulWidget {
 }
 
 class _RouterSwitchState extends State<RouterSwitch> {
-  List<PlutoColumn> plutoCols = [];
-  List<PlutoRow> gridrows = [];
-
   String route2Page = 'detail';
   String action = 'getTags'; // 'getNews';
   Future<String> getData(BuildContext context) async {
@@ -31,11 +26,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (action == 'getTags') rowsArr = await tagsPrepare();
     if (rowsArr.isEmpty) rowsArr = await getSheetValues();
 
-    colsHeader = blUti.toListString(rowsArr[0]);
-    rowsArr.removeAt(0);
-
-    plutoCols = await colsMap(colsHeader);
-    gridrows = await gridRowsMap(rowsArr, colsHeader);
+    await gridPrepare();
 
     return 'ok';
   }
@@ -70,7 +61,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            if (route2Page == 'detail') {
+            if (route2Page == 'grid') {
               return GridPage(plutoCols, gridrows);
             }
             if (route2Page == 'getTags') {
@@ -80,6 +71,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
             if (route2Page == 'homesidebar') {
               return SidebarXApp();
             }
+            //-----------------------------------------------default detail view
             if (rowsArrFiltered.isEmpty) {
               return Carousel(colsHeader, rowsArr, false, 'All');
             } else {

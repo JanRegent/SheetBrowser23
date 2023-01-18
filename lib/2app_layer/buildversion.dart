@@ -1,1 +1,1 @@
-const buildVersion = 'sidebar-news---18-01-2023 16:29:40,87';      
+const buildVersion = 'sidebar-starred---18-01-2023 16:44:29,94';      

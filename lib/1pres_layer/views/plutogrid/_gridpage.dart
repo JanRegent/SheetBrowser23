@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2app_layer/approotdata.dart';
+import '../../alib/uti.dart';
 import '../detail/carousel.dart';
+import 'cols.dart';
+import 'rows.dart';
 
 //import 'gtidviewopt.dart';
 
@@ -11,6 +14,16 @@ late final PlutoGridStateManager stateManager;
 List<dynamic> rowsArrFiltered = [];
 List<dynamic> rowsArr = [];
 List<String> colsHeader = [];
+List<PlutoColumn> plutoCols = [];
+List<PlutoRow> gridrows = [];
+
+Future gridPrepare() async {
+  colsHeader = blUti.toListString(rowsArr[0]);
+  rowsArr.removeAt(0);
+
+  plutoCols = await colsMap(colsHeader);
+  gridrows = await gridRowsMap(rowsArr, colsHeader);
+}
 
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
