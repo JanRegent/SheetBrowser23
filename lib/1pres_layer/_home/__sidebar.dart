@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../2app_layer/getdata.dart';
+import '../filelist/filelistcard.dart';
+import '../filelist/inboxhome.dart';
 import '../gettags_getnews/newsselectpage.dart';
 import '../gettags_getnews/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
@@ -139,16 +141,18 @@ class ExampleSidebarX extends StatelessWidget {
         );
       },
       items: [
-        // SidebarXItem(icon: Icons.home, label: 'Home', onTap: () async {}),
+        SidebarXItem(icon: Icons.home, label: 'Home', onTap: () async {}),
         SidebarXItem(
             icon: Icons.list,
             label: 'Inbox',
             onTap: () async {
-              // await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (ctx) => const InboxHomePage('fileList'),
-              //     ));
+              await getFilelist();
+              // ignore: use_build_context_synchronously
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => InboxHomePage(filelist),
+                  ));
             }),
         SidebarXItem(
             icon: Icons.newspaper,
@@ -204,7 +208,6 @@ class ExampleSidebarX extends StatelessWidget {
               //       builder: (ctx) => const QuickAlertsApp(),
               //     ));
             }),
-
         SidebarXItem(
             icon: Icons.person,
             label: 'About',

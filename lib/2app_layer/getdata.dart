@@ -1,3 +1,5 @@
+import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowse/1pres_layer/filelist/filelistcard.dart';
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../4data_layer/sheetget.dart';
@@ -16,7 +18,7 @@ Future<List> getSheetValues() async {
   return values;
 }
 
-Future<List> getAllSheet(String sheetName) async {
+Future<List> getAllSheet(String? sheetName) async {
   String currentSheetId =
       AppDataPrefs.getString('currentSheetId', AppDataPrefs.getRootSheetId())!;
 
@@ -27,7 +29,19 @@ Future<List> getAllSheet(String sheetName) async {
   return values;
 }
 
+//--------------------------------------------------------------------filelist
+Future getFilelist() async {
+  List<dynamic> fileArr =
+      await getAllSheet(AppDataPrefs.getString('currentFileList', ''));
+  List<String> fileHeader = blUti.toListString(fileArr[0]);
+  filelist.clear();
+  for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
+    filelist.add(row2Map(fileHeader, fileArr[rowIx]));
+  }
+}
+
 //------------------------------------------------------------------------news
+
 Future<List<dynamic>> getNewsData() async {
   final values = await GoogleSheets(
     sheetId: AppDataPrefs.getRootSheetId(),

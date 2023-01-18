@@ -208,7 +208,6 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
       future: getDataListviewItems(context), // async work

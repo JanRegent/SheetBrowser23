@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 class GoogleSheets {
-  final String sheetId, sheetName;
+  final String? sheetId, sheetName;
   // obtain your api key on https://console.developers.google.com/
   GoogleSheets({
     required this.sheetName,
