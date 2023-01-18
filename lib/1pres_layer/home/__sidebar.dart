@@ -4,6 +4,7 @@ import 'package:sidebarx/sidebarx.dart';
 
 import '../../2app_layer/getdata.dart';
 import '../gettags_getnews/newsselectpage.dart';
+import '../gettags_getnews/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
 
 class SidebarXApp extends StatelessWidget {
@@ -138,7 +139,7 @@ class ExampleSidebarX extends StatelessWidget {
         );
       },
       items: [
-        SidebarXItem(icon: Icons.home, label: 'Home', onTap: () async {}),
+        // SidebarXItem(icon: Icons.home, label: 'Home', onTap: () async {}),
         SidebarXItem(
             icon: Icons.list,
             label: 'Inbox',
@@ -185,8 +186,13 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
-              // List<String> tags = await tagsDb.readTags();
-              // await starredTagsFlow(context, tags, 'Tags');
+              await tagsPrepare();
+              // ignore: use_build_context_synchronously
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => TagSelectPage(tagsList, 'Tags'),
+                  ));
             }),
         SidebarXItem(
             icon: Icons.settings,
@@ -198,16 +204,7 @@ class ExampleSidebarX extends StatelessWidget {
               //       builder: (ctx) => const QuickAlertsApp(),
               //     ));
             }),
-        SidebarXItem(
-            icon: Icons.refresh,
-            label: 'Refresh data',
-            onTap: () async {
-              // await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (ctx) => const LoaderPage(),
-              //     ));
-            }),
+
         SidebarXItem(
             icon: Icons.person,
             label: 'About',
