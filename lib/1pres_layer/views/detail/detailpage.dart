@@ -55,9 +55,11 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Map rowmap = {};
-  Future<List<Widget>> getListviewItems(BuildContext context) async {
+  Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
+
     rowmap = widget.rowmap;
+
     void key2listWidget(String key, List<Widget> list) {
       String value = '';
       try {
@@ -67,8 +69,12 @@ class _DetailPageState extends State<DetailPage> {
         value = '';
       }
 
-      // ignore: unnecessary_string_interpolations
-      String text = rowmap['$key'].toString().trim();
+      String text = '';
+      try {
+        text = rowmap[key].toString().trim();
+      } catch (_) {
+        text = '';
+      }
 
       if (text.isNotEmpty) {
         list.add(ListTile(
@@ -108,7 +114,9 @@ class _DetailPageState extends State<DetailPage> {
           widget.rowmap['targetSheetID'], fileId);
     }
 
-    for (var key in rowmap.keys) {
+    for (String key in rowmap.keys) {
+      // ignore: unnecessary_null_comparison
+      if (key == null) continue;
       key2listWidget(key, listWidgets);
     }
 
@@ -203,7 +211,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: getListviewItems(context), // async work
+      future: getDataListviewItems(context), // async work
       builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -217,7 +225,7 @@ class _DetailPageState extends State<DetailPage> {
 
           default:
             if (snapshot.hasError) {
-              return Text('RowDetailPage\n\n Error: ${snapshot.error}');
+              return Text('DetailPage\n\n Error: ${snapshot.error}');
             } else {
               return listViewBody();
             }

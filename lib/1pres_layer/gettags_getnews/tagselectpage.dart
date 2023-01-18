@@ -83,7 +83,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
                           'targetSheetID',
                           'targetFileUrl',
                           'ID'
-                        ], tagRows, true),
+                        ], tagRows, true, 'Tag: ${textEditingController.text}'),
                       ));
                 },
                 icon: const Icon(Icons.search))

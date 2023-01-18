@@ -8,7 +8,7 @@ import 'package:sheetbrowse/1pres_layer/views/plutogrid/rows.dart';
 import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../2app_layer/getdata.dart';
-import '1pres_layer/gettags/tagselectpage.dart';
+import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/home/__sidebar.dart';
 
 class RouterSwitch extends StatefulWidget {
@@ -31,8 +31,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (action == 'getTags') rowsArr = await tagsPrepare();
     if (rowsArr.isEmpty) rowsArr = await getSheetValues();
 
-    BLuti uti = BLuti();
-    colsHeader = uti.toListString(rowsArr[0]);
+    colsHeader = blUti.toListString(rowsArr[0]);
     rowsArr.removeAt(0);
 
     plutoCols = await colsMap(colsHeader);
@@ -82,9 +81,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
               return SidebarXApp();
             }
             if (rowsArrFiltered.isEmpty) {
-              return Carousel(colsHeader, rowsArr, false);
+              return Carousel(colsHeader, rowsArr, false, 'All');
             } else {
-              return Carousel(colsHeader, rowsArrFiltered, false);
+              return Carousel(colsHeader, rowsArrFiltered, false, 'Filter:');
             }
           } else if (snapshot.hasError) {
             children = <Widget>[

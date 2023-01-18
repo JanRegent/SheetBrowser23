@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
+import '../gettags_getnews/newsselectpage.dart';
+
 class SidebarXApp extends StatelessWidget {
   SidebarXApp({Key? key}) : super(key: key);
 
@@ -11,7 +13,7 @@ class SidebarXApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SheetsViewer',
+      title: 'SheetsBrowser',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -149,8 +151,11 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.newspaper,
             label: 'News',
             onTap: () async {
-              // List<String> days = bl.blUti.lastNdays(5);
-              // await searchFlow(context, days, 'News by days');
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => const NewsSelectPage(),
+                  ));
             }),
         SidebarXItem(
           icon: Icons.search,

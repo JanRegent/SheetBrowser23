@@ -1,6 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
+BLuti blUti = BLuti();
+
 class BLuti {
   String url2fileid(String url) {
     try {

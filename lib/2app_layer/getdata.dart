@@ -22,7 +22,6 @@ Future<List<dynamic>> getNewsData() async {
     sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'getNews',
   ).getAllSheet();
-
   return values;
 }
 

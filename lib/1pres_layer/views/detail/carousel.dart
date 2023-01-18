@@ -3,7 +3,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../../2app_layer/approotdata.dart';
 import '../../../2app_layer/getdata.dart';
 import 'detailpage.dart';
 
@@ -13,7 +12,9 @@ class Carousel extends StatefulWidget {
   final List<String> colsHeader;
   final List sheetArr;
   final bool askTags;
-  const Carousel(this.colsHeader, this.sheetArr, this.askTags, {super.key});
+  final String title;
+  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.title,
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -28,13 +29,11 @@ class CarouselState extends State<Carousel> {
     setState(() {});
   }
 
-  String currentSheetName = '';
   List<int> tabsList = [];
   late List<Widget> widgets;
   @override
   void initState() {
     super.initState();
-    currentSheetName = AppDataPrefs.getString('currentSheetName', '')!;
     tabsList = List.generate(widget.sheetArr.length - 1, (index) {
       return index;
     });
@@ -59,7 +58,7 @@ class CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(currentSheetName)),
+        appBar: AppBar(title: Text(widget.title)),
         body: Column(
           children: <Widget>[
             CarouselSlider(

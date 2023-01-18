@@ -1,4 +1,4 @@
-rem call backendPull.bat
+
 @ECHO off
 SET YY=%DATE:~-4%
 SET MM=%DATE:~-7,2%
