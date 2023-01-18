@@ -47,6 +47,7 @@ dependencies:
 
   carousel_slider: ^4.2.1             #https://pub.dev/packages/carousel_slider
   searchable_listview: ^2.2.1         #https://pub.dev/packages/searchable_listview
+  sidebarx: ^0.14.0                   #https://pub.dev/packages/sidebarx
   #-----------------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
 

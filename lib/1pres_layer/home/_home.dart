@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../2app_layer/getdata.dart';
-import 'views/detail/detailpage.dart';
+import '../../2app_layer/getdata.dart';
+import '../views/detail/detailpage.dart';
 
 // A Counter example implemented with riverpod
 

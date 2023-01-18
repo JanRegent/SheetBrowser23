@@ -9,6 +9,7 @@ import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../2app_layer/getdata.dart';
 import '1pres_layer/gettags/tagselectpage.dart';
+import '1pres_layer/home/__sidebar.dart';
 
 class RouterSwitch extends StatefulWidget {
   const RouterSwitch({super.key});
@@ -24,6 +25,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
   String route2Page = 'detail';
   String action = 'getTags'; // 'getNews';
   Future<String> getData(BuildContext context) async {
+    route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
     rowsArr = [];
     if (action == 'getNews') rowsArr = await getNewsData();
     if (action == 'getTags') rowsArr = await tagsPrepare();
@@ -36,7 +38,6 @@ class _RouterSwitchState extends State<RouterSwitch> {
     plutoCols = await colsMap(colsHeader);
     gridrows = await gridRowsMap(rowsArr, colsHeader);
 
-    route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
     return 'ok';
   }
 
@@ -70,13 +71,16 @@ class _RouterSwitchState extends State<RouterSwitch> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            if (route2Page != 'detail') {
+            if (route2Page == 'detail') {
               return GridPage(plutoCols, gridrows);
             }
-            if (route2Page != 'getTags') {
+            if (route2Page == 'getTags') {
               return TagSelectPage(tagsList, 'Tags');
             }
 
+            if (route2Page == 'homesidebar') {
+              return SidebarXApp();
+            }
             if (rowsArrFiltered.isEmpty) {
               return Carousel(colsHeader, rowsArr, false);
             } else {
