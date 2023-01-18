@@ -9,7 +9,6 @@ import 'package:sheetbrowse/2app_layer/approotdata.dart';
 
 import '../2app_layer/getdata.dart';
 import '1pres_layer/gettags/tagselectpage.dart';
-import '4data_layer/sheetget.dart';
 
 class RouterSwitch extends StatefulWidget {
   const RouterSwitch({super.key});
@@ -28,8 +27,6 @@ class _RouterSwitchState extends State<RouterSwitch> {
     rowsArr = [];
     if (action == 'getNews') rowsArr = await getNewsData();
     if (action == 'getTags') rowsArr = await tagsPrepare();
-    print(await getTagQuote('Nisargadatta__tgQuotes', '46',
-        '1JJk7OMlA3_qp0re6H_15ugYUj5KP8x3319GUNHEZ0zo'));
     if (rowsArr.isEmpty) rowsArr = await getSheetValues();
 
     BLuti uti = BLuti();
@@ -81,9 +78,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
 
             if (rowsArrFiltered.isEmpty) {
-              return Carousel(colsHeader, rowsArr);
+              return Carousel(colsHeader, rowsArr, false);
             } else {
-              return Carousel(colsHeader, rowsArrFiltered);
+              return Carousel(colsHeader, rowsArrFiltered, false);
             }
           } else if (snapshot.hasError) {
             children = <Widget>[

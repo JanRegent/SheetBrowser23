@@ -100,14 +100,15 @@ class _GridPageState extends State<GridPage> {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(colsHeader, rowsArr),
+                          builder: (ctx) =>
+                              Carousel(colsHeader, rowsArr, false),
                         ));
                   } else {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (ctx) =>
-                              Carousel(colsHeader, rowsArrFiltered),
+                              Carousel(colsHeader, rowsArrFiltered, false),
                         ));
                   }
                 }),

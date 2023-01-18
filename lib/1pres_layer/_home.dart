@@ -42,7 +42,7 @@ class Home extends ConsumerWidget {
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailPage(rowMap)),
+          MaterialPageRoute(builder: (context) => DetailPage(rowMap, false)),
         );
       },
       child: const Icon(Icons.add),

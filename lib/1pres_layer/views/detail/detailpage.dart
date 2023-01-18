@@ -4,13 +4,16 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
+import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
+import '../../../4data_layer/sheetget.dart';
 import '../../alib/alib.dart';
 //ccc
 
 class DetailPage extends StatefulWidget {
   final Map rowmap;
-  const DetailPage(this.rowmap, {Key? key}) : super(key: key);
+  final bool askTag;
+  const DetailPage(this.rowmap, this.askTag, {Key? key}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -51,20 +54,21 @@ class _DetailPageState extends State<DetailPage> {
         onSelected: (value) {});
   }
 
+  Map rowmap = {};
   Future<List<Widget>> getListviewItems(BuildContext context) async {
     listWidgets.clear();
-
+    rowmap = widget.rowmap;
     void key2listWidget(String key, List<Widget> list) {
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations
-        value = widget.rowmap['$key'];
+        value = rowmap['$key'];
       } catch (_) {
         value = '';
       }
 
       // ignore: unnecessary_string_interpolations
-      String text = widget.rowmap['$key'].toString().trim();
+      String text = rowmap['$key'].toString().trim();
 
       if (text.isNotEmpty) {
         list.add(ListTile(
@@ -97,7 +101,14 @@ class _DetailPageState extends State<DetailPage> {
       }
     }
 
-    for (var key in widget.rowmap.keys) {
+    if (widget.askTag) {
+      BLuti bLuti = BLuti();
+      String fileId = bLuti.url2fileid(widget.rowmap['targetFileUrl']);
+      rowmap = await getTagQuote(widget.rowmap['sourceSheetName'],
+          widget.rowmap['targetSheetID'], fileId);
+    }
+
+    for (var key in rowmap.keys) {
       key2listWidget(key, listWidgets);
     }
 

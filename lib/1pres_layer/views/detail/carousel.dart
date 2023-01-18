@@ -12,7 +12,8 @@ enum Status { changed, running, stopped, paused }
 class Carousel extends StatefulWidget {
   final List<String> colsHeader;
   final List sheetArr;
-  const Carousel(this.colsHeader, this.sheetArr, {super.key});
+  final bool askTags;
+  const Carousel(this.colsHeader, this.sheetArr, this.askTags, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -46,7 +47,8 @@ class CarouselState extends State<Carousel> {
                   child: Stack(
                     children: <Widget>[
                       DetailPage(
-                          row2Map(widget.colsHeader, widget.sheetArr[rowIndex]))
+                          row2Map(widget.colsHeader, widget.sheetArr[rowIndex]),
+                          widget.askTags)
                     ],
                   )),
             ))
