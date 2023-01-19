@@ -3,7 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../../2app_layer/getdata.dart';
+import '../../../2business_layer/getdata.dart';
 import 'detailpage.dart';
 
 enum Status { changed, running, stopped, paused }

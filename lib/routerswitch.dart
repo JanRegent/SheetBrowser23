@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sheetbrowse/1pres_layer/views/detail/carousel.dart';
 import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
 
-import 'package:sheetbrowse/2app_layer/approotdata.dart';
+import 'package:sheetbrowse/2business_layer/approotdata.dart';
 
-import '../2app_layer/getdata.dart';
+import '2business_layer/getdata.dart';
 import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/_home/__sidebar.dart';
 

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../2app_layer/getdata.dart';
+import '../../2business_layer/getdata.dart';
 import '../views/detail/carousel.dart';
 
 ///

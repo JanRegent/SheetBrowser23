@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../2app_layer/approotdata.dart';
+import '../../../2business_layer/approotdata.dart';
 import '../../alib/uti.dart';
 import '../detail/carousel.dart';
 import 'cols.dart';

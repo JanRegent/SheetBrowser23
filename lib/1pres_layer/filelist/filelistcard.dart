@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
-import '../../4data_layer/sheetget.dart';
+import '../../data_layer/sheetget.dart';
 import '../alib/alib.dart';
 
 import '../views/detail/carousel.dart';
