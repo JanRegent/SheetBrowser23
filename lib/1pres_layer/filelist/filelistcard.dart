@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
-import '../../data_layer/sheetget.dart';
 import '../alib/alib.dart';
 
 import '../views/detail/carousel.dart';
@@ -108,9 +107,7 @@ ElevatedButton allRowsButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.newRows(await GoogleSheetsDL(
-                sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .getAllSheet());
+        await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         // ignore: use_build_context_synchronously
         await plutoGridShow(context, fileListRow);
       });
@@ -126,9 +123,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.newRows(await GoogleSheetsDL(
-                sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .getAllSheet());
+        await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         // ignore: use_build_context_synchronously
         await Navigator.push(
             context,

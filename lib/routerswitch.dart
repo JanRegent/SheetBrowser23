@@ -23,11 +23,14 @@ class _RouterSwitchState extends State<RouterSwitch> {
     route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
     currentSheet.rowsArr = [];
     if (action == 'getNews') {
-      await currentSheet.newRows(await currentSheet.getAllSheet('getNews', ''));
+      await currentSheet.getSheet('getNews', '');
     }
-    if (action == 'getTags') await currentSheet.newRows(await tagsPrepare());
+    if (action == 'getTags') {
+      await currentSheet.getSheet('getTags', '');
+      await tagsPrepare();
+    }
     if (currentSheet.rowsArr.isEmpty) {
-      await currentSheet.newRows(await currentSheet.getAllSheet('', ''));
+      await currentSheet.getSheet('', '');
     }
 
     return 'ok';

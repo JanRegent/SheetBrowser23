@@ -73,9 +73,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  await currentSheet
-                      .newRows(await currentSheet.getAllSheet('getNews', ''));
-
+                  await currentSheet.getSheet('getNews', '');
                   // ignore: use_build_context_synchronously
                   await Navigator.push(
                       context,

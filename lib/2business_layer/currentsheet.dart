@@ -7,16 +7,42 @@ import '../data_layer/sheetget.dart';
 import 'approotdata.dart';
 
 class CurrentSheet {
+  String fileId = '';
+  String sheetName = '';
+
   List<dynamic> rowsArrFiltered = [];
   List<dynamic> rowsArr = [];
   List<String> colsHeader = [];
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
 
-  Future newRows(List<dynamic> newRowsArr) async {
-    rowsArr = newRowsArr;
+  Future getSheet(String sheetNameNew, String fileIdNew) async {
+    if (fileId == '' && fileIdNew == '') {
+      fileId = AppDataPrefs.getRootSheetId();
+      rowsArr = [];
+    }
+
+    if (fileId != fileIdNew) rowsArr = [];
+    if (sheetName != sheetNameNew) rowsArr = [];
+    if (rowsArr.isNotEmpty) return;
+    //-----------------------------------new sheet
+    sheetName = sheetNameNew;
+
+    if (sheetName.isEmpty) {
+      sheetName = AppDataPrefs.getString('currentSheetName', '')!;
+    }
+    fileId = fileIdNew;
+    if (fileId.isEmpty) {
+      fileId = AppDataPrefs.getRootSheetId();
+    }
+    rowsArr = await getAllSheet(sheetName, fileId);
     await gridPrepare();
   }
+
+  // Future newRows(List<dynamic> newRowsArr) async {
+  //   rowsArr = newRowsArr;
+  //   await gridPrepare();
+  // }
 
   Future gridPrepare() async {
     colsHeader = blUti.toListString(rowsArr[0]);
@@ -26,13 +52,8 @@ class CurrentSheet {
     gridrows = await gridRowsMap(rowsArr, colsHeader);
   }
 
+  //---------------------------------------------------------------DL
   Future<List> getAllSheet(String? sheetName, String fileId) async {
-    if (fileId.isEmpty) {
-      fileId = AppDataPrefs.getRootSheetId();
-    }
-    if (sheetName!.isEmpty) {
-      sheetName = AppDataPrefs.getString('currentSheetName', '')!;
-    }
     final values = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
         .getAllSheet();
 

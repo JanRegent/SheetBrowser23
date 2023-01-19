@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../2business_layer/approotdata.dart';
 import '../../../2business_layer/currentsheet.dart';
 import '../detail/carousel.dart';
 
@@ -22,11 +21,9 @@ class GridPage extends StatefulWidget {
 
 class _GridPageState extends State<GridPage> {
   //late GridViewOpt gridViewOpt;
-  String currentSheetName = '';
   @override
   void initState() {
     super.initState();
-    currentSheetName = AppDataPrefs.getString('currentSheetName', '')!;
     try {
       stateManager.setShowColumnFilter(true);
     } catch (_) {}
@@ -79,7 +76,7 @@ class _GridPageState extends State<GridPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(currentSheetName),
+          title: Text(currentSheet.sheetName),
           actions: [
             ElevatedButton(
                 child: const Icon(Icons.add),
@@ -100,8 +97,11 @@ class _GridPageState extends State<GridPage> {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(currentSheet.colsHeader,
-                              currentSheet.rowsArr, false, currentSheetName),
+                          builder: (ctx) => Carousel(
+                              currentSheet.colsHeader,
+                              currentSheet.rowsArr,
+                              false,
+                              currentSheet.sheetName),
                         ));
                   } else {
                     await Navigator.push(
@@ -111,7 +111,7 @@ class _GridPageState extends State<GridPage> {
                               currentSheet.colsHeader,
                               currentSheet.rowsArrFiltered,
                               false,
-                              currentSheetName),
+                              currentSheet.sheetName),
                         ));
                   }
                 }),
