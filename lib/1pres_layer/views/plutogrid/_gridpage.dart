@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../2business_layer/currentsheet.dart';
+import '../../../2business_layer/getsheet.dart';
 import '../detail/carousel.dart';
 
 //import 'gtidviewopt.dart';
 
 late final PlutoGridStateManager stateManager;
-CurrentSheet currentSheet = CurrentSheet();
+GetSheet currentSheet = GetSheet();
 
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;

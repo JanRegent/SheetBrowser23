@@ -6,7 +6,7 @@ import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/sheetget.dart';
 import 'approotdata.dart';
 
-class CurrentSheet {
+class GetSheet {
   String fileId = '';
   String sheetName = '';
 
@@ -35,7 +35,8 @@ class CurrentSheet {
     if (fileId.isEmpty) {
       fileId = AppDataPrefs.getRootSheetId();
     }
-    rowsArr = await getAllSheet(sheetName, fileId);
+    rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+        .getAllSheet();
     await gridPrepare();
   }
 
@@ -53,10 +54,10 @@ class CurrentSheet {
   }
 
   //---------------------------------------------------------------DL
-  Future<List> getAllSheet(String? sheetName, String fileId) async {
-    final values = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-        .getAllSheet();
+  // Future<List> getAllSheet(String? sheetName, String fileId) async {
+  //   final values = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+  //       .getAllSheet();
 
-    return values;
-  }
+  //   return values;
+  // }
 }
