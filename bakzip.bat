@@ -9,9 +9,6 @@ del *.7z
 
 C:\uti\7-Zip\7z.exe a %1%-%%MYDATE%  backend\* lib\* test\* web\*.* web\help\*.* docs\* web\appsScript\*.*  pubspec.yaml *.bat *.ps1  -r
 
-xcopy *.7z  "c:\dev\zBak\SheetViewer\" /C /Y
-xcopy *.7z  "C:\Users\janre\Dropbox\Drop2NAS\" /C /Y
-
 echo pCloud----
 xcopy *.7z  "P:\backup\sheetBrowser\"  /C /Y
 

@@ -34,7 +34,7 @@ class CarouselState extends State<Carousel> {
   @override
   void initState() {
     super.initState();
-    tabsList = List.generate(widget.sheetArr.length - 1, (index) {
+    tabsList = List.generate(widget.sheetArr.length, (index) {
       return index;
     });
     widgets = tabsList
