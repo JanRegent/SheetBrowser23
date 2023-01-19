@@ -3,27 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2business_layer/approotdata.dart';
-import '../../alib/uti.dart';
+import '../../../2business_layer/currentsheet.dart';
 import '../detail/carousel.dart';
-import 'cols.dart';
-import 'rows.dart';
 
 //import 'gtidviewopt.dart';
 
 late final PlutoGridStateManager stateManager;
-List<dynamic> rowsArrFiltered = [];
-List<dynamic> rowsArr = [];
-List<String> colsHeader = [];
-List<PlutoColumn> plutoCols = [];
-List<PlutoRow> gridrows = [];
-
-Future gridPrepare() async {
-  colsHeader = blUti.toListString(rowsArr[0]);
-  rowsArr.removeAt(0);
-
-  plutoCols = await colsMap(colsHeader);
-  gridrows = await gridRowsMap(rowsArr, colsHeader);
-}
+CurrentSheet currentSheet = CurrentSheet();
 
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
@@ -57,7 +43,7 @@ class _GridPageState extends State<GridPage> {
                   onPressed: () {
                     stateManager.filterRows.clear();
                     stateManager.setFilterWithFilterRows([]);
-                    rowsArrFiltered = [];
+                    currentSheet.rowsArrFiltered = [];
                   }),
             ),
             PopupMenuItem<int>(
@@ -103,25 +89,29 @@ class _GridPageState extends State<GridPage> {
 
                   for (String filteredID in filteredIDs) {
                     int? rowIx = int.tryParse(filteredID);
-                    rowsArrFiltered.add(rowsArr[rowIx!]);
+                    currentSheet.rowsArrFiltered
+                        .add(currentSheet.rowsArr[rowIx!]);
                   }
                 }),
             ElevatedButton(
                 child: const Icon(Icons.list),
                 onPressed: () async {
-                  if (rowsArrFiltered.isEmpty) {
+                  if (currentSheet.rowsArrFiltered.isEmpty) {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(
-                              colsHeader, rowsArr, false, currentSheetName),
+                          builder: (ctx) => Carousel(currentSheet.colsHeader,
+                              currentSheet.rowsArr, false, currentSheetName),
                         ));
                   } else {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(colsHeader,
-                              rowsArrFiltered, false, currentSheetName),
+                          builder: (ctx) => Carousel(
+                              currentSheet.colsHeader,
+                              currentSheet.rowsArrFiltered,
+                              false,
+                              currentSheetName),
                         ));
                   }
                 }),

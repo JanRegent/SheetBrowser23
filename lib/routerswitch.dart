@@ -21,12 +21,12 @@ class _RouterSwitchState extends State<RouterSwitch> {
   String action = 'getTags'; // 'getNews';
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
-    rowsArr = [];
-    if (action == 'getNews') rowsArr = await getNewsData();
-    if (action == 'getTags') rowsArr = await tagsPrepare();
-    if (rowsArr.isEmpty) rowsArr = await getSheetValues();
-
-    await gridPrepare();
+    currentSheet.rowsArr = [];
+    if (action == 'getNews') await currentSheet.newRows(await getNewsData());
+    if (action == 'getTags') await currentSheet.newRows(await tagsPrepare());
+    if (currentSheet.rowsArr.isEmpty) {
+      await currentSheet.newRows(await getSheetValues());
+    }
 
     return 'ok';
   }
@@ -62,7 +62,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
           List<Widget> children;
           if (snapshot.hasData) {
             if (route2Page == 'grid') {
-              return GridPage(plutoCols, gridrows);
+              return GridPage(currentSheet.plutoCols, currentSheet.gridrows);
             }
             if (route2Page == 'getTags') {
               return TagSelectPage(tagsList, 'Tags');
@@ -72,10 +72,12 @@ class _RouterSwitchState extends State<RouterSwitch> {
               return SidebarXApp();
             }
             //-----------------------------------------------default detail view
-            if (rowsArrFiltered.isEmpty) {
-              return Carousel(colsHeader, rowsArr, false, 'All');
+            if (currentSheet.rowsArrFiltered.isEmpty) {
+              return Carousel(
+                  currentSheet.colsHeader, currentSheet.rowsArr, false, 'All');
             } else {
-              return Carousel(colsHeader, rowsArrFiltered, false, 'Filter:');
+              return Carousel(currentSheet.colsHeader,
+                  currentSheet.rowsArrFiltered, false, 'Filter:');
             }
           } else if (snapshot.hasError) {
             children = <Widget>[
@@ -87,7 +89,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
-                    'Error: [RouterSwitch]\n ${snapshot.error}\n\n${colsHeader.join(',')}'),
+                    'Error: [RouterSwitch]\n ${snapshot.error}\n\n${currentSheet.colsHeader.join(',')}'),
               ),
             ];
           } else {

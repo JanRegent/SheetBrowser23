@@ -88,8 +88,11 @@ Future plutoGridShow(
 
   //----------------------------------------------------------------------rows
 
-  await Navigator.push(context,
-      MaterialPageRoute(builder: (context) => GridPage(plutoCols, gridrows)));
+  await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              GridPage(currentSheet.plutoCols, currentSheet.gridrows)));
 }
 
 //-------------------------------------------------------------------------all
@@ -105,10 +108,9 @@ ElevatedButton allRowsButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        rowsArr = await GoogleSheets(
+        await currentSheet.newRows(await GoogleSheets(
                 sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .sheetValues();
-        await gridPrepare();
+            .sheetValues());
         // ignore: use_build_context_synchronously
         await plutoGridShow(context, fileListRow);
       });
@@ -124,15 +126,15 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        rowsArr = await GoogleSheets(
+        await currentSheet.newRows(await GoogleSheets(
                 sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .sheetValues();
+            .sheetValues());
         // ignore: use_build_context_synchronously
         await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => Carousel(
-                    colsHeader, rowsArr, false, fileListRow['sheetName'])));
+                builder: (_) => Carousel(currentSheet.colsHeader,
+                    currentSheet.rowsArr, false, fileListRow['sheetName'])));
       });
 }
 

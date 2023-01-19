@@ -175,15 +175,14 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.star,
             label: 'Starred',
             onTap: () async {
-              rowsArr = await getAllSheet('starred2022');
-              await gridPrepare();
+              await currentSheet.newRows(await getAllSheet('starred2022'));
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (ctx) => GridPage(
-                            plutoCols,
-                            gridrows,
+                            currentSheet.plutoCols,
+                            currentSheet.gridrows,
                           )));
             }),
         SidebarXItem(

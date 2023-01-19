@@ -74,15 +74,15 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  rowsArr = await getNewsData();
+                  await currentSheet.newRows(await getNewsData());
 
                   // ignore: use_build_context_synchronously
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (ctx) => Carousel(
-                            blUti.toListString(rowsArr[0]),
-                            rowsArr,
+                            blUti.toListString(currentSheet.rowsArr[0]),
+                            currentSheet.rowsArr,
                             false,
                             'News for ${textEditingController.text}'),
                       ));
