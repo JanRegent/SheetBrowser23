@@ -89,12 +89,4 @@ Future sheet2localStorage(List<dynamic> arr) async {
     if (arr[rowIx].length == 0) continue;
     await AppDataPrefs.setString(arr[rowIx][0], arr[rowIx][1]);
   }
-  String currentSheetId = ''; //------------default is rootSheetId
-  try {
-    currentSheetId = AppDataPrefs.getString(
-        'currentSheetId', AppDataPrefs.getRootSheetId())!;
-  } catch (_) {
-    currentSheetId = AppDataPrefs.getRootSheetId();
-    AppDataPrefs.setString('currentSheetId', currentSheetId);
-  }
 }

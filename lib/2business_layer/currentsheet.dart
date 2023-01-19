@@ -28,12 +28,10 @@ class CurrentSheet {
 
   Future<List> getAllSheet(String? sheetName, String fileId) async {
     if (fileId.isEmpty) {
-      fileId = AppDataPrefs.getString(
-          'currentSheetId', AppDataPrefs.getRootSheetId())!;
+      fileId = AppDataPrefs.getRootSheetId();
     }
     if (sheetName!.isEmpty) {
-      sheetName = AppDataPrefs.getString(
-          'currentSheetId', AppDataPrefs.getRootSheetId())!;
+      sheetName = AppDataPrefs.getString('currentSheetName', '')!;
     }
     final values = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
         .getAllSheet();
