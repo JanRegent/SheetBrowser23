@@ -4,35 +4,14 @@ import 'package:sheetbrowse/2business_layer/approotdata.dart';
 
 import '../data_layer/sheetget.dart';
 
-Future<List> getSheetValues() async {
-  String currentSheetId =
-      AppDataPrefs.getString('currentSheetId', AppDataPrefs.getRootSheetId())!;
-
-  String currentSheetName =
-      AppDataPrefs.getString('currentSheetName', 'rootSheet')!;
-
-  final values =
-      await GoogleSheets(sheetId: currentSheetId, sheetName: currentSheetName)
-          .sheetValues();
-
-  return values;
-}
-
-Future<List> getAllSheet(String? sheetName) async {
-  String currentSheetId =
-      AppDataPrefs.getString('currentSheetId', AppDataPrefs.getRootSheetId())!;
-
-  final values =
-      await GoogleSheets(sheetId: currentSheetId, sheetName: sheetName)
-          .sheetValues();
-
-  return values;
-}
-
 //--------------------------------------------------------------------filelist
 Future getFilelist() async {
+  String? sheetName = AppDataPrefs.getString('currentFileList', '');
+  String sheetId = AppDataPrefs.getRootSheetId();
   List<dynamic> fileArr =
-      await getAllSheet(AppDataPrefs.getString('currentFileList', ''));
+      await GoogleSheetsDL(sheetId: sheetId, sheetName: sheetName!)
+          .getAllSheet();
+
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelist.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
@@ -40,19 +19,9 @@ Future getFilelist() async {
   }
 }
 
-//------------------------------------------------------------------------news
-
-Future<List<dynamic>> getNewsData() async {
-  final values = await GoogleSheets(
-    sheetId: AppDataPrefs.getRootSheetId(),
-    sheetName: 'getNews',
-  ).getAllSheet();
-  return values;
-}
-
 //-----------------------------------------------------------------------tags
 Future<List<dynamic>> getTagsData() async {
-  final values = await GoogleSheets(
+  final values = await GoogleSheetsDL(
     sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'getTags',
   ).getAllSheet();
@@ -85,7 +54,7 @@ Future rowsOfTag(String tagSelected) async {
 
 //-------------------------------------------------------------------selects
 Future<List<dynamic>> selectData() async {
-  final values = await GoogleSheets(
+  final values = await GoogleSheetsDL(
     sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'starred2022',
   ).selectData();
@@ -108,10 +77,10 @@ Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
 //-----------------------------------------------------------------------rootSheet
 
 Future rootSheet2localStorage() async {
-  final values = await GoogleSheets(
+  final values = await GoogleSheetsDL(
     sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'rootSheet',
-  ).sheetValues();
+  ).getAllSheet();
   sheet2localStorage(values);
 }
 

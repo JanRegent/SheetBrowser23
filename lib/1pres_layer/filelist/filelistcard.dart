@@ -108,9 +108,9 @@ ElevatedButton allRowsButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.newRows(await GoogleSheets(
+        await currentSheet.newRows(await GoogleSheetsDL(
                 sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .sheetValues());
+            .getAllSheet());
         // ignore: use_build_context_synchronously
         await plutoGridShow(context, fileListRow);
       });
@@ -126,9 +126,9 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.newRows(await GoogleSheets(
+        await currentSheet.newRows(await GoogleSheetsDL(
                 sheetId: fileId, sheetName: fileListRow['sheetName'])
-            .sheetValues());
+            .getAllSheet());
         // ignore: use_build_context_synchronously
         await Navigator.push(
             context,

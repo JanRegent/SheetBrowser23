@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../2business_layer/getdata.dart';
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
 import '../views/plutogrid/_gridpage.dart';
@@ -74,14 +73,15 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  await currentSheet.newRows(await getNewsData());
+                  await currentSheet
+                      .newRows(await currentSheet.getAllSheet('getNews', ''));
 
                   // ignore: use_build_context_synchronously
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (ctx) => Carousel(
-                            blUti.toListString(currentSheet.rowsArr[0]),
+                            blUti.toListString(currentSheet.colsHeader),
                             currentSheet.rowsArr,
                             false,
                             'News for ${textEditingController.text}'),

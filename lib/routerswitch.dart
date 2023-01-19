@@ -18,14 +18,16 @@ class RouterSwitch extends StatefulWidget {
 
 class _RouterSwitchState extends State<RouterSwitch> {
   String route2Page = 'detail';
-  String action = 'getTags'; // 'getNews';
+  String action = 'getNews'; // 'getNews';
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
     currentSheet.rowsArr = [];
-    if (action == 'getNews') await currentSheet.newRows(await getNewsData());
+    if (action == 'getNews') {
+      await currentSheet.newRows(await currentSheet.getAllSheet('getNews', ''));
+    }
     if (action == 'getTags') await currentSheet.newRows(await tagsPrepare());
     if (currentSheet.rowsArr.isEmpty) {
-      await currentSheet.newRows(await getSheetValues());
+      await currentSheet.newRows(await currentSheet.getAllSheet('', ''));
     }
 
     return 'ok';

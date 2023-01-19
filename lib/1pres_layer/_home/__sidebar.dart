@@ -175,7 +175,8 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.star,
             label: 'Starred',
             onTap: () async {
-              await currentSheet.newRows(await getAllSheet('starred2022'));
+              await currentSheet
+                  .newRows(await currentSheet.getAllSheet('starred2022', ''));
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,

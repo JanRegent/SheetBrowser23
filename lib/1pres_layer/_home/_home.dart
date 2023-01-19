@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../2business_layer/getdata.dart';
 import '../views/detail/detailpage.dart';
+import '../views/plutogrid/_gridpage.dart';
 
 // A Counter example implemented with riverpod
 
@@ -37,7 +38,7 @@ class Home extends ConsumerWidget {
       onPressed: () async {
         ref.read(counterProvider.notifier).state++;
         await selectData();
-        final values = await getSheetValues();
+        final values = await currentSheet.getAllSheet('', '');
         Map rowMap = row2Map(values[0], values[1]);
         // ignore: use_build_context_synchronously
         Navigator.push(

@@ -37,7 +37,6 @@ class CarouselState extends State<Carousel> {
     tabsList = List.generate(widget.sheetArr.length - 1, (index) {
       return index;
     });
-
     widgets = tabsList
         .map((rowIndex) => Container(
               margin: const EdgeInsets.all(5.0),

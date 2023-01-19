@@ -14,10 +14,11 @@ void sessionLog(String key, String value) {
   sessionManager.set('__log__$key', value);
 }
 
-class GoogleSheets {
-  final String? sheetId, sheetName;
+class GoogleSheetsDL {
+  final String? sheetName;
+  String sheetId = '';
   // obtain your api key on https://console.developers.google.com/
-  GoogleSheets({
+  GoogleSheetsDL({
     required this.sheetName,
     required this.sheetId,
   });
@@ -46,33 +47,10 @@ class GoogleSheets {
     }
   }
 
-  Future<List> sheetValues() async {
-    String? apiKey = AppDataPrefs.getApikey();
-    final url =
-        'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
-    sessionLog('url-sheetValues', url);
-    try {
-      final response = await http.get(Uri.parse(url));
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      return extractedData['values'];
-    } on SocketException {
-      throw Failure(message: "Error: No Internet Connection. [sheetValues]");
-    } on HttpException {
-      throw Failure(message: "Error: Internal Issue Occured. [sheetValues]");
-    } on FormatException {
-      throw Failure(message: "Error: Bad Response. [sheetValues]");
-    } catch (e) {
-      debugPrint(e.toString());
-
-      return [];
-      // you can show any error widgets for your users here.
-    }
-  }
-
   Future selectData() async {
     String url =
         'https://script.google.com/macros/s/AKfycbzfN5YsBSbhwfk9FbbCmIFjz6wkBkHFXVCk6zMytHdjdUO6DjSL_OSKcgrVEWj81EpIww/exec?sheetName=starred2022&colLetter=B&value=@Dala';
-    sessionLog('url-sheetValues', url);
+    sessionLog('url-selectData', url);
     try {
       final response = await http.get(Uri.parse(url));
       return jsonDecode(response.body);
