@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
+import '../../2business_layer/getsheet.dart';
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
 import '../views/plutogrid/_gridpage.dart';
@@ -71,21 +72,24 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
         appBar: AppBar(
           title: const Text('Select day'),
           actions: [
-            IconButton(
-                onPressed: () async {
-                  await currentSheet.getSheet('getNews', '');
-                  // ignore: use_build_context_synchronously
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => Carousel(
-                            blUti.toListString(currentSheet.colsHeader),
-                            currentSheet.rowsArr,
-                            false,
-                            'News for ${textEditingController.text}'),
-                      ));
-                },
-                icon: const Icon(Icons.search))
+            textEditingController.text.isEmpty
+                ? const Text('')
+                : IconButton(
+                    onPressed: () async {
+                      GetNewsSheet getNewsSheet = GetNewsSheet();
+                      await getNewsSheet.getSheet(textEditingController.text);
+                      // ignore: use_build_context_synchronously
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => Carousel(
+                                blUti.toListString(currentSheet.colsHeader),
+                                currentSheet.rowsArr,
+                                false,
+                                'News for ${textEditingController.text}'),
+                          ));
+                    },
+                    icon: const Icon(Icons.search))
           ],
         ),
         body: searchableKeyListview());

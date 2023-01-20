@@ -47,6 +47,29 @@ class GoogleSheetsDL {
     }
   }
 
+  Future getNews(String dateinsert) async {
+    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl', '');
+
+    if (!dateinsert.endsWith('.')) dateinsert = '$dateinsert.';
+    String url = '$selectServiceUrl?action=getNews&dateinsert=$dateinsert';
+    sessionLog('url-getNews', url);
+    try {
+      final response = await http.get(Uri.parse(url));
+      return jsonDecode(response.body);
+    } on SocketException {
+      throw Failure(message: "Error: No Internet Connection. [getNews]");
+    } on HttpException {
+      throw Failure(message: "Error: Internal Issue Occured. [getNews]");
+    } on FormatException {
+      throw Failure(message: "Error: Bad Response. [getNews]");
+    } catch (e) {
+      debugPrint(e.toString());
+
+      return [];
+      // you can show any error widgets for your users here.
+    }
+  }
+
   Future selectData() async {
     String url =
         'https://script.google.com/macros/s/AKfycbzfN5YsBSbhwfk9FbbCmIFjz6wkBkHFXVCk6zMytHdjdUO6DjSL_OSKcgrVEWj81EpIww/exec?sheetName=starred2022&colLetter=B&value=@Dala';

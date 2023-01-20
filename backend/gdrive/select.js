@@ -1,24 +1,24 @@
 
-function columnLetter(index) {
-    var cname = String.fromCharCode(65 + ((index - 1) % 26));
-    if (index > 26)
-        cname = String.fromCharCode(64 + (index - 1) / 26) + cname;
-    return cname;
-}
 
 
-function selectWhere(e) {
-  var sheetName = e.parameter.sheetName;
+//----------------------------------------------------------------------------------------------------selectWhere
+function selectWhere1(sheetName, columnName, operator, value) {
+ 
 
   var sourceSheet = SpreadsheetApp.getActive().getSheetByName(sheetName);
-  var source = '=QUERY('+ sheetName +  '!A1:'+ columnLetter(sourceSheet.getLastColumn()) ;
-  var select = '"select * where '+ e.parameter.colLetter+' like \'%'+e.parameter.value+'%\' "';
-
+  var columnLetter = columnName2columnLetter(sourceSheet, columnName);
+  var source = '=QUERY('+ sheetName +  '!A1:'+ columnLetter ;
+  var select = '"select * where '+ columnLetter +' like \'%'+value+'%\' "';
+Logger.log(source + ',' + select + ',1)');
   var temp = SpreadsheetApp.getActive().getSheetByName('temp');
   temp.clear();
   temp.getRange('A1:A1').setValue(source + ',' + select + ',1)') ;
 
   return ContentService.createTextOutput(JSON.stringify(temp.getDataRange().getValues()));
+}
+
+function selectWhere1__test() {
+  Logger.log(selectWhere1('starred2022', 'dateinsert', 'contains', '2022-10-31.'));
 }
 
 function select_dateinsert(filelistRow, dateinsert, targetAgent) {
@@ -34,4 +34,19 @@ function select_dateinsert(filelistRow, dateinsert, targetAgent) {
   for (var rowIx = 0; rowIx < rows.length; rowIx = rowIx + 1) {
      createRow(targetAgent, rows[rowIx], filelistRow['sheetName'] );
   }
+}
+
+
+//---------------------------------------------------------------------------------uti
+function columnName2columnLetter(sourceSheet, columnName) {
+  var header = sourceSheet.getDataRange().getValues()[0];
+  var index = header.indexOf(columnName);
+  if (index < 0) return ''; 
+  return columnLetter(index+1);
+}
+function columnLetter(index) {
+    var cname = String.fromCharCode(65 + ((index - 1) % 26));
+    if (index > 26)
+        cname = String.fromCharCode(64 + (index - 1) / 26) + cname;
+    return cname;
 }
