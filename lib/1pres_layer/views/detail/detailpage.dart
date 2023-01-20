@@ -55,9 +55,28 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Map rowmap = {};
+
+  Widget firstButtons() {
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.star),
+      onPressed: () async {
+        String encoded = Uri.encodeFull(
+            '${widget.rowmap.keys.join(',')}__|__${widget.rowmap}');
+        await GoogleSheetsDL(sheetId: '', sheetName: '').starredAppend(encoded);
+
+        // ignore: use_build_context_synchronously
+        al.message(context, 'Added to starred');
+      },
+      onLongPress: () {
+        //todo open sheet
+      },
+      label: const Text(''),
+    );
+  }
+
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
-
+    listWidgets.add(firstButtons());
     rowmap = widget.rowmap;
 
     void key2listWidget(String key, List<Widget> list) {
@@ -149,9 +168,15 @@ class _DetailPageState extends State<DetailPage> {
               value: 0,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.star),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pop(context);
-                  //starred.setStar(sheetRowsDb.currentRow);
+                  //setStar(sheetRowsDb.currentRow);
+                  String encoded =
+                      Uri.encodeFull('${rowmap.keys.join(',')}__|__$row');
+                  await GoogleSheetsDL(sheetId: '', sheetName: '')
+                      .starredAppend(encoded);
+
+                  // ignore: use_build_context_synchronously
                   al.message(context, 'Added to starred');
                 },
                 onLongPress: () {

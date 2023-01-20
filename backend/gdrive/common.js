@@ -10,7 +10,9 @@ function getRootValues() {
   }
 }
 
-function createRow(targetAgent, sourceRow, sourceSheetName) {
+function createRow(targetAgent, sourceRow) {
+  Logger.log(sourceRow);
+
   try {
     targetAgent.create({
         'citat': sourceRow.citat,
@@ -19,19 +21,14 @@ function createRow(targetAgent, sourceRow, sourceSheetName) {
         'kniha': sourceRow['kniha'],
         'strana': sourceRow['strana'],
         'vydal': sourceRow['vydal'],
-        'sourceSheetName': sourceSheetName,
-        'sourceSheetID': sourceRow['ID'],
+        'sourceSheetName': sourceRow['sourceSheetName'],
+        'sourceSheetID': sourceRow['sourceSheetID'],
         'dateinsert': sourceRow['dateinsert'],
         'sourceUrl': sourceRow['sourceUrl'],
 
       });
     }catch(e){
       Logger.log(sourceSheetName + '  ' +e.toString())
-      //  targetAgent.create({
-      //     'citat': listRow['sheetName'],
-      //     'dateinsert': e.toString(),
-
-      //   });
   }
 
 }

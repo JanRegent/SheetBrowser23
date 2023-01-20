@@ -45,7 +45,7 @@ class _InboxHomePageState extends State<InboxHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(filelistName), //isLoadingWidget(context),
+          title: Text(filelistName),
           backgroundColor: Colors.lightBlue,
           actions: [rightPopup(context)],
         ),

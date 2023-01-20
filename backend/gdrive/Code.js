@@ -7,12 +7,16 @@ function doGet(e) {
   getRootValues() ;
 
   try { 
+    if (e.parameter.action=='starredAppend') return starredAppend(e.parameter.value);
+    //--------------------------------------------------------------------------------------------------news
     // ?action=getNews&dateinsert=2023-01-20.
     if (e.parameter.action=='getNews') return getNews(e.parameter.dateinsert);
     // ?action=getNews1&sheetName=starred2022&value=2022-10-31.
     if (e.parameter.action=='getNews1') return getNews1(e.parameter.sheetName,e.parameter.value,e.parameter.fileId);
 
+    //--------------------------------------------------------------------------------------------------tags
     if (e.parameter.action=='getTagQuote') return getTagQuote(e.parameter.sourceSheetName,e.parameter.ID,e.parameter.fileId);
+    //--------------------------------------------------------------------------------------------------select
     if (e.parameter.action=='selectWhere') return selectWhere(e);
   }catch(e) {
     return ContentService.createTextOutput( 'Error: runtime error \n\n' + querystring + '\n\n'  +  JSON.stringify(e));

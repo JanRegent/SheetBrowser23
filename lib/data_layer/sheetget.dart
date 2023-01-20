@@ -57,6 +57,16 @@ class GoogleSheetsDL {
     return 'OK';
   }
 
+  Future starredAppend(String encoded) async {
+    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl', '');
+
+    String url = '$selectServiceUrl?action=starredAppend&value=$encoded';
+    sessionLog('url-starredAppend', url);
+
+    await http.get(Uri.parse(url));
+    return 'OK';
+  }
+
   Future selectData() async {
     String url =
         'https://script.google.com/macros/s/AKfycbzfN5YsBSbhwfk9FbbCmIFjz6wkBkHFXVCk6zMytHdjdUO6DjSL_OSKcgrVEWj81EpIww/exec?sheetName=starred2022&colLetter=B&value=@Dala';
