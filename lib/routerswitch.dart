@@ -6,6 +6,7 @@ import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
 import 'package:sheetbrowse/2business_layer/approotdata.dart';
 
 import '../../2business_layer/getdata.dart';
+import '1pres_layer/acontrolers/isloading.dart';
 import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/_home/__sidebar.dart';
 
@@ -98,17 +99,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
               ),
             ];
           } else {
-            children = const <Widget>[
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
-              ),
-            ];
+            children = isloadingWidgetList('Awaiting result...');
           }
           return Center(
             child: Column(

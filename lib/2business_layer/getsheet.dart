@@ -61,28 +61,3 @@ class GetSheet {
   //   return values;
   // }
 }
-
-class GetNewsSheet {
-  List<dynamic> rowsArrFiltered = [];
-  List<dynamic> rowsArr = [];
-  List<String> colsHeader = [];
-  List<PlutoColumn> plutoCols = [];
-  List<PlutoRow> gridrows = [];
-
-  String dateinsert = blUti.todayStrN(0);
-
-  Future getSheet(dateinsertNew) async {
-    dateinsert = dateinsertNew;
-    rowsArr =
-        await GoogleSheetsDL(sheetId: '', sheetName: '').getNews(dateinsert);
-    await gridPrepare();
-  }
-
-  Future gridPrepare() async {
-    colsHeader = blUti.toListString(rowsArr[0]);
-    rowsArr.removeAt(0);
-
-    plutoCols = await colsMap(colsHeader);
-    gridrows = await gridRowsMap(rowsArr, colsHeader);
-  }
-}

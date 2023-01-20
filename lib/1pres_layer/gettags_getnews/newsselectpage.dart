@@ -1,9 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+import 'package:sheetbrowse/1pres_layer/acontrolers/isloading.dart';
+import 'package:sheetbrowse/data_layer/sheetget.dart';
 
-import '../../2business_layer/getsheet.dart';
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
 import '../views/plutogrid/_gridpage.dart';
@@ -23,6 +25,7 @@ class NewsSelectPage extends StatefulWidget {
 
 class _NewsSelectPageState extends State<NewsSelectPage> {
   List<String> keysNames = [];
+
   @override
   void initState() {
     super.initState();
@@ -69,29 +72,38 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Select day'),
-          actions: [
-            textEditingController.text.isEmpty
-                ? const Text('')
-                : IconButton(
-                    onPressed: () async {
-                      GetNewsSheet getNewsSheet = GetNewsSheet();
-                      await getNewsSheet.getSheet(textEditingController.text);
-                      // ignore: use_build_context_synchronously
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (ctx) => Carousel(
-                                blUti.toListString(currentSheet.colsHeader),
-                                currentSheet.rowsArr,
-                                false,
-                                'News for ${textEditingController.text}'),
-                          ));
-                    },
-                    icon: const Icon(Icons.search))
-          ],
-        ),
-        body: searchableKeyListview());
+      appBar: AppBar(
+        title: const Text('Select day'),
+        actions: [
+          textEditingController.text.isEmpty
+              ? const Text('')
+              : IconButton(
+                  onPressed: () async {
+                    isDataLoading.value = true;
+                    await GoogleSheetsDL(sheetId: '', sheetName: '')
+                        .getNewsBuild(textEditingController.text);
+                    await currentSheet.getSheet('getNews', '');
+                    isDataLoading.value = false;
+                    // ignore: use_build_context_synchronously
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => Carousel(
+                              blUti.toListString(currentSheet.colsHeader),
+                              currentSheet.rowsArr,
+                              false,
+                              'News for ${textEditingController.text}'),
+                        ));
+                  },
+                  icon: const Icon(Icons.search))
+        ],
+      ),
+      body: Obx(() => isDataLoading.value
+          ? isloadingWidgetColumn(
+              'Awaiting news...(${textEditingController.text})')
+          : searchableKeyListview()),
+
+      //searchableKeyListview()
+    );
   }
 }
