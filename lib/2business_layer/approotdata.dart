@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'getdata.dart';
+import '../../2business_layer/getdata.dart';
 
 class AppDataPrefs {
   static late final SharedPreferences _instance;

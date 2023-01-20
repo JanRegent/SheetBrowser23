@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:sheetbrowse/2business_layer/getdata.dart';
+import '../../../2business_layer/getdata.dart';
 
 Future<List<PlutoRow>> gridRowsMap(
     List<dynamic> rowsArr, List<String> cols) async {
