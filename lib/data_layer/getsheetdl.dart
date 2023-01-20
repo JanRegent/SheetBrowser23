@@ -62,7 +62,7 @@ class GoogleSheetsDL {
 
     String url = '$selectServiceUrl?action=starredAppend&value=$encoded';
     sessionLog('url-starredAppend', url);
-
+    print(url);
     await http.get(Uri.parse(url));
     return 'OK';
   }

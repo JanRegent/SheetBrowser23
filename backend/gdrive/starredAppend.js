@@ -4,7 +4,7 @@
 function decodeQueryParam(p) {
   return decodeURIComponent(p.replace(/\+/g, " "));
 }
-function isbadJSONing(str) {
+function isJSONing(str) {
     try {
         JSON.parse(str);
     } catch (e) {
@@ -14,18 +14,27 @@ function isbadJSONing(str) {
 }
 
 
-var todecode = 'citat,autor,tags,kniha,strana,vydal,sourceSheetName,sourceSheetID,dateinsert,folder,sourceUrl,ID__%7C__%7Bcitat:%20Za%C4%8Dn%C4%9Bte%20n%C3%A9st%20ovoce%20odpov%C3%ADdaj%C3%ADc%C3%AD%20va%C5%A1emu%20pok%C3%A1n%C3%AD.%20(Matou%C5%A1%203:8),%20autor:%20,%20tags:%20,%20kniha:%20Matou%C5%A1%203:8,%20strana:%20,%20vydal:%20,%20sourceSheetName:%20bible21,%20sourceSheetID:%201331,%20dateinsert:%202023-01-20.,%20folder:%20,%20sourceUrl:%20,%20ID:%203%7D';
+var todecode = 'sheetName%7CdailyNotes__%7C__ID%7C384__%7C__fileId%7C1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0';
 
-function starredAppend(encodedRow) {
+function starredAppend(rowValue) {
   Tamotsu.initialize();
   var sourceAgent =    Tamotsu.Table.define({ sheetName: 'starred2022', idColumn: 'ID' });
-  var row = string2json(encodedRow);
+  var row = decodeURI(rowValue);
+  Logger.log(isJSONing(row))
+  Logger.log(row); //['"citat"']
+Logger.log(row.keys); 
+Logger.log(row['citat']); //
+  //createRow(sourceAgent, rowValue);
 
-  createRow(sourceAgent, row);
-
-   return ContentService.createTextOutput(JSON.stringify({action: "starredAppend", result: "OK-starred"}));
+  return ContentService.createTextOutput(JSON.stringify({action: "starredAppend", result: "OK-starred"}));
 
 }
+
+function starredAppend__test() {
+  starredAppend(todecode)
+  
+}
+
 
 function string2json(encodedString) {
   var decoded =  decodeURI(encodedString);
@@ -52,10 +61,6 @@ function string2json(encodedString) {
   return obj
 }
 
-function starredAppend__test() {
-  starredAppend(todecode)
-  
-}
 
 
 

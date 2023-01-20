@@ -3,7 +3,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../1pres_layer/alib/uti.dart';
 import '../1pres_layer/views/plutogrid/cols.dart';
 import '../1pres_layer/views/plutogrid/rows.dart';
-import '../data_layer/sheetget.dart';
+import '../data_layer/getsheetdl.dart';
 import 'approotdata.dart';
 
 class GetSheet {
@@ -40,6 +40,12 @@ class GetSheet {
     await gridPrepare();
   }
 
+  Map getFilelistRow() {
+    Map filelistRow = {};
+    filelistRow['sheetName'] = sheetName;
+    filelistRow['fileId'] = fileId;
+    return filelistRow;
+  }
   // Future newRows(List<dynamic> newRowsArr) async {
   //   rowsArr = newRowsArr;
   //   await gridPrepare();

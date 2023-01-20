@@ -12,8 +12,8 @@ class Carousel extends StatefulWidget {
   final List<String> colsHeader;
   final List sheetArr;
   final bool askTags;
-  final String title;
-  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.title,
+  final Map filelistRow;
+  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.filelistRow,
       {super.key});
 
   @override
@@ -46,7 +46,8 @@ class CarouselState extends State<Carousel> {
                     children: <Widget>[
                       DetailPage(
                           row2Map(widget.colsHeader, widget.sheetArr[rowIndex]),
-                          widget.askTags)
+                          widget.askTags,
+                          widget.filelistRow)
                     ],
                   )),
             ))
@@ -57,7 +58,7 @@ class CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
+        appBar: AppBar(title: Text(widget.filelistRow['sheetName'])),
         body: Column(
           children: <Widget>[
             CarouselSlider(

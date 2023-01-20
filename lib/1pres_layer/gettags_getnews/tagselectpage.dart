@@ -73,6 +73,9 @@ class _TagSelectPageState extends State<TagSelectPage> {
             IconButton(
                 onPressed: () async {
                   await rowsOfTag(textEditingController.text);
+                  Map filelistRow = {};
+                  filelistRow['sheetName'] =
+                      'Tag: ${textEditingController.text}';
                   // ignore: use_build_context_synchronously
                   await Navigator.push(
                       context,
@@ -83,7 +86,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
                           'targetSheetID',
                           'targetFileUrl',
                           'ID'
-                        ], tagRows, true, 'Tag: ${textEditingController.text}'),
+                        ], tagRows, true, filelistRow),
                       ));
                 },
                 icon: const Icon(Icons.search))

@@ -117,7 +117,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
   return ElevatedButton.icon(
       label: const Text(''),
       icon: const Icon(
-        Icons.last_page,
+        Icons.list,
         color: Colors.black,
       ),
       onPressed: () async {
@@ -129,7 +129,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
             context,
             MaterialPageRoute(
                 builder: (_) => Carousel(currentSheet.colsHeader,
-                    currentSheet.rowsArr, false, fileListRow['sheetName'])));
+                    currentSheet.rowsArr, false, fileListRow)));
       });
 }
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowse/1pres_layer/acontrolers/isloading.dart';
-import 'package:sheetbrowse/data_layer/sheetget.dart';
+import 'package:sheetbrowse/data_layer/getsheetdl.dart';
 
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
@@ -84,6 +84,9 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                         .getNewsBuild(textEditingController.text);
                     await currentSheet.getSheet('getNews', '');
                     isDataLoading.value = false;
+                    Map filelistRow = {};
+                    filelistRow['sheetName'] =
+                        'News for ${textEditingController.text}';
                     // ignore: use_build_context_synchronously
                     await Navigator.push(
                         context,
@@ -92,7 +95,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                               blUti.toListString(currentSheet.colsHeader),
                               currentSheet.rowsArr,
                               false,
-                              'News for ${textEditingController.text}'),
+                              filelistRow),
                         ));
                   },
                   icon: const Icon(Icons.search))

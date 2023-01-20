@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:parsed_readmore/parsed_readmore.dart';
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
-import '../../../data_layer/sheetget.dart';
+import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
+import 'detailpage2.dart';
 //ccc
 
 class DetailPage extends StatefulWidget {
   final Map rowmap;
   final bool askTag;
-  const DetailPage(this.rowmap, this.askTag, {Key? key}) : super(key: key);
+  final Map configRow;
+  const DetailPage(this.rowmap, this.askTag, this.configRow, {Key? key})
+      : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -56,27 +59,9 @@ class _DetailPageState extends State<DetailPage> {
 
   Map rowmap = {};
 
-  Widget firstButtons() {
-    return ElevatedButton.icon(
-      icon: const Icon(Icons.star),
-      onPressed: () async {
-        String encoded = Uri.encodeFull(
-            '${widget.rowmap.keys.join(',')}__|__${widget.rowmap}');
-        await GoogleSheetsDL(sheetId: '', sheetName: '').starredAppend(encoded);
-
-        // ignore: use_build_context_synchronously
-        al.message(context, 'Added to starred');
-      },
-      onLongPress: () {
-        //todo open sheet
-      },
-      label: const Text(''),
-    );
-  }
-
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
-    listWidgets.add(firstButtons());
+    listWidgets.add(firstButtons(widget.rowmap, widget.configRow, context));
     rowmap = widget.rowmap;
 
     void key2listWidget(String key, List<Widget> list) {

@@ -79,11 +79,15 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
             //-----------------------------------------------default detail view
             if (currentSheet.rowsArrFiltered.isEmpty) {
-              return Carousel(
-                  currentSheet.colsHeader, currentSheet.rowsArr, false, 'All');
+              Map filelistRow = {};
+              filelistRow['sheetName'] = 'All';
+              return Carousel(currentSheet.colsHeader, currentSheet.rowsArr,
+                  false, filelistRow);
             } else {
+              Map filelistRow = {};
+              filelistRow['sheetName'] = 'Filter:';
               return Carousel(currentSheet.colsHeader,
-                  currentSheet.rowsArrFiltered, false, 'Filter:');
+                  currentSheet.rowsArrFiltered, false, filelistRow);
             }
           } else if (snapshot.hasError) {
             children = <Widget>[
