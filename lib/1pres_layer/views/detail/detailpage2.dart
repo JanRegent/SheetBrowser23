@@ -8,7 +8,6 @@ import '../../alib/alib.dart';
 Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
   return Row(
     children: [
-      al.linkIconOpenDoc(configMap['fileUrl'], context),
       ElevatedButton.icon(
         icon: const Icon(Icons.star),
         onPressed: () async {
@@ -30,28 +29,6 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
         label: const Text(''),
       ),
       ElevatedButton.icon(
-        icon: const Icon(Icons.copy_all),
-        onPressed: () {
-          Navigator.pop(context);
-          al.message(context, 'copy all row dialog');
-        },
-        onLongPress: () {
-          //todo open sheet
-        },
-        label: const Text(''),
-      ),
-      ElevatedButton.icon(
-        icon: const Icon(Icons.import_export),
-        onPressed: () {
-          Navigator.pop(context);
-          al.message(context, 'inport/export dialog');
-        },
-        onLongPress: () {
-          //todo open sheet
-        },
-        label: const Text(''),
-      ),
-      ElevatedButton.icon(
         icon: const Icon(Icons.bookmark_add),
         onPressed: () async {
           // Navigator.pop(context);
@@ -61,18 +38,64 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
           //todo open sheet
         },
         label: const Text(''),
-      )
+      ),
+      //---------------------------------------------other menu
+      PopupMenuButton(
+        itemBuilder: (context) {
+          return <PopupMenuItem>[
+            PopupMenuItem(
+              child: al.linkIconOpenDoc(
+                  configMap['fileUrl'], context, 'Open source sheet'),
+            ),
+            PopupMenuItem(
+              child: PopupMenuItem(
+                  value: 0,
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.copy_all),
+                    label: const Text('Copy all row'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      al.message(context, 'Copy all row dialog');
+                    },
+                    onLongPress: () {
+                      //todo open sheet
+                    },
+                  )),
+            ),
+            PopupMenuItem(
+              value: 0,
+              child: ElevatedButton.icon(
+                label: const Text('Import/export '),
+                icon: const Icon(Icons.import_export),
+                onPressed: () {
+                  Navigator.pop(context);
+                  al.message(context, 'Import/export dialog');
+                },
+                onLongPress: () {
+                  //todo open sheet
+                },
+              ),
+            )
+          ];
+        },
+        child: const Icon(
+          Icons.menu,
+          color: Colors.lightBlue,
+        ),
+      ),
     ],
   );
 }
+//----------------------------------------------------------------page menu
 
+//----------------------------------------------------------------row menu
 PopupMenuButton rowItemRightPopup(BuildContext context, String clipContent) {
   return PopupMenuButton(
       // add icon, by default "3 dot" icon
       // icon: Icon(Icons.book)
       itemBuilder: (context) {
         return [
-          PopupMenuItem<int>(
+          PopupMenuItem(
             value: 0,
             child: IconButton(
               tooltip: 'Copy current cell',

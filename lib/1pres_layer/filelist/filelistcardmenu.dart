@@ -6,7 +6,7 @@ ListTile urlTile(String label, String url, BuildContext context) {
   return ListTile(
     leading: Text(label),
     title: label.startsWith('sheet')
-        ? al.linkIconOpenDoc(url, context)
+        ? al.linkIconOpenDoc(url, context, label)
         : al.linkIconOpenUrlNoDoc(url, context),
   );
 }

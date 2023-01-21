@@ -15,7 +15,7 @@ function starredAppend(rowValue) {
   Tamotsu.initialize();
   var starredAgent =    Tamotsu.Table.define({ sheetName: 'starred2022', idColumn: 'ID' });
 
-  createRow2(starredAgent, sourceRow, sourceFileId);
+  createRow2(starredAgent, sourceRow, sourceFileId, sourceSheetName);
 
   return ContentService.createTextOutput(JSON.stringify({action: "starredAppend", result: "OK-starred"}));
 
@@ -29,7 +29,7 @@ function starredAppend__test() {
 }
 
 
-function createRow2(targetAgent, sourceRow, fileId) {
+function createRow2(targetAgent, sourceRow, fileId, sourceSheetName) {
 
   var cols = ['citat', 'autor', 'tags', 'kniha', 'strana', 'vydal', 'sourceSheetName', 'sourceSheetID', 'dateinsert','sourceUrl'];
   for (var colIx = 0; colIx < cols.length; colIx = colIx + 1) {
@@ -47,7 +47,7 @@ function createRow2(targetAgent, sourceRow, fileId) {
       'kniha': sourceRow?.kniha ?? '',
       'strana': sourceRow?.strana ?? '',
       'vydal': sourceRow?.vydal ?? '',
-      'sourceSheetName': targetAgent.sheetName,
+      'sourceSheetName': sourceSheetName,
       'sourceSheetID': sourceRow?.ID ?? '',
       'sourceFileId': fileId,
       'dateinsert': sourceRow?.dateinsert ?? '',

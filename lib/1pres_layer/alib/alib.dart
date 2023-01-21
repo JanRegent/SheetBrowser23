@@ -15,14 +15,14 @@ class AL {
         : await infoSnack(context, 'could_not_launch_this_url\n $url');
   }
 
-  Widget linkIconOpenDoc(String fileid, BuildContext context) {
+  Widget linkIconOpenDoc(String fileid, BuildContext context, String label) {
     if (fileid.startsWith('http')) fileid = blUti.url2fileid(fileid);
     // ignore: unnecessary_null_comparison
     if (fileid.trim() == null) return const Text(' ');
     if (fileid.trim().isEmpty) return const Text(' ');
     return ElevatedButton.icon(
       icon: const Icon(Icons.link),
-      label: const Text(''),
+      label: Text(label),
       // color: Colors.black,
       //tooltip: 'Open sheet in browser',
       onPressed: () async {
