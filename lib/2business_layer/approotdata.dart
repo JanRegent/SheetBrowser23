@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,15 @@ class AppDataPrefs {
     await setString('rootSheetId', jsonMap['rootSheetId']);
 
     await rootSheet2localStorage();
+
+    var url = window.defaultRouteName;
+    await setString(
+        'domain',
+        url
+            .toString()
+            .replaceAll('http://', '')
+            .replaceAll('https://', '')
+            .split('#')[0]);
   }
 
 // ----------------------------------------------------root vars

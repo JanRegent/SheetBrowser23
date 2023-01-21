@@ -54,6 +54,7 @@ dependencies:
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
 
   #==================================================================================BL
+  cupertino_setting_control: ^1.1.0   #https://pub.dev/packages/cupertino_setting_control
   #data
   shared_preferences: ^2.0.15         #https://pub.dev/packages/shared_preferences
   flutter_session_manager: ^1.0.3     #https://pub.dev/packages/flutter_session_manager

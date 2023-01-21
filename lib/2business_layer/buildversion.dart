@@ -1,1 +1,1 @@
-const buildVersion = 'sidebar-inbox---18-01-2023 18:52:15,14';      
+const buildVersion = 'AppSettingsPage---21-01-2023 18:21:41,07';     

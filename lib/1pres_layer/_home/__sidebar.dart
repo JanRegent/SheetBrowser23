@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
+import '../../2business_layer/appsettings.dart';
 import '../../2business_layer/getdata.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
@@ -199,23 +200,13 @@ class ExampleSidebarX extends StatelessWidget {
             }),
         SidebarXItem(
             icon: Icons.settings,
-            label: 'App Settings',
+            label: 'Settings',
             onTap: () async {
-              // await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (ctx) => const QuickAlertsApp(),
-              //     ));
-            }),
-        SidebarXItem(
-            icon: Icons.person,
-            label: 'About',
-            onTap: () async {
-              // await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (ctx) => const About(),
-              //     ));
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => const AppSettingsPage(),
+                  ));
             }),
       ],
     );
