@@ -149,27 +149,7 @@ class _DetailPageState extends State<DetailPage> {
             //   child: al.linkSheetNameOpenUrl(
             //       sheetRowsDb.currentRow.aSheetName, context),
             // ),
-            PopupMenuItem<int>(
-              value: 0,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.star),
-                onPressed: () async {
-                  Navigator.pop(context);
-                  //setStar(sheetRowsDb.currentRow);
-                  String encoded =
-                      Uri.encodeFull('${rowmap.keys.join(',')}__|__$row');
-                  await GoogleSheetsDL(sheetId: '', sheetName: '')
-                      .starredAppend(encoded);
 
-                  // ignore: use_build_context_synchronously
-                  al.message(context, 'Added to starred');
-                },
-                onLongPress: () {
-                  //todo open sheet
-                },
-                label: const Text(''),
-              ),
-            ),
             PopupMenuItem<int>(
               value: 0,
               child: ElevatedButton.icon(

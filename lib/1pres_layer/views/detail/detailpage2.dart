@@ -14,8 +14,8 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
         'fileId|${blUti.url2fileid(configMap['fileUrl'])}',
       ];
 
-      String encoded = Uri.encodeFull(starredLink.join('__|__'));
-      await GoogleSheetsDL(sheetId: '', sheetName: '').starredAppend(encoded);
+      await GoogleSheetsDL(sheetId: '', sheetName: '')
+          .starredAppend(starredLink.join('__|__'));
 
       // ignore: use_build_context_synchronously
       al.message(context, 'Added to starred');

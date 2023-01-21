@@ -1,34 +1,27 @@
 
 
-
-function decodeQueryParam(p) {
-  return decodeURIComponent(p.replace(/\+/g, " "));
-}
-function isJSONing(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-
-var todecode = 'sheetName%7CdailyNotes__%7C__ID%7C384__%7C__fileId%7C1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0';
-
 function starredAppend(rowValue) {
+
+  var rowStr = decodeURI(rowValue);
+  var starredLink = rowStr.split('__|__');
+
+  var sheetName = starredLink[0].replace('sheetName|','');
+  var sourceFileId = starredLink[2].replace('fileId|','');
+
+  Tamotsu.initialize(SpreadsheetApp.openById(sourceFileId));
+  var sourceAgent =    Tamotsu.Table.define({ sheetName: sheetName, idColumn: 'ID' });
+  var sourceRow = sourceAgent.find(parseInt(starredLink[1].replace('ID|','')))
+
   Tamotsu.initialize();
-  var sourceAgent =    Tamotsu.Table.define({ sheetName: 'starred2022', idColumn: 'ID' });
-  var row = decodeURI(rowValue);
-  Logger.log(isJSONing(row))
-  Logger.log(row); //['"citat"']
-Logger.log(row.keys); 
-Logger.log(row['citat']); //
-  //createRow(sourceAgent, rowValue);
+  var starredAgent =    Tamotsu.Table.define({ sheetName: 'starred2022', idColumn: 'ID' });
+
+  createRow2(starredAgent, sourceRow, sourceFileId);
 
   return ContentService.createTextOutput(JSON.stringify({action: "starredAppend", result: "OK-starred"}));
 
 }
+
+var todecode = 'sheetName%7CdailyNotes__%7C__ID%7C384__%7C__fileId%7C1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0';
 
 function starredAppend__test() {
   starredAppend(todecode)
@@ -36,32 +29,33 @@ function starredAppend__test() {
 }
 
 
-function string2json(encodedString) {
-  var decoded =  decodeURI(encodedString);
+function createRow2(targetAgent, sourceRow, fileId) {
 
- 
-  var arr = decoded.split('__|__');
-  var cols = arr[0].split(',');
-  var badJSON = arr[1];
-
-
+  var cols = ['citat', 'autor', 'tags', 'kniha', 'strana', 'vydal', 'sourceSheetName', 'sourceSheetID', 'dateinsert','sourceUrl'];
   for (var colIx = 0; colIx < cols.length; colIx = colIx + 1) {
-    var colQ = '"' +cols[colIx]+ '"';
-    badJSON = badJSON.replaceAll(cols[colIx], colQ);
-    badJSON = badJSON.replaceAll(', ' + colQ + ': ', '", ' + colQ + ': "');
+    value = sourceRow[cols[colIx]] 
+    if (value != null) continue;
+    sourceRow[cols[colIx]] = '';
   }
-  var colQ = '"' +cols[0]+ '": ';
-  badJSON = badJSON.replaceAll(colQ, colQ + '"');
-  badJSON = badJSON.substring(0,badJSON.length-1) + '"}'
-  badJSON = badJSON.replace('"sourceSheet"ID""', '"sourceSheetID"')
+ 
+  try {
 
-  
-  var obj = eval( '(' + badJSON + ')' );
-  //Logger.log(isbadJSONing(badJSON));
-  return obj
+    targetAgent.create({
+      'citat': sourceRow['citat'],
+      'autor': sourceRow?.autor ?? '',
+      'tags': sourceRow?.tags ?? '',
+      'kniha': sourceRow?.kniha ?? '',
+      'strana': sourceRow?.strana ?? '',
+      'vydal': sourceRow?.vydal ?? '',
+      'sourceSheetName': targetAgent.sheetName,
+      'sourceSheetID': sourceRow?.ID ?? '',
+      'sourceFileId': fileId,
+      'dateinsert': sourceRow?.dateinsert ?? '',
+      'sourceUrl': sourceRow?.sourceUrl ?? '',
+
+    });
+  }catch(e){
+      Logger.log(targetAgent.sheetName + '  ' +e.toString())
+  }
+
 }
-
-
-
-
-

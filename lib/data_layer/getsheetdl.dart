@@ -57,10 +57,11 @@ class GoogleSheetsDL {
     return 'OK';
   }
 
-  Future starredAppend(String encoded) async {
+  Future starredAppend(String starredLink) async {
     String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl', '');
-
-    String url = '$selectServiceUrl?action=starredAppend&value=$encoded';
+    String starredLinkEncoded = Uri.encodeFull(starredLink);
+    String url =
+        '$selectServiceUrl?action=starredAppend&starredLink=$starredLinkEncoded';
     sessionLog('url-starredAppend', url);
     print(url);
     await http.get(Uri.parse(url));

@@ -7,7 +7,8 @@ function doGet(e) {
   getRootValues() ;
 
   try { 
-    if (e.parameter.action=='starredAppend') return starredAppend(e.parameter.value);
+    // ?action=starredAppend&starredLink=sheetName%7CdailyNotes__%7C__ID%7C384__%7C__fileId%7C1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0
+    if (e.parameter.action=='starredAppend') return starredAppend(e.parameter.starredLink);
     //--------------------------------------------------------------------------------------------------news
     // ?action=getNews&dateinsert=2023-01-20.
     if (e.parameter.action=='getNews') return getNews(e.parameter.dateinsert);
