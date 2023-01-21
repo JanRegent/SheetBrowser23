@@ -217,8 +217,40 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
       );
     }
 
+    Widget buildSegment(String text) {
+      return Text(
+        text,
+        style: const TextStyle(fontSize: 22, color: Colors.black),
+      );
+    }
+
+    int? groupValue = 0;
+    Container segmentedButton() {
+      return Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(10),
+        child: CupertinoSlidingSegmentedControl<int>(
+          backgroundColor: CupertinoColors.white,
+          thumbColor: CupertinoColors.activeGreen,
+          padding: const EdgeInsets.all(8),
+          groupValue: groupValue,
+          children: {
+            0: buildSegment("Flutter"),
+            1: buildSegment("React"),
+            2: buildSegment("Native"),
+          },
+          onValueChanged: (value) {
+            setState(() {
+              groupValue = value;
+            });
+          },
+        ),
+      );
+    }
+
     final List<Widget> widgetList = [
       version(),
+      segmentedButton(),
       titleOnTopSwitch,
       const SizedBox(height: 15.0),
       profileSettingsTile,
