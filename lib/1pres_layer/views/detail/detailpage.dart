@@ -1,13 +1,12 @@
 // ignore_for_file: file_names
 
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
 import '../../../data_layer/getsheetdl.dart';
-import '../../alib/alib.dart';
+
 import 'detailpage2.dart';
 //ccc
 
@@ -33,28 +32,6 @@ class _DetailPageState extends State<DetailPage> {
     _controller = ScrollController();
 
     super.initState();
-  }
-
-  PopupMenuButton rowItemRightPopup(BuildContext context, String clipContent) {
-    return PopupMenuButton(
-        // add icon, by default "3 dot" icon
-        // icon: Icon(Icons.book)
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem<int>(
-              value: 0,
-              child: IconButton(
-                tooltip: 'Copy current cell',
-                icon: const Icon(Icons.copy),
-                onPressed: () async {
-                  Navigator.pop(context);
-                  FlutterClipboard.copy(clipContent).then((value) => {});
-                },
-              ),
-            ),
-          ];
-        },
-        onSelected: (value) {});
   }
 
   Map rowmap = {};
@@ -136,65 +113,6 @@ class _DetailPageState extends State<DetailPage> {
           controller: _controller,
           children: listWidgets,
         ));
-  }
-
-  PopupMenuButton sheetRightPopup(BuildContext context, Map row) {
-    return PopupMenuButton(
-        // add icon, by default "3 dot" icon
-        // icon: Icon(Icons.book)
-        itemBuilder: (context) {
-          return [
-            // PopupMenuItem<int>(
-            //   value: 0,
-            //   child: al.linkSheetNameOpenUrl(
-            //       sheetRowsDb.currentRow.aSheetName, context),
-            // ),
-
-            PopupMenuItem<int>(
-              value: 0,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.copy_all),
-                onPressed: () {
-                  Navigator.pop(context);
-                  al.message(context, 'copy all row dialog');
-                },
-                onLongPress: () {
-                  //todo open sheet
-                },
-                label: const Text(''),
-              ),
-            ),
-            PopupMenuItem<int>(
-              value: 0,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.import_export),
-                onPressed: () {
-                  Navigator.pop(context);
-                  al.message(context, 'inport/export dialog');
-                },
-                onLongPress: () {
-                  //todo open sheet
-                },
-                label: const Text(''),
-              ),
-            ),
-            PopupMenuItem<int>(
-              value: 0,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.bookmark_add),
-                onPressed: () async {
-                  // Navigator.pop(context);
-                  // await filelistContr.bookmarkSheetIDset(row['ID']);
-                },
-                onLongPress: () {
-                  //todo open sheet
-                },
-                label: const Text(''),
-              ),
-            ),
-          ];
-        },
-        onSelected: (value) {});
   }
 
   @override
