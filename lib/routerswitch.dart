@@ -20,6 +20,7 @@ class RouterSwitch extends StatefulWidget {
 class _RouterSwitchState extends State<RouterSwitch> {
   String route2Page = 'detail';
   String action = 'getNews'; // 'getNews';
+  Map configRow = {};
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
     currentSheet.rowsArr = [];
@@ -33,7 +34,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (currentSheet.rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
-
+    configRow['fileUrl'] = currentSheet.fileId;
     return 'ok';
   }
 
@@ -79,15 +80,13 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
             //-----------------------------------------------default detail view
             if (currentSheet.rowsArrFiltered.isEmpty) {
-              Map filelistRow = {};
-              filelistRow['sheetName'] = 'All';
+              configRow['sheetName'] = 'All';
               return Carousel(currentSheet.colsHeader, currentSheet.rowsArr,
-                  false, filelistRow);
+                  false, configRow);
             } else {
-              Map filelistRow = {};
-              filelistRow['sheetName'] = 'Filter:';
+              configRow['sheetName'] = 'Filter:';
               return Carousel(currentSheet.colsHeader,
-                  currentSheet.rowsArrFiltered, false, filelistRow);
+                  currentSheet.rowsArrFiltered, false, configRow);
             }
           } else if (snapshot.hasError) {
             children = <Widget>[

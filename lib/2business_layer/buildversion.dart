@@ -1,1 +1,1 @@
-const buildVersion = 'starredLink-getNews---22-01-2023 12:58:19,71';     
+const buildVersion = 'starredLinkGet---22-01-2023 13:34:06,23';     

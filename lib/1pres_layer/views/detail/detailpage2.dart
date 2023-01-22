@@ -41,8 +41,6 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
   }
 
   List<String> starredLinkGet(Map rowmap, Map configMap) {
-    print(configMap);
-    print(rowmap);
     List<String> starredLink = [];
 
     if (configMap['sheetName'] == 'getNews') {
