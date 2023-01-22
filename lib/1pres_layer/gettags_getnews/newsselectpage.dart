@@ -84,9 +84,9 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                         .getNewsBuild(textEditingController.text);
                     await currentSheet.getSheet('getNews', '');
                     isDataLoading.value = false;
-                    Map filelistRow = {};
-                    filelistRow['sheetName'] =
-                        'News for ${textEditingController.text}';
+                    Map configRow = {};
+                    configRow['sheetName'] = 'getNews';
+                    configRow['title'] = 'New: ${textEditingController.text}';
                     // ignore: use_build_context_synchronously
                     await Navigator.push(
                         context,
@@ -95,7 +95,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                               blUti.toListString(currentSheet.colsHeader),
                               currentSheet.rowsArr,
                               false,
-                              filelistRow),
+                              configRow),
                         ));
                   },
                   icon: const Icon(Icons.search))

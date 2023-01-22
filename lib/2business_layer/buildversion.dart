@@ -1,1 +1,1 @@
-const buildVersion = 'detail-link2sheetName---22-01-2023 12:25:56,70';     
+const buildVersion = 'starredLink-getNews---22-01-2023 12:58:19,71';     

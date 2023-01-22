@@ -40,16 +40,29 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
         });
   }
 
+  List<String> starredLinkGet(Map rowmap, Map configMap) {
+    print(configMap);
+    print(rowmap);
+    List<String> starredLink = [];
+
+    if (configMap['sheetName'] == 'getNews') {
+      starredLink.add('link2sheetName=${rowmap['link2sheetName']}');
+      starredLink.add('link2ID=${rowmap['link2ID']}');
+      starredLink.add('link2fileId=${rowmap['link2fileId']}');
+    } else {
+      starredLink.add('link2sheetName=${configMap['sheetName']}');
+      starredLink.add('link2ID=${rowmap['ID']}');
+      starredLink.add('link2fileId=${blUti.url2fileid(configMap['fileUrl'])}');
+    }
+    return starredLink;
+  }
+
   return Row(
     children: [
       ElevatedButton.icon(
         icon: const Icon(Icons.star),
         onPressed: () async {
-          List<String> starredLink = [
-            'link2sheetName=${configMap['sheetName']}',
-            'link2ID=${rowmap['ID']}',
-            'link2fileId=${blUti.url2fileid(configMap['fileUrl'])}',
-          ];
+          List<String> starredLink = starredLinkGet(rowmap, configMap);
 
           await GoogleSheetsDL(sheetId: '', sheetName: '')
               .starredAppend(starredLink.join('__|__'));

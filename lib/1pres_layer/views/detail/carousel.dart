@@ -6,14 +6,12 @@ import 'package:flutter/material.dart';
 import '../../../2business_layer/getdata.dart';
 import 'detailpage.dart';
 
-enum Status { changed, running, stopped, paused }
-
 class Carousel extends StatefulWidget {
   final List<String> colsHeader;
   final List sheetArr;
   final bool askTags;
-  final Map filelistRow;
-  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.filelistRow,
+  final Map configRow;
+  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.configRow,
       {super.key});
 
   @override
@@ -47,7 +45,7 @@ class CarouselState extends State<Carousel> {
                       DetailPage(
                           row2Map(widget.colsHeader, widget.sheetArr[rowIndex]),
                           widget.askTags,
-                          widget.filelistRow)
+                          widget.configRow)
                     ],
                   )),
             ))
@@ -58,7 +56,7 @@ class CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.filelistRow['sheetName'])),
+        appBar: AppBar(title: Text(widget.configRow['title'])),
         body: Column(
           children: <Widget>[
             CarouselSlider(
