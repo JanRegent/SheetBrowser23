@@ -63,6 +63,7 @@ class GoogleSheetsDL {
     String url =
         '$selectServiceUrl?action=starredAppend&starredLink=$starredLinkEncoded';
     sessionLog('url-starredAppend', url);
+    print(url);
     await http.get(Uri.parse(url));
     return 'OK';
   }

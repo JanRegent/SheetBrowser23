@@ -10,3 +10,13 @@ function getRootValues() {
   }
 }
 
+
+
+function logi(e) {
+  var logsheet = SpreadsheetApp.getActive().getSheetByName('log')
+  logsheet.appendRow([new Date(), e])
+}
+function logclear() {
+  var logsheet = SpreadsheetApp.getActive().getSheetByName('log')
+  logsheet.clear()
+}

@@ -46,9 +46,9 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
         icon: const Icon(Icons.star),
         onPressed: () async {
           List<String> starredLink = [
-            'sheetName|${configMap['sheetName']}',
-            'ID|${rowmap['ID']}',
-            'fileId|${blUti.url2fileid(configMap['fileUrl'])}',
+            'link2sheetName=${configMap['sheetName']}',
+            'link2ID=${rowmap['ID']}',
+            'link2fileId=${blUti.url2fileid(configMap['fileUrl'])}',
           ];
 
           await GoogleSheetsDL(sheetId: '', sheetName: '')

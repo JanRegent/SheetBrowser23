@@ -21,20 +21,6 @@ function selectWhere1__test() {
   Logger.log(selectWhere1('starred2022', 'dateinsert', 'contains', '2022-10-31.'));
 }
 
-function select_dateinsert(filelistRow, dateinsert, targetAgent) {
-
-  var sourceFileId = SpreadsheetApp.openByUrl(filelistRow['fileUrl']).getId();
-  Tamotsu.initialize(SpreadsheetApp.openById(sourceFileId));
-  var sourceAgent =    Tamotsu.Table.define({ sheetName: filelistRow['sheetName'], idColumn: 'ID' });
-
-  var rows = sourceAgent.where({ dateinsert: dateinsert })
-     .order(dateinsert)
-     .all(); 
-
-  for (var rowIx = 0; rowIx < rows.length; rowIx = rowIx + 1) {
-     createRow(targetAgent, rows[rowIx], filelistRow['sheetName'] );
-  }
-}
 
 
 //---------------------------------------------------------------------------------uti

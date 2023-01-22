@@ -1,1 +1,1 @@
-const buildVersion = 'material_symbol_icons---21-01-2023 18:54:27,57';     
+const buildVersion = 'detail-link2sheetName---22-01-2023 12:25:56,70';     

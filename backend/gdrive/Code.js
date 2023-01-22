@@ -3,11 +3,13 @@
 // ?action=getNews
 // ?action=getTagQuote&sourceSheetName=Nisargadatta__tgQuotes&ID=46&fileId=1JJk7OMlA3_qp0re6H_15ugYUj5KP8x3319GUNHEZ0zo
 function doGet(e) {
+  logclear()
   var querystring = JSON.stringify(e);
+  logi(querystring);
   getRootValues() ;
 
   try { 
-    // ?action=starredAppend&starredLink=sheetName%7CdailyNotes__%7C__ID%7C384__%7C__fileId%7C1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0
+    // ?action=starredAppend&starredLink=link2sheetName=dailyNotes__%7C__link2ID=386__%7C__link2fileId=1oklmBpFWHAUCU4nPpNUMOQAZ0jIA1U_zfVtIWxHhBG0
     if (e.parameter.action=='starredAppend') return starredAppend(e.parameter.starredLink);
     //--------------------------------------------------------------------------------------------------news
     // ?action=getNews&dateinsert=2023-01-20.
