@@ -43,7 +43,7 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
   List<String> starredLinkGet(Map rowmap, Map configMap) {
     List<String> starredLink = [];
 
-    if (configMap['sheetName'] == 'getNews') {
+    if (rowmap['link2sheetName'] != null) {
       starredLink.add('link2sheetName=${rowmap['link2sheetName']}');
       starredLink.add('link2ID=${rowmap['link2ID']}');
       starredLink.add('link2fileId=${rowmap['link2fileId']}');
@@ -57,22 +57,24 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
 
   return Row(
     children: [
-      ElevatedButton.icon(
-        icon: const Icon(Icons.star),
-        onPressed: () async {
-          List<String> starredLink = starredLinkGet(rowmap, configMap);
+      configMap['sheetName'] == 'starred2022'
+          ? const Text('')
+          : ElevatedButton.icon(
+              icon: const Icon(Icons.star),
+              onPressed: () async {
+                List<String> starredLink = starredLinkGet(rowmap, configMap);
 
-          await GoogleSheetsDL(sheetId: '', sheetName: '')
-              .starredAppend(starredLink.join('__|__'));
+                await GoogleSheetsDL(sheetId: '', sheetName: '')
+                    .starredAppend(starredLink.join('__|__'));
 
-          // ignore: use_build_context_synchronously
-          al.message(context, 'Added to starred');
-        },
-        onLongPress: () {
-          //todo open sheet
-        },
-        label: const Text(''),
-      ),
+                // ignore: use_build_context_synchronously
+                al.message(context, 'Added to starred');
+              },
+              onLongPress: () {
+                //todo open sheet
+              },
+              label: const Text(''),
+            ),
       ElevatedButton.icon(
         icon: const Icon(Icons.bookmark_add),
         onPressed: () async {
