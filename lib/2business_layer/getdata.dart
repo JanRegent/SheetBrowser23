@@ -6,7 +6,7 @@ import '../data_layer/getsheetdl.dart';
 
 //--------------------------------------------------------------------filelist
 Future getFilelist() async {
-  String? sheetName = AppDataPrefs.getString('currentFileList', '');
+  String? sheetName = AppDataPrefs.getString('currentFileList');
   String sheetId = AppDataPrefs.getRootSheetId();
   List<dynamic> fileArr =
       await GoogleSheetsDL(sheetId: sheetId, sheetName: sheetName!)

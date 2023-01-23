@@ -41,12 +41,8 @@ class AppDataPrefs {
       _instance.getString('rootSheetId').toString();
 
   //-------------------------------------------------------string
-  static String? getString(String key, String defValue) {
-    try {
-      return _instance.getString(key);
-    } catch (_) {
-      return defValue;
-    }
+  static String? getString(String key) {
+    return _instance.getString(key);
   }
 
   static Future<bool> setString(String key, String value) async {

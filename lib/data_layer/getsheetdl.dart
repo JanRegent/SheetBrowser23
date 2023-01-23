@@ -31,6 +31,9 @@ class GoogleSheetsDL {
     sessionLog('url-getAllSheet', url);
     try {
       final response = await http.get(Uri.parse(url));
+      if (response.statusCode != 200) {
+        throw Exception('Error:[DL] Could not connect to server');
+      }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       return extractedData['values'];
     } on SocketException {
@@ -48,17 +51,18 @@ class GoogleSheetsDL {
   }
 
   Future getNewsBuild(String dateinsert) async {
-    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl', '');
+    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
 
     if (!dateinsert.endsWith('.')) dateinsert = '$dateinsert.';
     String url = '$selectServiceUrl?action=getNews&dateinsert=$dateinsert';
     sessionLog('url-getNews', url);
     await http.get(Uri.parse(url));
+
     return 'OK';
   }
 
   Future starredAppend(String starredLink) async {
-    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl', '');
+    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
     String starredLinkEncoded = Uri.encodeFull(starredLink);
     String url =
         '$selectServiceUrl?action=starredAppend&starredLink=$starredLinkEncoded';
@@ -74,6 +78,9 @@ class GoogleSheetsDL {
     sessionLog('url-selectData', url);
     try {
       final response = await http.get(Uri.parse(url));
+      if (response.statusCode != 200) {
+        throw Exception('Error:[DL] Could not connect to server');
+      }
       return jsonDecode(response.body);
     } on SocketException {
       throw Failure(message: "Error: No Internet Connection. [selectData]");
@@ -91,12 +98,15 @@ class GoogleSheetsDL {
 } //class
 
 Future getTagQuote(String sourceSheetName, String id, String fileId) async {
-  String? url = AppDataPrefs.getString('selectServiceUrl', '');
+  String? url = AppDataPrefs.getString('selectServiceUrl');
   url =
       '$url?action=getTagQuote&sourceSheetName=$sourceSheetName&ID=$id&fileId=$fileId';
   sessionLog('url-getTagQuote', url);
   try {
     final response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw Exception('Error:[DL] Could not connect to server');
+    }
     return jsonDecode(response.body);
   } on SocketException {
     throw Failure(message: "Error: No Internet Connection. [getTagQuote]");

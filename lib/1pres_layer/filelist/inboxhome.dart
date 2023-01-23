@@ -21,7 +21,7 @@ class _InboxHomePageState extends State<InboxHomePage>
   @override
   void initState() {
     super.initState();
-    filelistName = AppDataPrefs.getString('currentFileList', 'file list')!;
+    filelistName = AppDataPrefs.getString('currentFileList')!;
   }
 
   Widget filelistBody() {

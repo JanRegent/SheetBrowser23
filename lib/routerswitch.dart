@@ -22,7 +22,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
   String action = 'getNews'; // 'getNews';
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
-    route2Page = AppDataPrefs.getString('route2Page', 'detail')!;
+    route2Page = AppDataPrefs.getString('route2Page')!;
     currentSheet.rowsArr = [];
     if (action == 'getNews') {
       await currentSheet.getSheet('getNews', '');

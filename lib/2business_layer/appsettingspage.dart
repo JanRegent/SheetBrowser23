@@ -212,7 +212,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
         children: [
           const Text('appVersion:   $appVersion'),
           const Text('buildVersion: $buildVersion'),
-          Text('at domain: ${AppDataPrefs.getString('domain', '')}')
+          Text('at domain: ${AppDataPrefs.getString('domain')}')
         ],
       );
     }
