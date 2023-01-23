@@ -42,14 +42,17 @@ dependencies:
 
 
   #====================================================PresL
+  get: ^4.6.5                         #https://pub.dev/packages/get
+  #-----------------------------info
   loading_animation_widget: ^1.2.0+4  #https://pub.dev/packages/loading_animation_widget
   quickalert: ^1.0.1                  #https://pub.dev/packages/quickalert
-
+  #-----------------------------layout
   carousel_slider: ^4.2.1             #https://pub.dev/packages/carousel_slider
-  searchable_listview: ^2.2.1         #https://pub.dev/packages/searchable_listview
   sidebarx: ^0.14.0                   #https://pub.dev/packages/sidebarx
+  #-----------------------------choice
+  searchable_listview: ^2.2.1         #https://pub.dev/packages/searchable_listview
   expansion_tile_card: ^2.0.0         #https://pub.dev/packages/expansion_tile_card
-  get: ^4.6.5                         #https://pub.dev/packages/get
+  dropdown_button2: ^1.9.2            #https://pub.dev/packages/dropdown_button2?utm_source=fluttertap
   #-----------------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
 

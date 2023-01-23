@@ -15,6 +15,7 @@ class AppSettingsPage extends StatefulWidget {
 
 class _AppSettingsPageState extends State<AppSettingsPage> {
   bool _chatResult = true;
+  // ignore: unused_field
   String _searchAreaResult = 'Germany';
   bool _titleOnTop = false;
 
@@ -66,6 +67,24 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
       ),
     );
 
+    bool selected = true;
+    final backroundCompleter = ActionChip(
+        backgroundColor: Colors.brown.shade200,
+        padding:
+            const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+        // ignore: dead_code
+        avatar: selected ? const CircularProgressIndicator() : null,
+        label: Text(
+          // ignore: dead_code
+          selected ? "Cancel" : "Download",
+          style: const TextStyle(fontSize: 16),
+        ),
+        onPressed: () {
+          selected = !selected;
+          setState(() {});
+        },
+        elevation: 8);
+
     final privacySettings = Material(
       color: Colors.transparent,
       child: Column(
@@ -87,90 +106,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
             rowData: SettingsYesNoConfig(
                 initialValue: _chatResult, title: 'Allow Chat'),
             onSettingDataRowChange: onChatSettingChange,
-          ),
-        ],
-      ),
-    );
-
-    final profileSettingsTile = Material(
-      color: Colors.transparent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Padding(
-              padding: EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
-              child: Text(
-                'Profile',
-                style: TextStyle(
-                  color: CupertinoColors.systemBlue,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              )),
-          SettingRow(
-            rowData: SettingsDropDownConfig(
-                title: 'User Area',
-                initialKey: _searchAreaResult,
-                choices: {
-                  'Germany': 'Germany',
-                  'Spain': 'Spain',
-                  'France': 'France'
-                },
-                onDropdownFinished: () => {}),
-            onSettingDataRowChange: onSearchAreaChange,
-            config: SettingsRowConfiguration(
-                showAsTextField: false,
-                showTitleLeft: !_titleOnTop,
-                showTopTitle: _titleOnTop,
-                showAsSingleSetting: false),
-          ),
-          SizedBox(height: _titleOnTop ? 10.0 : 0.0),
-          SettingRow(
-            rowData: SettingsSliderConfig(
-              title: 'Age',
-              from: 18,
-              to: 120,
-              initialValue: 20,
-              justIntValues: true,
-              unit: ' years',
-            ),
-            onSettingDataRowChange: (double resultVal) {},
-            config: SettingsRowConfiguration(
-                showAsTextField: false,
-                showTitleLeft: !_titleOnTop,
-                showTopTitle: _titleOnTop,
-                showAsSingleSetting: false),
-          ),
-          SizedBox(height: _titleOnTop ? 10.0 : 0.0),
-          SettingRow(
-            rowData: SettingsSliderFromToConfig(
-              title: 'Weight',
-              from: 40,
-              to: 120,
-              initialFrom: 50,
-              initialTo: 80,
-              justIntValues: true,
-              unit: 'kg',
-            ),
-            onSettingDataRowChange: (List<double> resultVals) {},
-            config: SettingsRowConfiguration(
-                showAsTextField: false,
-                showTitleLeft: !_titleOnTop,
-                showTopTitle: _titleOnTop,
-                showAsSingleSetting: false),
-          ),
-          SizedBox(height: _titleOnTop ? 10.0 : 0.0),
-          SettingRow(
-            rowData: SettingsTextFieldConfig(
-              title: 'Name',
-              initialValue: 'Chris',
-            ),
-            onSettingDataRowChange: (String resultVal) {},
-            config: SettingsRowConfiguration(
-                showAsTextField: false,
-                showTitleLeft: !_titleOnTop,
-                showTopTitle: _titleOnTop,
-                showAsSingleSetting: false),
           ),
         ],
       ),
@@ -252,8 +187,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
       version(),
       segmentedButton(),
       titleOnTopSwitch,
-      const SizedBox(height: 15.0),
-      profileSettingsTile,
+      backroundCompleter,
       const SizedBox(height: 15.0),
       privacySettings,
       const SizedBox(height: 15.0),
