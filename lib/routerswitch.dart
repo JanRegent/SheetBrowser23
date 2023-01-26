@@ -6,8 +6,10 @@ import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
 import 'package:sheetbrowse/2business_layer/approotdata.dart';
 
 import '../../2business_layer/getdata.dart';
-import '1pres_layer/_home/customerror.dart';
+import '1pres_layer/_home/errorpage.dart';
 import '1pres_layer/acontrolers/isloading.dart';
+import '1pres_layer/filelist/filelistcard.dart';
+import '1pres_layer/filelist/inboxhome.dart';
 import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/_home/__sidebar.dart';
 
@@ -25,6 +27,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page')!;
     currentSheet.rowsArr = [];
+    if (route2Page == 'filelist') {
+      await getFilelist();
+    }
     if (action == 'getNews') {
       await currentSheet.getSheet('getNews', '');
     }
@@ -69,6 +74,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
+            if (route2Page == 'filelist') {
+              return InboxHomePage(filelist);
+            }
             if (route2Page == 'grid') {
               return GridPage(currentSheet.plutoCols, currentSheet.gridrows);
             }
