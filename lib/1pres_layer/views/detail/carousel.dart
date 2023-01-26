@@ -25,16 +25,15 @@ class Carousel extends StatefulWidget {
 class CarouselState extends State<Carousel> {
   final CarouselController _controller = CarouselController();
 
-  void methodA() {
-    setState(() {});
-  }
-
   List<int> tabsList = [];
   late List<Widget> widgets;
   int _currentIndex = 0;
   @override
   void initState() {
     super.initState();
+    if (widget.configRow['title'] == null) {
+      widget.configRow['title'] = widget.configRow['sheetName'];
+    }
     try {
       _currentIndex = widget.startRow;
     } catch (_) {
