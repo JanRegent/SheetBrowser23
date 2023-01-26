@@ -11,7 +11,9 @@ class Carousel extends StatefulWidget {
   final List sheetArr;
   final bool askTags;
   final Map configRow;
+  final int startRow;
   const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.configRow,
+      this.startRow,
       {super.key});
 
   @override
@@ -29,9 +31,16 @@ class CarouselState extends State<Carousel> {
 
   List<int> tabsList = [];
   late List<Widget> widgets;
+  int _currentIndex = 0;
   @override
   void initState() {
     super.initState();
+    try {
+      _currentIndex = widget.startRow;
+    } catch (_) {
+      _currentIndex = 0;
+    }
+
     tabsList = List.generate(widget.sheetArr.length, (index) {
       return index;
     });
@@ -45,14 +54,14 @@ class CarouselState extends State<Carousel> {
                       DetailPage(
                           row2Map(widget.colsHeader, widget.sheetArr[rowIndex]),
                           widget.askTags,
-                          widget.configRow)
+                          widget.configRow,
+                          rowIndex)
                     ],
                   )),
             ))
         .toList();
   }
 
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +71,7 @@ class CarouselState extends State<Carousel> {
             CarouselSlider(
               items: widgets,
               options: CarouselOptions(
+                initialPage: widget.startRow,
                 enlargeCenterPage: true,
                 height: MediaQuery.of(context).size.height - 100,
                 onPageChanged: (index, reason) {

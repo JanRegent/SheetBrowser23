@@ -2,11 +2,13 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowse/2business_layer/approotdata.dart';
 import 'package:sheetbrowse/data_layer/getsheetdl.dart';
 
 import '../../alib/alib.dart';
 
-Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
+Widget firstButtons(
+    Map rowmap, Map configMap, BuildContext context, int rowsArrRowIx) {
   //----------------------------------------------------------------page menu
 
   Future<void> showExportDialog(BuildContext context) async {
@@ -78,8 +80,8 @@ Widget firstButtons(Map rowmap, Map configMap, BuildContext context) {
       ElevatedButton.icon(
         icon: const Icon(Icons.bookmark_add),
         onPressed: () async {
-          // Navigator.pop(context);
-          // await filelistContr.bookmarkSheetIDset(row['ID']);
+          AppDataPrefs.setString(
+              configMap['sheetName'] + '__bookmark', rowsArrRowIx.toString());
         },
         onLongPress: () {
           //todo open sheet

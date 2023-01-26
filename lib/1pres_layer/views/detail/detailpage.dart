@@ -14,7 +14,9 @@ class DetailPage extends StatefulWidget {
   final Map rowmap;
   final bool askTag;
   final Map configRow;
-  const DetailPage(this.rowmap, this.askTag, this.configRow, {Key? key})
+  final int rowsArrRowIx;
+  const DetailPage(this.rowmap, this.askTag, this.configRow, this.rowsArrRowIx,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +40,8 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
-    listWidgets.add(firstButtons(widget.rowmap, widget.configRow, context));
+    listWidgets.add(firstButtons(
+        widget.rowmap, widget.configRow, context, widget.rowsArrRowIx));
     rowmap = widget.rowmap;
 
     void key2listWidget(String key, List<Widget> list) {

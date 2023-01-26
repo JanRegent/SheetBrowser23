@@ -101,7 +101,8 @@ class _GridPageState extends State<GridPage> {
                               currentSheet.colsHeader,
                               currentSheet.rowsArr,
                               false,
-                              currentSheet.getFilelistRow()),
+                              currentSheet.getFilelistRow(),
+                              0),
                         ));
                   } else {
                     await Navigator.push(
@@ -111,7 +112,8 @@ class _GridPageState extends State<GridPage> {
                               currentSheet.colsHeader,
                               currentSheet.rowsArrFiltered,
                               false,
-                              currentSheet.getFilelistRow()),
+                              currentSheet.getFilelistRow(),
+                              0),
                         ));
                   }
                 }),

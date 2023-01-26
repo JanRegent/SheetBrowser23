@@ -95,7 +95,8 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                               blUti.toListString(currentSheet.colsHeader),
                               currentSheet.rowsArr,
                               false,
-                              configRow),
+                              configRow,
+                              0),
                         ));
                   },
                   icon: const Icon(Icons.search))

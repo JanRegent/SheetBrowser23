@@ -86,7 +86,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
                           'targetSheetID',
                           'targetFileUrl',
                           'ID'
-                        ], tagRows, true, filelistRow),
+                        ], tagRows, true, filelistRow, 0),
                       ));
                 },
                 icon: const Icon(Icons.search))

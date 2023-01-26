@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
 
+import '../../2business_layer/approotdata.dart';
 import '../alib/alib.dart';
 
 import '../views/detail/carousel.dart';
@@ -130,7 +131,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
             context,
             MaterialPageRoute(
                 builder: (_) => Carousel(currentSheet.colsHeader,
-                    currentSheet.rowsArr, false, fileListRow)));
+                    currentSheet.rowsArr, false, fileListRow, 0)));
       });
 }
 
@@ -151,7 +152,20 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
-        al.message(context, fileListRow['sheetName']);
+        String fileId = blUti.url2fileid(fileListRow['fileUrl']);
+        await currentSheet.getSheet(fileListRow['sheetName'], fileId);
+        fileListRow['title'] = fileListRow['sheetName'];
+
+        String? startRowStr =
+            AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');
+        int? startRow = int.tryParse(startRowStr!);
+
+        // ignore: use_build_context_synchronously
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => Carousel(currentSheet.colsHeader,
+                    currentSheet.rowsArr, false, fileListRow, startRow!)));
         // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);
