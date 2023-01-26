@@ -12,13 +12,15 @@ class AppDataPrefs {
   static Future<SharedPreferences> init() async =>
       _instance = await SharedPreferences.getInstance();
 
-  static String apiKey = '';
-
   static Future appRootConfigLoad() async {
-    String jsonString =
-        await rootBundle.loadString('appRootConfig_gitIgnore.json');
-    final dynamic jsonMap = jsonDecode(jsonString);
+    //----------------------appRootConfig
+    String jsonString = await rootBundle.loadString('appRootConfig.json');
+    dynamic jsonMap = jsonDecode(jsonString);
     apiKey = jsonMap['apikey'];
+
+    jsonString = await rootBundle.loadString('appConfig.json');
+    jsonMap = jsonDecode(jsonString);
+
     await setString('rootSheetId', jsonMap['rootSheetId']);
 
     await rootSheet2localStorage();
@@ -34,7 +36,8 @@ class AppDataPrefs {
   }
 
 // ----------------------------------------------------root vars
-
+  static String apiKey = '';
+  static String rootConfig = '';
   static String? getApikey() => apiKey;
 
   static String getRootSheetId() =>

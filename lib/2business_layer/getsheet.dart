@@ -35,9 +35,14 @@ class GetSheet {
     if (fileId.isEmpty) {
       fileId = AppDataPrefs.getRootSheetId();
     }
-    rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-        .getAllSheet();
-    await gridPrepare();
+
+    try {
+      rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+          .getAllSheet();
+      await gridPrepare();
+    } catch (e) {
+      AppDataPrefs.setString('errorLast', e.toString());
+    }
   }
 
   Map getFilelistRow() {

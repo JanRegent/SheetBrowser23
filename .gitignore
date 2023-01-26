@@ -1,9 +1,7 @@
-# root app Configuration
-web/assets/appRootConfig_gitIgnore.json
-web/appRootConfig_gitIgnore.json
+# root app Configuration #apikey!
+web/assets/appRootConfig.json  
+web/appRootConfig.json
 
-web/assets/pbrunton.json
-web/pbrunton.json
 
 # Miscellaneous
 *.class

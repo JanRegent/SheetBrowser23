@@ -4,15 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 
 import 'package:sheetbrowse/2business_layer/approotdata.dart';
-
-var sessionManager = SessionManager();
-
-void sessionLog(String key, String value) {
-  sessionManager.set('__log__$key', value);
-}
 
 class GoogleSheetsDL {
   final String? sheetName;
@@ -28,11 +21,12 @@ class GoogleSheetsDL {
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
 
-    sessionLog('url-getAllSheet', url);
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) {
-        throw Exception('Error:[DL] Could not connect to server');
+        String errMess = 'Error:[DL] Could not connect to server';
+        AppDataPrefs.setString('errorLastDL', errMess);
+        throw Exception(errMess);
       }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       return extractedData['values'];
@@ -55,7 +49,6 @@ class GoogleSheetsDL {
 
     if (!dateinsert.endsWith('.')) dateinsert = '$dateinsert.';
     String url = '$selectServiceUrl?action=getNews&dateinsert=$dateinsert';
-    sessionLog('url-getNews', url);
     await http.get(Uri.parse(url));
 
     return 'OK';
@@ -66,7 +59,6 @@ class GoogleSheetsDL {
     String starredLinkEncoded = Uri.encodeFull(starredLink);
     String url =
         '$selectServiceUrl?action=starredAppend&starredLink=$starredLinkEncoded';
-    sessionLog('url-starredAppend', url);
 
     await http.get(Uri.parse(url));
     return 'OK';
@@ -75,7 +67,7 @@ class GoogleSheetsDL {
   Future selectData() async {
     String url =
         'https://script.google.com/macros/s/AKfycbzfN5YsBSbhwfk9FbbCmIFjz6wkBkHFXVCk6zMytHdjdUO6DjSL_OSKcgrVEWj81EpIww/exec?sheetName=starred2022&colLetter=B&value=@Dala';
-    sessionLog('url-selectData', url);
+
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) {
@@ -101,7 +93,7 @@ Future getTagQuote(String sourceSheetName, String id, String fileId) async {
   String? url = AppDataPrefs.getString('selectServiceUrl');
   url =
       '$url?action=getTagQuote&sourceSheetName=$sourceSheetName&ID=$id&fileId=$fileId';
-  sessionLog('url-getTagQuote', url);
+
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
@@ -125,10 +117,8 @@ Future getTagQuote(String sourceSheetName, String id, String fileId) async {
 class Failure {
   final String message;
   Failure({required this.message});
-
   @override
   String toString() {
-    sessionLog(message, 'Failure');
     return message;
   }
 }

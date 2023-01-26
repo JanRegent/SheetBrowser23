@@ -6,6 +6,7 @@ import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
 import 'package:sheetbrowse/2business_layer/approotdata.dart';
 
 import '../../2business_layer/getdata.dart';
+import '1pres_layer/_home/customerror.dart';
 import '1pres_layer/acontrolers/isloading.dart';
 import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/_home/__sidebar.dart';
@@ -19,7 +20,7 @@ class RouterSwitch extends StatefulWidget {
 
 class _RouterSwitchState extends State<RouterSwitch> {
   String route2Page = 'detail';
-  String action = 'getNews'; // 'getNews';
+  String action = ''; // 'getNews';
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page')!;
@@ -89,6 +90,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
                   currentSheet.rowsArrFiltered, false, configRow);
             }
           } else if (snapshot.hasError) {
+            runApp(
+              const ErrorPage(),
+            );
             children = <Widget>[
               const Icon(
                 Icons.error_outline,

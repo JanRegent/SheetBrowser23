@@ -56,7 +56,7 @@ Future rowsOfTag(String tagSelected) async {
 Future<List<dynamic>> selectData() async {
   final values = await GoogleSheetsDL(
     sheetId: AppDataPrefs.getRootSheetId(),
-    sheetName: 'starred2022',
+    sheetName: '',
   ).selectData();
 
   return values;
