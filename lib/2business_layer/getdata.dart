@@ -3,6 +3,7 @@ import 'package:sheetbrowser/1pres_layer/filelist/filelistcard.dart';
 import 'package:sheetbrowser/2business_layer/approotdata.dart';
 
 import '../data_layer/getsheetdl.dart';
+import 'models/sheetdb.dart';
 
 //--------------------------------------------------------------------filelist
 Future getFilelist() async {
@@ -77,11 +78,17 @@ Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
 //-----------------------------------------------------------------------rootSheet
 
 Future rootSheet2localStorage() async {
-  final values = await GoogleSheetsDL(
-    sheetId: AppDataPrefs.getRootSheetId(),
-    sheetName: 'rootSheet',
-  ).getAllSheet();
-  sheet2localStorage(values);
+  try {
+    final values = await GoogleSheetsDL(
+      sheetId: AppDataPrefs.getRootSheetId(),
+      sheetName: 'rootSheet',
+    ).getAllSheet();
+    sheet2localStorage(values);
+  } catch (e, s) {
+    logDb.createErr('getData.rootSheet2localStorage', e, s,
+        description:
+            '\n sheetName: rootSheet \nsheetId: ${AppDataPrefs.getRootSheetId()}');
+  }
 }
 
 Future sheet2localStorage(List<dynamic> arr) async {

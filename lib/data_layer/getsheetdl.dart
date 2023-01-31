@@ -20,7 +20,6 @@ class GoogleSheetsDL {
     String? apiKey = AppDataPrefs.getApikey();
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
-
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) {

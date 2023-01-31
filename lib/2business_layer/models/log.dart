@@ -78,7 +78,8 @@ class LogDb {
     }
   }
 
-  Future createErr(String clasFunc, error, stackTrace) async {
+  Future createErr(String clasFunc, error, stackTrace,
+      {String description = ''}) async {
     try {
       Log log = Log()
         ..clasFunc = clasFunc

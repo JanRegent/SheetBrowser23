@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../2business_layer/getdata.dart';
+import 'models/sheetdb.dart';
 
 class AppDataPrefs {
   static late final SharedPreferences _instance;
@@ -13,15 +14,24 @@ class AppDataPrefs {
       _instance = await SharedPreferences.getInstance();
 
   static Future appRootConfigLoad() async {
-    //----------------------appRootConfig
-    String jsonString = await rootBundle.loadString('appRootConfig.json');
-    dynamic jsonMap = jsonDecode(jsonString);
-    apiKey = jsonMap['apikey'];
+    //----------------------apikey
+    // ignore: unused_local_variable
 
-    jsonString = await rootBundle.loadString('appConfig.json');
-    jsonMap = jsonDecode(jsonString);
+    try {
+      String jsonString = await rootBundle.loadString('apikey.json');
+      dynamic jsonMap = jsonDecode(jsonString);
+      apiKey = jsonMap['apikey'];
+    } catch (e, s) {
+      logDb.createErr('AppDataPrefs.apikey', e, s);
+    }
 
-    await setString('rootSheetId', jsonMap['rootSheetId']);
+    try {
+      String jsonString = await rootBundle.loadString('appConfig.json');
+      dynamic jsonMap = jsonDecode(jsonString);
+      await setString('rootSheetId', jsonMap['rootSheetId']);
+    } catch (e, s) {
+      logDb.createErr('AppDataPrefs.rootSheetId', e, s);
+    }
 
     await rootSheet2localStorage();
 
