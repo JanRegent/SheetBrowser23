@@ -62,10 +62,16 @@ class SheetDb {
       return '';
     }
   }
-  // Future<void> cleanDb() async {
-  //   //final isar = await db;
-  //   //await isar.writeTxn(() => isar.clear());
-  // }
+
+  Future cleanDb() async {
+    try {
+      await isar.writeTxn((isar) async {
+        await isar.sheets.clear();
+      });
+    } catch (e, s) {
+      logDb.createErr('SheetService.cleanDb', e, s);
+    }
+  }
 
   Future<int> lengthRows(String sheetName) async {
     final rows = await isar.sheets
@@ -74,5 +80,24 @@ class SheetDb {
         .keyEqualTo('row')
         .findAll();
     return rows.length;
+  }
+
+  Future<List<String>?> readColsHeader(String sheetName) async {
+    final row = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .keyEqualTo('colsHeader')
+        .findFirst();
+    return row!.listStr;
+  }
+
+  Future<List<List<String>?>> readRowsAll(String sheetName) async {
+    final rows = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .keyEqualTo('row')
+        .listStrProperty()
+        .findAll();
+    return rows;
   }
 }

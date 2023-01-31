@@ -41,10 +41,12 @@ class GetSheet {
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getAllSheet();
-      await gridPrepare();
       if (await sheetDb.lengthRows(sheetName) == 0) {
+        colsHeader = blUti.toListString(rowsArr[0]);
+        rowsArr.removeAt(0);
         sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
       }
+      await gridPrepare();
     } catch (e, s) {
       logDb.createErr('GetSheet().getSheet', e, s);
     }
@@ -56,24 +58,11 @@ class GetSheet {
     filelistRow['fileId'] = fileId;
     return filelistRow;
   }
-  // Future newRows(List<dynamic> newRowsArr) async {
-  //   rowsArr = newRowsArr;
-  //   await gridPrepare();
-  // }
 
   Future gridPrepare() async {
-    colsHeader = blUti.toListString(rowsArr[0]);
-    rowsArr.removeAt(0);
-
+    colsHeader = (await sheetDb.readColsHeader(sheetName))!;
     plutoCols = await colsMap(colsHeader);
+    rowsArr = await sheetDb.readRowsAll(sheetName);
     gridrows = await gridRowsMap(rowsArr, colsHeader);
   }
-
-  //---------------------------------------------------------------DL
-  // Future<List> getAllSheet(String? sheetName, String fileId) async {
-  //   final values = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-  //       .getAllSheet();
-
-  //   return values;
-  // }
 }
