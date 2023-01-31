@@ -1,1 +1,1 @@
-const buildVersion = 'bookmarks-2---26-01-2023 18:58:38,19';     
+const buildVersion = 'isar305---31-01-2023  9:24:00,48';     

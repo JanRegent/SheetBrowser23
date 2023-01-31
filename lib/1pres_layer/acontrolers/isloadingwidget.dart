@@ -18,12 +18,12 @@ Obx isLoadingWidget(BuildContext context) {
             const Text('  '),
             Text(
               loadController.sheetName.value,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             )
           ],
         )
       : Text(
           loadController.sheetName.value,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ));
 }
