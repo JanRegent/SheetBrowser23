@@ -19,17 +19,10 @@ class GetSheet {
   List<PlutoRow> gridrows = [];
 
   Future getSheet(String sheetNameNew, String fileIdNew) async {
-    if (fileId == '' && fileIdNew == '') {
-      fileId = AppDataPrefs.getRootSheetId();
-      rowsArr = [];
-    }
-
-    if (fileId != fileIdNew) rowsArr = [];
-    if (sheetName != sheetNameNew) rowsArr = [];
-    if (rowsArr.isNotEmpty) return;
+    rowsArr = [];
     //-----------------------------------new sheet
     sheetName = sheetNameNew;
-
+    fileId = fileIdNew;
     if (sheetName.isEmpty) {
       sheetName = AppDataPrefs.getString('currentSheetName')!;
     }
@@ -37,18 +30,17 @@ class GetSheet {
     if (fileId.isEmpty) {
       fileId = AppDataPrefs.getRootSheetId();
     }
-
     try {
-      rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-          .getAllSheet();
       if (await sheetDb.lengthRows(sheetName) == 0) {
+        rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+            .getAllSheet();
         colsHeader = blUti.toListString(rowsArr[0]);
         rowsArr.removeAt(0);
         sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
       }
       await gridPrepare();
     } catch (e, s) {
-      logDb.createErr('GetSheet().getSheet', e, s);
+      logDb.createErr('GetSheet().getSheet', e.toString(), s.toString());
     }
   }
 

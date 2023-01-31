@@ -32,7 +32,7 @@ class SheetDb {
       });
       return 'OK';
     } catch (e, s) {
-      logDb.createErr('SheetService.create', e, s);
+      logDb.createErr('SheetService.create', e.toString(), s.toString());
       return '';
     }
   }
@@ -42,7 +42,7 @@ class SheetDb {
     create(Sheet()
       ..zfileId = fileId
       ..aSheetName = sheetName
-      ..key = 'colsHeader'
+      ..aKey = 'colsHeader'
       ..listStr = blUti.toListString(colsHeader));
 
     List<Sheet> rows = [];
@@ -50,7 +50,7 @@ class SheetDb {
       rows.add(Sheet()
         ..zfileId = fileId
         ..aSheetName = sheetName
-        ..key = 'row'
+        ..aKey = 'row'
         ..listStr = blUti.toListString(rowsArr[rowIx]));
     }
     try {
@@ -59,7 +59,7 @@ class SheetDb {
       });
       return 'OK';
     } catch (e, s) {
-      logDb.createErr('SheetService.create', e, s);
+      logDb.createErr('SheetService.create', e.toString(), s.toString());
       return '';
     }
   }
@@ -70,7 +70,7 @@ class SheetDb {
         await isar.sheets.clear();
       });
     } catch (e, s) {
-      logDb.createErr('SheetService.cleanDb', e, s);
+      logDb.createErr('SheetService.cleanDb', e.toString(), s.toString());
     }
   }
 
@@ -78,25 +78,34 @@ class SheetDb {
     final rows = await isar.sheets
         .filter()
         .aSheetNameEqualTo(sheetName)
-        .keyEqualTo('row')
+        .and()
+        .aKeyEqualTo('row')
         .findAll();
     return rows.length;
   }
 
   Future<List<String>?> readColsHeader(String sheetName) async {
-    final row = await isar.sheets
-        .filter()
-        .aSheetNameEqualTo(sheetName)
-        .keyEqualTo('colsHeader')
-        .findFirst();
-    return row!.listStr;
+    late Sheet? row;
+    try {
+      row = (await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('colsHeader')
+          .findFirst());
+    } catch (_) {
+      return [];
+    }
+    if (row?.listStr == null) return [];
+    return row?.listStr;
   }
 
   Future<List<List<String>?>> readRowsAll(String sheetName) async {
     final rows = await isar.sheets
         .filter()
         .aSheetNameEqualTo(sheetName)
-        .keyEqualTo('row')
+        .and()
+        .aKeyEqualTo('row')
         .listStrProperty()
         .findAll();
     return rows;

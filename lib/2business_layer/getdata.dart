@@ -85,8 +85,9 @@ Future rootSheet2localStorage() async {
     ).getAllSheet();
     sheet2localStorage(values);
   } catch (e, s) {
-    logDb.createErr('getData.rootSheet2localStorage', e, s,
-        description:
+    logDb.createErr(
+        'getData.rootSheet2localStorage', e.toString(), s.toString(),
+        descr:
             '\n sheetName: rootSheet \nsheetId: ${AppDataPrefs.getRootSheetId()}');
   }
 }

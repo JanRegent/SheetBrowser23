@@ -6,6 +6,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb.dart';
 
 import '../../2business_layer/approotdata.dart';
 import '../alib/alib.dart';
@@ -20,7 +21,7 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
   List<Widget> getLements() {
     List<Widget> rowWigs = [];
     rowWigs.add(const Text('    '));
-    rowWigs.add(allRowsButton(context, fileListRow));
+    rowWigs.add(datagridButton(context, fileListRow));
     rowWigs.add(const Text('  '));
 
     rowWigs.add(lastRowButton(context, fileListRow));
@@ -87,18 +88,26 @@ Future plutoGridShow(
   /// Columns must be provided at the beginning of a row synchronously.
 
   //----------------------------------------------------------------------rows
-
-  await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              GridPage(currentSheet.plutoCols, currentSheet.gridrows)));
+  String fileId = '';
+  try {
+    fileId = blUti.url2fileid(fileListRow['fileUrl']);
+    await currentSheet.getSheet(fileListRow['sheetName'], fileId);
+    // ignore: use_build_context_synchronously
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                GridPage(currentSheet.plutoCols, currentSheet.gridrows)));
+  } catch (e, s) {
+    logDb.createErr('plutoGridShow(', e.toString(), s.toString(),
+        descr: fileListRow['sheetName'] + ' fileId: ' + fileId);
+  }
 }
 
 //-------------------------------------------------------------------------all
 RxString allRowsButtonlAllRowsLabel = ''.obs;
 
-ElevatedButton allRowsButton(BuildContext context, Map fileListRow) {
+ElevatedButton datagridButton(BuildContext context, Map fileListRow) {
   return ElevatedButton.icon(
       label: const Text(''),
       icon: const Icon(

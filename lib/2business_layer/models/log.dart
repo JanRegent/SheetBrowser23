@@ -78,18 +78,20 @@ class LogDb {
     }
   }
 
-  Future createErr(String clasFunc, error, stackTrace,
-      {String description = ''}) async {
+  Future createErr(String clasFunc, String e, String s,
+      {String descr = ''}) async {
     try {
       Log log = Log()
         ..clasFunc = clasFunc
-        ..error = error
-        ..stackTrace = stackTrace.toString();
+        ..error = e
+        ..descr = descr
+        ..stackTrace = s;
       await isar.writeTxn((isar) async {
         await isar.logs.put(log); // insert
       });
       return 'OK';
     } catch (e) {
+      debugPrint('-------------log.createErr-----------------');
       debugPrint(e.toString());
       // logi('--- LocalStore: ', '-----------------isar');
       // logi('updateSheetView(String ', sheetView.aQuerystringKey);

@@ -22,7 +22,7 @@ class AppDataPrefs {
       dynamic jsonMap = jsonDecode(jsonString);
       apiKey = jsonMap['apikey'];
     } catch (e, s) {
-      logDb.createErr('AppDataPrefs.apikey', e, s);
+      logDb.createErr('AppDataPrefs.apikey', e.toString(), s.toString());
     }
 
     try {
@@ -30,7 +30,7 @@ class AppDataPrefs {
       dynamic jsonMap = jsonDecode(jsonString);
       await setString('rootSheetId', jsonMap['rootSheetId']);
     } catch (e, s) {
-      logDb.createErr('AppDataPrefs.rootSheetId', e, s);
+      logDb.createErr('AppDataPrefs.rootSheetId', e.toString(), s.toString());
     }
 
     await rootSheet2localStorage();

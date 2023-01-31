@@ -14,12 +14,27 @@ class Sheet {
   int sheetId = -1;
 
   @Index(type: IndexType.value)
-  String? key;
+  String? aKey;
   List<String>? listStr;
   List<int>? listInt;
 
   @Index(type: IndexType.value)
   String? zfileId;
+
+  Future toStrings() async {
+    '''
+    -----------------------------------------------------sheet
+    id          $id
+    aSheetName  $aSheetName
+  
+    aKey    $aKey
+
+    listStr
+    $listStr                
+
+    zfileId     $zfileId
+  ''';
+  }
 }
 
 enum Status {
