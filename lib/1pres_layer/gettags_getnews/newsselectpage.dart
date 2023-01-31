@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowse/1pres_layer/acontrolers/isloading.dart';
-import 'package:sheetbrowse/data_layer/getsheetdl.dart';
+import 'package:sheetbrowser/1pres_layer/acontrolers/isloading.dart';
+import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';

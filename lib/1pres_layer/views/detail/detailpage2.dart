@@ -1,9 +1,9 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
-import 'package:sheetbrowse/2business_layer/approotdata.dart';
-import 'package:sheetbrowse/data_layer/getsheetdl.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowser/2business_layer/approotdata.dart';
+import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../alib/alib.dart';
 

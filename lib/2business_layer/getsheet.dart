@@ -6,6 +6,8 @@ import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
 import 'approotdata.dart';
 
+import 'models/sheetdb.dart';
+
 class GetSheet {
   String fileId = '';
   String sheetName = '';
@@ -40,8 +42,11 @@ class GetSheet {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getAllSheet();
       await gridPrepare();
-    } catch (e) {
-      AppDataPrefs.setString('errorLast', e.toString());
+      if (await sheetDb.lengthRows(sheetName) == 0) {
+        sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+      }
+    } catch (e, s) {
+      logDb.createErr('GetSheet().getSheet', e, s);
     }
   }
 

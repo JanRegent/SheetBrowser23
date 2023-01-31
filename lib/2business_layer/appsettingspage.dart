@@ -1,9 +1,9 @@
 import 'package:cupertino_setting_control/cupertino_setting_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sheetbrowse/2business_layer/approotdata.dart';
-import 'package:sheetbrowse/2business_layer/appversion.dart';
-import 'package:sheetbrowse/2business_layer/buildversion.dart';
+import 'package:sheetbrowser/2business_layer/approotdata.dart';
+import 'package:sheetbrowser/2business_layer/appversion.dart';
+import 'package:sheetbrowser/2business_layer/buildversion.dart';
 
 class AppSettingsPage extends StatefulWidget {
   const AppSettingsPage({super.key});

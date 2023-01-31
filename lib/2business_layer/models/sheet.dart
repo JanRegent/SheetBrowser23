@@ -4,31 +4,22 @@ part 'sheet.g.dart';
 
 // dart  run build_runner build
 
-@collection
+@Collection()
 class Sheet {
-  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
+  @Id()
+  int id = Isar.autoIncrement;
 
   @Index(type: IndexType.value)
-  String? sheetName;
-  late int sheetId;
+  String? aSheetName;
+  int sheetId = -1;
 
   @Index(type: IndexType.value)
   String? key;
   List<String>? listStr;
   List<int>? listInt;
 
-  @enumerated
-  Status status = Status.pending;
-
   @Index(type: IndexType.value)
-  String? fileId;
-}
-
-@embedded
-class Recipient {
-  String? name;
-
-  String? address;
+  String? zfileId;
 }
 
 enum Status {

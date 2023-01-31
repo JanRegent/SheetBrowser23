@@ -1,199 +1,151 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 part of 'sheet.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetSheetCollection on Isar {
-  IsarCollection<Sheet> get sheets => this.collection();
+  IsarCollection<Sheet> get sheets => getCollection();
 }
 
 const SheetSchema = CollectionSchema(
-  name: r'Sheet',
-  id: 1381883676009027634,
-  properties: {
-    r'fileId': PropertySchema(
-      id: 0,
-      name: r'fileId',
-      type: IsarType.string,
-    ),
-    r'key': PropertySchema(
-      id: 1,
-      name: r'key',
-      type: IsarType.string,
-    ),
-    r'listInt': PropertySchema(
-      id: 2,
-      name: r'listInt',
-      type: IsarType.longList,
-    ),
-    r'listStr': PropertySchema(
-      id: 3,
-      name: r'listStr',
-      type: IsarType.stringList,
-    ),
-    r'sheetId': PropertySchema(
-      id: 4,
-      name: r'sheetId',
-      type: IsarType.long,
-    ),
-    r'sheetName': PropertySchema(
-      id: 5,
-      name: r'sheetName',
-      type: IsarType.string,
-    ),
-    r'status': PropertySchema(
-      id: 6,
-      name: r'status',
-      type: IsarType.byte,
-      enumMap: _SheetstatusEnumValueMap,
-    )
+  name: 'Sheet',
+  schema:
+      '{"name":"Sheet","idName":"id","properties":[{"name":"aSheetName","type":"String"},{"name":"key","type":"String"},{"name":"listInt","type":"LongList"},{"name":"listStr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"key","unique":false,"properties":[{"name":"key","type":"Value","caseSensitive":true}]},{"name":"zfileId","unique":false,"properties":[{"name":"zfileId","type":"Value","caseSensitive":true}]}],"links":[]}',
+  idName: 'id',
+  propertyIds: {
+    'aSheetName': 0,
+    'key': 1,
+    'listInt': 2,
+    'listStr': 3,
+    'sheetId': 4,
+    'zfileId': 5
   },
-  estimateSize: _sheetEstimateSize,
-  serialize: _sheetSerialize,
-  deserialize: _sheetDeserialize,
-  deserializeProp: _sheetDeserializeProp,
-  idName: r'id',
-  indexes: {
-    r'sheetName': IndexSchema(
-      id: 7851646127127792625,
-      name: r'sheetName',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'sheetName',
-          type: IndexType.value,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'key': IndexSchema(
-      id: -4906094122524121629,
-      name: r'key',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'key',
-          type: IndexType.value,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'fileId': IndexSchema(
-      id: -2092632783237962250,
-      name: r'fileId',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'fileId',
-          type: IndexType.value,
-          caseSensitive: true,
-        )
-      ],
-    )
+  listProperties: {'listInt', 'listStr'},
+  indexIds: {'aSheetName': 0, 'key': 1, 'zfileId': 2},
+  indexValueTypes: {
+    'aSheetName': [
+      IndexValueType.string,
+    ],
+    'key': [
+      IndexValueType.string,
+    ],
+    'zfileId': [
+      IndexValueType.string,
+    ]
   },
-  links: {},
-  embeddedSchemas: {},
+  linkIds: {},
+  backlinkLinkNames: {},
   getId: _sheetGetId,
+  setId: _sheetSetId,
   getLinks: _sheetGetLinks,
-  attach: _sheetAttach,
-  version: '3.0.5',
+  attachLinks: _sheetAttachLinks,
+  serializeNative: _sheetSerializeNative,
+  deserializeNative: _sheetDeserializeNative,
+  deserializePropNative: _sheetDeserializePropNative,
+  serializeWeb: _sheetSerializeWeb,
+  deserializeWeb: _sheetDeserializeWeb,
+  deserializePropWeb: _sheetDeserializePropWeb,
+  version: 3,
 );
 
-int _sheetEstimateSize(
-  Sheet object,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  var bytesCount = offsets.last;
-  {
-    final value = object.fileId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
+int? _sheetGetId(Sheet object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
   }
-  {
-    final value = object.key;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.listInt;
-    if (value != null) {
-      bytesCount += 3 + value.length * 8;
-    }
-  }
-  {
-    final list = object.listStr;
-    if (list != null) {
-      bytesCount += 3 + list.length * 3;
-      {
-        for (var i = 0; i < list.length; i++) {
-          final value = list[i];
-          bytesCount += value.length * 3;
-        }
-      }
-    }
-  }
-  {
-    final value = object.sheetName;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  return bytesCount;
 }
 
-void _sheetSerialize(
-  Sheet object,
-  IsarWriter writer,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  writer.writeString(offsets[0], object.fileId);
-  writer.writeString(offsets[1], object.key);
-  writer.writeLongList(offsets[2], object.listInt);
-  writer.writeStringList(offsets[3], object.listStr);
-  writer.writeLong(offsets[4], object.sheetId);
-  writer.writeString(offsets[5], object.sheetName);
-  writer.writeByte(offsets[6], object.status.index);
+void _sheetSetId(Sheet object, int id) {
+  object.id = id;
 }
 
-Sheet _sheetDeserialize(
-  Id id,
-  IsarReader reader,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
+List<IsarLinkBase> _sheetGetLinks(Sheet object) {
+  return [];
+}
+
+void _sheetSerializeNative(
+    IsarCollection<Sheet> collection,
+    IsarRawObject rawObj,
+    Sheet object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.aSheetName;
+  IsarUint8List? _aSheetName;
+  if (value0 != null) {
+    _aSheetName = IsarBinaryWriter.utf8Encoder.convert(value0);
+  }
+  dynamicSize += (_aSheetName?.length ?? 0) as int;
+  final value1 = object.key;
+  IsarUint8List? _key;
+  if (value1 != null) {
+    _key = IsarBinaryWriter.utf8Encoder.convert(value1);
+  }
+  dynamicSize += (_key?.length ?? 0) as int;
+  final value2 = object.listInt;
+  dynamicSize += (value2?.length ?? 0) * 8;
+  final _listInt = value2;
+  final value3 = object.listStr;
+  dynamicSize += (value3?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList3;
+  if (value3 != null) {
+    bytesList3 = [];
+    for (var str in value3) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList3.add(bytes);
+      dynamicSize += bytes.length as int;
+    }
+  }
+  final _listStr = bytesList3;
+  final value4 = object.sheetId;
+  final _sheetId = value4;
+  final value5 = object.zfileId;
+  IsarUint8List? _zfileId;
+  if (value5 != null) {
+    _zfileId = IsarBinaryWriter.utf8Encoder.convert(value5);
+  }
+  dynamicSize += (_zfileId?.length ?? 0) as int;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _aSheetName);
+  writer.writeBytes(offsets[1], _key);
+  writer.writeLongList(offsets[2], _listInt);
+  writer.writeStringList(offsets[3], _listStr);
+  writer.writeLong(offsets[4], _sheetId);
+  writer.writeBytes(offsets[5], _zfileId);
+}
+
+Sheet _sheetDeserializeNative(IsarCollection<Sheet> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
   final object = Sheet();
-  object.fileId = reader.readStringOrNull(offsets[0]);
+  object.aSheetName = reader.readStringOrNull(offsets[0]);
   object.id = id;
   object.key = reader.readStringOrNull(offsets[1]);
   object.listInt = reader.readLongList(offsets[2]);
   object.listStr = reader.readStringList(offsets[3]);
   object.sheetId = reader.readLong(offsets[4]);
-  object.sheetName = reader.readStringOrNull(offsets[5]);
-  object.status = _SheetstatusValueEnumMap[reader.readByteOrNull(offsets[6])] ??
-      Status.draft;
+  object.zfileId = reader.readStringOrNull(offsets[5]);
   return object;
 }
 
-P _sheetDeserializeProp<P>(
-  IsarReader reader,
-  int propertyId,
-  int offset,
-  Map<Type, List<int>> allOffsets,
-) {
-  switch (propertyId) {
+P _sheetDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
@@ -206,380 +158,309 @@ P _sheetDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
-    case 6:
-      return (_SheetstatusValueEnumMap[reader.readByteOrNull(offset)] ??
-          Status.draft) as P;
     default:
-      throw IsarError('Unknown property with id $propertyId');
+      throw 'Illegal propertyIndex';
   }
 }
 
-const _SheetstatusEnumValueMap = {
-  'draft': 0,
-  'pending': 1,
-  'sent': 2,
-};
-const _SheetstatusValueEnumMap = {
-  0: Status.draft,
-  1: Status.pending,
-  2: Status.sent,
-};
-
-Id _sheetGetId(Sheet object) {
-  return object.id;
+dynamic _sheetSerializeWeb(IsarCollection<Sheet> collection, Sheet object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'aSheetName', object.aSheetName);
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'key', object.key);
+  IsarNative.jsObjectSet(jsObj, 'listInt', object.listInt);
+  IsarNative.jsObjectSet(jsObj, 'listStr', object.listStr);
+  IsarNative.jsObjectSet(jsObj, 'sheetId', object.sheetId);
+  IsarNative.jsObjectSet(jsObj, 'zfileId', object.zfileId);
+  return jsObj;
 }
 
-List<IsarLinkBase<dynamic>> _sheetGetLinks(Sheet object) {
-  return [];
+Sheet _sheetDeserializeWeb(IsarCollection<Sheet> collection, dynamic jsObj) {
+  final object = Sheet();
+  object.aSheetName = IsarNative.jsObjectGet(jsObj, 'aSheetName');
+  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.key = IsarNative.jsObjectGet(jsObj, 'key');
+  object.listInt = (IsarNative.jsObjectGet(jsObj, 'listInt') as List?)
+      ?.map((e) => e ?? double.negativeInfinity)
+      .toList()
+      .cast<int>();
+  object.listStr = (IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+      ?.map((e) => e ?? '')
+      .toList()
+      .cast<String>();
+  object.sheetId =
+      IsarNative.jsObjectGet(jsObj, 'sheetId') ?? double.negativeInfinity;
+  object.zfileId = IsarNative.jsObjectGet(jsObj, 'zfileId');
+  return object;
 }
 
-void _sheetAttach(IsarCollection<dynamic> col, Id id, Sheet object) {
-  object.id = id;
+P _sheetDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'aSheetName':
+      return (IsarNative.jsObjectGet(jsObj, 'aSheetName')) as P;
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
+    case 'key':
+      return (IsarNative.jsObjectGet(jsObj, 'key')) as P;
+    case 'listInt':
+      return ((IsarNative.jsObjectGet(jsObj, 'listInt') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'listStr':
+      return ((IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+          ?.map((e) => e ?? '')
+          .toList()
+          .cast<String>()) as P;
+    case 'sheetId':
+      return (IsarNative.jsObjectGet(jsObj, 'sheetId') ??
+          double.negativeInfinity) as P;
+    case 'zfileId':
+      return (IsarNative.jsObjectGet(jsObj, 'zfileId')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
 }
+
+void _sheetAttachLinks(IsarCollection col, int id, Sheet object) {}
 
 extension SheetQueryWhereSort on QueryBuilder<Sheet, Sheet, QWhere> {
   QueryBuilder<Sheet, Sheet, QAfterWhere> anyId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(const IdWhereClause.any());
-    });
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhere> anySheetName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'sheetName'),
-      );
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhere> anyASheetName() {
+    return addWhereClauseInternal(
+        const IndexWhereClause.any(indexName: 'aSheetName'));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhere> anyKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'key'),
-      );
-    });
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'key'));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhere> anyFileId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'fileId'),
-      );
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhere> anyZfileId() {
+    return addWhereClauseInternal(
+        const IndexWhereClause.any(indexName: 'zfileId'));
   }
 }
 
 extension SheetQueryWhere on QueryBuilder<Sheet, Sheet, QWhereClause> {
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idEqualTo(Id id) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idEqualTo(int id) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: id,
+      includeLower: true,
+      upper: id,
+      includeUpper: true,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idNotEqualTo(Id id) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            )
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            );
-      } else {
-        return query
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            )
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            );
-      }
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idNotEqualTo(int id) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
       );
-    });
+    } else {
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      );
+    }
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idGreaterThan(int id,
       {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
-      );
-    });
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: id, includeLower: include),
+    );
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: id, includeUpper: include),
+    );
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> idBetween(
-    Id lowerId,
-    Id upperId, {
+    int lowerId,
+    int upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
-    });
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerId,
+      includeLower: includeLower,
+      upper: upperId,
+      includeUpper: includeUpper,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'sheetName',
-        value: [null],
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameEqualTo(
+      String? aSheetName) {
+    return addWhereClauseInternal(IndexWhereClause.equalTo(
+      indexName: 'aSheetName',
+      value: [aSheetName],
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sheetName',
-        lower: [null],
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameNotEqualTo(
+      String? aSheetName) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'aSheetName',
+        upper: [aSheetName],
+        includeUpper: false,
+      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'aSheetName',
+        lower: [aSheetName],
         includeLower: false,
-        upper: [],
       ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameEqualTo(
-      String? sheetName) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'sheetName',
-        value: [sheetName],
+    } else {
+      return addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'aSheetName',
+        lower: [aSheetName],
+        includeLower: false,
+      )).addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'aSheetName',
+        upper: [aSheetName],
+        includeUpper: false,
       ));
-    });
+    }
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameNotEqualTo(
-      String? sheetName) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sheetName',
-              lower: [],
-              upper: [sheetName],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sheetName',
-              lower: [sheetName],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sheetName',
-              lower: [sheetName],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sheetName',
-              lower: [],
-              upper: [sheetName],
-              includeUpper: false,
-            ));
-      }
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameIsNull() {
+    return addWhereClauseInternal(const IndexWhereClause.equalTo(
+      indexName: 'aSheetName',
+      value: [null],
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameGreaterThan(
-    String? sheetName, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameIsNotNull() {
+    return addWhereClauseInternal(const IndexWhereClause.greaterThan(
+      indexName: 'aSheetName',
+      lower: [null],
+      includeLower: false,
+    ));
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameGreaterThan(
+    String? aSheetName, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sheetName',
-        lower: [sheetName],
-        includeLower: include,
-        upper: [],
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.greaterThan(
+      indexName: 'aSheetName',
+      lower: [aSheetName],
+      includeLower: include,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameLessThan(
-    String? sheetName, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameLessThan(
+    String? aSheetName, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sheetName',
-        lower: [],
-        upper: [sheetName],
-        includeUpper: include,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.lessThan(
+      indexName: 'aSheetName',
+      upper: [aSheetName],
+      includeUpper: include,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameBetween(
-    String? lowerSheetName,
-    String? upperSheetName, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameBetween(
+    String? lowerASheetName,
+    String? upperASheetName, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sheetName',
-        lower: [lowerSheetName],
-        includeLower: includeLower,
-        upper: [upperSheetName],
-        includeUpper: includeUpper,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'aSheetName',
+      lower: [lowerASheetName],
+      includeLower: includeLower,
+      upper: [upperASheetName],
+      includeUpper: includeUpper,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameStartsWith(
-      String SheetNamePrefix) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sheetName',
-        lower: [SheetNamePrefix],
-        upper: ['$SheetNamePrefix\u{FFFFF}'],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'sheetName',
-        value: [''],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> sheetNameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'sheetName',
-              upper: [''],
-            ))
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'sheetName',
-              lower: [''],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'sheetName',
-              lower: [''],
-            ))
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'sheetName',
-              upper: [''],
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'key',
-        value: [null],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'key',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> aSheetNameStartsWith(
+      String? ASheetNamePrefix) {
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'aSheetName',
+      lower: [ASheetNamePrefix],
+      includeLower: true,
+      upper: ['$ASheetNamePrefix\u{FFFFF}'],
+      includeUpper: true,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyEqualTo(String? key) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'key',
-        value: [key],
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.equalTo(
+      indexName: 'key',
+      value: [key],
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyNotEqualTo(String? key) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'key',
-              lower: [],
-              upper: [key],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'key',
-              lower: [key],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'key',
-              lower: [key],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'key',
-              lower: [],
-              upper: [key],
-              includeUpper: false,
-            ));
-      }
-    });
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'key',
+        upper: [key],
+        includeUpper: false,
+      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'key',
+        lower: [key],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'key',
+        lower: [key],
+        includeLower: false,
+      )).addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'key',
+        upper: [key],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsNull() {
+    return addWhereClauseInternal(const IndexWhereClause.equalTo(
+      indexName: 'key',
+      value: [null],
+    ));
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsNotNull() {
+    return addWhereClauseInternal(const IndexWhereClause.greaterThan(
+      indexName: 'key',
+      lower: [null],
+      includeLower: false,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyGreaterThan(
     String? key, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'key',
-        lower: [key],
-        includeLower: include,
-        upper: [],
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.greaterThan(
+      indexName: 'key',
+      lower: [key],
+      includeLower: include,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyLessThan(
     String? key, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'key',
-        lower: [],
-        upper: [key],
-        includeUpper: include,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.lessThan(
+      indexName: 'key',
+      upper: [key],
+      includeUpper: include,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyBetween(
@@ -588,977 +469,604 @@ extension SheetQueryWhere on QueryBuilder<Sheet, Sheet, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'key',
-        lower: [lowerKey],
-        includeLower: includeLower,
-        upper: [upperKey],
-        includeUpper: includeUpper,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'key',
+      lower: [lowerKey],
+      includeLower: includeLower,
+      upper: [upperKey],
+      includeUpper: includeUpper,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyStartsWith(
-      String KeyPrefix) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'key',
-        lower: [KeyPrefix],
-        upper: ['$KeyPrefix\u{FFFFF}'],
-      ));
-    });
+      String? KeyPrefix) {
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'key',
+      lower: [KeyPrefix],
+      includeLower: true,
+      upper: ['$KeyPrefix\u{FFFFF}'],
+      includeUpper: true,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'key',
-        value: [''],
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdEqualTo(
+      String? zfileId) {
+    return addWhereClauseInternal(IndexWhereClause.equalTo(
+      indexName: 'zfileId',
+      value: [zfileId],
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> keyIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'key',
-              upper: [''],
-            ))
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'key',
-              lower: [''],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'key',
-              lower: [''],
-            ))
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'key',
-              upper: [''],
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'fileId',
-        value: [null],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'fileId',
-        lower: [null],
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdNotEqualTo(
+      String? zfileId) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'zfileId',
+        upper: [zfileId],
+        includeUpper: false,
+      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'zfileId',
+        lower: [zfileId],
         includeLower: false,
-        upper: [],
       ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdEqualTo(String? fileId) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'fileId',
-        value: [fileId],
+    } else {
+      return addWhereClauseInternal(IndexWhereClause.greaterThan(
+        indexName: 'zfileId',
+        lower: [zfileId],
+        includeLower: false,
+      )).addWhereClauseInternal(IndexWhereClause.lessThan(
+        indexName: 'zfileId',
+        upper: [zfileId],
+        includeUpper: false,
       ));
-    });
+    }
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdNotEqualTo(
-      String? fileId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'fileId',
-              lower: [],
-              upper: [fileId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'fileId',
-              lower: [fileId],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'fileId',
-              lower: [fileId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'fileId',
-              lower: [],
-              upper: [fileId],
-              includeUpper: false,
-            ));
-      }
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdIsNull() {
+    return addWhereClauseInternal(const IndexWhereClause.equalTo(
+      indexName: 'zfileId',
+      value: [null],
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdGreaterThan(
-    String? fileId, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdIsNotNull() {
+    return addWhereClauseInternal(const IndexWhereClause.greaterThan(
+      indexName: 'zfileId',
+      lower: [null],
+      includeLower: false,
+    ));
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdGreaterThan(
+    String? zfileId, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'fileId',
-        lower: [fileId],
-        includeLower: include,
-        upper: [],
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.greaterThan(
+      indexName: 'zfileId',
+      lower: [zfileId],
+      includeLower: include,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdLessThan(
-    String? fileId, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdLessThan(
+    String? zfileId, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'fileId',
-        lower: [],
-        upper: [fileId],
-        includeUpper: include,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.lessThan(
+      indexName: 'zfileId',
+      upper: [zfileId],
+      includeUpper: include,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdBetween(
-    String? lowerFileId,
-    String? upperFileId, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdBetween(
+    String? lowerZfileId,
+    String? upperZfileId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'fileId',
-        lower: [lowerFileId],
-        includeLower: includeLower,
-        upper: [upperFileId],
-        includeUpper: includeUpper,
-      ));
-    });
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'zfileId',
+      lower: [lowerZfileId],
+      includeLower: includeLower,
+      upper: [upperZfileId],
+      includeUpper: includeUpper,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdStartsWith(
-      String FileIdPrefix) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'fileId',
-        lower: [FileIdPrefix],
-        upper: ['$FileIdPrefix\u{FFFFF}'],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'fileId',
-        value: [''],
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> fileIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'fileId',
-              upper: [''],
-            ))
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'fileId',
-              lower: [''],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'fileId',
-              lower: [''],
-            ))
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'fileId',
-              upper: [''],
-            ));
-      }
-    });
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> zfileIdStartsWith(
+      String? ZfileIdPrefix) {
+    return addWhereClauseInternal(IndexWhereClause.between(
+      indexName: 'zfileId',
+      lower: [ZfileIdPrefix],
+      includeLower: true,
+      upper: ['$ZfileIdPrefix\u{FFFFF}'],
+      includeUpper: true,
+    ));
   }
 }
 
 extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'fileId',
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'aSheetName',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'fileId',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdEqualTo(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdGreaterThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameGreaterThan(
     String? value, {
+    bool caseSensitive = true,
     bool include = false,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdLessThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameLessThan(
     String? value, {
-    bool include = false,
     bool caseSensitive = true,
+    bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdBetween(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameBetween(
     String? lower,
     String? upper, {
+    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'fileId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'aSheetName',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdContains(String value,
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameContains(
+      String value,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'fileId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'aSheetName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> aSheetNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'fileId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'aSheetName',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'fileId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> fileIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'fileId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> idEqualTo(Id value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> idEqualTo(int value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'id',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    int value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'id',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> idLessThan(
-    Id value, {
+    int value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'id',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'id',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'key',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'key',
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'key',
+      value: null,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyGreaterThan(
     String? value, {
-    bool include = false,
     bool caseSensitive = true,
+    bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyLessThan(
     String? value, {
-    bool include = false,
     bool caseSensitive = true,
+    bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyBetween(
     String? lower,
     String? upper, {
+    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'key',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'key',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyContains(String value,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'key',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyMatches(String pattern,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'key',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'key',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> keyIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'key',
-        value: '',
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'key',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'listInt',
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'listInt',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'listInt',
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntAnyIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'listInt',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntElementEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listInt',
-        value: value,
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntAnyEqualTo(
+      int? value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'listInt',
+      value: value,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntElementGreaterThan(
-    int value, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntAnyGreaterThan(
+    int? value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'listInt',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'listInt',
+      value: value,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntElementLessThan(
-    int value, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntAnyLessThan(
+    int? value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'listInt',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'listInt',
+      value: value,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntElementBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntAnyBetween(
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'listInt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntLengthEqualTo(
-      int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listIntLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listInt',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'listInt',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'listStr',
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'listStr',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'listStr',
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'listStr',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementEqualTo(
-    String value, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEqualTo(
+    String? value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementGreaterThan(
-    String value, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
     bool include = false,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementLessThan(
-    String value, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyLessThan(
+    String? value, {
+    bool caseSensitive = true,
     bool include = false,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementBetween(
-    String lower,
-    String upper, {
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'listStr',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'listStr',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementContains(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyContains(
       String value,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'listStr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'listStr',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'listStr',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listStr',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'listStr',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrLengthEqualTo(
-      int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'listStr',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'listStr',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetIdEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sheetId',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'sheetId',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetIdGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'sheetId',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'sheetId',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetIdLessThan(
     int value, {
     bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'sheetId',
-        value: value,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'sheetId',
+      value: value,
+    ));
   }
 
   QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetIdBetween(
@@ -1567,836 +1075,264 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'sheetId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'sheetId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'sheetName',
-      ));
-    });
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'zfileId',
+      value: null,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'sheetName',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameEqualTo(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameGreaterThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdGreaterThan(
     String? value, {
+    bool caseSensitive = true,
     bool include = false,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameLessThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdLessThan(
     String? value, {
-    bool include = false,
     bool caseSensitive = true,
+    bool include = false,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameBetween(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdBetween(
     String? lower,
     String? upper, {
+    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'sheetName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'zfileId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameContains(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'sheetName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'zfileId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> zfileIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'sheetName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sheetName',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> sheetNameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'sheetName',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> statusEqualTo(
-      Status value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> statusGreaterThan(
-    Status value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> statusLessThan(
-    Status value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> statusBetween(
-    Status lower,
-    Status upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'status',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'zfileId',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
   }
 }
-
-extension SheetQueryObject on QueryBuilder<Sheet, Sheet, QFilterCondition> {}
 
 extension SheetQueryLinks on QueryBuilder<Sheet, Sheet, QFilterCondition> {}
 
-extension SheetQuerySortBy on QueryBuilder<Sheet, Sheet, QSortBy> {
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByFileId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'fileId', Sort.asc);
-    });
+extension SheetQueryWhereSortBy on QueryBuilder<Sheet, Sheet, QSortBy> {
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByASheetName() {
+    return addSortByInternal('aSheetName', Sort.asc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByFileIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'fileId', Sort.desc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByASheetNameDesc() {
+    return addSortByInternal('aSheetName', Sort.desc);
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortById() {
+    return addSortByInternal('id', Sort.asc);
+  }
+
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByIdDesc() {
+    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.asc);
-    });
+    return addSortByInternal('key', Sort.asc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.desc);
-    });
+    return addSortByInternal('key', Sort.desc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> sortBySheetId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetId', Sort.asc);
-    });
+    return addSortByInternal('sheetId', Sort.asc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> sortBySheetIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetId', Sort.desc);
-    });
+    return addSortByInternal('sheetId', Sort.desc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortBySheetName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetName', Sort.asc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByZfileId() {
+    return addSortByInternal('zfileId', Sort.asc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortBySheetNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetName', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByZfileIdDesc() {
+    return addSortByInternal('zfileId', Sort.desc);
   }
 }
 
-extension SheetQuerySortThenBy on QueryBuilder<Sheet, Sheet, QSortThenBy> {
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByFileId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'fileId', Sort.asc);
-    });
+extension SheetQueryWhereSortThenBy on QueryBuilder<Sheet, Sheet, QSortThenBy> {
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByASheetName() {
+    return addSortByInternal('aSheetName', Sort.asc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByFileIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'fileId', Sort.desc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByASheetNameDesc() {
+    return addSortByInternal('aSheetName', Sort.desc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
-    });
+    return addSortByInternal('id', Sort.asc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
-    });
+    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.asc);
-    });
+    return addSortByInternal('key', Sort.asc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.desc);
-    });
+    return addSortByInternal('key', Sort.desc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenBySheetId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetId', Sort.asc);
-    });
+    return addSortByInternal('sheetId', Sort.asc);
   }
 
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenBySheetIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetId', Sort.desc);
-    });
+    return addSortByInternal('sheetId', Sort.desc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenBySheetName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetName', Sort.asc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByZfileId() {
+    return addSortByInternal('zfileId', Sort.asc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenBySheetNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sheetName', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
+  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByZfileIdDesc() {
+    return addSortByInternal('zfileId', Sort.desc);
   }
 }
 
 extension SheetQueryWhereDistinct on QueryBuilder<Sheet, Sheet, QDistinct> {
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctByFileId(
+  QueryBuilder<Sheet, Sheet, QDistinct> distinctByASheetName(
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'fileId', caseSensitive: caseSensitive);
-    });
+    return addDistinctByInternal('aSheetName', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Sheet, Sheet, QDistinct> distinctById() {
+    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Sheet, Sheet, QDistinct> distinctByKey(
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'key', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctByListInt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'listInt');
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctByListStr() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'listStr');
-    });
+    return addDistinctByInternal('key', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<Sheet, Sheet, QDistinct> distinctBySheetId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'sheetId');
-    });
+    return addDistinctByInternal('sheetId');
   }
 
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctBySheetName(
+  QueryBuilder<Sheet, Sheet, QDistinct> distinctByZfileId(
       {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'sheetName', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'status');
-    });
+    return addDistinctByInternal('zfileId', caseSensitive: caseSensitive);
   }
 }
 
 extension SheetQueryProperty on QueryBuilder<Sheet, Sheet, QQueryProperty> {
-  QueryBuilder<Sheet, int, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
-    });
+  QueryBuilder<Sheet, String?, QQueryOperations> aSheetNameProperty() {
+    return addPropertyNameInternal('aSheetName');
   }
 
-  QueryBuilder<Sheet, String?, QQueryOperations> fileIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'fileId');
-    });
+  QueryBuilder<Sheet, int, QQueryOperations> idProperty() {
+    return addPropertyNameInternal('id');
   }
 
   QueryBuilder<Sheet, String?, QQueryOperations> keyProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'key');
-    });
+    return addPropertyNameInternal('key');
   }
 
   QueryBuilder<Sheet, List<int>?, QQueryOperations> listIntProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'listInt');
-    });
+    return addPropertyNameInternal('listInt');
   }
 
   QueryBuilder<Sheet, List<String>?, QQueryOperations> listStrProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'listStr');
-    });
+    return addPropertyNameInternal('listStr');
   }
 
   QueryBuilder<Sheet, int, QQueryOperations> sheetIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'sheetId');
-    });
+    return addPropertyNameInternal('sheetId');
   }
 
-  QueryBuilder<Sheet, String?, QQueryOperations> sheetNameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'sheetName');
-    });
-  }
-
-  QueryBuilder<Sheet, Status, QQueryOperations> statusProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'status');
-    });
+  QueryBuilder<Sheet, String?, QQueryOperations> zfileIdProperty() {
+    return addPropertyNameInternal('zfileId');
   }
 }
-
-// **************************************************************************
-// IsarEmbeddedGenerator
-// **************************************************************************
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
-
-const RecipientSchema = Schema(
-  name: r'Recipient',
-  id: -4734433259764111223,
-  properties: {
-    r'address': PropertySchema(
-      id: 0,
-      name: r'address',
-      type: IsarType.string,
-    ),
-    r'name': PropertySchema(
-      id: 1,
-      name: r'name',
-      type: IsarType.string,
-    )
-  },
-  estimateSize: _recipientEstimateSize,
-  serialize: _recipientSerialize,
-  deserialize: _recipientDeserialize,
-  deserializeProp: _recipientDeserializeProp,
-);
-
-int _recipientEstimateSize(
-  Recipient object,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  var bytesCount = offsets.last;
-  {
-    final value = object.address;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.name;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  return bytesCount;
-}
-
-void _recipientSerialize(
-  Recipient object,
-  IsarWriter writer,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  writer.writeString(offsets[0], object.address);
-  writer.writeString(offsets[1], object.name);
-}
-
-Recipient _recipientDeserialize(
-  Id id,
-  IsarReader reader,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  final object = Recipient();
-  object.address = reader.readStringOrNull(offsets[0]);
-  object.name = reader.readStringOrNull(offsets[1]);
-  return object;
-}
-
-P _recipientDeserializeProp<P>(
-  IsarReader reader,
-  int propertyId,
-  int offset,
-  Map<Type, List<int>> allOffsets,
-) {
-  switch (propertyId) {
-    case 0:
-      return (reader.readStringOrNull(offset)) as P;
-    case 1:
-      return (reader.readStringOrNull(offset)) as P;
-    default:
-      throw IsarError('Unknown property with id $propertyId');
-  }
-}
-
-extension RecipientQueryFilter
-    on QueryBuilder<Recipient, Recipient, QFilterCondition> {
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'address',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'address',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'address',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'address',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> addressIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'address',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition>
-      addressIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'address',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'name',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'name',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'name',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'name',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Recipient, Recipient, QAfterFilterCondition> nameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'name',
-        value: '',
-      ));
-    });
-  }
-}
-
-extension RecipientQueryObject
-    on QueryBuilder<Recipient, Recipient, QFilterCondition> {}

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:sheetbrowse/1pres_layer/alib/uti.dart';
-import 'package:sheetbrowse/1pres_layer/filelist/filelistcard.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowser/1pres_layer/filelist/filelistcard.dart';
 
 import '../2business_layer/approotdata.dart';
 import '../2business_layer/getdata.dart';

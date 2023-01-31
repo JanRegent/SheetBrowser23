@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sheetbrowse/1pres_layer/views/detail/carousel.dart';
-import 'package:sheetbrowse/1pres_layer/views/plutogrid/_gridpage.dart';
+import 'package:sheetbrowser/1pres_layer/views/detail/carousel.dart';
+import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
 
-import 'package:sheetbrowse/2business_layer/approotdata.dart';
+import 'package:sheetbrowser/2business_layer/approotdata.dart';
 
 import '../../2business_layer/getdata.dart';
 import '1pres_layer/_home/errorpage.dart';
