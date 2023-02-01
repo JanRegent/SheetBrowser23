@@ -71,6 +71,15 @@ class BLuti {
     return list;
   }
 
+  List<int> toListInt(List<dynamic> items) {
+    List<int> list = [];
+    for (var item in items) {
+      int? intNum = int.tryParse(item.toString());
+      list.add(intNum!);
+    }
+    return list;
+  }
+
   List<Map> toListMap(List<dynamic> items) {
     List<Map> list = [];
     for (var item in items) {

@@ -1,1 +1,1 @@
-const buildVersion = 'GlobalConfiguration-2---01-02-2023 10:53:58,58';     
+const buildVersion = 'sheetsDiff---01-02-2023 16:58:55,84';     

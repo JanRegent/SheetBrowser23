@@ -37,20 +37,49 @@ class SheetDb {
     }
   }
 
+  Future createColsHeader(
+      String sheetName, String fileId, List<String> colsHeader) async {
+    await deleteColsHeader(sheetName, fileId);
+    try {
+      await create(Sheet()
+        ..zfileId = fileId
+        ..aSheetName = sheetName
+        ..aKey = 'colsHeader'
+        ..listStr = blUti.toListString(colsHeader));
+    } catch (e, s) {
+      logDb.createErr('SheetService.create', e.toString(), s.toString());
+      return '';
+    }
+  }
+
+  Future deleteColsHeader(String sheetName, String fileId) async {
+    try {
+      List<int> ids = await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('colsHeader')
+          .idProperty()
+          .findAll();
+      if (ids.isNotEmpty) {
+        await isar.writeTxn((isar) {
+          return isar.sheets.deleteAll(ids); // delete
+        });
+      }
+    } catch (_) {}
+  }
+
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
       List<String> colsHeader) async {
-    create(Sheet()
-      ..zfileId = fileId
-      ..aSheetName = sheetName
-      ..aKey = 'colsHeader'
-      ..listStr = blUti.toListString(colsHeader));
-
+    await createColsHeader(sheetName, fileId, colsHeader);
+    int sheetIDix = colsHeader.indexOf('ID');
     List<Sheet> rows = [];
     for (int rowIx = 0; rowIx < rowsArr.length; rowIx++) {
       rows.add(Sheet()
         ..zfileId = fileId
         ..aSheetName = sheetName
         ..aKey = 'row'
+        ..sheetId = int.tryParse(rowsArr[rowIx][sheetIDix])!
         ..listStr = blUti.toListString(rowsArr[rowIx]));
     }
     try {
@@ -109,5 +138,25 @@ class SheetDb {
         .listStrProperty()
         .findAll();
     return rows;
+  }
+
+  Future<List<int>> locIDs(String sheetName) async {
+    List<int> ids = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .aKeyEqualTo('row')
+        .and()
+        .sheetIdGreaterThan(-1)
+        .sheetIdProperty()
+        .findAll();
+    return ids;
+  }
+
+  Future deleteRowsAll(String sheetName) async {
+    List<int> todelIDs = await locIDs(sheetName);
+    await isar.writeTxn((isar) {
+      return isar.sheets.deleteAll(todelIDs); // delete
+    });
   }
 }

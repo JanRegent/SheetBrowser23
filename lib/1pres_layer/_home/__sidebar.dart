@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
-import '../../2business_layer/appsettingspage.dart';
+import '../../2business_layer/appdata/appsettingspage.dart';
 import '../../2business_layer/getdata.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';

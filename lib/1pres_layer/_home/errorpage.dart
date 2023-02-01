@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../2business_layer/approotdata.dart';
+import '../../2business_layer/appdata/approotdata.dart';
 
 class ErrorPage extends StatelessWidget {
   final String errorPageMess;

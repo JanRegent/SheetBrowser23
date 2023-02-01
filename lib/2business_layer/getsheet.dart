@@ -4,7 +4,7 @@ import '../1pres_layer/alib/uti.dart';
 import '../1pres_layer/views/plutogrid/cols.dart';
 import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
-import 'approotdata.dart';
+import 'appdata/approotdata.dart';
 
 import 'models/sheetdb.dart';
 
@@ -30,13 +30,17 @@ class GetSheet {
     if (fileId.isEmpty) {
       fileId = AppDataPrefs.getRootSheetId();
     }
+
     try {
-      if (await sheetDb.lengthRows(sheetName) == 0) {
-        rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-            .getAllSheet();
-        colsHeader = blUti.toListString(rowsArr[0]);
-        rowsArr.removeAt(0);
-        sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+      //if (await sheetDb.lengthRows(sheetName) == 0) {
+      rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+          .getAllSheet();
+      colsHeader = blUti.toListString(rowsArr[0]);
+      rowsArr.removeAt(0);
+      List<int> newRows = await sheetsDiff(rowsArr);
+      if (newRows.isNotEmpty) {
+        await sheetDb.deleteRowsAll(sheetName);
+        await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
       }
       await gridPrepare();
     } catch (e, s) {
@@ -49,6 +53,26 @@ class GetSheet {
     filelistRow['sheetName'] = sheetName;
     filelistRow['fileId'] = fileId;
     return filelistRow;
+  }
+
+  Future<List<int>> sheetsDiff(List<dynamic> rowsCloud) async {
+    List<int> locIDs = await sheetDb.locIDs(sheetName);
+    //------------------------------------------cloudIDs
+    colsHeader = (await sheetDb.readColsHeader(sheetName))!;
+    int sheetIDix = colsHeader.indexOf('ID');
+    List<int> cloudIDs = [];
+    try {
+      List<dynamic> cloudIDsStr = rowsCloud
+          .map<String>((row) => row[sheetIDix])
+          .toList(growable: false);
+      cloudIDs = blUti.toListInt(cloudIDsStr);
+    } catch (e, s) {
+      logDb.createErr('GetSheet().sheetsDiff', e.toString(), s.toString());
+    }
+    //------------------------------------------difference
+    List<int> diffIds = cloudIDs.toSet().difference(locIDs.toSet()).toList();
+
+    return diffIds;
   }
 
   Future gridPrepare() async {

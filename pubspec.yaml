@@ -55,7 +55,7 @@ dependencies:
   dropdown_button2: ^1.9.2            #https://pub.dev/packages/dropdown_button2?utm_source=fluttertap
   #-----------------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
-
+  web_scraper: ^0.1.4                 #https://pub.dev/packages/web_scraper
   #==================================================================================BL
   cupertino_setting_control: ^1.1.0   #https://pub.dev/packages/cupertino_setting_control
   #data
