@@ -7,7 +7,7 @@ import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 
 import '../../../data_layer/getsheetdl.dart';
 
-import 'detailpage2.dart';
+import 'detailmenu.dart';
 //ccc
 
 class DetailPage extends StatefulWidget {
@@ -40,8 +40,9 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
-    listWidgets.add(firstButtons(
-        widget.rowmap, widget.configRow, context, widget.rowsArrRowIx));
+
+    listWidgets
+        .add(DetailMenu(widget.rowmap, widget.configRow, widget.rowsArrRowIx));
     rowmap = widget.rowmap;
 
     void key2listWidget(String key, List<Widget> list) {

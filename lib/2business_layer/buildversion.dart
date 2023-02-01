@@ -1,1 +1,1 @@
-const buildVersion = 'sheetsDiff---01-02-2023 16:58:55,84';     
+const buildVersion = 'DetailMenu---01-02-2023 21:59:21,16';     

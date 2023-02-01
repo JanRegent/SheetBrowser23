@@ -33,6 +33,17 @@ class AL {
     );
   }
 
+  Future openDoc(String fileid, BuildContext context, String label) async {
+    if (fileid.startsWith('http')) fileid = blUti.url2fileid(fileid);
+    // ignore: unnecessary_null_comparison
+    if (fileid.trim() == null) return;
+    if (fileid.trim().isEmpty) return;
+
+    if (fileid.trim().isEmpty) return;
+    String url = 'https://docs.google.com/spreadsheets/d/$fileid';
+    await openhUrl(Uri.parse(url), context);
+  }
+
   Widget linkIconOpenUrlNoDoc(String url, BuildContext context) {
     // ignore: unnecessary_null_comparison
     if (url.trim() == null) return const Text(' ');

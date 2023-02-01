@@ -37,10 +37,14 @@ class GetSheet {
           .getAllSheet();
       colsHeader = blUti.toListString(rowsArr[0]);
       rowsArr.removeAt(0);
-      List<int> newRows = await sheetsDiff(rowsArr);
-      if (newRows.isNotEmpty) {
-        await sheetDb.deleteRowsAll(sheetName);
+      if (await sheetDb.lengthRows(sheetName) == 0) {
         await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+      } else {
+        List<int> newRows = await sheetsDiff(rowsArr);
+        if (newRows.isNotEmpty) {
+          await sheetDb.deleteRowsAll(sheetName);
+          await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+        }
       }
       await gridPrepare();
     } catch (e, s) {
