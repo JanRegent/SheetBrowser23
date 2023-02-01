@@ -1,14 +1,14 @@
 
+@echo off
+echo {"rootSheetId": "%1"} > .\web\assets\cfg\rootSheetId.json
+echo {"rootSheetId": "%1"} > .\web\assets\assets\cfg\rootSheetId.json
 
-call  .\buildweb.bat
-
-copy web\appConfigs\rssdaily.json build\web\appConfig.json
-copy web\appConfigs\rssdaily.json build\web\assets\appConfig.json
-call surge c:\dev\SheetViewer\sheetBrowse\SheetBrowse23\build\web --domain SheetBrowser23.surge.sh
-rem -----pbrunton-----
-copy web\appConfigs\pbrunton.json build\web\appConfig.json
-copy web\appConfigs\pbrunton.json build\web\assets\appConfig.json
-call surge c:\dev\SheetViewer\sheetBrowse\SheetBrowse23\build\web --domain PaulBrunton.surge.sh
+call flutter build web --web-renderer html 
+rem --release
 
 
+echo {"rootSheetId": "%1"} > .\build\web\assets\cfg\rootSheetId.json
+echo {"rootSheetId": "%1"} > .\build\web\assets\assets\cfg\rootSheetId.json
 
+
+call surge .\build\web --domain %2.surge.sh

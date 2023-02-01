@@ -1,6 +1,6 @@
 # root app Configuration #apikey!
-web/apikey.json
-web/assets/apikey.json
+assets/
+web/assets/
 
 # Miscellaneous
 *.class

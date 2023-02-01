@@ -1,1 +1,1 @@
-const buildVersion = 'aKeyEqualTo---31-01-2023 17:29:27,89';     
+const buildVersion = 'GlobalConfiguration---01-02-2023 10:52:42,36';     

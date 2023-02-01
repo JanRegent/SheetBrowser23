@@ -83,6 +83,7 @@ Future rootSheet2localStorage() async {
       sheetId: AppDataPrefs.getRootSheetId(),
       sheetName: 'rootSheet',
     ).getAllSheet();
+
     sheet2localStorage(values);
   } catch (e, s) {
     logDb.createErr(
@@ -93,8 +94,10 @@ Future rootSheet2localStorage() async {
 }
 
 Future sheet2localStorage(List<dynamic> arr) async {
+  int keyIx = 0;
+  int valIx = 1;
   for (var rowIx = 1; rowIx < arr.length; rowIx++) {
     if (arr[rowIx].length == 0) continue;
-    await AppDataPrefs.setString(arr[rowIx][0], arr[rowIx][1]);
+    await AppDataPrefs.setString(arr[rowIx][keyIx], arr[rowIx][valIx]);
   }
 }

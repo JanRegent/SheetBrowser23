@@ -99,7 +99,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
           } else if (snapshot.hasError) {
             runApp(
-              const ErrorPage(),
+              ErrorPage2('[RouterSwitch] snapshot.error \n${snapshot.error}'),
             );
             children = <Widget>[
               const Icon(

@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'dart:ui';
+import 'package:global_configuration/global_configuration.dart';
 
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../2business_layer/getdata.dart';
@@ -13,45 +11,35 @@ class AppDataPrefs {
   static Future<SharedPreferences> init() async =>
       _instance = await SharedPreferences.getInstance();
 
-  static Future appRootConfigLoad() async {
-    //----------------------apikey
-    // ignore: unused_local_variable
-
+  static Future apikeyRootSheetIdLoad() async {
     try {
-      String jsonString = await rootBundle.loadString('apikey.json');
-      dynamic jsonMap = jsonDecode(jsonString);
-      apiKey = jsonMap['apikey'];
+      await GlobalConfiguration().loadFromAsset("apikey");
     } catch (e, s) {
-      logDb.createErr('AppDataPrefs.apikey', e.toString(), s.toString());
+      logDb.createErr(
+        'GlobalConfiguration().loadFromAsset("apikey")',
+        e.toString(),
+        s.toString(),
+      );
     }
-
     try {
-      String jsonString = await rootBundle.loadString('appConfig.json');
-      dynamic jsonMap = jsonDecode(jsonString);
-      await setString('rootSheetId', jsonMap['rootSheetId']);
+      await GlobalConfiguration().loadFromAsset("rootSheetId");
+      await AppDataPrefs.setString('rootSheetId', getRootSheetId());
     } catch (e, s) {
-      logDb.createErr('AppDataPrefs.rootSheetId', e.toString(), s.toString());
+      logDb.createErr(
+        'GlobalConfiguration().loadFromAsset("rootSheetId")',
+        e.toString(),
+        s.toString(),
+      );
     }
-
     await rootSheet2localStorage();
-
-    var url = window.defaultRouteName;
-    await setString(
-        'domain',
-        url
-            .toString()
-            .replaceAll('http://', '')
-            .replaceAll('https://', '')
-            .split('#')[0]);
   }
 
 // ----------------------------------------------------root vars
-  static String apiKey = '';
-  static String rootConfig = '';
-  static String? getApikey() => apiKey;
+
+  static String? getApikey() => GlobalConfiguration().getValue("apikey");
 
   static String getRootSheetId() =>
-      _instance.getString('rootSheetId').toString();
+      GlobalConfiguration().getValue("rootSheetId");
 
   //-------------------------------------------------------string
   static String? getString(String key) {

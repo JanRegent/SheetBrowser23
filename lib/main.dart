@@ -11,20 +11,48 @@ import 'data_layer/backgrounscompleter.dart';
 void main() async {
   // Required for async calls in `main`
   WidgetsFlutterBinding.ensureInitialized();
-  await dbInit();
-  try {
-    await AppDataPrefs.init();
-    await AppDataPrefs.appRootConfigLoad();
 
-    backgroundCompleter();
+  if (!await mainInit()) return;
+
+  try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
     );
   } catch (e) {
     runApp(
-      const ErrorPage(),
+      const ErrorPage2('main().RouterSwitch()'),
     );
   }
+}
+
+Future<bool> mainInit() async {
+  try {
+    await dbInit();
+  } catch (e) {
+    runApp(
+      const ErrorPage2('main().dbInit()'),
+    );
+  }
+
+  try {
+    await AppDataPrefs.init();
+  } catch (e) {
+    runApp(
+      const ErrorPage2('main().AppDataPrefs.init()'),
+    );
+  }
+
+  try {
+    await AppDataPrefs.apikeyRootSheetIdLoad();
+  } catch (e) {
+    runApp(
+      const ErrorPage2('main().AppDataPrefs.appRootConfigLoad()'),
+    );
+  }
+
+  backgroundCompleter();
+
+  return true;
 }
 
 class SheetBrowserApp extends StatelessWidget {
