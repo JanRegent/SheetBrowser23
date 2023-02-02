@@ -68,37 +68,39 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
     );
   }
 
+  IconButton searchButton() {
+    return IconButton(
+        onPressed: () async {
+          isDataLoading.value = true;
+          List newsRows = await sheetDb.readNews(textEditingController.text);
+          isDataLoading.value = false;
+          Map configRow = {};
+          configRow['sheetName'] = 'News';
+          configRow['title'] = 'New: ${textEditingController.text}';
+          // ignore: use_build_context_synchronously
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => Carousel(
+                    sheetDb.readNewsCols, newsRows, false, configRow, 0),
+              ));
+        },
+        icon: const Icon(Icons.search));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select day'),
-        actions: [
-          textEditingController.text.isEmpty
-              ? const Text('')
-              : IconButton(
-                  onPressed: () async {
-                    isDataLoading.value = true;
-                    List newsRows =
-                        await sheetDb.readNews(textEditingController.text);
-                    isDataLoading.value = false;
-                    Map configRow = {};
-                    configRow['sheetName'] = 'News';
-                    configRow['title'] = 'New: ${textEditingController.text}';
-                    // ignore: use_build_context_synchronously
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) => Carousel(sheetDb.readNewsCols,
-                              newsRows, false, configRow, 0),
-                        ));
-                  },
-                  icon: const Icon(Icons.search))
+          title: Row(
+        children: [
+          const Text('Day?  '),
+          textEditingController.text.isEmpty ? const Text('') : searchButton()
         ],
-      ),
+      )),
       body: Obx(() => isDataLoading.value
           ? isloadingWidgetColumn(
-              'Awaiting news...(${textEditingController.text})')
+              'Awaiting news...\n (${textEditingController.text}) \n ${phaseMessage.value}')
           : searchableKeyListview()),
 
       //searchableKeyListview()

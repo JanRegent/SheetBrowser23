@@ -60,7 +60,7 @@ class GetSheet {
       List<int> newRows = await sheetsDiff(rowsArr);
       if (newRows.isEmpty) return;
 
-      await sheetDb.deleteRowsAll(sheetName);
+      await sheetDb.deleteRowsOfSheet(sheetName);
       await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
       logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString(),

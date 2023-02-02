@@ -1,3 +1,4 @@
+import '../../1pres_layer/acontrolers/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 
 import 'package:isar/isar.dart';
@@ -145,8 +146,8 @@ class SheetDb {
   Future<List<List<String>>> readNews(String yyyyMMdd) async {
     final sheets = await isar.sheets
         .filter()
-        // .aKeyEqualTo('row')
-        // .and()
+        .aKeyEqualTo('row')
+        .and()
         .listStrAnyContains(yyyyMMdd)
         .findAll();
 
@@ -154,11 +155,12 @@ class SheetDb {
     for (var rowIx = 0; rowIx < sheets.length; rowIx++) {
       List<String> row = blUti.toListString(sheets[rowIx].listStr!);
       if (row.isEmpty) continue;
-      List<String> colsHeader =
-          await readColsHeader(sheets[rowIx].aSheetName!) as List<String>;
+      String sheetName = sheets[rowIx].aSheetName!;
+      phaseMessage.value = sheetName;
+      List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
       if (!colsHeader.contains('sheetName')) {
         colsHeader.add('sheetName');
-        row.add(sheets[rowIx].aSheetName!);
+        row.add(sheetName);
       }
       readNewsCols.add(colsHeader);
       rows.add(row);
@@ -179,10 +181,22 @@ class SheetDb {
     return ids;
   }
 
-  Future deleteRowsAll(String sheetName) async {
+  Future deleteRowsOfSheet(String sheetName) async {
     List<int> todelIDs = await locIDs(sheetName);
     await isar.writeTxn((isar) {
       return isar.sheets.deleteAll(todelIDs); // delete
+    });
+  }
+
+  Future deleteAKeyEqualToRow() async {
+    List<int> ids = await isar.sheets
+        .filter()
+        .aKeyEqualTo('row')
+        .sheetIdProperty()
+        .findAll();
+
+    await isar.writeTxn((isar) {
+      return isar.sheets.deleteAll(ids); // delete
     });
   }
 }

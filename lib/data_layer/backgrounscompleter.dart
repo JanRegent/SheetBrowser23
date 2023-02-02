@@ -12,6 +12,12 @@ import '../2business_layer/models/sheetdb.dart';
 Future backgroundCompleter() async {
   AppDataPrefs.setString('backgroundCompleter', 'start');
 
+  String? lastCompleted =
+      AppDataPrefs.getString('backgroundCompleter-lastDate');
+  if (lastCompleted != blUti.todayStr()) {
+    await sheetDb.deleteAKeyEqualToRow();
+  }
+  //deleteRowsAll
   await getFilelist();
 
   AppDataPrefs.setString('backgroundCompleter', '2filelist');
@@ -31,5 +37,6 @@ Future backgroundCompleter() async {
   }).whenComplete(() {
     AppDataPrefs.setString('backgroundCompleter', '9completed');
     sheetNameIsloadiding.value = '';
+    AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
 }

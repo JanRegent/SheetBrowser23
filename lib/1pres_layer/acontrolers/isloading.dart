@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 RxBool isDataLoading = false.obs;
 RxString sheetNameIsloadiding = ''.obs;
+RxString phaseMessage = ''.obs;
 
 ///
 ///    body: Obx(() => isDataLoading.value
