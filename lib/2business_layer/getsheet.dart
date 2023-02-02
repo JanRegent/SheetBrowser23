@@ -40,20 +40,28 @@ class GetSheet {
   }
 
   Future sheetPrepare(String sheetName, String fileId) async {
+    int sheetLen = await sheetDb.lengthRows(sheetName);
+    if (sheetLen > 0) return;
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
+      if (rowsArr.isEmpty) return;
       colsHeader = blUti.toListString(rowsArr[0]);
+      if (colsHeader.isEmpty) return;
       rowsArr.removeAt(0);
-      if (await sheetDb.lengthRows(sheetName) == 0) {
+      if (rowsArr.isEmpty) return;
+      if (!colsHeader.contains('ID')) return;
+
+      if (sheetLen == 0) {
         await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
-      } else {
-        List<int> newRows = await sheetsDiff(rowsArr);
-        if (newRows.isNotEmpty) {
-          await sheetDb.deleteRowsAll(sheetName);
-          await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
-        }
+        return;
       }
+      //-----------------------------------------------try update
+      List<int> newRows = await sheetsDiff(rowsArr);
+      if (newRows.isEmpty) return;
+
+      await sheetDb.deleteRowsAll(sheetName);
+      await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
       logDb.createErr('GetSheet().checkSheet', e.toString(), s.toString());
     }
@@ -78,7 +86,11 @@ class GetSheet {
           .toList(growable: false);
       cloudIDs = blUti.toListInt(cloudIDsStr);
     } catch (e, s) {
-      logDb.createErr('GetSheet().sheetsDiff', e.toString(), s.toString());
+      if (!e.toString().contains(
+          'RangeError (index): Index out of range: index must not be negative: -1')) {
+        logDb.createErr('GetSheet().sheetsDiff', e.toString(), s.toString());
+      }
+      return [];
     }
     //------------------------------------------difference
     List<int> diffIds = cloudIDs.toSet().difference(locIDs.toSet()).toList();

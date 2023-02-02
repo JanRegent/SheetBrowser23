@@ -30,5 +30,6 @@ Future backgroundCompleter() async {
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());
   }).whenComplete(() {
     AppDataPrefs.setString('backgroundCompleter', '9completed');
+    sheetNameIsloadiding.value = '';
   });
 }
