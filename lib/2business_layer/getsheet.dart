@@ -32,9 +32,17 @@ class GetSheet {
     }
 
     try {
-      //if (await sheetDb.lengthRows(sheetName) == 0) {
+      await sheetPrepare(sheetName, fileId);
+      await gridPrepare();
+    } catch (e, s) {
+      logDb.createErr('GetSheet().getSheet', e.toString(), s.toString());
+    }
+  }
+
+  Future sheetPrepare(String sheetName, String fileId) async {
+    try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
-          .getAllSheet();
+          .getSheet();
       colsHeader = blUti.toListString(rowsArr[0]);
       rowsArr.removeAt(0);
       if (await sheetDb.lengthRows(sheetName) == 0) {
@@ -46,9 +54,8 @@ class GetSheet {
           await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
         }
       }
-      await gridPrepare();
     } catch (e, s) {
-      logDb.createErr('GetSheet().getSheet', e.toString(), s.toString());
+      logDb.createErr('GetSheet().checkSheet', e.toString(), s.toString());
     }
   }
 

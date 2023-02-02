@@ -32,6 +32,7 @@ Future<bool> mainInit() async {
     runApp(
       const ErrorPage2('main().dbInit()'),
     );
+    return false;
   }
 
   try {
@@ -40,6 +41,7 @@ Future<bool> mainInit() async {
     runApp(
       const ErrorPage2('main().AppDataPrefs.init()'),
     );
+    return false;
   }
 
   try {
@@ -48,6 +50,7 @@ Future<bool> mainInit() async {
     runApp(
       const ErrorPage2('main().AppDataPrefs.appRootConfigLoad()'),
     );
+    return false;
   }
 
   backgroundCompleter();

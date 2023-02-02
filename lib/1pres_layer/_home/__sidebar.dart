@@ -9,6 +9,7 @@ import '../filelist/inboxhome.dart';
 import '../gettags_getnews/newsselectpage.dart';
 import '../gettags_getnews/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
+import '_home.dart';
 
 class SidebarXApp extends StatelessWidget {
   SidebarXApp({Key? key}) : super(key: key);
@@ -223,16 +224,12 @@ class _ScreensExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
         switch (controller.selectedIndex) {
           default:
-            return Text(
-              'Home',
-              style: theme.textTheme.headlineSmall,
-            );
+            return const SidebarHome();
         }
       },
     );

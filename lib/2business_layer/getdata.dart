@@ -10,8 +10,7 @@ Future getFilelist() async {
   String? sheetName = AppDataPrefs.getString('currentFileList');
   String sheetId = AppDataPrefs.getRootSheetId();
   List<dynamic> fileArr =
-      await GoogleSheetsDL(sheetId: sheetId, sheetName: sheetName!)
-          .getAllSheet();
+      await GoogleSheetsDL(sheetId: sheetId, sheetName: sheetName!).getSheet();
 
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelist.clear();
@@ -25,7 +24,7 @@ Future<List<dynamic>> getTagsData() async {
   final values = await GoogleSheetsDL(
     sheetId: AppDataPrefs.getRootSheetId(),
     sheetName: 'getTags',
-  ).getAllSheet();
+  ).getSheet();
 
   return values;
 }
@@ -82,7 +81,7 @@ Future rootSheet2localStorage() async {
     final values = await GoogleSheetsDL(
       sheetId: AppDataPrefs.getRootSheetId(),
       sheetName: 'rootSheet',
-    ).getAllSheet();
+    ).getSheet();
 
     sheet2localStorage(values);
   } catch (e, s) {

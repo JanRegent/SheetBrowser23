@@ -1,1 +1,1 @@
-const buildVersion = 'DetailMenu---01-02-2023 21:59:21,16';     
+const buildVersion = 'backgroundCompleter---02-02-2023 10:30:21,37';     

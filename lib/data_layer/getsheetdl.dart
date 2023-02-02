@@ -16,7 +16,7 @@ class GoogleSheetsDL {
     required this.sheetId,
   });
 
-  Future<List> getAllSheet() async {
+  Future<List> getSheet() async {
     String? apiKey = AppDataPrefs.getApikey();
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
