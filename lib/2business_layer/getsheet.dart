@@ -63,7 +63,8 @@ class GetSheet {
       await sheetDb.deleteRowsAll(sheetName);
       await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
-      logDb.createErr('GetSheet().checkSheet', e.toString(), s.toString());
+      logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString(),
+          descr: '\n sheetName: $sheetName\n fileId: $fileId');
     }
   }
 

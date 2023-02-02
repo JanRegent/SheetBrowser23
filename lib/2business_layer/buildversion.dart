@@ -1,1 +1,1 @@
-const buildVersion = 'backgroundCompleter-2---02-02-2023 11:11:07,80';     
+const buildVersion = 'news-at-local---02-02-2023 14:31:21,98';     

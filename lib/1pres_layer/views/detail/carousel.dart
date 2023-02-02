@@ -7,12 +7,12 @@ import '../../../2business_layer/getdata.dart';
 import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
-  final List<String> colsHeader;
+  final List<List<dynamic>> colsHeaders;
   final List sheetArr;
   final bool askTags;
   final Map configRow;
   final int startRow;
-  const Carousel(this.colsHeader, this.sheetArr, this.askTags, this.configRow,
+  const Carousel(this.colsHeaders, this.sheetArr, this.askTags, this.configRow,
       this.startRow,
       {super.key});
 
@@ -34,6 +34,7 @@ class CarouselState extends State<Carousel> {
     if (widget.configRow['title'] == null) {
       widget.configRow['title'] = widget.configRow['sheetName'];
     }
+
     try {
       _currentIndex = widget.startRow;
     } catch (_) {
@@ -51,7 +52,11 @@ class CarouselState extends State<Carousel> {
                   child: Stack(
                     children: <Widget>[
                       DetailPage(
-                          row2Map(widget.colsHeader, widget.sheetArr[rowIndex]),
+                          row2Map(
+                              widget.colsHeaders.length == 1
+                                  ? widget.colsHeaders[0]
+                                  : widget.colsHeaders[rowIndex],
+                              widget.sheetArr[rowIndex]),
                           widget.askTags,
                           widget.configRow,
                           rowIndex)

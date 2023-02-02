@@ -112,6 +112,7 @@ class SheetDb {
         .findAll();
     return rows.length;
   }
+  //----------------------------------------------------------read
 
   Future<List<String>?> readColsHeader(String sheetName) async {
     late Sheet? row;
@@ -137,6 +138,31 @@ class SheetDb {
         .aKeyEqualTo('row')
         .listStrProperty()
         .findAll();
+    return rows;
+  }
+
+  List<List<String>> readNewsCols = [];
+  Future<List<List<String>>> readNews(String yyyyMMdd) async {
+    final sheets = await isar.sheets
+        .filter()
+        // .aKeyEqualTo('row')
+        // .and()
+        .listStrAnyContains(yyyyMMdd)
+        .findAll();
+
+    List<List<String>> rows = [];
+    for (var rowIx = 0; rowIx < sheets.length; rowIx++) {
+      List<String> row = blUti.toListString(sheets[rowIx].listStr!);
+      if (row.isEmpty) continue;
+      List<String> colsHeader =
+          await readColsHeader(sheets[rowIx].aSheetName!) as List<String>;
+      if (!colsHeader.contains('sheetName')) {
+        colsHeader.add('sheetName');
+        row.add(sheets[rowIx].aSheetName!);
+      }
+      readNewsCols.add(colsHeader);
+      rows.add(row);
+    }
     return rows;
   }
 

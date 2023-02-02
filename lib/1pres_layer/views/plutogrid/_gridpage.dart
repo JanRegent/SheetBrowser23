@@ -99,7 +99,7 @@ class _GridPageState extends State<GridPage> {
                         context,
                         MaterialPageRoute(
                           builder: (ctx) => Carousel(
-                              currentSheet.colsHeader,
+                              [currentSheet.colsHeader],
                               currentSheet.rowsArr,
                               false,
                               currentSheet.getFilelistRow(),
@@ -110,7 +110,7 @@ class _GridPageState extends State<GridPage> {
                         context,
                         MaterialPageRoute(
                           builder: (ctx) => Carousel(
-                              currentSheet.colsHeader,
+                              [currentSheet.colsHeader],
                               currentSheet.rowsArrFiltered,
                               false,
                               currentSheet.getFilelistRow(),

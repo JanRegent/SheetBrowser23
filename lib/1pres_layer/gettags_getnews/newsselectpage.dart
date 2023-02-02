@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/1pres_layer/acontrolers/isloading.dart';
-import 'package:sheetbrowser/data_layer/getsheetdl.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb.dart';
 
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
-import '../views/plutogrid/_gridpage.dart';
 
 ///
 ///https://pub.dev/packages/multiple_search_selection/example
@@ -80,23 +79,18 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
               : IconButton(
                   onPressed: () async {
                     isDataLoading.value = true;
-                    await GoogleSheetsDL(sheetId: '', sheetName: '')
-                        .getNewsBuild(textEditingController.text);
-                    await currentSheet.getSheet('getNews', '');
+                    List newsRows =
+                        await sheetDb.readNews(textEditingController.text);
                     isDataLoading.value = false;
                     Map configRow = {};
-                    configRow['sheetName'] = 'getNews';
+                    configRow['sheetName'] = 'News';
                     configRow['title'] = 'New: ${textEditingController.text}';
                     // ignore: use_build_context_synchronously
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(
-                              blUti.toListString(currentSheet.colsHeader),
-                              currentSheet.rowsArr,
-                              false,
-                              configRow,
-                              0),
+                          builder: (ctx) => Carousel(sheetDb.readNewsCols,
+                              newsRows, false, configRow, 0),
                         ));
                   },
                   icon: const Icon(Icons.search))

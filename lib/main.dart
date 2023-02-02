@@ -34,7 +34,6 @@ Future<bool> mainInit() async {
     );
     return false;
   }
-
   try {
     await AppDataPrefs.init();
   } catch (e) {

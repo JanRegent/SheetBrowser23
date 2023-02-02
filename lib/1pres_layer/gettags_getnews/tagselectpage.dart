@@ -81,11 +81,13 @@ class _TagSelectPageState extends State<TagSelectPage> {
                       context,
                       MaterialPageRoute(
                         builder: (ctx) => Carousel(const [
-                          'tag',
-                          'sourceSheetName',
-                          'targetSheetID',
-                          'targetFileUrl',
-                          'ID'
+                          [
+                            'tag',
+                            'sourceSheetName',
+                            'targetSheetID',
+                            'targetFileUrl',
+                            'ID'
+                          ]
                         ], tagRows, true, filelistRow, 0),
                       ));
                 },
