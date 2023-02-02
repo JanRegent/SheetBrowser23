@@ -42,26 +42,26 @@ class GetSheet {
   Future sheetPrepare(String sheetName, String fileId) async {
     int sheetLen = await sheetDb.lengthRows(sheetName);
     if (sheetLen > 0) return;
+    //------------------------------------sheet did empty,new replacement
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
       if (rowsArr.isEmpty) return;
       colsHeader = blUti.toListString(rowsArr[0]);
       if (colsHeader.isEmpty) return;
-      rowsArr.removeAt(0);
-      if (rowsArr.isEmpty) return;
       if (!colsHeader.contains('ID')) return;
 
-      if (sheetLen == 0) {
-        await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
-        return;
-      }
-      //-----------------------------------------------try update
-      List<int> newRows = await sheetsDiff(rowsArr);
-      if (newRows.isEmpty) return;
+      rowsArr.removeAt(0);
+      if (rowsArr.isEmpty) return;
 
-      await sheetDb.deleteRowsOfSheet(sheetName);
       await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+
+      //-----------------------------------------------try update diffs
+      // List<int> newRows = await sheetsDiff(rowsArr);
+      // if (newRows.isEmpty) return;
+
+      // await sheetDb.deleteRowsOfSheet(sheetName);
+      // await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
       logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString(),
           descr: '\n sheetName: $sheetName\n fileId: $fileId');

@@ -1,5 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:dartx/dartx.dart';
 
 BLuti blUti = BLuti();
 
@@ -25,9 +26,33 @@ class BLuti {
     return key;
   }
 
+  //--------------------------------------------------------dartX
+  //https://pub.dev/packages/dartx
+  //dartx by Simon Leier
+  bool isBlankOrEmpty(String str) {
+    return str.isNullOrEmpty;
+  }
+
+  String Function() capitalize(String str) {
+    return str.capitalize;
+  }
+
+  //---------------------------------------------------------string clean
   String removeNonASCII(String str) {
     return str.replaceAll(RegExp(r'[^\x20-\x7E]'), '');
   }
+
+  String removeHTMLtags(String html) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    String parsedhtml = html.replaceAll(exp, ' ');
+    return parsedhtml; //output with space
+    //return html.replaceAll(exp, ''); //output without space
+
+    //https://medium.com/@arrahmanbd/remove-html-tags-from-string-in-flutter-dart-with-regex-b824c613e82b
+  }
+
+  //---------------------------------------------------------date
 
   String todayStr() {
     DateTime day = DateTime.now();

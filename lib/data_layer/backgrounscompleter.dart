@@ -14,10 +14,13 @@ Future backgroundCompleter() async {
 
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
-  if (lastCompleted != blUti.todayStr()) {
-    await sheetDb.deleteAKeyEqualToRow();
+  if (lastCompleted == blUti.todayStr()) {
+    AppDataPrefs.setString('backgroundCompleter', '9completed');
+    sheetNameIsloadiding.value = '';
+    return;
   }
-  //deleteRowsAll
+  await sheetDb.deleteAKeyEqualToRow();
+
   await getFilelist();
 
   AppDataPrefs.setString('backgroundCompleter', '2filelist');
