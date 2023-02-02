@@ -10,12 +10,9 @@ import '../2business_layer/getdata.dart';
 import '../2business_layer/models/sheetdb.dart';
 
 Future backgroundCompleter() async {
-  AppDataPrefs.setString('backgroundCompleter', 'start');
-
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
   if (lastCompleted == blUti.todayStr()) {
-    AppDataPrefs.setString('backgroundCompleter', '9completed');
     sheetNameIsloadiding.value = '';
     return;
   }
@@ -23,7 +20,6 @@ Future backgroundCompleter() async {
 
   await getFilelist();
 
-  AppDataPrefs.setString('backgroundCompleter', '2filelist');
   Future.delayed(const Duration(seconds: 1), () async {
     for (int fileIx = 0; fileIx < filelist.length; fileIx++) {
       String sheetName = filelist[fileIx]['sheetName'];
@@ -35,10 +31,8 @@ Future backgroundCompleter() async {
       Future.delayed(const Duration(seconds: 1));
     }
   }).then((value) {}).catchError((e, s) {
-    AppDataPrefs.setString('backgroundCompleter', e);
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());
   }).whenComplete(() {
-    AppDataPrefs.setString('backgroundCompleter', '9completed');
     sheetNameIsloadiding.value = '';
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
