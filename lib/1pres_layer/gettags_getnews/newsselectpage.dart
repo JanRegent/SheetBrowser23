@@ -109,18 +109,23 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
         icon: const Icon(Icons.today));
   }
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            textEditingController.text.isEmpty
-                ? const Text('')
-                : const Text('Day?  '),
-            textEditingController.text.isEmpty ? const Text('') : searchButton()
-          ],
-        ),
+        title: isDataLoading.value
+            ? const CircularProgressIndicator()
+            : Row(
+                children: [
+                  textEditingController.text.isNotEmpty
+                      ? const Text('')
+                      : const Text('Day?  '),
+                  textEditingController.text.isEmpty
+                      ? const Text('')
+                      : searchButton()
+                ],
+              ),
         actions: [todayButton()],
       ),
       body: Obx(() => isDataLoading.value

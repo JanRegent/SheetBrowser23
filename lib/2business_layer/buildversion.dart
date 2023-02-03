@@ -1,1 +1,1 @@
-const buildVersion = 'deleteNewsToday---03-02-2023 14:14:35,16';     
+const buildVersion = 'homeBody-isLoading---03-02-2023 14:53:39,94';     

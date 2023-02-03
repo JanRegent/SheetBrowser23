@@ -21,10 +21,10 @@ Future backgroundCompleter() async {
   await getFilelist();
 
   Future.delayed(const Duration(seconds: 1), () async {
+    isDataLoading.value = true;
     for (int fileIx = 0; fileIx < filelist.length; fileIx++) {
       String sheetName = filelist[fileIx]['sheetName'];
 
-      AppDataPrefs.setString('backgroundCompleter-lastSheet', sheetName);
       sheetNameIsloadiding.value = sheetName;
       String fileId = blUti.url2fileid(filelist[fileIx]['fileUrl']);
       await GetSheet().sheetPrepare(sheetName, fileId);
@@ -32,8 +32,10 @@ Future backgroundCompleter() async {
     }
   }).then((value) {}).catchError((e, s) {
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());
+    isDataLoading.value = false;
   }).whenComplete(() {
     sheetNameIsloadiding.value = '';
+    isDataLoading.value = false;
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
 }
