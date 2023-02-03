@@ -28,19 +28,16 @@ class TagsDb {
     return rows.length;
   }
 
-  Set sheetNames = {};
   Map<String, List<int>> tagsMap = {};
   Future tagsIndex() async {
     await sheetDb.colsHeadersMapBuild();
 
-    sheetNames.clear();
     List<Sheet?> sheetrows = await sheetDb.readAllRows();
 
     for (var rIx = 1; rIx < sheetrows.length; rIx = rIx + 1) {
       sheetNameIsloadiding.value = 'Indexing: ${sheetrows[rIx]!.aSheetName!}';
       await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.listStr,
           sheetrows[rIx]!.id);
-      sheetNames.add(sheetrows[rIx]!.aSheetName);
     }
   }
 
@@ -80,8 +77,10 @@ class TagsDb {
   Future tagsMapSave() async {
     //----------------------------------------------------------sort
     var mapEntries = tagsMap.entries.toList();
+    tagsMap = {};
     mapEntries.sort((a, b) => a.key.compareTo(b.key));
     Map sortedMap = Map.fromEntries(mapEntries);
+    mapEntries.clear();
     //----------------------------------------------------------index save
     List<Tag> tagsIn = [];
     for (String tagKey in sortedMap.keys) {
@@ -91,6 +90,7 @@ class TagsDb {
     }
     await tagsDb.clear();
     await tagsDb.updateAll(tagsIn);
+    sortedMap.clear();
   }
 
   Future<List<String>> readTags() async {

@@ -191,12 +191,10 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
-              await tagsPrepare();
-              // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => TagSelectPage(tagsList, 'Tags'),
+                    builder: (ctx) => const TagSelectPage('Tags'),
                   ));
             }),
         SidebarXItem(

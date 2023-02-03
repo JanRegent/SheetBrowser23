@@ -12,15 +12,15 @@ import '../2business_layer/models/sheetdb.dart';
 Future backgroundCompleter() async {
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
+
   if (lastCompleted == blUti.todayStr()) {
     sheetNameIsloadiding.value = '';
-    await tagsDb.clear();
-    await tagsDb.tagsIndex();
-    await tagsDb.tagsMapSave();
     return;
   }
   await sheetDb.deleteAKeyEqualToRow();
   await sheetDb.deleteNewsToday();
+  await tagsDb.clear();
+
   await getFilelist();
 
   Future.delayed(const Duration(seconds: 1), () async {
@@ -39,6 +39,7 @@ Future backgroundCompleter() async {
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
     sheetNameIsloadiding.value = 'Indexing tags';
     await tagsDb.tagsIndex();
+    await tagsDb.tagsMapSave();
     sheetNameIsloadiding.value = 'Indexing done';
     isDataLoading.value = false;
   });

@@ -59,6 +59,22 @@ class SheetDb {
     }
   }
 
+  Future<List<String>?> readColsHeader(String sheetName) async {
+    late Sheet? row;
+    try {
+      row = (await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('colsHeader')
+          .findFirst());
+    } catch (_) {
+      return [];
+    }
+    if (row?.listStr == null) return [];
+    return row?.listStr;
+  }
+
   Map<String, List<String>> colsHeadersMap = {};
 
   Future colsHeadersMapBuild() async {
@@ -87,6 +103,18 @@ class SheetDb {
       }
     } catch (_) {}
   }
+
+  Future<List<String>> sheetNamesGet() async {
+    List<String> sheetNames = await isar.sheets
+        .filter()
+        .aKeyEqualTo('colsHeader')
+        .aSheetNameProperty()
+        .findAll() as List<String>;
+
+    return sheetNames;
+  }
+
+  //----------------------------------------------------------------
 
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
       List<String> colsHeader) async {
@@ -176,22 +204,6 @@ class SheetDb {
     return rows.length;
   }
   //----------------------------------------------------------read
-
-  Future<List<String>?> readColsHeader(String sheetName) async {
-    late Sheet? row;
-    try {
-      row = (await isar.sheets
-          .filter()
-          .aSheetNameEqualTo(sheetName)
-          .and()
-          .aKeyEqualTo('colsHeader')
-          .findFirst());
-    } catch (_) {
-      return [];
-    }
-    if (row?.listStr == null) return [];
-    return row?.listStr;
-  }
 
   Future<List<List<String>?>> readRowsAll(String sheetName) async {
     final rows = await isar.sheets

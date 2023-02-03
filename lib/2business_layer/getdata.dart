@@ -20,29 +20,8 @@ Future getFilelist() async {
 }
 
 //-----------------------------------------------------------------------tags
-Future<List<dynamic>> getTagsData() async {
-  final values = await GoogleSheetsDL(
-    sheetId: AppDataPrefs.getRootSheetId(),
-    sheetName: 'getTags',
-  ).getSheet();
-
-  return values;
-}
 
 List<dynamic> getTagsSheet = [];
-List<String> tagsList = [];
-Future<List<dynamic>> tagsPrepare() async {
-  {
-    getTagsSheet = await getTagsData();
-  }
-  Set<String> tagsSet = {};
-  for (var rowIx = 0; rowIx < getTagsSheet.length; rowIx++) {
-    tagsSet.add(getTagsSheet[rowIx][0].toString());
-  }
-  tagsList = tagsSet.toList();
-  tagsList.sort();
-  return getTagsSheet;
-}
 
 List<dynamic> tagRows = [];
 Future rowsOfTag(String tagSelected) async {

@@ -10,7 +10,6 @@ import '1pres_layer/_home/errorpage.dart';
 import '1pres_layer/acontrolers/isloading.dart';
 import '1pres_layer/filelist/filelistcard.dart';
 import '1pres_layer/filelist/inboxhome.dart';
-import '1pres_layer/gettags_getnews/tagselectpage.dart';
 import '1pres_layer/_home/__sidebar.dart';
 
 class RouterSwitch extends StatefulWidget {
@@ -33,10 +32,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (action == 'getNews') {
       await currentSheet.getSheet('getNews', '');
     }
-    if (action == 'getTags') {
-      await currentSheet.getSheet('getTags', '');
-      await tagsPrepare();
-    }
+
     if (currentSheet.rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
@@ -79,9 +75,6 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
             if (route2Page == 'grid') {
               return GridPage(currentSheet.plutoCols, currentSheet.gridrows);
-            }
-            if (route2Page == 'getTags') {
-              return TagSelectPage(tagsList, 'Tags');
             }
 
             if (route2Page == 'homesidebar') {
