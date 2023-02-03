@@ -17,7 +17,7 @@ Future backgroundCompleter() async {
     return;
   }
   await sheetDb.deleteAKeyEqualToRow();
-
+  await sheetDb.deleteNewsToday();
   await getFilelist();
 
   Future.delayed(const Duration(seconds: 1), () async {

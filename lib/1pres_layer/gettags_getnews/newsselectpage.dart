@@ -93,7 +93,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
     return IconButton(
         onPressed: () async {
           isDataLoading.value = true;
-          List rowsArr = await sheetDb.readNewToday();
+          List rowsArr = await sheetDb.readNewsToday();
           isDataLoading.value = false;
           Map configRow = {};
           configRow['sheetName'] = 'News';

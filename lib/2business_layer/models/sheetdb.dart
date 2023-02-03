@@ -196,8 +196,9 @@ class SheetDb {
     return sheetNames;
   }
 
+  //-------------------------------------------------------------news
   List<List<String>> readNewsCols = [];
-  Future<List<List<String>>> readNewToday() async {
+  Future<List<List<String>>> readNewsToday() async {
     List<List<String>> rows = [];
     readNewsCols = [];
 
@@ -216,6 +217,17 @@ class SheetDb {
     }
 
     return rows;
+  }
+
+  Future deleteNewsToday() async {
+    List<int> todelIDs = await isar.sheets
+        .filter()
+        .aKeyEqualTo('__newToday__')
+        .sheetIdProperty()
+        .findAll();
+    await isar.writeTxn((isar) {
+      return isar.sheets.deleteAll(todelIDs); // delete
+    });
   }
 
   Future<List<List<String>>> readNews(String yyyyMMdd) async {
@@ -249,6 +261,7 @@ class SheetDb {
     return rows;
   }
 
+  //----------------------------------------------------------delete
   Future<List<int>> locIDs(String sheetName) async {
     List<int> ids = await isar.sheets
         .filter()
