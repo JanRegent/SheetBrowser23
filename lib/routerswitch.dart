@@ -84,11 +84,11 @@ class _RouterSwitchState extends State<RouterSwitch> {
             if (currentSheet.rowsArrFiltered.isEmpty) {
               configRow['sheetName'] = 'All';
               return Carousel([currentSheet.colsHeader], currentSheet.rowsArr,
-                  false, configRow, 0);
+                  configRow, 0);
             } else {
               configRow['sheetName'] = 'Filter:';
               return Carousel([currentSheet.colsHeader],
-                  currentSheet.rowsArrFiltered, false, configRow, 0);
+                  currentSheet.rowsArrFiltered, configRow, 0);
             }
           } else if (snapshot.hasError) {
             runApp(

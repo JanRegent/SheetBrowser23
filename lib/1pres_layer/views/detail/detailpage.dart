@@ -3,20 +3,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
-import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
-
-import '../../../data_layer/getsheetdl.dart';
 
 import 'detailmenu.dart';
 //ccc
 
 class DetailPage extends StatefulWidget {
   final Map rowmap;
-  final bool askTag;
   final Map configRow;
   final int rowsArrRowIx;
-  const DetailPage(this.rowmap, this.askTag, this.configRow, this.rowsArrRowIx,
-      {Key? key})
+  const DetailPage(this.rowmap, this.configRow, this.rowsArrRowIx, {Key? key})
       : super(key: key);
 
   @override
@@ -80,23 +75,16 @@ class _DetailPageState extends State<DetailPage> {
           trimMode: TrimMode.line,
           textAlign: TextAlign.left,
           trimLines: 4,
-          delimiter: '  ***',
+          delimiter: '  ...',
           delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
           style: const TextStyle(color: Colors.black, fontSize: 20),
-          trimCollapsedText: 'expand',
-          trimExpandedText: 'compress',
+          trimCollapsedText: '-->',
+          trimExpandedText: '<--',
           moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
           lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
         ));
         //list.add(const Text('  '));
       }
-    }
-
-    if (widget.askTag) {
-      BLuti bLuti = BLuti();
-      String fileId = bLuti.url2fileid(widget.rowmap['targetFileUrl']);
-      rowmap = await getTagQuote(widget.rowmap['sourceSheetName'],
-          widget.rowmap['targetSheetID'], fileId);
     }
 
     for (String key in rowmap.keys) {

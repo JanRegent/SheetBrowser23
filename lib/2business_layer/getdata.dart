@@ -19,18 +19,6 @@ Future getFilelist() async {
   }
 }
 
-//-----------------------------------------------------------------------tags
-
-List<dynamic> getTagsSheet = [];
-
-List<dynamic> tagRows = [];
-Future rowsOfTag(String tagSelected) async {
-  tagRows = [];
-  for (var rowIx = 0; rowIx < getTagsSheet.length; rowIx++) {
-    if (getTagsSheet[rowIx][0] == tagSelected) tagRows.add(getTagsSheet[rowIx]);
-  }
-}
-
 //-------------------------------------------------------------------selects
 Future<List<dynamic>> selectData() async {
   final values = await GoogleSheetsDL(

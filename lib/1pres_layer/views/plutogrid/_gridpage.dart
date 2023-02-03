@@ -101,7 +101,6 @@ class _GridPageState extends State<GridPage> {
                           builder: (ctx) => Carousel(
                               [currentSheet.colsHeader],
                               currentSheet.rowsArr,
-                              false,
                               currentSheet.getFilelistRow(),
                               0),
                         ));
@@ -112,7 +111,6 @@ class _GridPageState extends State<GridPage> {
                           builder: (ctx) => Carousel(
                               [currentSheet.colsHeader],
                               currentSheet.rowsArrFiltered,
-                              false,
                               currentSheet.getFilelistRow(),
                               0),
                         ));

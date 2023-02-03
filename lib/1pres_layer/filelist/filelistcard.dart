@@ -140,7 +140,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
             context,
             MaterialPageRoute(
                 builder: (_) => Carousel([currentSheet.colsHeader],
-                    currentSheet.rowsArr, false, fileListRow, 0)));
+                    currentSheet.rowsArr, fileListRow, 0)));
       });
 }
 
@@ -174,7 +174,7 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
             context,
             MaterialPageRoute(
                 builder: (_) => Carousel([currentSheet.colsHeader],
-                    currentSheet.rowsArr, false, fileListRow, startRow!)));
+                    currentSheet.rowsArr, fileListRow, startRow!)));
         // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);

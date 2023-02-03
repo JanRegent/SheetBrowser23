@@ -4,6 +4,7 @@ import 'package:sidebarx/sidebarx.dart';
 
 import '../../2business_layer/appdata/appsettingspage.dart';
 import '../../2business_layer/getdata.dart';
+import '../../2business_layer/models/sheetdb.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../gettags_getnews/newsselectpage.dart';
@@ -191,10 +192,12 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
+              List<String> tags = await tagsDb.readTags();
+              // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => const TagSelectPage('Tags'),
+                    builder: (ctx) => TagSelectPage(tags),
                   ));
             }),
         SidebarXItem(

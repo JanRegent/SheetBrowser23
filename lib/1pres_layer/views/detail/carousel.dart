@@ -3,17 +3,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../../2business_layer/getdata.dart';
 import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
   final List<List<dynamic>> colsHeaders;
-  final List sheetArr;
-  final bool askTags;
+  final List rowMaps;
   final Map configRow;
   final int startRow;
-  const Carousel(this.colsHeaders, this.sheetArr, this.askTags, this.configRow,
-      this.startRow,
+  const Carousel(this.colsHeaders, this.rowMaps, this.configRow, this.startRow,
       {super.key});
 
   @override
@@ -41,7 +38,7 @@ class CarouselState extends State<Carousel> {
       _currentIndex = 0;
     }
 
-    tabsList = List.generate(widget.sheetArr.length, (index) {
+    tabsList = List.generate(widget.rowMaps.length, (index) {
       return index;
     });
     widgets = tabsList
@@ -52,14 +49,7 @@ class CarouselState extends State<Carousel> {
                   child: Stack(
                     children: <Widget>[
                       DetailPage(
-                          row2Map(
-                              widget.colsHeaders.length == 1
-                                  ? widget.colsHeaders[0]
-                                  : widget.colsHeaders[rowIndex],
-                              widget.sheetArr[rowIndex]),
-                          widget.askTags,
-                          widget.configRow,
-                          rowIndex)
+                          widget.rowMaps[rowIndex], widget.configRow, rowIndex)
                     ],
                   )),
             ))
@@ -96,7 +86,7 @@ class CarouselState extends State<Carousel> {
                   ),
                 ),
                 Text(
-                  '$_currentIndex/${widget.sheetArr.length}',
+                  '$_currentIndex/${widget.rowMaps.length}',
                   style: const TextStyle(fontSize: 15),
                 ),
                 Flexible(

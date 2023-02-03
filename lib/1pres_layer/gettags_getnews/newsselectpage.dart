@@ -82,8 +82,8 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(
-                    sheetDb.readNewsCols, rowsArr, false, configRow, 0),
+                builder: (ctx) =>
+                    Carousel(sheetDb.readNewsCols, rowsArr, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));
@@ -102,8 +102,8 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(
-                    sheetDb.readNewsCols, rowsArr, false, configRow, 0),
+                builder: (ctx) =>
+                    Carousel(sheetDb.readNewsCols, rowsArr, configRow, 0),
               ));
         },
         icon: const Icon(Icons.today));
