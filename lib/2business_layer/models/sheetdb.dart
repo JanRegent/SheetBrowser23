@@ -142,29 +142,44 @@ class SheetDb {
     return rows;
   }
 
+  Future<List<String>> readSheetNames() async {
+    final sheets =
+        await isar.sheets.where(distinct: true).anyASheetName().findAll();
+    List<String> sheetNames = [];
+    for (Sheet sheet in sheets) {
+      sheetNames.add(sheet.aSheetName!);
+    }
+    return sheetNames;
+  }
+
   List<List<String>> readNewsCols = [];
   Future<List<List<String>>> readNews(String yyyyMMdd) async {
-    final sheets = await isar.sheets
-        .filter()
-        .aKeyEqualTo('row')
-        .and()
-        .listStrAnyContains(yyyyMMdd)
-        .findAll();
-
     List<List<String>> rows = [];
-    for (var rowIx = 0; rowIx < sheets.length; rowIx++) {
-      List<String> row = blUti.toListString(sheets[rowIx].listStr!);
-      if (row.isEmpty) continue;
-      String sheetName = sheets[rowIx].aSheetName!;
+
+    List<String> sheetNames = await readSheetNames();
+    for (String sheetName in sheetNames) {
       phaseMessage.value = sheetName;
+      //---------------------------------------------ColsHeader
       List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
       if (!colsHeader.contains('sheetName')) {
         colsHeader.add('sheetName');
-        row.add(sheetName);
       }
-      readNewsCols.add(colsHeader);
-      rows.add(row);
+      //---------------------------------------------dateinsert rows
+      List<Sheet> sheetRows = await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('row')
+          .and()
+          .listStrAnyContains(yyyyMMdd)
+          .findAll();
+      for (var rowIx = 0; rowIx < sheetRows.length; rowIx++) {
+        readNewsCols.add(colsHeader);
+
+        rows.add(sheetRows[rowIx].listStr!);
+      }
     }
+
     return rows;
   }
 

@@ -68,7 +68,7 @@ Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
     try {
       row[keys[i]] = datarow[i];
     } catch (_) {
-      row[keys[i]] = ''; //datarow.length < keys.length
+      row[keys[i]] = '';
     }
   }
   return row;

@@ -72,7 +72,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
     return IconButton(
         onPressed: () async {
           isDataLoading.value = true;
-          List newsRows = await sheetDb.readNews(textEditingController.text);
+          List rowsArr = await sheetDb.readNews(textEditingController.text);
           isDataLoading.value = false;
           Map configRow = {};
           configRow['sheetName'] = 'News';
@@ -82,7 +82,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
               context,
               MaterialPageRoute(
                 builder: (ctx) => Carousel(
-                    sheetDb.readNewsCols, newsRows, false, configRow, 0),
+                    sheetDb.readNewsCols, rowsArr, false, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));
