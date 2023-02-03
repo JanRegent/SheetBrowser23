@@ -1,3 +1,5 @@
+import 'package:sheetbrowser/2business_layer/models/tag.dart';
+
 import '../../1pres_layer/acontrolers/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 
@@ -8,18 +10,20 @@ import 'log.dart';
 
 late SheetDb sheetDb;
 late LogDb logDb;
+late TagsDb tagsDb;
 
 Future dbInit() async {
   //db = openIsar();
 
   final isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema],
+    schemas: [SheetSchema, LogSchema, TagSchema],
     name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
   );
   logDb = LogDb(isar);
   sheetDb = SheetDb(isar);
+  tagsDb = TagsDb(isar);
 }
 
 class SheetDb {
@@ -38,6 +42,8 @@ class SheetDb {
     }
   }
 
+  //------------------------------------------------------------cols
+
   Future createColsHeader(
       String sheetName, String fileId, List<String> colsHeader) async {
     await deleteColsHeader(sheetName, fileId);
@@ -50,6 +56,18 @@ class SheetDb {
     } catch (e, s) {
       logDb.createErr('sheetDB.create', e.toString(), s.toString());
       return '';
+    }
+  }
+
+  Map<String, List<String>> colsHeadersMap = {};
+
+  Future colsHeadersMapBuild() async {
+    final colRows =
+        await isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
+
+    for (var sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
+      colsHeadersMap[colRows[sheetNameIx].aSheetName!] =
+          colRows[sheetNameIx].listStr!;
     }
   }
 
@@ -183,6 +201,11 @@ class SheetDb {
         .aKeyEqualTo('row')
         .listStrProperty()
         .findAll();
+    return rows;
+  }
+
+  Future<List<Sheet>> readAllRows() async {
+    final rows = await isar.sheets.filter().aKeyEqualTo('row').findAll();
     return rows;
   }
 

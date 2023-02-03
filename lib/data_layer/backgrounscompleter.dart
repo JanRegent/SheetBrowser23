@@ -14,6 +14,9 @@ Future backgroundCompleter() async {
       AppDataPrefs.getString('backgroundCompleter-lastDate');
   if (lastCompleted == blUti.todayStr()) {
     sheetNameIsloadiding.value = '';
+    await tagsDb.clear();
+    await tagsDb.tagsIndex();
+    await tagsDb.tagsMapSave();
     return;
   }
   await sheetDb.deleteAKeyEqualToRow();
@@ -28,14 +31,15 @@ Future backgroundCompleter() async {
       sheetNameIsloadiding.value = sheetName;
       String fileId = blUti.url2fileid(filelist[fileIx]['fileUrl']);
       await GetSheet().sheetPrepare(sheetName, fileId);
-      Future.delayed(const Duration(seconds: 1));
     }
   }).then((value) {}).catchError((e, s) {
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());
     isDataLoading.value = false;
-  }).whenComplete(() {
-    sheetNameIsloadiding.value = '';
-    isDataLoading.value = false;
+  }).whenComplete(() async {
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
+    sheetNameIsloadiding.value = 'Indexing tags';
+    await tagsDb.tagsIndex();
+    sheetNameIsloadiding.value = 'Indexing done';
+    isDataLoading.value = false;
   });
 }
