@@ -1,1 +1,1 @@
-const buildVersion = 'sheetDb-createRows-ID---03-02-2023 10:52:58,02';     
+const buildVersion = 'sheetDb.readNewToday---03-02-2023 14:08:44,96';     

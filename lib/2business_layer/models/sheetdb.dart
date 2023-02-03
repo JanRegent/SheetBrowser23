@@ -80,6 +80,7 @@ class SheetDb {
       return;
     }
     List<Sheet> rows = [];
+    String todayStr = blUti.todayStr();
     int rowIx = 0;
     try {
       int sheetIDix = colsHeader.indexOf('ID');
@@ -90,21 +91,42 @@ class SheetDb {
         } catch (_) {
           continue;
         }
-        print(sheetID);
         rows.add(Sheet()
           ..zfileId = fileId
           ..aSheetName = sheetName
           ..aKey = 'row'
           ..sheetId = sheetID
           ..listStr = blUti.toListString(rowsArr[rowIx]));
+
+        if (rowsArr[rowIx].toString().contains(todayStr)) {
+          try {
+            await isar.writeTxn((isar) async {
+              await isar.sheets.put(Sheet()
+                ..zfileId = fileId
+                ..aSheetName = sheetName
+                ..aKey = '__newToday__'
+                ..sheetId = sheetID
+                ..listStr = blUti.toListString(rowsArr[rowIx]));
+            });
+            return 'OK';
+          } catch (e, s) {
+            logDb.createErr(
+                'sheetDB.createRows.putAll', e.toString(), s.toString());
+            return;
+          }
+        }
       }
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.createRows.for rows.add', e.toString(), s.toString(),
           descr: 'rowIx $rowIx of rowsArr.length ${rowsArr.length}');
-      return;
     }
 
+    if (rows.isEmpty) {
+      logDb.createErr('sheetDB.createRows.putAll',
+          'Error: wrong data sheet $sheetName', 'empty rows[]');
+      return;
+    }
     try {
       await isar.writeTxn((isar) async {
         await isar.sheets.putAll(rows); // insert
@@ -175,8 +197,30 @@ class SheetDb {
   }
 
   List<List<String>> readNewsCols = [];
+  Future<List<List<String>>> readNewToday() async {
+    List<List<String>> rows = [];
+    readNewsCols = [];
+
+    List<Sheet> newsTodayRows =
+        await isar.sheets.filter().aKeyEqualTo('__newToday__').findAll();
+
+    for (var newIx = 0; newIx < newsTodayRows.length; newIx++) {
+      String sheetName = newsTodayRows[newIx].aSheetName!;
+      phaseMessage.value = sheetName;
+      List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
+      if (!colsHeader.contains('sheetName')) {
+        colsHeader.add('sheetName');
+      }
+      readNewsCols.add(colsHeader);
+      rows.add(newsTodayRows[newIx].listStr!);
+    }
+
+    return rows;
+  }
+
   Future<List<List<String>>> readNews(String yyyyMMdd) async {
     List<List<String>> rows = [];
+    readNewsCols = [];
 
     List<String> sheetNames = await readSheetNames();
     for (String sheetName in sheetNames) {

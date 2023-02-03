@@ -13,7 +13,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
-  await sheetDb.readSheetNames();
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
