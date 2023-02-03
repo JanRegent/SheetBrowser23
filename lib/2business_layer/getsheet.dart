@@ -46,6 +46,7 @@ class GetSheet {
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
+
       if (rowsArr.isEmpty) return;
       colsHeader = blUti.toListString(rowsArr[0]);
       if (colsHeader.isEmpty) return;
@@ -53,7 +54,14 @@ class GetSheet {
 
       rowsArr.removeAt(0);
       if (rowsArr.isEmpty) return;
+    } catch (e, s) {
+      logDb.createErr(
+          'GetSheet().sheetPrepare.GoogleSheetsDL', e.toString(), s.toString(),
+          descr:
+              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+    }
 
+    try {
       await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
 
       //-----------------------------------------------try update diffs
@@ -63,8 +71,10 @@ class GetSheet {
       // await sheetDb.deleteRowsOfSheet(sheetName);
       // await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
-      logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString(),
-          descr: '\n sheetName: $sheetName\n fileId: $fileId');
+      logDb.createErr(
+          'GetSheet().sheetPrepare.createRows', e.toString(), s.toString(),
+          descr:
+              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
   }
 

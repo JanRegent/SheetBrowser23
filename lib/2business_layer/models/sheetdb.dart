@@ -33,7 +33,7 @@ class SheetDb {
       });
       return 'OK';
     } catch (e, s) {
-      logDb.createErr('SheetService.create', e.toString(), s.toString());
+      logDb.createErr('sheetDB.create', e.toString(), s.toString());
       return '';
     }
   }
@@ -48,7 +48,7 @@ class SheetDb {
         ..aKey = 'colsHeader'
         ..listStr = blUti.toListString(colsHeader));
     } catch (e, s) {
-      logDb.createErr('SheetService.create', e.toString(), s.toString());
+      logDb.createErr('sheetDB.create', e.toString(), s.toString());
       return '';
     }
   }
@@ -72,25 +72,47 @@ class SheetDb {
 
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
       List<String> colsHeader) async {
-    await createColsHeader(sheetName, fileId, colsHeader);
-    int sheetIDix = colsHeader.indexOf('ID');
-    List<Sheet> rows = [];
-    for (int rowIx = 0; rowIx < rowsArr.length; rowIx++) {
-      rows.add(Sheet()
-        ..zfileId = fileId
-        ..aSheetName = sheetName
-        ..aKey = 'row'
-        ..sheetId = int.tryParse(rowsArr[rowIx][sheetIDix])!
-        ..listStr = blUti.toListString(rowsArr[rowIx]));
+    try {
+      await createColsHeader(sheetName, fileId, colsHeader);
+    } catch (e, s) {
+      logDb.createErr(
+          'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
+      return;
     }
+    List<Sheet> rows = [];
+    int rowIx = 0;
+    try {
+      int sheetIDix = colsHeader.indexOf('ID');
+      for (rowIx = 0; rowIx < rowsArr.length; rowIx++) {
+        int sheetID = -1;
+        try {
+          sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
+        } catch (_) {
+          continue;
+        }
+        print(sheetID);
+        rows.add(Sheet()
+          ..zfileId = fileId
+          ..aSheetName = sheetName
+          ..aKey = 'row'
+          ..sheetId = sheetID
+          ..listStr = blUti.toListString(rowsArr[rowIx]));
+      }
+    } catch (e, s) {
+      logDb.createErr(
+          'sheetDB.createRows.for rows.add', e.toString(), s.toString(),
+          descr: 'rowIx $rowIx of rowsArr.length ${rowsArr.length}');
+      return;
+    }
+
     try {
       await isar.writeTxn((isar) async {
         await isar.sheets.putAll(rows); // insert
       });
       return 'OK';
     } catch (e, s) {
-      logDb.createErr('SheetService.create', e.toString(), s.toString());
-      return '';
+      logDb.createErr('sheetDB.createRows.putAll', e.toString(), s.toString());
+      return;
     }
   }
 
@@ -100,7 +122,7 @@ class SheetDb {
         await isar.sheets.clear();
       });
     } catch (e, s) {
-      logDb.createErr('SheetService.cleanDb', e.toString(), s.toString());
+      logDb.createErr('sheetDB.cleanDb', e.toString(), s.toString());
     }
   }
 
@@ -173,9 +195,9 @@ class SheetDb {
           .and()
           .listStrAnyContains(yyyyMMdd)
           .findAll();
+
       for (var rowIx = 0; rowIx < sheetRows.length; rowIx++) {
         readNewsCols.add(colsHeader);
-
         rows.add(sheetRows[rowIx].listStr!);
       }
     }
