@@ -231,17 +231,18 @@ class SheetDb {
     return sheetNames;
   }
 
-  Future<List<Map>> readRowMap(List<int> ids) async {
+  Future<List<Map>> readRowMaps(List<int> ids) async {
     List<Map> rowmaps = [];
     await colsHeadersMapBuild();
     for (var idIx = 0; idIx < ids.length; idIx++) {
       Sheet? sheet = await isar.sheets.get(ids[idIx]);
       List<String> colHeader = colsHeadersMap[sheet!.aSheetName]!;
       Map rowmap = {};
-      print(colHeader);
-      print(sheet.listStr);
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
-        rowmap[colHeader[colIx]] = sheet.listStr![colIx];
+        try {
+          rowmap[colHeader[colIx]] = sheet.listStr![colIx];
+          //todo: different len of cols and listStr row
+        } catch (_) {}
       }
       rowmaps.add(rowmap);
     }

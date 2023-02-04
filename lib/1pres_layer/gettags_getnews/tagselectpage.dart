@@ -67,10 +67,8 @@ class _TagSelectPageState extends State<TagSelectPage> {
     return IconButton(
         onPressed: () async {
           List<int> ids = await tagsDb.readTagIds(textEditingController.text);
-          print(ids);
 
-          List<Map> rowMaps = await sheetDb.readRowMap(ids);
-          print(rowMaps);
+          List<Map> rowMaps = await sheetDb.readRowMaps(ids);
           Map filelistRow = {};
           filelistRow['sheetName'] = 'Tag: ${textEditingController.text}';
           // ignore: use_build_context_synchronously

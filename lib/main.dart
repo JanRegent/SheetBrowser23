@@ -13,12 +13,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
-
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
     );
-  } catch (e) {
+  } catch (e, s) {
+    logDb.createErr('main().RouterSwitch()', e.toString(), s.toString());
     runApp(
       const ErrorPage2('main().RouterSwitch()'),
     );
@@ -28,7 +28,9 @@ void main() async {
 Future<bool> mainInit() async {
   try {
     await dbInit();
-  } catch (e) {
+  } catch (e, s) {
+    logDb.createErr('main().dbInit()', e.toString(), s.toString());
+
     runApp(
       const ErrorPage2('main().dbInit()'),
     );
@@ -36,7 +38,9 @@ Future<bool> mainInit() async {
   }
   try {
     await AppDataPrefs.init();
-  } catch (e) {
+  } catch (e, s) {
+    logDb.createErr('main().AppDataPrefs.init()', e.toString(), s.toString());
+
     runApp(
       const ErrorPage2('main().AppDataPrefs.init()'),
     );
@@ -45,7 +49,10 @@ Future<bool> mainInit() async {
 
   try {
     await AppDataPrefs.apikeyRootSheetIdLoad();
-  } catch (e) {
+  } catch (e, s) {
+    logDb.createErr(
+        'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());
+
     runApp(
       const ErrorPage2('main().AppDataPrefs.appRootConfigLoad()'),
     );
