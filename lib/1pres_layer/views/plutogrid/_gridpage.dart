@@ -98,21 +98,15 @@ class _GridPageState extends State<GridPage> {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(
-                              [currentSheet.colsHeader],
-                              currentSheet.rowsMaps,
-                              currentSheet.getFilelistRow(),
-                              0),
+                          builder: (ctx) => Carousel(currentSheet.rowsMaps,
+                              currentSheet.getFilelistRow(), 0),
                         ));
                   } else {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(
-                              [currentSheet.colsHeader],
-                              currentSheet.rowsMaps,
-                              currentSheet.getFilelistRow(),
-                              0),
+                          builder: (ctx) => Carousel(currentSheet.rowsMaps,
+                              currentSheet.getFilelistRow(), 0),
                         ));
                   }
                 }),

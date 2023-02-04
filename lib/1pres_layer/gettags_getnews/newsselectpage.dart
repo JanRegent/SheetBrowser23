@@ -83,8 +83,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) =>
-                    Carousel(sheetDb.readNewsCols, rowsMaps, configRow, 0),
+                builder: (ctx) => Carousel(rowsMaps, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));
@@ -103,8 +102,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) =>
-                    Carousel(sheetDb.readNewsCols, rowsMaps, configRow, 0),
+                builder: (ctx) => Carousel(rowsMaps, configRow, 0),
               ));
         },
         icon: const Icon(Icons.today));

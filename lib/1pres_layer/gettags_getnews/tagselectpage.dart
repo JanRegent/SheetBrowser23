@@ -75,7 +75,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(const [[]], rowMaps, filelistRow, 0),
+                builder: (ctx) => Carousel(rowMaps, filelistRow, 0),
               ));
         },
         icon: const Icon(Icons.search));

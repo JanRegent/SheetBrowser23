@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
-  final List<List<dynamic>> colsHeaders;
   final List<Map> rowMaps;
   final Map configRow;
   final int startRow;
-  const Carousel(this.colsHeaders, this.rowMaps, this.configRow, this.startRow,
-      {super.key});
+  const Carousel(this.rowMaps, this.configRow, this.startRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
