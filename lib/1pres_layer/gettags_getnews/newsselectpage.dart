@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowser/1pres_layer/acontrolers/isloading.dart';
+import 'package:sheetbrowser/data_layer/isloading/isloading.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb.dart';
 
 import '../alib/uti.dart';
@@ -129,7 +129,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
       ),
       body: Obx(() => isDataLoading.value
           ? isloadingWidgetColumn(
-              'Awaiting news...\n (${textEditingController.text}) \n ${phaseMessage.value}')
+              'Awaiting news...\n (${textEditingController.text}) \n ${isloadingPhaseMessage.value}')
           : searchableKeyListview()),
 
       //searchableKeyListview()

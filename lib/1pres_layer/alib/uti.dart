@@ -84,8 +84,8 @@ class BLuti {
         r'^((?:.|\n)*?)((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?)';
     var match =
         RegExp(urlPattern, caseSensitive: false).hasMatch(url).toString();
-    // ignore: avoid_print
-    print(match); // .allMatches || firstMatch || hasMatch || stringMatch
+
+    match = match; // .allMatches || firstMatch || hasMatch || stringMatch
   }
 
   List<String> toListString(List<dynamic> items) {

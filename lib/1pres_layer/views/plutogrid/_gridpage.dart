@@ -137,9 +137,7 @@ class _GridPageState extends State<GridPage> {
                 stateManager.setShowColumnFilter(true);
               },
               onChanged: (PlutoGridOnChangedEvent event) {
-                if (kDebugMode) {
-                  print(event);
-                }
+                if (kDebugMode) {}
               },
               onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {},
               //configuration: configuration,

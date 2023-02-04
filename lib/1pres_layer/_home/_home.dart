@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 
-import '../acontrolers/isloading.dart';
+import '../../data_layer/isloading/isloading.dart';
 
 /// Providers are declared globally and specify how to create a state
 final counterProvider = StateProvider((ref) => 0);
@@ -21,9 +20,7 @@ class SidebarHome extends ConsumerWidget {
   Widget homeBody(ref) {
     return Column(
       children: [
-        const Text('Sheet is uploaded:'),
-        Obx(() => Text(' ${sheetNameIsloadiding.value}',
-            style: const TextStyle(fontSize: 18)))
+        isloadingListTile(),
       ],
     );
   }

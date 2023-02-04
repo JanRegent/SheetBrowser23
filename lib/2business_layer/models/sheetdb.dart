@@ -1,6 +1,6 @@
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
-import '../../1pres_layer/acontrolers/isloading.dart';
+import '../../data_layer/isloading/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 
 import 'package:isar/isar.dart';
@@ -134,32 +134,20 @@ class SheetDb {
         int sheetID = -1;
         try {
           sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
-        } catch (_) {
+        } catch (e) {
+          //rint('$sheetName $e');
           continue;
         }
-        rows.add(Sheet()
+        Sheet sheet = Sheet()
           ..zfileId = fileId
           ..aSheetName = sheetName
           ..aKey = 'row'
           ..sheetId = sheetID
-          ..listStr = blUti.toListString(rowsArr[rowIx]));
+          ..listStr = blUti.toListString(rowsArr[rowIx]);
+        rows.add(sheet);
 
-        if (rowsArr[rowIx].toString().contains(todayStr)) {
-          try {
-            await isar.writeTxn((isar) async {
-              await isar.sheets.put(Sheet()
-                ..zfileId = fileId
-                ..aSheetName = sheetName
-                ..aKey = '__newToday__'
-                ..sheetId = sheetID
-                ..listStr = blUti.toListString(rowsArr[rowIx]));
-            });
-            return 'OK';
-          } catch (e, s) {
-            logDb.createErr(
-                'sheetDB.createRows.putAll', e.toString(), s.toString());
-            return;
-          }
+        if (sheet.listStr!.contains(todayStr)) {
+          await createTodayNews(sheet);
         }
       }
     } catch (e, s) {
@@ -180,6 +168,18 @@ class SheetDb {
       return 'OK';
     } catch (e, s) {
       logDb.createErr('sheetDB.createRows.putAll', e.toString(), s.toString());
+      return;
+    }
+  }
+
+  Future createTodayNews(Sheet sheet) async {
+    try {
+      sheet.aKey = '__newToday__';
+      await isar.writeTxn((isar) async {
+        await isar.sheets.put(sheet);
+      });
+    } catch (e, s) {
+      logDb.createErr('sheetDB.createTodayNews', e.toString(), s.toString());
       return;
     }
   }
@@ -284,7 +284,7 @@ class SheetDb {
 
     for (var newIx = 0; newIx < newsTodaySheets.length; newIx++) {
       String sheetName = newsTodaySheets[newIx].aSheetName!;
-      phaseMessage.value = sheetName;
+      isloadingPhaseMessage.value = sheetName;
       List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
       rowsMaps.add(row2Map(
           colsHeader, blUti.toListDynamic(newsTodaySheets[newIx].listStr!)));
@@ -309,7 +309,7 @@ class SheetDb {
 
     List<String> sheetNames = await readSheetNames();
     for (String sheetName in sheetNames) {
-      phaseMessage.value = sheetName;
+      isloadingPhaseMessage.value = sheetName;
       //---------------------------------------------ColsHeader
       List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
       if (!colsHeader.contains('sheetName')) {

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
@@ -36,8 +34,6 @@ class GoogleSheetsDL {
     } on FormatException {
       throw Failure(message: "Error: Bad Response. [getAllSheet]");
     } catch (e) {
-      debugPrint(e.toString());
-
       return [];
       // you can show any error widgets for your users here.
     }
@@ -80,8 +76,6 @@ class GoogleSheetsDL {
     } on FormatException {
       throw Failure(message: "Error: Bad Response. [selectData]");
     } catch (e) {
-      debugPrint(e.toString());
-
       return [];
       // you can show any error widgets for your users here.
     }
@@ -106,8 +100,6 @@ Future getTagQuote(String sourceSheetName, String id, String fileId) async {
   } on FormatException {
     throw Failure(message: "Error: Bad Response. [getTagQuote]");
   } catch (e) {
-    debugPrint(e.toString());
-
     return [];
     // you can show any error widgets for your users here.
   }

@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../../1pres_layer/acontrolers/isloading.dart';
+import '../../data_layer/isloading/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 import 'sheet.dart';
 import 'sheetdb.dart';
@@ -35,7 +35,7 @@ class TagsDb {
     List<Sheet?> sheetrows = await sheetDb.readAllRows();
 
     for (var rIx = 1; rIx < sheetrows.length; rIx = rIx + 1) {
-      sheetNameIsloadiding.value = 'Indexing: ${sheetrows[rIx]!.aSheetName!}';
+      isloadingPhaseMessage.value = 'Indexing: ${sheetrows[rIx]!.aSheetName!}';
       await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.listStr,
           sheetrows[rIx]!.id);
     }

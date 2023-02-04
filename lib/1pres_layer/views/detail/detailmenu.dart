@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
@@ -32,7 +30,6 @@ class _DetailMenuState extends State<DetailMenu> {
     super.initState();
 
     whiteTapMenus = _makeMenus(context);
-    print(widget.configMap);
   }
 
   void message(context, String text) {
