@@ -73,7 +73,8 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
     return IconButton(
         onPressed: () async {
           isDataLoading.value = true;
-          List rowsArr = await sheetDb.readNews(textEditingController.text);
+          List<Map> rowsMaps =
+              await sheetDb.readNews(textEditingController.text);
           isDataLoading.value = false;
           Map configRow = {};
           configRow['sheetName'] = 'News';
@@ -83,7 +84,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
               context,
               MaterialPageRoute(
                 builder: (ctx) =>
-                    Carousel(sheetDb.readNewsCols, rowsArr, configRow, 0),
+                    Carousel(sheetDb.readNewsCols, rowsMaps, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));
@@ -93,7 +94,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
     return IconButton(
         onPressed: () async {
           isDataLoading.value = true;
-          List rowsArr = await sheetDb.readNewsToday();
+          List<Map> rowsMaps = await sheetDb.readNewsToday();
           isDataLoading.value = false;
           Map configRow = {};
           configRow['sheetName'] = 'News';
@@ -103,7 +104,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
               context,
               MaterialPageRoute(
                 builder: (ctx) =>
-                    Carousel(sheetDb.readNewsCols, rowsArr, configRow, 0),
+                    Carousel(sheetDb.readNewsCols, rowsMaps, configRow, 0),
               ));
         },
         icon: const Icon(Icons.today));

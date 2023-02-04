@@ -7,7 +7,7 @@ import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
   final List<List<dynamic>> colsHeaders;
-  final List rowMaps;
+  final List<Map> rowMaps;
   final Map configRow;
   final int startRow;
   const Carousel(this.colsHeaders, this.rowMaps, this.configRow, this.startRow,

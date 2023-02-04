@@ -113,6 +113,14 @@ class BLuti {
     return list;
   }
 
+  List<dynamic> toListDynamic(List<String> items) {
+    List<dynamic> list = [];
+    for (var item in items) {
+      list.add(item);
+    }
+    return list;
+  }
+
   Map<String, dynamic> toMapStringDynamic(Map<dynamic, dynamic> resp) {
     Map<String, dynamic> map = {};
     for (String key in resp.keys) {

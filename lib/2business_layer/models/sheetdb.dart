@@ -249,27 +249,48 @@ class SheetDb {
     return rowmaps;
   }
 
+  Future<List<Map>> readRowMapsSheet(String sheetName) async {
+    List<int> ids = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .aKeyEqualTo('row')
+        .idProperty()
+        .findAll();
+
+    return readRowMaps(ids);
+  }
+
+  Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
+    Map row = {};
+    for (var i = 0; i < keys.length; i++) {
+      try {
+        row[keys[i]] = datarow[i];
+      } catch (_) {
+        row[keys[i]] = '';
+      }
+    }
+    return row;
+  }
+
   //-------------------------------------------------------------news
   List<List<String>> readNewsCols = [];
-  Future<List<List<String>>> readNewsToday() async {
-    List<List<String>> rows = [];
+  Future<List<Map>> readNewsToday() async {
+    List<Map> rowsMaps = [];
     readNewsCols = [];
 
-    List<Sheet> newsTodayRows =
+    List<Sheet> newsTodaySheets =
         await isar.sheets.filter().aKeyEqualTo('__newToday__').findAll();
 
-    for (var newIx = 0; newIx < newsTodayRows.length; newIx++) {
-      String sheetName = newsTodayRows[newIx].aSheetName!;
+    for (var newIx = 0; newIx < newsTodaySheets.length; newIx++) {
+      String sheetName = newsTodaySheets[newIx].aSheetName!;
       phaseMessage.value = sheetName;
       List<String> colsHeader = await readColsHeader(sheetName) as List<String>;
-      if (!colsHeader.contains('sheetName')) {
-        colsHeader.add('sheetName');
-      }
-      readNewsCols.add(colsHeader);
-      rows.add(newsTodayRows[newIx].listStr!);
+      rowsMaps.add(row2Map(
+          colsHeader, blUti.toListDynamic(newsTodaySheets[newIx].listStr!)));
     }
 
-    return rows;
+    return rowsMaps;
   }
 
   Future deleteNewsToday() async {
@@ -283,9 +304,8 @@ class SheetDb {
     });
   }
 
-  Future<List<List<String>>> readNews(String yyyyMMdd) async {
-    List<List<String>> rows = [];
-    readNewsCols = [];
+  Future<List<Map>> readNews(String yyyyMMdd) async {
+    List<Map> rowsMaps = [];
 
     List<String> sheetNames = await readSheetNames();
     for (String sheetName in sheetNames) {
@@ -296,22 +316,20 @@ class SheetDb {
         colsHeader.add('sheetName');
       }
       //---------------------------------------------dateinsert rows
-      List<Sheet> sheetRows = await isar.sheets
+      List<int> ids = await isar.sheets
           .filter()
           .aSheetNameEqualTo(sheetName)
           .and()
           .aKeyEqualTo('row')
           .and()
           .listStrAnyContains(yyyyMMdd)
+          .idProperty()
           .findAll();
 
-      for (var rowIx = 0; rowIx < sheetRows.length; rowIx++) {
-        readNewsCols.add(colsHeader);
-        rows.add(sheetRows[rowIx].listStr!);
-      }
+      rowsMaps.addAll(await readRowMaps(ids));
     }
 
-    return rows;
+    return rowsMaps;
   }
 
   //----------------------------------------------------------delete

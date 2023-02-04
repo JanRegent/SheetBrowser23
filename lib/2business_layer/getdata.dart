@@ -15,7 +15,7 @@ Future getFilelist() async {
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelist.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
-    filelist.add(row2Map(fileHeader, fileArr[rowIx]));
+    filelist.add(sheetDb.row2Map(fileHeader, fileArr[rowIx]));
   }
 }
 
@@ -27,18 +27,6 @@ Future<List<dynamic>> selectData() async {
   ).selectData();
 
   return values;
-}
-
-Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
-  Map row = {};
-  for (var i = 0; i < keys.length; i++) {
-    try {
-      row[keys[i]] = datarow[i];
-    } catch (_) {
-      row[keys[i]] = '';
-    }
-  }
-  return row;
 }
 
 //-----------------------------------------------------------------------rootSheet

@@ -14,6 +14,7 @@ class GetSheet {
 
   List<dynamic> rowsArrFiltered = [];
   List<dynamic> rowsArr = [];
+  List<Map> rowsMaps = [];
   List<String> colsHeader = [];
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
@@ -113,6 +114,7 @@ class GetSheet {
     colsHeader = (await sheetDb.readColsHeader(sheetName))!;
     plutoCols = await colsMap(colsHeader);
     rowsArr = await sheetDb.readRowsAll(sheetName);
+    rowsMaps = await sheetDb.readRowMapsSheet(sheetName);
     gridrows = await gridRowsMap(rowsArr, colsHeader);
   }
 }

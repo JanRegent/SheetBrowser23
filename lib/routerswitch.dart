@@ -83,12 +83,12 @@ class _RouterSwitchState extends State<RouterSwitch> {
             //-----------------------------------------------default detail view
             if (currentSheet.rowsArrFiltered.isEmpty) {
               configRow['sheetName'] = 'All';
-              return Carousel([currentSheet.colsHeader], currentSheet.rowsArr,
+              return Carousel([currentSheet.colsHeader], currentSheet.rowsMaps,
                   configRow, 0);
             } else {
               configRow['sheetName'] = 'Filter:';
-              return Carousel([currentSheet.colsHeader],
-                  currentSheet.rowsArrFiltered, configRow, 0);
+              return Carousel([currentSheet.colsHeader], currentSheet.rowsMaps,
+                  configRow, 0);
             }
           } else if (snapshot.hasError) {
             runApp(
