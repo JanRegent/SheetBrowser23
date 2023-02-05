@@ -61,19 +61,20 @@ class _KeySelectPageState extends State<KeySelectPage> {
     );
   }
 
+  IconButton searchButton() {
+    return IconButton(
+        onPressed: () {
+          Navigator.pop(context, textEditingController.text);
+        },
+        icon: const Icon(Icons.search));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context, textEditingController.text);
-                },
-                icon: const Icon(Icons.search))
-          ],
-        ),
-        body: searchableKeyListview());
+        appBar: AppBar(title: Text(widget.title)),
+        body: Column(
+          children: [searchButton(), searchableKeyListview()],
+        ));
   }
 }

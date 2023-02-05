@@ -8,6 +8,7 @@ import '../../2business_layer/models/sheetdb.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../gettags_getnews/newsselectpage.dart';
+import '../gettags_getnews/searchflow.dart';
 import '../gettags_getnews/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
 import '_home.dart';
@@ -171,7 +172,7 @@ class ExampleSidebarX extends StatelessWidget {
           icon: Icons.search,
           label: 'Search',
           onTap: () async {
-            //await searchFlow(context, [], 'Search by words');
+            await searchFlow(context, [], 'Search by words');
           },
         ),
         SidebarXItem(

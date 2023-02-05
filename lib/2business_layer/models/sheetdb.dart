@@ -214,6 +214,17 @@ class SheetDb {
     return sheetNames;
   }
 
+  Future<List<Map>> readFullText(String str) async {
+    List<Sheet> sheets = await isar.sheets
+        .filter()
+        .aKeyEqualTo('row')
+        .and()
+        .listStrAnyContains(str)
+        .findAll();
+
+    return await readRowMapsBySheets(sheets);
+  }
+
   Future<List<Map>> readRowMapsByIDs(List<int> ids) async {
     List<Map> rowmaps = [];
     await colsHeadersMapBuild();
