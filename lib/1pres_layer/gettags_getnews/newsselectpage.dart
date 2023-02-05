@@ -29,7 +29,6 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
   void initState() {
     super.initState();
     keysNames = blUti.lastNdays(5);
-    keysNames.removeAt(0); //today
   }
 
   TextEditingController textEditingController = TextEditingController();
@@ -89,25 +88,6 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
         icon: const Icon(Icons.search));
   }
 
-  IconButton todayButton() {
-    return IconButton(
-        onPressed: () async {
-          isDataLoading.value = true;
-          List<Map> rowsMaps = await sheetDb.readNewsToday();
-          isDataLoading.value = false;
-          Map configRow = {};
-          configRow['sheetName'] = 'News';
-          configRow['title'] = 'New: ${textEditingController.text}';
-          // ignore: use_build_context_synchronously
-          await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => Carousel(rowsMaps, configRow, 0),
-              ));
-        },
-        icon: const Icon(Icons.today));
-  }
-
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -125,7 +105,6 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
                       : searchButton()
                 ],
               ),
-        actions: [todayButton()],
       ),
       body: Obx(() => isDataLoading.value
           ? isloadingWidgetColumn(

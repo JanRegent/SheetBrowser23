@@ -12,14 +12,13 @@ import '../../2business_layer/models/sheetdb.dart';
 Future backgroundCompleter() async {
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
-  isloadingPhaseMessage.value = 'Data to $lastCompleted';
+  isloadingPhaseMessage.value = 'Up to date $lastCompleted';
 
   if (lastCompleted == blUti.todayStr()) {
     isloadingPhaseMessage.value = '';
     return;
   }
   await sheetDb.deleteAKeyEqualToRow();
-  await sheetDb.deleteNewsToday();
   await tagsDb.clear();
 
   await getFilelist();
@@ -46,7 +45,7 @@ Future backgroundCompleter() async {
     await tagsDb.tagsMapSave();
     isloadingAction.value = '';
     isloadingPhaseMessage.value =
-        'Data to ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
+        'Up to date ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
     isDataLoading.value = false;
   });
 }

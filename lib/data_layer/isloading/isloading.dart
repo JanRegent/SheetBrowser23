@@ -11,7 +11,7 @@ RxString isloadingPhaseMessage = ''.obs;
 
 ListTile isloadingListTile() {
   isloadingPhaseMessage.value =
-      'Data to ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
+      'Up to date ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
 
   return ListTile(
       leading: Obx(() => Text(' ${isloadingAction.value}',
