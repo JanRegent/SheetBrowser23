@@ -1,19 +1,19 @@
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
-import '../../1pres_layer/alib/uti.dart';
+import '../../../1pres_layer/alib/uti.dart';
 
 import 'package:isar/isar.dart';
 
-import 'sheet.dart';
-import 'log.dart';
+import '../sheet.dart';
+import '../log.dart';
+import 'starreddb.dart';
 
 late SheetDb sheetDb;
+
 late LogDb logDb;
 late TagsDb tagsDb;
 
 Future dbInit() async {
-  //db = openIsar();
-
   final isar = await Isar.open(
     schemas: [SheetSchema, LogSchema, TagSchema],
     name: 'pbFielistDB',
@@ -22,12 +22,20 @@ Future dbInit() async {
   );
   logDb = LogDb(isar);
   sheetDb = SheetDb(isar);
+  await sheetDb.init();
+
   tagsDb = TagsDb(isar);
 }
 
 class SheetDb {
   final Isar isar;
   SheetDb(this.isar);
+
+  late StarredDb starredDb;
+
+  Future init() async {
+    starredDb = StarredDb(isar);
+  }
 
   Future create(Sheet newSheet) async {
     try {
@@ -124,6 +132,14 @@ class SheetDb {
           'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
       return;
     }
+    try {
+      await sheetDb.starredDb.createStarred(sheetName, fileId);
+    } catch (e, s) {
+      logDb.createErr(
+          'sheetDB.createRows.createStarred', e.toString(), s.toString());
+      return;
+    }
+
     List<Sheet> rows = [];
 
     int rowIx = 0;

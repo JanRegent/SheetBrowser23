@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/sheetdb.dart';
 
 import '../views/detail/carousel.dart';
 

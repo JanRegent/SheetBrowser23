@@ -6,7 +6,7 @@ import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
 import 'appdata/approotdata.dart';
 
-import 'models/sheetdb.dart';
+import 'models/sheetdb/sheetdb.dart';
 
 class GetSheet {
   String fileId = '';

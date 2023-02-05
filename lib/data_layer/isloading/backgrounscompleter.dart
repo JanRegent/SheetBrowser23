@@ -7,7 +7,7 @@ import 'package:sheetbrowser/2business_layer/getsheet.dart';
 import 'isloading.dart';
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../2business_layer/getdata.dart';
-import '../../2business_layer/models/sheetdb.dart';
+import '../../2business_layer/models/sheetdb/sheetdb.dart';
 
 Future backgroundCompleter() async {
   String? lastCompleted =
@@ -25,7 +25,7 @@ Future backgroundCompleter() async {
 
   Future.delayed(const Duration(seconds: 1), () async {
     isDataLoading.value = true;
-    isloadingAction.value = 'Sheets loading';
+    isloadingAction.value = 'Loading';
     for (int fileIx = 0; fileIx < filelist.length; fileIx++) {
       String sheetName = filelist[fileIx]['sheetName'];
 
@@ -38,9 +38,9 @@ Future backgroundCompleter() async {
     isDataLoading.value = false;
   }).whenComplete(() async {
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
-    isloadingPhaseMessage.value = 'Indexing tags';
+    isloadingPhaseMessage.value = 'Indexing';
     //-----------------------------------------------index
-    isloadingAction.value = 'Tags indexing';
+    isloadingAction.value = 'Indexing';
     await tagsDb.tagsIndex();
     await tagsDb.tagsMapSave();
     isloadingAction.value = '';
