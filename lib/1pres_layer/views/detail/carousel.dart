@@ -26,9 +26,6 @@ class CarouselState extends State<Carousel> {
   @override
   void initState() {
     super.initState();
-    if (widget.configRow['title'] == null) {
-      widget.configRow['title'] = widget.configRow['sheetName'];
-    }
 
     try {
       _currentIndex = widget.startRow;

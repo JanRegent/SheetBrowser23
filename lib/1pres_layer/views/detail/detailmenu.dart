@@ -50,9 +50,9 @@ class _DetailMenuState extends State<DetailMenu> {
       starredLink.add('link2ID=${rowmap['link2ID']}');
       starredLink.add('link2fileId=${rowmap['link2fileId']}');
     } else {
-      starredLink.add('link2sheetName=${configMap['sheetName']}');
+      starredLink.add('link2sheetName=${rowmap['sheetName']}');
       starredLink.add('link2ID=${rowmap['ID']}');
-      starredLink.add('link2fileId=${blUti.url2fileid(configMap['fileUrl'])}');
+      starredLink.add('link2fileId=${blUti.url2fileid(rowmap['fileUrl'])}');
     }
     return starredLink;
   }
@@ -68,7 +68,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.open_in_browser,
             onTap: () async {
               await al.openDoc(
-                  widget.configMap['fileUrl'], context, 'Open data source');
+                  widget.rowmap['fileUrl'], context, 'Open data source');
             },
           ),
           PlutoMenuItem(
@@ -105,7 +105,7 @@ class _DetailMenuState extends State<DetailMenu> {
         title: 'Star',
         icon: Icons.stars,
         children: [
-          widget.configMap['sheetName'] == 'starred2022'
+          widget.rowmap['sheetName'] == 'starred2022'
               ? PlutoMenuItem(title: '')
               : PlutoMenuItem(
                   title: 'Add',
@@ -131,7 +131,7 @@ class _DetailMenuState extends State<DetailMenu> {
             title: 'Add',
             icon: Icons.bookmark_add,
             onTap: () => AppDataPrefs.setString(
-                widget.configMap['sheetName'] + '__bookmark',
+                widget.rowmap['sheetName'] + '__bookmark',
                 widget.rowsArrRowIx.toString()),
           ),
         ],

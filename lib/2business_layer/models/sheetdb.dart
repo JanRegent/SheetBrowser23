@@ -227,6 +227,7 @@ class SheetDb {
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
+      rowmap['sheetName'] = sheet.aSheetName;
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -245,6 +246,7 @@ class SheetDb {
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
+      rowmap['sheetName'] = sheet.aSheetName;
       rowmaps.add(rowmap);
     }
     return rowmaps;

@@ -69,13 +69,13 @@ class _TagSelectPageState extends State<TagSelectPage> {
           List<int> ids = await tagsDb.readTagIds(textEditingController.text);
 
           List<Map> rowMaps = await sheetDb.readRowMapsByIDs(ids);
-          Map filelistRow = {};
-          filelistRow['sheetName'] = 'Tag: ${textEditingController.text}';
+          Map configRow = {};
+          configRow['title'] = 'Tag: ${textEditingController.text}';
           // ignore: use_build_context_synchronously
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(rowMaps, filelistRow, 0),
+                builder: (ctx) => Carousel(rowMaps, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));

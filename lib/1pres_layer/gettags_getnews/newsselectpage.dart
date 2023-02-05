@@ -76,7 +76,6 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
               await sheetDb.readNews(textEditingController.text);
           isDataLoading.value = false;
           Map configRow = {};
-          configRow['sheetName'] = 'News';
           configRow['title'] = 'New: ${textEditingController.text}';
           // ignore: use_build_context_synchronously
           await Navigator.push(
