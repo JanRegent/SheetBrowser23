@@ -2,7 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
-import '_sheetdb.dart';
+import '../sheetDb/_sheetdb.dart';
 
 class StarredDb extends SheetDb {
   StarredDb(super.isar);

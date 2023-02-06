@@ -17,17 +17,17 @@ extension GetSheetCollection on Isar {
 const SheetSchema = CollectionSchema(
   name: 'Sheet',
   schema:
-      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"listStr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"starred","type":"String"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"zfileId","unique":false,"properties":[{"name":"zfileId","type":"Value","caseSensitive":true}]}],"links":[]}',
+      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"rowArr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"starred","type":"String"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"zfileId","unique":false,"properties":[{"name":"zfileId","type":"Value","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'aKey': 0,
     'aSheetName': 1,
-    'listStr': 2,
+    'rowArr': 2,
     'sheetId': 3,
     'starred': 4,
     'zfileId': 5
   },
-  listProperties: {'listStr'},
+  listProperties: {'rowArr'},
   indexIds: {'aKey': 0, 'aSheetName': 1, 'zfileId': 2},
   indexValueTypes: {
     'aKey': [
@@ -93,7 +93,7 @@ void _sheetSerializeNative(
     bytesList2.add(bytes);
     dynamicSize += bytes.length as int;
   }
-  final _listStr = bytesList2;
+  final _rowArr = bytesList2;
   final value3 = object.sheetId;
   final _sheetId = value3;
   final value4 = object.starred;
@@ -110,7 +110,7 @@ void _sheetSerializeNative(
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _aKey);
   writer.writeBytes(offsets[1], _aSheetName);
-  writer.writeStringList(offsets[2], _listStr);
+  writer.writeStringList(offsets[2], _rowArr);
   writer.writeLong(offsets[3], _sheetId);
   writer.writeBytes(offsets[4], _starred);
   writer.writeBytes(offsets[5], _zfileId);
@@ -156,7 +156,7 @@ dynamic _sheetSerializeWeb(IsarCollection<Sheet> collection, Sheet object) {
   IsarNative.jsObjectSet(jsObj, 'aKey', object.aKey);
   IsarNative.jsObjectSet(jsObj, 'aSheetName', object.aSheetName);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'listStr', object.rowArr);
+  IsarNative.jsObjectSet(jsObj, 'rowArr', object.rowArr);
   IsarNative.jsObjectSet(jsObj, 'sheetId', object.sheetId);
   IsarNative.jsObjectSet(jsObj, 'starred', object.starred);
   IsarNative.jsObjectSet(jsObj, 'zfileId', object.zfileId);
@@ -168,7 +168,7 @@ Sheet _sheetDeserializeWeb(IsarCollection<Sheet> collection, dynamic jsObj) {
   object.aKey = IsarNative.jsObjectGet(jsObj, 'aKey') ?? '';
   object.aSheetName = IsarNative.jsObjectGet(jsObj, 'aSheetName') ?? '';
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.rowArr = (IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+  object.rowArr = (IsarNative.jsObjectGet(jsObj, 'rowArr') as List?)
           ?.map((e) => e ?? '')
           .toList()
           .cast<String>() ??
@@ -189,8 +189,8 @@ P _sheetDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
           as P;
-    case 'listStr':
-      return ((IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+    case 'rowArr':
+      return ((IsarNative.jsObjectGet(jsObj, 'rowArr') as List?)
               ?.map((e) => e ?? '')
               .toList()
               .cast<String>() ??
@@ -777,19 +777,19 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEqualTo(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyGreaterThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -797,13 +797,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyLessThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -811,13 +811,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyBetween(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -825,7 +825,7 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'listStr',
+      property: 'rowArr',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -834,47 +834,47 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyContains(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyContains(
       String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'listStr',
+      property: 'rowArr',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -1279,8 +1279,8 @@ extension SheetQueryProperty on QueryBuilder<Sheet, Sheet, QQueryProperty> {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<Sheet, List<String>, QQueryOperations> listStrProperty() {
-    return addPropertyNameInternal('listStr');
+  QueryBuilder<Sheet, List<String>, QQueryOperations> rowArrProperty() {
+    return addPropertyNameInternal('rowArr');
   }
 
   QueryBuilder<Sheet, int, QQueryOperations> sheetIdProperty() {
