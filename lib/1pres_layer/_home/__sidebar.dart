@@ -6,6 +6,7 @@ import '../../2business_layer/appdata/appsettingspage.dart';
 import '../../2business_layer/getdata.dart';
 
 import '../../2business_layer/models/sheetdb/sheetdb.dart';
+import '../../data_layer/isloading/isloading.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../gettags_getnews/searchpage.dart';
@@ -159,7 +160,7 @@ class ExampleSidebarX extends StatelessWidget {
                   ));
             }),
         SidebarXItem(
-            icon: Icons.newspaper,
+            icon: Icons.search,
             label: 'Search',
             onTap: () async {
               await Navigator.push(
@@ -172,7 +173,9 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.star,
             label: 'Starred',
             onTap: () async {
+              isloadingPhaseMessage.value = 'Loading starred';
               await currentSheet.getSheet('starred2022', '');
+              isloadingPhaseMessage.value = '';
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
@@ -186,7 +189,9 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
+              isloadingPhaseMessage.value = 'Loading tags';
               List<String> tags = await tagsDb.readTags();
+              isloadingPhaseMessage.value = '';
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,

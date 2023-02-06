@@ -1,10 +1,10 @@
+import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
 
 import 'package:isar/isar.dart';
 
-import '../sheet.dart';
 import '../log.dart';
 import 'starreddb.dart';
 
@@ -89,8 +89,8 @@ class SheetDb {
         await isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
 
     for (var sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
-      colsHeadersMap[colRows[sheetNameIx].aSheetName!] =
-          colRows[sheetNameIx].listStr!;
+      colsHeadersMap[colRows[sheetNameIx].aSheetName] =
+          colRows[sheetNameIx].listStr;
     }
   }
 
@@ -116,7 +116,7 @@ class SheetDb {
         .filter()
         .aKeyEqualTo('colsHeader')
         .aSheetNameProperty()
-        .findAll() as List<String>;
+        .findAll();
 
     return sheetNames;
   }
@@ -130,13 +130,6 @@ class SheetDb {
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
-      return;
-    }
-    try {
-      await sheetDb.starredDb.createStarred(sheetName, fileId);
-    } catch (e, s) {
-      logDb.createErr(
-          'sheetDB.createRows.createStarred', e.toString(), s.toString());
       return;
     }
 
@@ -159,6 +152,7 @@ class SheetDb {
           ..aKey = 'row'
           ..sheetId = sheetID
           ..listStr = blUti.toListString(rowsArr[rowIx]);
+
         rows.add(sheet);
       }
     } catch (e, s) {
@@ -215,6 +209,16 @@ class SheetDb {
     return rows;
   }
 
+  Future<List<Sheet>> readSheetsAll(String sheetName) async {
+    final rows = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .aKeyEqualTo('row')
+        .findAll();
+    return rows;
+  }
+
   Future<List<Sheet>> readAllRows() async {
     final rows = await isar.sheets.filter().aKeyEqualTo('row').findAll();
     return rows;
@@ -225,7 +229,7 @@ class SheetDb {
         await isar.sheets.where(distinct: true).anyASheetName().findAll();
     List<String> sheetNames = [];
     for (Sheet sheet in sheets) {
-      sheetNames.add(sheet.aSheetName!);
+      sheetNames.add(sheet.aSheetName);
     }
     return sheetNames;
   }
@@ -250,11 +254,12 @@ class SheetDb {
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
         try {
-          rowmap[colHeader[colIx]] = sheet.listStr![colIx];
+          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
+      rowmap['starred'] = sheet.starred;
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -269,11 +274,12 @@ class SheetDb {
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
         try {
-          rowmap[colHeader[colIx]] = sheet.listStr![colIx];
+          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
+      rowmap['starred'] = sheet.starred;
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -292,17 +298,30 @@ class SheetDb {
   }
 
   Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
-    Map row = {};
+    Map rowmap = {};
     for (var i = 0; i < keys.length; i++) {
       try {
-        row[keys[i]] = datarow[i];
+        rowmap[keys[i]] = datarow[i];
       } catch (_) {
-        row[keys[i]] = '';
+        rowmap[keys[i]] = '';
       }
     }
-    return row;
+    return rowmap;
   }
 
+  Map row2MapSheet(List<dynamic> keys, Sheet sheet) {
+    Map rowmap = {};
+    for (var i = 0; i < keys.length; i++) {
+      try {
+        rowmap[keys[i]] = sheet.listStr[i];
+      } catch (_) {
+        rowmap[keys[i]] = '';
+      }
+    }
+    rowmap['sheetName'] = sheet.aSheetName;
+    rowmap['starred'] = sheet.starred;
+    return rowmap;
+  }
   //-------------------------------------------------------------news
 
   Future<List<Map>> readNews(String yyyyMMdd) async {

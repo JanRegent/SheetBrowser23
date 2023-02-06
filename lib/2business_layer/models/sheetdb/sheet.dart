@@ -10,16 +10,16 @@ class Sheet {
   int id = Isar.autoIncrement;
 
   @Index(type: IndexType.value)
-  String? aSheetName;
+  String aSheetName = '';
   int sheetId = -1;
 
   @Index(type: IndexType.value)
-  String? aKey;
-  List<String>? listStr;
-  List<int>? listInt;
+  String aKey = 'row';
+  List<String> listStr = [];
+  String starred = '';
 
   @Index(type: IndexType.value)
-  String? zfileId;
+  String zfileId = '';
 
   Future toStrings() async {
     '''

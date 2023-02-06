@@ -1,29 +1,29 @@
 import 'package:isar/isar.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
-import '../sheet.dart';
 import './sheetdb.dart';
 
 class StarredDb extends SheetDb {
   StarredDb(super.isar);
 
-  Future createStarred(String sheetName, String fileId) async {
-    int? id = await isar.sheets
+  Future addStarr(String sheetName, String fileId, int sheetID) async {
+    Sheet? sheet = await isar.sheets
         .filter()
         .aSheetNameEqualTo(sheetName)
         .and()
-        .aKeyEqualTo('starred')
-        .idProperty()
+        .sheetIdEqualTo(sheetID)
         .findFirst();
 
-    if (id != null) return;
-
     try {
-      await create(Sheet()
-        ..zfileId = fileId
-        ..aSheetName = sheetName
-        ..aKey = 'starred');
+      sheet!.starred += '*';
+      //todo: Error: Expected a value of type 'List<dynamic>?', but got one of type 'LegacyJavaScriptObject'
+      sheet.listStr = blUti.toListString(sheet.listStr);
+      await isar.writeTxn((isar) async {
+        await isar.sheets.put(sheet);
+      });
     } catch (e, s) {
-      logDb.createErr('sheetDB.createStarred', e.toString(), s.toString());
+      logDb.createErr('sheetDB.updateStarred2', e.toString(), s.toString());
       return '';
     }
   }

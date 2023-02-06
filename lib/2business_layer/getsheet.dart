@@ -6,6 +6,7 @@ import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
 import 'appdata/approotdata.dart';
 
+import 'models/sheetdb/sheet.dart';
 import 'models/sheetdb/sheetdb.dart';
 
 class GetSheet {
@@ -14,12 +15,14 @@ class GetSheet {
 
   List<dynamic> rowsArrFiltered = [];
   List<dynamic> rowsArr = [];
+  List<Sheet> sheets = [];
   List<Map> rowsMaps = [];
   List<String> colsHeader = [];
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
 
-  Future getSheet(String sheetNameNew, String fileIdNew) async {
+  Future getSheet(String sheetNameNew, String fileIdNew,
+      {String? starredFilter}) async {
     rowsArr = [];
     //-----------------------------------new sheet
     sheetName = sheetNameNew;
@@ -34,16 +37,30 @@ class GetSheet {
 
     try {
       await sheetPrepare(sheetName, fileId);
-      await gridPrepare();
     } catch (e, s) {
-      logDb.createErr('GetSheet().getSheet', e.toString(), s.toString());
+      logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString());
+    }
+
+    try {
+      starredFilter ??= '';
+      await gridPrepare(starredFilter);
+    } catch (e, s) {
+      logDb.createErr('GetSheet().gridPrepare', e.toString(), s.toString());
     }
   }
 
-  Future sheetPrepare(String sheetName, String fileId) async {
+  Future sheetPrepare(
+    String sheetName,
+    String fileId,
+  ) async {
     int sheetLen = await sheetDb.lengthRows(sheetName);
+
     if (sheetLen > 0) return;
-    //------------------------------------sheet did empty,new replacement
+
+    await sheetPrepare2localDb(sheetName, fileId);
+  }
+
+  Future sheetPrepare2localDb(String sheetName, String fileId) async {
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
@@ -56,8 +73,8 @@ class GetSheet {
       rowsArr.removeAt(0);
       if (rowsArr.isEmpty) return;
     } catch (e, s) {
-      logDb.createErr(
-          'GetSheet().sheetPrepare.GoogleSheetsDL', e.toString(), s.toString(),
+      logDb.createErr('GetSheet().sheetPrepare2localDb.GoogleSheetsDL',
+          e.toString(), s.toString(),
           descr:
               'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
@@ -72,8 +89,8 @@ class GetSheet {
       // await sheetDb.deleteRowsOfSheet(sheetName);
       // await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
     } catch (e, s) {
-      logDb.createErr(
-          'GetSheet().sheetPrepare.createRows', e.toString(), s.toString(),
+      logDb.createErr('GetSheet().sheetPrepare2localDb.createRows',
+          e.toString(), s.toString(),
           descr:
               'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
@@ -110,11 +127,13 @@ class GetSheet {
     return diffIds;
   }
 
-  Future gridPrepare() async {
+  Future gridPrepare(String starredFilter) async {
     colsHeader = (await sheetDb.readColsHeader(sheetName))!;
     plutoCols = await colsMap(colsHeader);
+
     rowsArr = await sheetDb.readRowsAll(sheetName);
+    sheets = await sheetDb.readSheetsAll(sheetName);
     rowsMaps = await sheetDb.readRowMapsSheet(sheetName);
-    gridrows = await gridRowsMap(rowsArr, colsHeader);
+    gridrows = await gridRowsMap(sheets, colsHeader);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/sheetdb.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
 import '../../../data_layer/getsheetdl.dart';
@@ -105,22 +106,24 @@ class _DetailMenuState extends State<DetailMenu> {
         title: 'Star',
         icon: Icons.stars,
         children: [
-          widget.rowmap['sheetName'] == 'starred2022'
-              ? PlutoMenuItem(title: '')
-              : PlutoMenuItem(
-                  title: 'Add',
-                  icon: Icons.star,
-                  onTap: () async {
-                    List<String> starredLink =
-                        starredLinkGet(widget.rowmap, widget.configMap);
+          PlutoMenuItem(title: widget.rowmap['starred'] ?? ''),
+          PlutoMenuItem(
+            title: 'Add',
+            icon: Icons.star,
+            onTap: () async {
+              int? sheetID = int.tryParse(widget.rowmap['ID']);
+              await sheetDb.starredDb
+                  .addStarr(widget.rowmap['sheetName'], '', sheetID!);
+              List<String> starredLink =
+                  starredLinkGet(widget.rowmap, widget.configMap);
 
-                    await GoogleSheetsDL(sheetId: '', sheetName: '')
-                        .starredAppend(starredLink.join('__|__'));
+              await GoogleSheetsDL(sheetId: '', sheetName: '')
+                  .starredAppend(starredLink.join('__|__'));
 
-                    // ignore: use_build_context_synchronously
-                    al.message(context, 'Added to starred');
-                  },
-                ),
+              // ignore: use_build_context_synchronously
+              al.message(context, 'Added to starred');
+            },
+          ),
         ],
       ),
       PlutoMenuItem(

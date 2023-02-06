@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import '../../../2business_layer/models/sheetdb/sheet.dart';
 import '../../../2business_layer/models/sheetdb/sheetdb.dart';
 
 Future<List<PlutoRow>> gridRowsMap(
-    List<dynamic> rowsArr, List<String> cols) async {
+    List<Sheet> sheets, List<String> cols) async {
   PlutoRow gridRow(List<dynamic> dynRow, int rowIx) {
     PlutoRow plutoRow = PlutoRow(cells: {});
-    Map row = sheetDb.row2Map(cols, dynRow);
+    Map row = sheetDb.row2MapSheet(cols, sheets[rowIx]);
 
     for (var colIx = 0; colIx < cols.length; colIx++) {
       // ignore: unused_local_variable
@@ -33,8 +34,8 @@ Future<List<PlutoRow>> gridRowsMap(
 
   List<PlutoRow> gridrows = [];
 
-  for (var rowIx = 1; rowIx < rowsArr.length; rowIx++) {
-    gridrows.add(gridRow(rowsArr[rowIx], rowIx));
+  for (var rowIx = 1; rowIx < sheets.length; rowIx++) {
+    gridrows.add(gridRow(sheets[rowIx].listStr, rowIx));
   }
   return gridrows;
 }

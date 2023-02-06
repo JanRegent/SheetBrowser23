@@ -2,7 +2,8 @@ import 'package:isar/isar.dart';
 
 import '../../data_layer/isloading/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
-import 'sheet.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
+
 import 'sheetdb/sheetdb.dart';
 
 part 'tag.g.dart'; // flutter pub run build_runner build
@@ -35,7 +36,7 @@ class TagsDb {
     List<Sheet?> sheetrows = await sheetDb.readAllRows();
 
     for (var rIx = 1; rIx < sheetrows.length; rIx = rIx + 1) {
-      isloadingPhaseMessage.value = sheetrows[rIx]!.aSheetName!;
+      isloadingPhaseMessage.value = sheetrows[rIx]!.aSheetName;
       await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.listStr,
           sheetrows[rIx]!.id);
     }
