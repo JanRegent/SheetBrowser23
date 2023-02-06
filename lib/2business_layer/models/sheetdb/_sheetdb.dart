@@ -85,7 +85,7 @@ class SheetDb {
           ..aSheetName = sheetName
           ..aKey = 'row'
           ..sheetId = sheetID
-          ..listStr = blUti.toListString(rowsArr[rowIx]);
+          ..rowArr = blUti.toListString(rowsArr[rowIx]);
 
         rows.add(sheet);
       }

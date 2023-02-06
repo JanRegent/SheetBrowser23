@@ -15,7 +15,7 @@ class ColsDb extends SheetDb {
         ..zfileId = fileId
         ..aSheetName = sheetName
         ..aKey = 'colsHeader'
-        ..listStr = blUti.toListString(colsHeader));
+        ..rowArr = blUti.toListString(colsHeader));
     } catch (e, s) {
       logDb.createErr('sheetDB.create', e.toString(), s.toString());
       return '';
@@ -34,8 +34,8 @@ class ColsDb extends SheetDb {
     } catch (_) {
       return [];
     }
-    if (row?.listStr == null) return [];
-    return row?.listStr;
+    if (row?.rowArr == null) return [];
+    return row?.rowArr;
   }
 
   Map<String, List<String>> colsHeadersMap = {};
@@ -46,7 +46,7 @@ class ColsDb extends SheetDb {
 
     for (var sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
       colsHeadersMap[colRows[sheetNameIx].aSheetName] =
-          colRows[sheetNameIx].listStr;
+          colRows[sheetNameIx].rowArr;
     }
   }
 

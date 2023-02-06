@@ -15,7 +15,7 @@ class Sheet {
 
   @Index(type: IndexType.value)
   String aKey = 'row';
-  List<String> listStr = [];
+  List<String> rowArr = [];
   String starred = '';
 
   @Index(type: IndexType.value)
@@ -30,7 +30,7 @@ class Sheet {
     aKey    $aKey
 
     listStr
-    $listStr                
+    $rowArr                
 
     zfileId     $zfileId
   ''';

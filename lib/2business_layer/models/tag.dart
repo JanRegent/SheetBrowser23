@@ -37,7 +37,7 @@ class TagsDb {
 
     for (var rIx = 1; rIx < sheetrows.length; rIx = rIx + 1) {
       isloadingPhaseMessage.value = sheetrows[rIx]!.aSheetName;
-      await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.listStr,
+      await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.rowArr,
           sheetrows[rIx]!.id);
     }
   }

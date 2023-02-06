@@ -85,7 +85,7 @@ void _sheetSerializeNative(
   final value1 = object.aSheetName;
   final _aSheetName = IsarBinaryWriter.utf8Encoder.convert(value1);
   dynamicSize += (_aSheetName.length) as int;
-  final value2 = object.listStr;
+  final value2 = object.rowArr;
   dynamicSize += (value2.length) * 8;
   final bytesList2 = <IsarUint8List>[];
   for (var str in value2) {
@@ -122,7 +122,7 @@ Sheet _sheetDeserializeNative(IsarCollection<Sheet> collection, int id,
   object.aKey = reader.readString(offsets[0]);
   object.aSheetName = reader.readString(offsets[1]);
   object.id = id;
-  object.listStr = reader.readStringList(offsets[2]) ?? [];
+  object.rowArr = reader.readStringList(offsets[2]) ?? [];
   object.sheetId = reader.readLong(offsets[3]);
   object.starred = reader.readString(offsets[4]);
   object.zfileId = reader.readString(offsets[5]);
@@ -156,7 +156,7 @@ dynamic _sheetSerializeWeb(IsarCollection<Sheet> collection, Sheet object) {
   IsarNative.jsObjectSet(jsObj, 'aKey', object.aKey);
   IsarNative.jsObjectSet(jsObj, 'aSheetName', object.aSheetName);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'listStr', object.listStr);
+  IsarNative.jsObjectSet(jsObj, 'listStr', object.rowArr);
   IsarNative.jsObjectSet(jsObj, 'sheetId', object.sheetId);
   IsarNative.jsObjectSet(jsObj, 'starred', object.starred);
   IsarNative.jsObjectSet(jsObj, 'zfileId', object.zfileId);
@@ -168,7 +168,7 @@ Sheet _sheetDeserializeWeb(IsarCollection<Sheet> collection, dynamic jsObj) {
   object.aKey = IsarNative.jsObjectGet(jsObj, 'aKey') ?? '';
   object.aSheetName = IsarNative.jsObjectGet(jsObj, 'aSheetName') ?? '';
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.listStr = (IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+  object.rowArr = (IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
           ?.map((e) => e ?? '')
           .toList()
           .cast<String>() ??

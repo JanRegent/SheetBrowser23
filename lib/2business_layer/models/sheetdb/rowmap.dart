@@ -28,7 +28,7 @@ class RowMap extends SheetDb {
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
         try {
-          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
+          rowmap[colHeader[colIx]] = sheet.rowArr[colIx];
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
@@ -48,7 +48,7 @@ class RowMap extends SheetDb {
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
         try {
-          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
+          rowmap[colHeader[colIx]] = sheet.rowArr[colIx];
           //todo: different len of cols and listStr row
         } catch (_) {}
       }
@@ -76,7 +76,7 @@ class RowMap extends SheetDb {
     Map rowmap = {};
     for (var i = 0; i < keys.length; i++) {
       try {
-        rowmap[keys[i]] = sheet.listStr[i];
+        rowmap[keys[i]] = sheet.rowArr[i];
       } catch (_) {
         rowmap[keys[i]] = '';
       }

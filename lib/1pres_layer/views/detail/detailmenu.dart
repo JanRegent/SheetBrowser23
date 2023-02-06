@@ -108,7 +108,7 @@ class _DetailMenuState extends State<DetailMenu> {
         children: [
           PlutoMenuItem(title: widget.rowmap['starred'] ?? ''),
           PlutoMenuItem(
-            title: '*',
+            title: '',
             icon: Icons.add,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
@@ -125,7 +125,7 @@ class _DetailMenuState extends State<DetailMenu> {
             },
           ),
           PlutoMenuItem(
-            title: '*',
+            title: '',
             icon: Icons.exposure_minus_1,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
@@ -134,7 +134,7 @@ class _DetailMenuState extends State<DetailMenu> {
             },
           ),
           PlutoMenuItem(
-            title: '*',
+            title: '',
             icon: Icons.clear,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);

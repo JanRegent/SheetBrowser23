@@ -18,7 +18,7 @@ class StarredDb extends SheetDb {
     try {
       sheet!.starred += '*';
       //todo: Error: Expected a value of type 'List<dynamic>?', but got one of type 'LegacyJavaScriptObject'
-      sheet.listStr = blUti.toListString(sheet.listStr);
+      sheet.rowArr = blUti.toListString(sheet.rowArr);
       await isar.writeTxn((isar) async {
         await isar.sheets.put(sheet);
       });
@@ -39,7 +39,7 @@ class StarredDb extends SheetDb {
     try {
       if (sheet!.starred.isEmpty) return;
       sheet.starred = sheet.starred.substring(0, sheet.starred.length - 1);
-      sheet.listStr = blUti.toListString(sheet.listStr);
+      sheet.rowArr = blUti.toListString(sheet.rowArr);
       await isar.writeTxn((isar) async {
         await isar.sheets.put(sheet);
       });
@@ -60,7 +60,7 @@ class StarredDb extends SheetDb {
     try {
       if (sheet!.starred.isEmpty) return;
       sheet.starred = '';
-      sheet.listStr = blUti.toListString(sheet.listStr);
+      sheet.rowArr = blUti.toListString(sheet.rowArr);
       await isar.writeTxn((isar) async {
         await isar.sheets.put(sheet);
       });
