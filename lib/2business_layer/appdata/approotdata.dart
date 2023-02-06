@@ -2,7 +2,7 @@ import 'package:global_configuration/global_configuration.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../2business_layer/getdata.dart';
+import '../../data_layer/getsheetdl.dart';
 import '../models/sheetdb/_sheetdb.dart';
 
 class AppDataPrefs {
@@ -32,6 +32,33 @@ class AppDataPrefs {
       );
     }
     await rootSheet2localStorage();
+  }
+
+//-----------------------------------------------------load
+
+  static Future rootSheet2localStorage() async {
+    try {
+      final values = await GoogleSheetsDL(
+        sheetId: AppDataPrefs.getRootSheetId(),
+        sheetName: 'rootSheet',
+      ).getSheet();
+
+      sheet2localStorage(values);
+    } catch (e, s) {
+      logDb.createErr(
+          'getData.rootSheet2localStorage', e.toString(), s.toString(),
+          descr:
+              '\n sheetName: rootSheet \nsheetId: ${AppDataPrefs.getRootSheetId()}');
+    }
+  }
+
+  static Future sheet2localStorage(List<dynamic> arr) async {
+    int keyIx = 0;
+    int valIx = 1;
+    for (var rowIx = 1; rowIx < arr.length; rowIx++) {
+      if (arr[rowIx].length == 0) continue;
+      await AppDataPrefs.setString(arr[rowIx][keyIx], arr[rowIx][valIx]);
+    }
   }
 
 // ----------------------------------------------------root vars

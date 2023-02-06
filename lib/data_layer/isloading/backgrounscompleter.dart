@@ -6,7 +6,6 @@ import 'package:sheetbrowser/2business_layer/getsheet.dart';
 
 import 'isloading.dart';
 import '../../2business_layer/appdata/approotdata.dart';
-import '../../2business_layer/getdata.dart';
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 
 Future backgroundCompleter() async {

@@ -88,7 +88,7 @@ class _GridPageState extends State<GridPage> {
                   for (String filteredID in filteredIDs) {
                     int? rowIx = int.tryParse(filteredID);
                     currentSheet.rowsArrFiltered
-                        .add(currentSheet.rowsArr[rowIx!]);
+                        .add(currentSheet.sheets[rowIx!].rowArr);
                   }
                 }),
             ElevatedButton(

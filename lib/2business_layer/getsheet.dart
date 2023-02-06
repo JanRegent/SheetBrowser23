@@ -14,7 +14,7 @@ class GetSheet {
   String sheetName = '';
 
   List<dynamic> rowsArrFiltered = [];
-  List<dynamic> rowsArr = [];
+
   List<Sheet> sheets = [];
   List<Map> rowsMaps = [];
   List<String> colsHeader = [];
@@ -25,7 +25,6 @@ class GetSheet {
     String sheetNameNew,
     String fileIdNew,
   ) async {
-    rowsArr = [];
     //-----------------------------------new sheet
     sheetName = sheetNameNew;
     fileId = fileIdNew;
@@ -62,6 +61,7 @@ class GetSheet {
   }
 
   Future sheetPrepare2localDb(String sheetName, String fileId) async {
+    List<dynamic> rowsArr = [];
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
@@ -132,7 +132,6 @@ class GetSheet {
     colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName))!;
     plutoCols = await colsMap(colsHeader);
 
-    rowsArr = await sheetDb.readRowsAll(sheetName);
     sheets = await sheetDb.readSheetsAll(sheetName);
     rowsMaps = await sheetDb.rowMap.readRowMapsSheet(sheetName);
     gridrows = await gridRowsMap(sheets, colsHeader);

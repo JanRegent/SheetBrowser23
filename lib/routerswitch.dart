@@ -5,7 +5,6 @@ import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
-import '../../2business_layer/getdata.dart';
 import '1pres_layer/_home/errorpage.dart';
 import 'data_layer/isloading/isloading.dart';
 import '1pres_layer/filelist/filelistcard.dart';
@@ -25,7 +24,8 @@ class _RouterSwitchState extends State<RouterSwitch> {
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
     route2Page = AppDataPrefs.getString('route2Page')!;
-    currentSheet.rowsArr = [];
+
+    List<dynamic> rowsArr = [];
     if (route2Page == 'filelist') {
       await getFilelist();
     }
@@ -33,7 +33,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
       await currentSheet.getSheet('getNews', '');
     }
 
-    if (currentSheet.rowsArr.isEmpty) {
+    if (rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
     configRow['fileUrl'] = currentSheet.fileId;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../2business_layer/appdata/appsettingspage.dart';
-import '../../2business_layer/getdata.dart';
 
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../../data_layer/isloading/isloading.dart';
