@@ -19,14 +19,13 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  TextEditingController textEditingController = TextEditingController();
   List<Widget> listWidgets = [];
 
-  late ScrollController _controller;
+  late ScrollController scrollController;
 
   @override
   void initState() {
-    _controller = ScrollController();
+    scrollController = ScrollController();
 
     super.initState();
   }
@@ -102,7 +101,7 @@ class _DetailPageState extends State<DetailPage> {
         width: double.infinity,
         color: Colors.blueGrey[50],
         child: ListView(
-          controller: _controller,
+          controller: scrollController,
           children: listWidgets,
         ));
   }

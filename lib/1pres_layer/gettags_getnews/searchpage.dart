@@ -15,20 +15,33 @@ import '../views/detail/carousel.dart';
 ///
 
 // ignore: must_be_immutable
-class NewsSelectPage extends StatefulWidget {
-  const NewsSelectPage({Key? key}) : super(key: key);
+class SearchPage extends StatefulWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
-  State<NewsSelectPage> createState() => _NewsSelectPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _NewsSelectPageState extends State<NewsSelectPage> {
+class _SearchPageState extends State<SearchPage> {
   List<String> keysNames = [];
 
   @override
   void initState() {
     super.initState();
     keysNames = blUti.lastNdays(5);
+    textEditingController.addListener(searchTextChanged);
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  void searchTextChanged() {
+    setState(() {});
   }
 
   TextEditingController textEditingController = TextEditingController();
@@ -96,10 +109,10 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
             ? const CircularProgressIndicator()
             : Row(
                 children: [
-                  textEditingController.text.isNotEmpty
+                  textEditingController.text.length > 1
                       ? const Text('')
-                      : const Text('Day?  '),
-                  textEditingController.text.isEmpty
+                      : const Text('Day or word?  '),
+                  textEditingController.text.length < 2
                       ? const Text('')
                       : searchButton()
                 ],
@@ -107,7 +120,7 @@ class _NewsSelectPageState extends State<NewsSelectPage> {
       ),
       body: Obx(() => isDataLoading.value
           ? isloadingWidgetColumn(
-              'Awaiting news...\n (${textEditingController.text}) \n ${isloadingPhaseMessage.value}')
+              'Awaiting search results...\n (${textEditingController.text}) \n ${isloadingPhaseMessage.value}')
           : searchableKeyListview()),
 
       //searchableKeyListview()

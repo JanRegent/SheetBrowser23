@@ -8,8 +8,7 @@ import '../../2business_layer/getdata.dart';
 import '../../2business_layer/models/sheetdb/sheetdb.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
-import '../gettags_getnews/newsselectpage.dart';
-import '../gettags_getnews/searchflow.dart';
+import '../gettags_getnews/searchpage.dart';
 import '../gettags_getnews/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
 import '_home.dart';
@@ -161,21 +160,14 @@ class ExampleSidebarX extends StatelessWidget {
             }),
         SidebarXItem(
             icon: Icons.newspaper,
-            label: 'News',
+            label: 'Search',
             onTap: () async {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => const NewsSelectPage(),
+                    builder: (ctx) => const SearchPage(),
                   ));
             }),
-        SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
-          onTap: () async {
-            await searchFlow(context, [], 'Search by words');
-          },
-        ),
         SidebarXItem(
             icon: Icons.star,
             label: 'Starred',
