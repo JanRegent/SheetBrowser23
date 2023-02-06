@@ -6,6 +6,8 @@ import '../../../1pres_layer/alib/uti.dart';
 import 'package:isar/isar.dart';
 
 import '../log.dart';
+import 'colsdb.dart';
+import 'rowmap.dart';
 import 'starreddb.dart';
 
 late SheetDb sheetDb;
@@ -31,9 +33,13 @@ class SheetDb {
   final Isar isar;
   SheetDb(this.isar);
 
+  late ColsDb colsDb;
   late StarredDb starredDb;
+  late RowMap rowMap;
 
   Future init() async {
+    colsDb = ColsDb(isar);
+    rowMap = RowMap(isar);
     starredDb = StarredDb(isar);
   }
 
@@ -49,84 +55,12 @@ class SheetDb {
     }
   }
 
-  //------------------------------------------------------------cols
-
-  Future createColsHeader(
-      String sheetName, String fileId, List<String> colsHeader) async {
-    await deleteColsHeader(sheetName, fileId);
-    try {
-      await create(Sheet()
-        ..zfileId = fileId
-        ..aSheetName = sheetName
-        ..aKey = 'colsHeader'
-        ..listStr = blUti.toListString(colsHeader));
-    } catch (e, s) {
-      logDb.createErr('sheetDB.create', e.toString(), s.toString());
-      return '';
-    }
-  }
-
-  Future<List<String>?> readColsHeader(String sheetName) async {
-    late Sheet? row;
-    try {
-      row = (await isar.sheets
-          .filter()
-          .aSheetNameEqualTo(sheetName)
-          .and()
-          .aKeyEqualTo('colsHeader')
-          .findFirst());
-    } catch (_) {
-      return [];
-    }
-    if (row?.listStr == null) return [];
-    return row?.listStr;
-  }
-
-  Map<String, List<String>> colsHeadersMap = {};
-
-  Future colsHeadersMapBuild() async {
-    final colRows =
-        await isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
-
-    for (var sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
-      colsHeadersMap[colRows[sheetNameIx].aSheetName] =
-          colRows[sheetNameIx].listStr;
-    }
-  }
-
-  Future deleteColsHeader(String sheetName, String fileId) async {
-    try {
-      List<int> ids = await isar.sheets
-          .filter()
-          .aSheetNameEqualTo(sheetName)
-          .and()
-          .aKeyEqualTo('colsHeader')
-          .idProperty()
-          .findAll();
-      if (ids.isNotEmpty) {
-        await isar.writeTxn((isar) {
-          return isar.sheets.deleteAll(ids); // delete
-        });
-      }
-    } catch (_) {}
-  }
-
-  Future<List<String>> sheetNamesGet() async {
-    List<String> sheetNames = await isar.sheets
-        .filter()
-        .aKeyEqualTo('colsHeader')
-        .aSheetNameProperty()
-        .findAll();
-
-    return sheetNames;
-  }
-
   //----------------------------------------------------------------
 
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
       List<String> colsHeader) async {
     try {
-      await createColsHeader(sheetName, fileId, colsHeader);
+      await colsDb.createColsHeader(sheetName, fileId, colsHeader);
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
@@ -242,86 +176,9 @@ class SheetDb {
         .listStrAnyContains(str)
         .findAll();
 
-    return await readRowMapsBySheets(sheets);
+    return await rowMap.readRowMapsBySheets(sheets);
   }
 
-  Future<List<Map>> readRowMapsByIDs(List<int> ids) async {
-    List<Map> rowmaps = [];
-    await colsHeadersMapBuild();
-    for (var idIx = 0; idIx < ids.length; idIx++) {
-      Sheet? sheet = await isar.sheets.get(ids[idIx]);
-      List<String> colHeader = colsHeadersMap[sheet!.aSheetName]!;
-      Map rowmap = {};
-      for (var colIx = 0; colIx < colHeader.length; colIx++) {
-        try {
-          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
-          //todo: different len of cols and listStr row
-        } catch (_) {}
-      }
-      rowmap['sheetName'] = sheet.aSheetName;
-      rowmap['starred'] = sheet.starred;
-      rowmaps.add(rowmap);
-    }
-    return rowmaps;
-  }
-
-  Future<List<Map>> readRowMapsBySheets(List<Sheet> sheets) async {
-    List<Map> rowmaps = [];
-    await colsHeadersMapBuild();
-    for (var idIx = 0; idIx < sheets.length; idIx++) {
-      Sheet? sheet = sheets[idIx];
-      List<String> colHeader = colsHeadersMap[sheet.aSheetName]!;
-      Map rowmap = {};
-      for (var colIx = 0; colIx < colHeader.length; colIx++) {
-        try {
-          rowmap[colHeader[colIx]] = sheet.listStr[colIx];
-          //todo: different len of cols and listStr row
-        } catch (_) {}
-      }
-      rowmap['sheetName'] = sheet.aSheetName;
-      rowmap['starred'] = sheet.starred;
-      rowmaps.add(rowmap);
-    }
-    return rowmaps;
-  }
-
-  Future<List<Map>> readRowMapsSheet(String sheetName) async {
-    List<int> ids = await isar.sheets
-        .filter()
-        .aSheetNameEqualTo(sheetName)
-        .and()
-        .aKeyEqualTo('row')
-        .idProperty()
-        .findAll();
-
-    return readRowMapsByIDs(ids);
-  }
-
-  Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
-    Map rowmap = {};
-    for (var i = 0; i < keys.length; i++) {
-      try {
-        rowmap[keys[i]] = datarow[i];
-      } catch (_) {
-        rowmap[keys[i]] = '';
-      }
-    }
-    return rowmap;
-  }
-
-  Map row2MapSheet(List<dynamic> keys, Sheet sheet) {
-    Map rowmap = {};
-    for (var i = 0; i < keys.length; i++) {
-      try {
-        rowmap[keys[i]] = sheet.listStr[i];
-      } catch (_) {
-        rowmap[keys[i]] = '';
-      }
-    }
-    rowmap['sheetName'] = sheet.aSheetName;
-    rowmap['starred'] = sheet.starred;
-    return rowmap;
-  }
   //-------------------------------------------------------------news
 
   Future<List<Map>> readNews(String yyyyMMdd) async {
@@ -332,7 +189,7 @@ class SheetDb {
         .listStrAnyContains(yyyyMMdd)
         .findAll();
 
-    return await readRowMapsBySheets(sheets);
+    return await rowMap.readRowMapsBySheets(sheets);
   }
 
   //----------------------------------------------------------delete

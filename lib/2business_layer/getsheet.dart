@@ -7,7 +7,7 @@ import '../data_layer/getsheetdl.dart';
 import 'appdata/approotdata.dart';
 
 import 'models/sheetdb/sheet.dart';
-import 'models/sheetdb/sheetdb.dart';
+import 'models/sheetdb/_sheetdb.dart';
 
 class GetSheet {
   String fileId = '';
@@ -21,8 +21,10 @@ class GetSheet {
   List<PlutoColumn> plutoCols = [];
   List<PlutoRow> gridrows = [];
 
-  Future getSheet(String sheetNameNew, String fileIdNew,
-      {String? starredFilter}) async {
+  Future getSheet(
+    String sheetNameNew,
+    String fileIdNew,
+  ) async {
     rowsArr = [];
     //-----------------------------------new sheet
     sheetName = sheetNameNew;
@@ -42,8 +44,7 @@ class GetSheet {
     }
 
     try {
-      starredFilter ??= '';
-      await gridPrepare(starredFilter);
+      await gridPrepare();
     } catch (e, s) {
       logDb.createErr('GetSheet().gridPrepare', e.toString(), s.toString());
     }
@@ -106,7 +107,7 @@ class GetSheet {
   Future<List<int>> sheetsDiff(List<dynamic> rowsCloud) async {
     List<int> locIDs = await sheetDb.locIDs(sheetName);
     //------------------------------------------cloudIDs
-    colsHeader = (await sheetDb.readColsHeader(sheetName))!;
+    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName))!;
     int sheetIDix = colsHeader.indexOf('ID');
     List<int> cloudIDs = [];
     try {
@@ -127,13 +128,13 @@ class GetSheet {
     return diffIds;
   }
 
-  Future gridPrepare(String starredFilter) async {
-    colsHeader = (await sheetDb.readColsHeader(sheetName))!;
+  Future gridPrepare() async {
+    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName))!;
     plutoCols = await colsMap(colsHeader);
 
     rowsArr = await sheetDb.readRowsAll(sheetName);
     sheets = await sheetDb.readSheetsAll(sheetName);
-    rowsMaps = await sheetDb.readRowMapsSheet(sheetName);
+    rowsMaps = await sheetDb.rowMap.readRowMapsSheet(sheetName);
     gridrows = await gridRowsMap(sheets, colsHeader);
   }
 }

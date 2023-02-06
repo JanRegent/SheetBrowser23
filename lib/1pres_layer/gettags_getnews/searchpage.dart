@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/data_layer/isloading/isloading.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/sheetdb.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';

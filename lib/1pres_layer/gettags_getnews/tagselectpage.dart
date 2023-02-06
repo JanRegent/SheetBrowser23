@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/sheetdb.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../views/detail/carousel.dart';
 
@@ -68,7 +68,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
         onPressed: () async {
           List<int> ids = await tagsDb.readTagIds(textEditingController.text);
 
-          List<Map> rowMaps = await sheetDb.readRowMapsByIDs(ids);
+          List<Map> rowMaps = await sheetDb.rowMap.readRowMapsByIDs(ids);
           Map configRow = {};
           configRow['title'] = 'Tag: ${textEditingController.text}';
           // ignore: use_build_context_synchronously

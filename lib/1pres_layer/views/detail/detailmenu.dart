@@ -1,7 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/sheetdb.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
 import '../../../data_layer/getsheetdl.dart';
@@ -109,7 +109,7 @@ class _DetailMenuState extends State<DetailMenu> {
           PlutoMenuItem(title: widget.rowmap['starred'] ?? ''),
           PlutoMenuItem(
             title: 'Add',
-            icon: Icons.star,
+            icon: Icons.add,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredDb
@@ -124,8 +124,18 @@ class _DetailMenuState extends State<DetailMenu> {
               al.message(context, 'Added to starred');
             },
           ),
+          PlutoMenuItem(
+            title: 'Remove One Star',
+            icon: Icons.exposure_minus_1,
+            onTap: () async {
+              int? sheetID = int.tryParse(widget.rowmap['ID']);
+              await sheetDb.starredDb
+                  .minusStar1(widget.rowmap['sheetName'], '', sheetID!);
+            },
+          ),
         ],
       ),
+
       PlutoMenuItem(
         title: 'Bookmark',
         icon: Icons.bookmark,

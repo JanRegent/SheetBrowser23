@@ -4,7 +4,7 @@ import '../../data_layer/isloading/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
-import 'sheetdb/sheetdb.dart';
+import 'sheetdb/_sheetdb.dart';
 
 part 'tag.g.dart'; // flutter pub run build_runner build
 
@@ -31,7 +31,7 @@ class TagsDb {
 
   Map<String, List<int>> tagsMap = {};
   Future tagsIndex() async {
-    await sheetDb.colsHeadersMapBuild();
+    await sheetDb.colsDb.colsHeadersMapBuild();
 
     List<Sheet?> sheetrows = await sheetDb.readAllRows();
 
@@ -47,7 +47,7 @@ class TagsDb {
 
     int tagIx = -1;
     try {
-      tagIx = sheetDb.colsHeadersMap[sheetName]!.indexOf('tags');
+      tagIx = sheetDb.colsDb.colsHeadersMap[sheetName]!.indexOf('tags');
       if (tagIx == -1) return;
     } catch (_) {
       return; //null

@@ -3,7 +3,7 @@ import 'package:sheetbrowser/1pres_layer/filelist/filelistcard.dart';
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
 import '../data_layer/getsheetdl.dart';
-import 'models/sheetdb/sheetdb.dart';
+import 'models/sheetdb/_sheetdb.dart';
 
 //--------------------------------------------------------------------filelist
 Future getFilelist() async {
@@ -15,7 +15,7 @@ Future getFilelist() async {
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelist.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
-    filelist.add(sheetDb.row2Map(fileHeader, fileArr[rowIx]));
+    filelist.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
   }
 }
 
