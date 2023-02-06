@@ -48,4 +48,25 @@ class StarredDb extends SheetDb {
       return '';
     }
   }
+
+  Future clearStars(String sheetName, String fileId, int sheetID) async {
+    Sheet? sheet = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .sheetIdEqualTo(sheetID)
+        .findFirst();
+
+    try {
+      if (sheet!.starred.isEmpty) return;
+      sheet.starred = '';
+      sheet.listStr = blUti.toListString(sheet.listStr);
+      await isar.writeTxn((isar) async {
+        await isar.sheets.put(sheet);
+      });
+    } catch (e, s) {
+      logDb.createErr('sheetDB.clearStars', e.toString(), s.toString());
+      return '';
+    }
+  }
 }
