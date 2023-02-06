@@ -2,11 +2,10 @@ import 'package:isar/isar.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
-import '../sheetDb/_sheetdb.dart';
+import '_sheetdb.dart';
 
-class StarredDb {
-  final Isar isar;
-  StarredDb(this.isar);
+class StarredDb extends SheetDb {
+  StarredDb(super.isar);
 
   Future addStarr(String sheetName, String fileId, int sheetID) async {
     Sheet? sheet = await isar.sheets

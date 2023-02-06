@@ -1,16 +1,14 @@
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
-import 'package:sheetbrowser/2business_layer/models/starred/starredvals.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
 
 import 'package:isar/isar.dart';
 
-import '../../appdata/appdata.dart';
 import '../log.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
-import '../starred/starredsheet.dart';
+import 'starreddb.dart';
 
 late SheetDb sheetDb;
 
@@ -19,14 +17,8 @@ late TagsDb tagsDb;
 
 Future dbInit() async {
   final isar = await Isar.open(
-    schemas: [
-      AppdataSchema,
-      LogSchema,
-      SheetSchema,
-      StarredValsSchema,
-      TagSchema
-    ],
-    name: 'SheetBrowser',
+    schemas: [SheetSchema, LogSchema, TagSchema],
+    name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
   );
@@ -146,7 +138,7 @@ class SheetDb {
         .aSheetNameEqualTo(sheetName)
         .and()
         .aKeyEqualTo('row')
-        .rowArrProperty()
+        .listStrProperty()
         .findAll();
     return rows;
   }
@@ -181,7 +173,7 @@ class SheetDb {
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .rowArrAnyContains(str)
+        .listStrAnyContains(str)
         .findAll();
 
     return await rowMap.readRowMapsBySheets(sheets);
@@ -194,7 +186,7 @@ class SheetDb {
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .rowArrAnyContains(yyyyMMdd)
+        .listStrAnyContains(yyyyMMdd)
         .findAll();
 
     return await rowMap.readRowMapsBySheets(sheets);
