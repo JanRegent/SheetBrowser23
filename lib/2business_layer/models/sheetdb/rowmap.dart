@@ -33,7 +33,7 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      rowmap['starred'] = sheet.starred;
+      //rowmap['starred'] = sheet.starred;
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -44,7 +44,7 @@ class RowMap extends SheetDb {
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < sheets.length; idIx++) {
       Sheet? sheet = sheets[idIx];
-      List<String> colHeader = colsDb.colsHeadersMap[sheet.aSheetName]!;
+      List<String> colHeader = sheetDb.colsDb.colsHeadersMap[sheet.aSheetName]!;
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {
         try {
@@ -53,7 +53,7 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      rowmap['starred'] = sheet.starred;
+      //rowmap['starred'] = sheet.starred;
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -82,7 +82,7 @@ class RowMap extends SheetDb {
       }
     }
     rowmap['sheetName'] = sheet.aSheetName;
-    rowmap['starred'] = sheet.starred;
+    //rowmap['starred'] = sheet.starred;
     return rowmap;
   }
 }

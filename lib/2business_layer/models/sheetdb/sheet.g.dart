@@ -17,17 +17,16 @@ extension GetSheetCollection on Isar {
 const SheetSchema = CollectionSchema(
   name: 'Sheet',
   schema:
-      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"listStr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"starred","type":"String"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"zfileId","unique":false,"properties":[{"name":"zfileId","type":"Value","caseSensitive":true}]}],"links":[]}',
+      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"rowArr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"zfileId","unique":false,"properties":[{"name":"zfileId","type":"Value","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'aKey': 0,
     'aSheetName': 1,
-    'listStr': 2,
+    'rowArr': 2,
     'sheetId': 3,
-    'starred': 4,
-    'zfileId': 5
+    'zfileId': 4
   },
-  listProperties: {'listStr'},
+  listProperties: {'rowArr'},
   indexIds: {'aKey': 0, 'aSheetName': 1, 'zfileId': 2},
   indexValueTypes: {
     'aKey': [
@@ -93,14 +92,11 @@ void _sheetSerializeNative(
     bytesList2.add(bytes);
     dynamicSize += bytes.length as int;
   }
-  final _listStr = bytesList2;
+  final _rowArr = bytesList2;
   final value3 = object.sheetId;
   final _sheetId = value3;
-  final value4 = object.starred;
-  final _starred = IsarBinaryWriter.utf8Encoder.convert(value4);
-  dynamicSize += (_starred.length) as int;
-  final value5 = object.zfileId;
-  final _zfileId = IsarBinaryWriter.utf8Encoder.convert(value5);
+  final value4 = object.zfileId;
+  final _zfileId = IsarBinaryWriter.utf8Encoder.convert(value4);
   dynamicSize += (_zfileId.length) as int;
   final size = staticSize + dynamicSize;
 
@@ -110,10 +106,9 @@ void _sheetSerializeNative(
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _aKey);
   writer.writeBytes(offsets[1], _aSheetName);
-  writer.writeStringList(offsets[2], _listStr);
+  writer.writeStringList(offsets[2], _rowArr);
   writer.writeLong(offsets[3], _sheetId);
-  writer.writeBytes(offsets[4], _starred);
-  writer.writeBytes(offsets[5], _zfileId);
+  writer.writeBytes(offsets[4], _zfileId);
 }
 
 Sheet _sheetDeserializeNative(IsarCollection<Sheet> collection, int id,
@@ -124,8 +119,7 @@ Sheet _sheetDeserializeNative(IsarCollection<Sheet> collection, int id,
   object.id = id;
   object.rowArr = reader.readStringList(offsets[2]) ?? [];
   object.sheetId = reader.readLong(offsets[3]);
-  object.starred = reader.readString(offsets[4]);
-  object.zfileId = reader.readString(offsets[5]);
+  object.zfileId = reader.readString(offsets[4]);
   return object;
 }
 
@@ -144,8 +138,6 @@ P _sheetDeserializePropNative<P>(
       return (reader.readLong(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
-    case 5:
-      return (reader.readString(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
   }
@@ -156,9 +148,8 @@ dynamic _sheetSerializeWeb(IsarCollection<Sheet> collection, Sheet object) {
   IsarNative.jsObjectSet(jsObj, 'aKey', object.aKey);
   IsarNative.jsObjectSet(jsObj, 'aSheetName', object.aSheetName);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'listStr', object.rowArr);
+  IsarNative.jsObjectSet(jsObj, 'rowArr', object.rowArr);
   IsarNative.jsObjectSet(jsObj, 'sheetId', object.sheetId);
-  IsarNative.jsObjectSet(jsObj, 'starred', object.starred);
   IsarNative.jsObjectSet(jsObj, 'zfileId', object.zfileId);
   return jsObj;
 }
@@ -168,14 +159,13 @@ Sheet _sheetDeserializeWeb(IsarCollection<Sheet> collection, dynamic jsObj) {
   object.aKey = IsarNative.jsObjectGet(jsObj, 'aKey') ?? '';
   object.aSheetName = IsarNative.jsObjectGet(jsObj, 'aSheetName') ?? '';
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.rowArr = (IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+  object.rowArr = (IsarNative.jsObjectGet(jsObj, 'rowArr') as List?)
           ?.map((e) => e ?? '')
           .toList()
           .cast<String>() ??
       [];
   object.sheetId =
       IsarNative.jsObjectGet(jsObj, 'sheetId') ?? double.negativeInfinity;
-  object.starred = IsarNative.jsObjectGet(jsObj, 'starred') ?? '';
   object.zfileId = IsarNative.jsObjectGet(jsObj, 'zfileId') ?? '';
   return object;
 }
@@ -189,8 +179,8 @@ P _sheetDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
           as P;
-    case 'listStr':
-      return ((IsarNative.jsObjectGet(jsObj, 'listStr') as List?)
+    case 'rowArr':
+      return ((IsarNative.jsObjectGet(jsObj, 'rowArr') as List?)
               ?.map((e) => e ?? '')
               .toList()
               .cast<String>() ??
@@ -198,8 +188,6 @@ P _sheetDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'sheetId':
       return (IsarNative.jsObjectGet(jsObj, 'sheetId') ??
           double.negativeInfinity) as P;
-    case 'starred':
-      return (IsarNative.jsObjectGet(jsObj, 'starred') ?? '') as P;
     case 'zfileId':
       return (IsarNative.jsObjectGet(jsObj, 'zfileId') ?? '') as P;
     default:
@@ -777,19 +765,19 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEqualTo(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyGreaterThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -797,13 +785,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyLessThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -811,13 +799,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyBetween(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -825,7 +813,7 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'listStr',
+      property: 'rowArr',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -834,47 +822,47 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyContains(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyContains(
       String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'listStr',
+      property: 'rowArr',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> listStrAnyMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> rowArrAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'listStr',
+      property: 'rowArr',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -924,109 +912,6 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'starred',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'starred',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> starredMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'starred',
-      value: pattern,
-      caseSensitive: caseSensitive,
     ));
   }
 
@@ -1169,14 +1054,6 @@ extension SheetQueryWhereSortBy on QueryBuilder<Sheet, Sheet, QSortBy> {
     return addSortByInternal('sheetId', Sort.desc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByStarred() {
-    return addSortByInternal('starred', Sort.asc);
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByStarredDesc() {
-    return addSortByInternal('starred', Sort.desc);
-  }
-
   QueryBuilder<Sheet, Sheet, QAfterSortBy> sortByZfileId() {
     return addSortByInternal('zfileId', Sort.asc);
   }
@@ -1219,14 +1096,6 @@ extension SheetQueryWhereSortThenBy on QueryBuilder<Sheet, Sheet, QSortThenBy> {
     return addSortByInternal('sheetId', Sort.desc);
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByStarred() {
-    return addSortByInternal('starred', Sort.asc);
-  }
-
-  QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByStarredDesc() {
-    return addSortByInternal('starred', Sort.desc);
-  }
-
   QueryBuilder<Sheet, Sheet, QAfterSortBy> thenByZfileId() {
     return addSortByInternal('zfileId', Sort.asc);
   }
@@ -1255,11 +1124,6 @@ extension SheetQueryWhereDistinct on QueryBuilder<Sheet, Sheet, QDistinct> {
     return addDistinctByInternal('sheetId');
   }
 
-  QueryBuilder<Sheet, Sheet, QDistinct> distinctByStarred(
-      {bool caseSensitive = true}) {
-    return addDistinctByInternal('starred', caseSensitive: caseSensitive);
-  }
-
   QueryBuilder<Sheet, Sheet, QDistinct> distinctByZfileId(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('zfileId', caseSensitive: caseSensitive);
@@ -1279,16 +1143,12 @@ extension SheetQueryProperty on QueryBuilder<Sheet, Sheet, QQueryProperty> {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<Sheet, List<String>, QQueryOperations> listStrProperty() {
-    return addPropertyNameInternal('listStr');
+  QueryBuilder<Sheet, List<String>, QQueryOperations> rowArrProperty() {
+    return addPropertyNameInternal('rowArr');
   }
 
   QueryBuilder<Sheet, int, QQueryOperations> sheetIdProperty() {
     return addPropertyNameInternal('sheetId');
-  }
-
-  QueryBuilder<Sheet, String, QQueryOperations> starredProperty() {
-    return addPropertyNameInternal('starred');
   }
 
   QueryBuilder<Sheet, String, QQueryOperations> zfileIdProperty() {

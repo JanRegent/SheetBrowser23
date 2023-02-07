@@ -16,7 +16,6 @@ class Sheet {
   @Index(type: IndexType.value)
   String aKey = 'row';
   List<String> rowArr = [];
-  String starred = '';
 
   @Index(type: IndexType.value)
   String zfileId = '';

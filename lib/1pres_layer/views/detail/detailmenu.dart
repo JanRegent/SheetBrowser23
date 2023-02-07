@@ -112,7 +112,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.add,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              await sheetDb.starredDb
+              await sheetDb.starredBL
                   .addStarr(widget.rowmap['sheetName'], '', sheetID!);
               List<String> starredLink =
                   starredLinkGet(widget.rowmap, widget.configMap);
@@ -129,7 +129,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.exposure_minus_1,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              await sheetDb.starredDb
+              await sheetDb.starredBL
                   .minusStar1(widget.rowmap['sheetName'], '', sheetID!);
             },
           ),
@@ -138,7 +138,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.clear,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              await sheetDb.starredDb
+              await sheetDb.starredBL
                   .clearStars(widget.rowmap['sheetName'], '', sheetID!);
             },
           )

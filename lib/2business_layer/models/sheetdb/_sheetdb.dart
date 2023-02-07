@@ -8,7 +8,7 @@ import 'package:isar/isar.dart';
 import '../log.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
-import 'starreddb.dart';
+import 'starred/starredbl.dart';
 
 late SheetDb sheetDb;
 
@@ -34,13 +34,13 @@ class SheetDb {
   SheetDb(this.isar);
 
   late ColsDb colsDb;
-  late StarredDb starredDb;
+  late StarredBL starredBL;
   late RowMap rowMap;
 
   Future init() async {
     colsDb = ColsDb(isar);
     rowMap = RowMap(isar);
-    starredDb = StarredDb(isar);
+    starredBL = StarredBL(isar);
   }
 
   Future create(Sheet newSheet) async {
@@ -60,7 +60,7 @@ class SheetDb {
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
       List<String> colsHeader) async {
     try {
-      await colsDb.createColsHeader(sheetName, fileId, colsHeader);
+      await sheetDb.colsDb.createColsHeader(sheetName, fileId, colsHeader);
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
@@ -138,7 +138,7 @@ class SheetDb {
         .aSheetNameEqualTo(sheetName)
         .and()
         .aKeyEqualTo('row')
-        .listStrProperty()
+        .rowArrProperty()
         .findAll();
     return rows;
   }
@@ -173,7 +173,7 @@ class SheetDb {
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .listStrAnyContains(str)
+        .rowArrAnyContains(str)
         .findAll();
 
     return await rowMap.readRowMapsBySheets(sheets);
@@ -186,7 +186,7 @@ class SheetDb {
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .listStrAnyContains(yyyyMMdd)
+        .rowArrAnyContains(yyyyMMdd)
         .findAll();
 
     return await rowMap.readRowMapsBySheets(sheets);
