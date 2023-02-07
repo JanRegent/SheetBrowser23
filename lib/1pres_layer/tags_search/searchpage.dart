@@ -90,7 +90,7 @@ class _SearchPageState extends State<SearchPage> {
               await sheetDb.readNews(textEditingController.text);
           isDataLoading.value = false;
           Map configRow = {};
-          configRow['title'] = 'New: ${textEditingController.text}';
+          configRow['title'] = textEditingController.text;
           // ignore: use_build_context_synchronously
           await Navigator.push(
               context,

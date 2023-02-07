@@ -9,13 +9,35 @@ RxMap starredMap = RxMap();
 class StarredBL extends SheetDb {
   StarredBL(super.isar);
 
-  Future addStarr(String sheetName, int sheetIDin) async {
+  Future<StarredVal?> readStarredVal(String sheetName, int sheetIDin) async {
     StarredVal? starredVal = await isar.starredVals
         .filter()
         .sheetNameEqualTo(sheetName)
         .and()
         .sheetIDEqualTo(sheetIDin)
         .findFirst();
+
+    return starredVal;
+  }
+
+  Future<String> readStars(String sheetName, int sheetIDin) async {
+    StarredVal? starredVal = await isar.starredVals
+        .filter()
+        .sheetNameEqualTo(sheetName)
+        .and()
+        .sheetIDEqualTo(sheetIDin)
+        .findFirst();
+    try {
+      // ignore: unnecessary_null_comparison
+      if (starredVal!.stars == null) return '';
+      return starredVal.stars;
+    } catch (_) {
+      return '';
+    }
+  }
+
+  Future addStarr(String sheetName, int sheetIDin) async {
+    StarredVal? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     starredVal ??= StarredVal()
       ..sheetName = sheetName
@@ -27,50 +49,41 @@ class StarredBL extends SheetDb {
         await isar.starredVals.put(starredVal!);
       });
     } catch (e, s) {
+      logDb.createErr('sheetDB.starredValss.starredBL.addStarr', e.toString(),
+          s.toString());
+      return '';
+    }
+  }
+
+  Future minusStar1(String sheetName, int sheetIDin) async {
+    StarredVal? starredVal = await readStarredVal(sheetName, sheetIDin);
+
+    try {
+      if (starredVal!.stars.isEmpty) return;
+      starredVal.stars =
+          starredVal.stars.substring(0, starredVal.stars.length - 1);
+      await isar.writeTxn((isar) async {
+        await isar.starredVals.put(starredVal);
+      });
+    } catch (e, s) {
       logDb.createErr(
-          'sheetDB.starredValss.addStarr', e.toString(), s.toString());
+          'sheetDB.starredBL.minusStar1', e.toString(), s.toString());
       return '';
     }
   }
 
-  Future minusStar1(String sheetName, String fileId, int sheetID) async {
-    // Sheet? sheet = await isar.sheets
-    //     .filter()
-    //     .aSheetNameEqualTo(sheetName)
-    //     .and()
-    //     .sheetIdEqualTo(sheetID)
-    //     .findFirst();
+  Future clearStars(String sheetName, int sheetIDin) async {
+    StarredVal? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     try {
-      // if (sheet!.starred.isEmpty) return;
-      // sheet.starred = sheet.starred.substring(0, sheet.starred.length - 1);
-      // sheet.rowArr = blUti.toListString(sheet.rowArr);
-      // await isar.writeTxn((isar) async {
-      //   await isar.sheets.put(sheet);
-      // });
+      if (starredVal!.stars.isEmpty) return;
+      starredVal.stars = '';
+      await isar.writeTxn((isar) async {
+        await isar.starredVals.put(starredVal);
+      });
     } catch (e, s) {
-      logDb.createErr('sheetDB.minusStar1', e.toString(), s.toString());
-      return '';
-    }
-  }
-
-  Future clearStars(String sheetName, String fileId, int sheetID) async {
-    // Sheet? sheet = await isar.sheets
-    //     .filter()
-    //     .aSheetNameEqualTo(sheetName)
-    //     .and()
-    //     .sheetIdEqualTo(sheetID)
-    //     .findFirst();
-
-    try {
-      // if (sheet!.starred.isEmpty) return;
-      // sheet.starred = '';
-      // sheet.rowArr = blUti.toListString(sheet.rowArr);
-      // await isar.writeTxn((isar) async {
-      //   await isar.sheets.put(sheet);
-      // });
-    } catch (e, s) {
-      logDb.createErr('sheetDB.clearStars', e.toString(), s.toString());
+      logDb.createErr(
+          'sheetDB.starredBL.clearStars', e.toString(), s.toString());
       return '';
     }
   }

@@ -57,7 +57,8 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      //rowmap['starred'] = sheet.starred;
+      rowmap['stars'] =
+          await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
       rowmaps.add(rowmap);
     }
     return rowmaps;

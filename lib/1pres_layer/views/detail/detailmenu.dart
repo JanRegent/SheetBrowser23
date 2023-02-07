@@ -4,7 +4,6 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
-import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
 
 class DetailMenu extends StatefulWidget {
@@ -40,21 +39,6 @@ class _DetailMenuState extends State<DetailMenu> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  List<String> starredLinkGet(Map rowmap, Map configMap) {
-    List<String> starredLink = [];
-
-    if (rowmap['link2sheetName'] != null) {
-      starredLink.add('link2sheetName=${rowmap['link2sheetName']}');
-      starredLink.add('link2ID=${rowmap['link2ID']}');
-      starredLink.add('link2fileId=${rowmap['link2fileId']}');
-    } else {
-      starredLink.add('link2sheetName=${rowmap['sheetName']}');
-      starredLink.add('link2ID=${rowmap['ID']}');
-      //starredLink.add('link2fileId=${blUti.url2fileid(rowmap['fileUrl'])}');
-    }
-    return starredLink;
   }
 
   List<PlutoMenuItem> _makeMenus(BuildContext context) {
@@ -105,7 +89,8 @@ class _DetailMenuState extends State<DetailMenu> {
         title: 'Star',
         icon: Icons.stars,
         children: [
-          PlutoMenuItem(title: widget.rowmap['starred'] ?? ''),
+          PlutoMenuItem(title: widget.rowmap['stars']),
+          PlutoMenuItemDivider(),
           PlutoMenuItem(
             title: '',
             icon: Icons.add,
@@ -113,14 +98,6 @@ class _DetailMenuState extends State<DetailMenu> {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredBL
                   .addStarr(widget.rowmap['sheetName'], sheetID!);
-              List<String> starredLink =
-                  starredLinkGet(widget.rowmap, widget.configMap);
-
-              await GoogleSheetsDL(sheetId: '', sheetName: '')
-                  .starredAppend(starredLink.join('__|__'));
-
-              // ignore: use_build_context_synchronously
-              al.message(context, 'Added to starred');
             },
           ),
           PlutoMenuItem(
@@ -128,8 +105,9 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.exposure_minus_1,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
+              if (sheetID == null) return;
               await sheetDb.starredBL
-                  .minusStar1(widget.rowmap['sheetName'], '', sheetID!);
+                  .minusStar1(widget.rowmap['sheetName'], sheetID);
             },
           ),
           PlutoMenuItem(
@@ -138,7 +116,7 @@ class _DetailMenuState extends State<DetailMenu> {
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredBL
-                  .clearStars(widget.rowmap['sheetName'], '', sheetID!);
+                  .clearStars(widget.rowmap['sheetName'], sheetID!);
             },
           )
         ],
