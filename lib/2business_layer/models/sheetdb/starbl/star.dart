@@ -1,10 +1,10 @@
 import 'package:isar/isar.dart';
 // flutter pub run build_runner build
 
-part 'starredvals.g.dart';
+part 'star.g.dart';
 
 @Collection()
-class StarredVal {
+class Star {
   @Id()
   int id = Isar.autoIncrement;
 
@@ -12,5 +12,5 @@ class StarredVal {
   int sheetID = -1;
   String stars = '';
 
-  StarredVal();
+  Star();
 }

@@ -1,5 +1,5 @@
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/starred/starredvals.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/starbl/star.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
@@ -9,7 +9,7 @@ import 'package:isar/isar.dart';
 import '../log.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
-import 'starred/starredbl.dart';
+import 'starbl/starbl.dart';
 
 late SheetDb sheetDb;
 
@@ -18,7 +18,7 @@ late TagsDb tagsDb;
 
 Future dbInit() async {
   final isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema, TagSchema, StarredValSchema],
+    schemas: [SheetSchema, LogSchema, TagSchema, StarSchema],
     name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
