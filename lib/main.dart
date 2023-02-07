@@ -6,6 +6,7 @@ import '1pres_layer/_home/errorpage.dart';
 import '2business_layer/appdata/approotdata.dart';
 
 import '2business_layer/models/sheetdb/_sheetdb.dart';
+import 'data_layer/getsheetdl.dart';
 import 'data_layer/isloading/backgrounscompleter.dart';
 
 void main() async {
@@ -13,6 +14,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
+
+  //postAppendStarred(['cccc2', 'aaaa2', 'ssss', 'pb', '11']);
+  await getAppendStarred(['cccc2GET', 'aaaa2', 'ssss', 'pb', '11']);
+
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),

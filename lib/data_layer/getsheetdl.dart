@@ -5,6 +5,22 @@ import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
+import '../2business_layer/models/sheetdb/_sheetdb.dart';
+
+///CORS
+///https://pub.dev/packages/flutter_cors
+///
+///dart pub global activate flutter_cors
+///
+///C:\Users\janre\AppData\Local\Pub\Cache\bin\fluttercors --disable
+///
+//Patching C:\Android\flutter/packages/flutter_tools/lib/src/web/chrome.dart
+//Deleting C:\Android\flutter/bin/cache/flutter_tools.stamp
+//CORS checks are now disabled for Flutter's Chrome instance
+///
+///
+///
+
 class GoogleSheetsDL {
   final String? sheetName;
   String sheetId = '';
@@ -103,6 +119,57 @@ Future getTagQuote(String sourceSheetName, String id, String fileId) async {
     return [];
     // you can show any error widgets for your users here.
   }
+}
+
+String appendServiceUrl =
+    'https://script.google.com/macros/s/AKfycbzV7T-PJ0_dKed6rDU0M9kqBHhNwkNDbUp6vaJuRYNWJrKMFwVzAQCZqPoWrW8zwhta/exec';
+
+Future getAppendStarred(List<String> rowArr) async {
+  String? url = appendServiceUrl;
+  rowArr[0] = rowArr[0] + DateTime.now().toIso8601String();
+  String rowStr = rowArr.join('__|__');
+  url = '$url?rowArr=$rowStr';
+  var encoded = Uri.encodeFull(url);
+  print(url);
+
+  try {
+    final response = await http.get(
+      Uri.parse(encoded),
+      // Send authorization headers to the backend.
+      headers: {
+        HttpHeaders.accessControlAllowOriginHeader: "*",
+        HttpHeaders.accessControlAllowMethodsHeader:
+            "GET,PUT,PATCH,POST,DELETE",
+        HttpHeaders.accessControlAllowHeadersHeader:
+            "Origin, X-Requested-With, Content-Type, Accept",
+        HttpHeaders.accessControlAllowCredentialsHeader: 'false'
+      },
+    );
+
+    //Response response = await http.get(Uri.parse(encoded));
+    print(response.statusCode);
+    //   if (response.statusCode != 200) {
+    //     throw Exception(
+    //         'Error:[DL].getAppendStarred Could not connect to server');
+    //   }
+    //   return jsonDecode(response.body);
+    // } on SocketException {
+    //   throw Failure(
+    //       message:
+    //           "Error: [DL].getAppendStarred No Internet Connection. [getTagQuote]");
+    // } on HttpException {
+    //   throw Failure(
+    //       message:
+    //           "Error: [DL].getAppendStarred Internal Issue Occured. [getTagQuote]");
+    // } on FormatException {
+    //   throw Failure(
+    //       message: "Error: [DL].getAppendStarred Bad Response. [getTagQuote]");
+  } catch (e, s) {
+    logDb.createErr('[DL].getAppendStarred', e.toString(), s.toString(),
+        descr: 'statusCode: ');
+  }
+  return [];
+  // you can show any error widgets for your users here.
 }
 
 class Failure {
