@@ -145,6 +145,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       ),
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
+
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         fileListRow['title'] = fileListRow['sheetName'];

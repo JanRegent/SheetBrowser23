@@ -24,6 +24,7 @@ class RowMap extends SheetDb {
 
   Future<List<Map>> readRowMapsByIDs(List<int> ids) async {
     List<Map> rowmaps = [];
+    starsMap.clear();
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < ids.length; idIx++) {
       Sheet? sheet = await isar.sheets.get(ids[idIx]);
@@ -37,7 +38,9 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      //rowmap['starred'] = sheet.starred;
+      String stars =
+          await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
+      starsMap.putIfAbsent(sheet.sheetId, () => stars);
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -45,6 +48,7 @@ class RowMap extends SheetDb {
 
   Future<List<Map>> readRowMapsBySheets(List<Sheet> sheets) async {
     List<Map> rowmaps = [];
+    starsMap.clear();
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < sheets.length; idIx++) {
       Sheet? sheet = sheets[idIx];
@@ -60,7 +64,6 @@ class RowMap extends SheetDb {
       rowmap['sheetName'] = sheet.aSheetName;
       String stars =
           await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
-
       starsMap.putIfAbsent(sheet.sheetId, () => stars);
 
       rowmaps.add(rowmap);
@@ -91,7 +94,7 @@ class RowMap extends SheetDb {
       }
     }
     rowmap['sheetName'] = sheet.aSheetName;
-    //rowmap['starred'] = sheet.starred;
+
     return rowmap;
   }
 }
