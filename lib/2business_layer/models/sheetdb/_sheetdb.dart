@@ -1,15 +1,14 @@
+import 'package:isar/isar.dart';
+
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/starbl/star.dart';
+import 'package:sheetbrowser/2business_layer/models/starbl/star.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
-
-import 'package:isar/isar.dart';
-
 import '../log.dart';
+import '../starbl/starbl.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
-import 'starbl/starbl.dart';
 
 late SheetDb sheetDb;
 

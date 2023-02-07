@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/starbl/star.dart';
+import 'package:sheetbrowser/2business_layer/models/starbl/star.dart';
 
-import '../_sheetdb.dart';
+import '../sheetdb/_sheetdb.dart';
 
 class StarredBL extends SheetDb {
   StarredBL(super.isar);

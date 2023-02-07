@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../_sheetdb.dart';
+import '../sheetdb/_sheetdb.dart';
 
 class StarredDb {
   final Isar isar;
