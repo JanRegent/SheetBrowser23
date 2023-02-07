@@ -1,7 +1,10 @@
+import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
 import '_sheetdb.dart';
+
+RxString rowmapsIsLoading = ''.obs;
 
 class RowMap extends SheetDb {
   RowMap(super.isar);
@@ -44,6 +47,7 @@ class RowMap extends SheetDb {
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < sheets.length; idIx++) {
       Sheet? sheet = sheets[idIx];
+      rowmapsIsLoading.value = sheet.aSheetName;
       List<String> colHeader = sheetDb.colsDb.colsHeadersMap[sheet.aSheetName]!;
       Map rowmap = {};
       for (var colIx = 0; colIx < colHeader.length; colIx++) {

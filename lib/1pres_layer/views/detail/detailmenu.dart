@@ -6,7 +6,6 @@ import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 import '../../../2business_layer/appdata/approotdata.dart';
 import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
-import '../../alib/uti.dart';
 
 class DetailMenu extends StatefulWidget {
   final Map rowmap;
@@ -53,7 +52,7 @@ class _DetailMenuState extends State<DetailMenu> {
     } else {
       starredLink.add('link2sheetName=${rowmap['sheetName']}');
       starredLink.add('link2ID=${rowmap['ID']}');
-      starredLink.add('link2fileId=${blUti.url2fileid(rowmap['fileUrl'])}');
+      //starredLink.add('link2fileId=${blUti.url2fileid(rowmap['fileUrl'])}');
     }
     return starredLink;
   }
@@ -113,7 +112,7 @@ class _DetailMenuState extends State<DetailMenu> {
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredBL
-                  .addStarr(widget.rowmap['sheetName'], '', sheetID!);
+                  .addStarr(widget.rowmap['sheetName'], sheetID!);
               List<String> starredLink =
                   starredLinkGet(widget.rowmap, widget.configMap);
 

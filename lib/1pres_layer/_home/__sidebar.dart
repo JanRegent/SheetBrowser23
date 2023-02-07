@@ -8,8 +8,8 @@ import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../../data_layer/isloading/isloading.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
-import '../gettags_getnews/searchpage.dart';
-import '../gettags_getnews/tagselectpage.dart';
+import '../tags_search/searchpage.dart';
+import '../tags_search/tagselectpage.dart';
 import '../views/plutogrid/_gridpage.dart';
 import '_home.dart';
 

@@ -6,6 +6,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/data_layer/isloading/isloading.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
+import '../../2business_layer/models/sheetdb/rowmap.dart';
 import '../alib/uti.dart';
 import '../views/detail/carousel.dart';
 
@@ -120,7 +121,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Obx(() => isDataLoading.value
           ? isloadingWidgetColumn(
-              'Awaiting search results...\n (${textEditingController.text}) \n ${isloadingPhaseMessage.value}')
+              'Awaiting search results...\n for ${textEditingController.text} \n ${isloadingPhaseMessage.value} \n in  + ${rowmapsIsLoading.value}')
           : searchableKeyListview()),
 
       //searchableKeyListview()

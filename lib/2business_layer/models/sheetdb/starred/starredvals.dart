@@ -4,13 +4,13 @@ import 'package:isar/isar.dart';
 part 'starredvals.g.dart';
 
 @Collection()
-class StarredVals {
+class StarredVal {
   @Id()
   int id = Isar.autoIncrement;
 
   String sheetName = '';
-  String key = '';
-  String value = '';
+  int sheetID = -1;
+  String stars = '';
 
-  StarredVals();
+  StarredVal();
 }

@@ -1,25 +1,34 @@
+import 'package:get/get.dart';
+import 'package:isar/isar.dart';
+import 'package:sheetbrowser/2business_layer/models/sheetdb/starred/starredvals.dart';
+
 import '../_sheetdb.dart';
+
+RxMap starredMap = RxMap();
 
 class StarredBL extends SheetDb {
   StarredBL(super.isar);
 
-  Future addStarr(String sheetName, String fileId, int sheetID) async {
-    // Sheet? sheet = await isar.sheets
-    //     .filter()
-    //     .aSheetNameEqualTo(sheetName)
-    //     .and()
-    //     .sheetIdEqualTo(sheetID)
-    //     .findFirst();
+  Future addStarr(String sheetName, int sheetIDin) async {
+    StarredVal? starredVal = await isar.starredVals
+        .filter()
+        .sheetNameEqualTo(sheetName)
+        .and()
+        .sheetIDEqualTo(sheetIDin)
+        .findFirst();
+
+    starredVal ??= StarredVal()
+      ..sheetName = sheetName
+      ..sheetID = sheetIDin;
 
     try {
-      // sheet!.starred += '*';
-      // //todo: Error: Expected a value of type 'List<dynamic>?', but got one of type 'LegacyJavaScriptObject'
-      // sheet.rowArr = blUti.toListString(sheet.rowArr);
-      // await isar.writeTxn((isar) async {
-      //   await isar.sheets.put(sheet);
-      // });
+      starredVal.stars += '*';
+      await isar.writeTxn((isar) async {
+        await isar.starredVals.put(starredVal!);
+      });
     } catch (e, s) {
-      logDb.createErr('sheetDB.addStarr', e.toString(), s.toString());
+      logDb.createErr(
+          'sheetDB.starredValss.addStarr', e.toString(), s.toString());
       return '';
     }
   }
