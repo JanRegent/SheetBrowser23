@@ -1,19 +1,24 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
+import '../../../2business_layer/models/sheetdb/rowmap.dart';
 import '../../alib/alib.dart';
 
+// ignore: must_be_immutable
 class DetailMenu extends StatefulWidget {
   final Map rowmap;
   final Map configMap;
   final int rowsArrRowIx;
-  const DetailMenu(
+  Function setStateCallback;
+  DetailMenu(
     this.rowmap,
     this.configMap,
-    this.rowsArrRowIx, {
+    this.rowsArrRowIx,
+    this.setStateCallback, {
     super.key,
   });
 
@@ -41,7 +46,15 @@ class _DetailMenuState extends State<DetailMenu> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  RxString starTitle = ''.obs;
+
   List<PlutoMenuItem> _makeMenus(BuildContext context) {
+    starTitle.value = '';
+    try {
+      starTitle.value = starsMap[int.tryParse(widget.rowmap['ID'])]!;
+    } catch (_) {
+      starTitle.value = '';
+    }
     return [
       //-----------------------------------------------------file
       PlutoMenuItem(
@@ -89,15 +102,17 @@ class _DetailMenuState extends State<DetailMenu> {
         title: 'Star',
         icon: Icons.stars,
         children: [
-          PlutoMenuItem(title: widget.rowmap['stars']),
+          PlutoMenuItem(title: starTitle.value),
           PlutoMenuItemDivider(),
           PlutoMenuItem(
             title: '',
             icon: Icons.add,
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              await sheetDb.starredBL
-                  .addStarr(widget.rowmap['sheetName'], sheetID!);
+              starsMap[sheetID!] = await sheetDb.starredBL
+                  .addStar(widget.rowmap['sheetName'], sheetID);
+              starTitle.value = starsMap[sheetID]!;
+              widget.setStateCallback();
             },
           ),
           PlutoMenuItem(
@@ -106,8 +121,10 @@ class _DetailMenuState extends State<DetailMenu> {
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               if (sheetID == null) return;
-              await sheetDb.starredBL
+              starsMap[sheetID] = await sheetDb.starredBL
                   .minusStar1(widget.rowmap['sheetName'], sheetID);
+              starTitle.value = starsMap[sheetID]!;
+              widget.setStateCallback();
             },
           ),
           PlutoMenuItem(
@@ -117,6 +134,9 @@ class _DetailMenuState extends State<DetailMenu> {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredBL
                   .clearStars(widget.rowmap['sheetName'], sheetID!);
+              starsMap[sheetID] = '';
+              starTitle.value = starsMap[sheetID]!;
+              widget.setStateCallback();
             },
           )
         ],

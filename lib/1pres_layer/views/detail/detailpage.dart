@@ -30,13 +30,17 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
   }
 
+  setStateCallback() {
+    setState(() {});
+  }
+
   Map rowmap = {};
 
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
 
-    listWidgets
-        .add(DetailMenu(widget.rowmap, widget.configRow, widget.rowsArrRowIx));
+    listWidgets.add(DetailMenu(widget.rowmap, widget.configRow,
+        widget.rowsArrRowIx, setStateCallback));
     rowmap = widget.rowmap;
 
     void key2listWidget(String key, List<Widget> list) {

@@ -1,10 +1,7 @@
-import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/starred/starredvals.dart';
 
 import '../_sheetdb.dart';
-
-RxMap starredMap = RxMap();
 
 class StarredBL extends SheetDb {
   StarredBL(super.isar);
@@ -36,7 +33,7 @@ class StarredBL extends SheetDb {
     }
   }
 
-  Future addStarr(String sheetName, int sheetIDin) async {
+  Future<String> addStar(String sheetName, int sheetIDin) async {
     StarredVal? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     starredVal ??= StarredVal()
@@ -48,6 +45,7 @@ class StarredBL extends SheetDb {
       await isar.writeTxn((isar) async {
         await isar.starredVals.put(starredVal!);
       });
+      return starredVal.stars;
     } catch (e, s) {
       logDb.createErr('sheetDB.starredValss.starredBL.addStarr', e.toString(),
           s.toString());
@@ -55,20 +53,21 @@ class StarredBL extends SheetDb {
     }
   }
 
-  Future minusStar1(String sheetName, int sheetIDin) async {
+  Future<String> minusStar1(String sheetName, int sheetIDin) async {
     StarredVal? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     try {
-      if (starredVal!.stars.isEmpty) return;
+      if (starredVal!.stars.isEmpty) return starredVal.stars;
       starredVal.stars =
           starredVal.stars.substring(0, starredVal.stars.length - 1);
       await isar.writeTxn((isar) async {
         await isar.starredVals.put(starredVal);
       });
+      return starredVal.stars;
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.starredBL.minusStar1', e.toString(), s.toString());
-      return '';
+      return starredVal!.stars;
     }
   }
 

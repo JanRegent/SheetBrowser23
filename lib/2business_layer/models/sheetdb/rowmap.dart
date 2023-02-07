@@ -4,6 +4,7 @@ import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
 import '_sheetdb.dart';
 
+RxMap<int, String> starsMap = RxMap();
 RxString rowmapsIsLoading = ''.obs;
 
 class RowMap extends SheetDb {
@@ -57,8 +58,11 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      rowmap['stars'] =
+      String stars =
           await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
+
+      starsMap.putIfAbsent(sheet.sheetId, () => stars);
+
       rowmaps.add(rowmap);
     }
     return rowmaps;
