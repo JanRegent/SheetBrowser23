@@ -30,6 +30,17 @@ Future getFilelist() async {
   }
 }
 
+Future<String> getFileIdFromFilelist(String sheetName) async {
+  filelist.clear();
+  for (var rowIx = 0; rowIx < filelist.length; rowIx++) {
+    if (filelist[rowIx]['sheetName'] == sheetName) {
+      String fileId = blUti.url2fileid(filelist[rowIx]['fileUrl']);
+      return fileId;
+    }
+  }
+  return '';
+}
+
 Card filelistCard(BuildContext context, Map fileListRow, int index) {
   List<Widget> getLements() {
     List<Widget> rowWigs = [];

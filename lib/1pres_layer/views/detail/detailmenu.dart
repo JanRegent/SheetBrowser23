@@ -3,7 +3,9 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
+import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
 import '../../../2business_layer/models/sheetdb/rowmap.dart';
@@ -124,11 +126,14 @@ class _DetailMenuState extends State<DetailMenu> {
             title: '',
             icon: Icons.add,
             onTap: () async {
+              String sheetName = widget.rowmap['sheetName'];
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              starsMap[sheetID!] = await sheetDb.starredBL
-                  .addStar(widget.rowmap['sheetName'], sheetID);
+              starsMap[sheetID!] =
+                  await sheetDb.starredBL.addStar(sheetName, sheetID);
               starTitle.value = starsMap[sheetID]!;
               widget.setStateCallback();
+              String fileId = blUti.url2fileid(widget.configMap['fileUrl']);
+              await appendStarCommunity(sheetName, sheetID.toString(), fileId);
             },
           ),
           PlutoMenuItem(

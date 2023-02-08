@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
+import '../1pres_layer/filelist/filelistcard.dart';
 import '../2business_layer/models/sheetdb/_sheetdb.dart';
 
 ///CORS
@@ -53,27 +54,6 @@ class GoogleSheetsDL {
       return [];
       // you can show any error widgets for your users here.
     }
-  }
-
-  Future getNewsBuild(String dateinsert) async {
-    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
-
-    if (!dateinsert.endsWith('.')) dateinsert = '$dateinsert.';
-
-    String url = '$selectServiceUrl?action=getNews&dateinsert=$dateinsert';
-    await http.get(Uri.parse(url));
-
-    return 'OK';
-  }
-
-  Future starredAppend(String starredLink) async {
-    String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
-    String starredLinkEncoded = Uri.encodeFull(starredLink);
-    String url =
-        '$selectServiceUrl?action=starredAppend&starredLink=$starredLinkEncoded';
-
-    await http.get(Uri.parse(url));
-    return 'OK';
   }
 
   Future selectData() async {
@@ -190,4 +170,15 @@ class Failure {
   String toString() {
     return message;
   }
+}
+
+Future appendStarCommunity(
+    String sheetName, String sheetID, String fileId) async {
+  String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
+
+  String url =
+      '$selectServiceUrl?action=starredAppend&sheetName=$sheetName&sheetID=$sheetID&fileId=$fileId';
+  await http.get(Uri.parse(url));
+
+  return 'OK';
 }

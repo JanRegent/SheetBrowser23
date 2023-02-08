@@ -7,9 +7,10 @@ import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
   final List<Map> rowMaps;
-  final Map configRow;
+  final Map configRowFilelistRow;
   final int startRow;
-  const Carousel(this.rowMaps, this.configRow, this.startRow, {super.key});
+  const Carousel(this.rowMaps, this.configRowFilelistRow, this.startRow,
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -43,8 +44,8 @@ class CarouselState extends State<Carousel> {
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   child: Stack(
                     children: <Widget>[
-                      DetailPage(
-                          widget.rowMaps[rowIndex], widget.configRow, rowIndex)
+                      DetailPage(widget.rowMaps[rowIndex],
+                          widget.configRowFilelistRow, rowIndex)
                     ],
                   )),
             ))
@@ -54,7 +55,7 @@ class CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.configRow['title'])),
+        appBar: AppBar(title: Text(widget.configRowFilelistRow['title'])),
         body: Column(
           children: <Widget>[
             CarouselSlider(
