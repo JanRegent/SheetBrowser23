@@ -76,6 +76,8 @@ dependencies:
 
   #------others utils
   clipboard: ^0.1.3                   #https://pub.dev/packages/clipboard
+  csv: ^5.0.1                         #https://pub.dev/packages/csv
+
   dartx: ^1.1.0                       #https://pub.dev/packages/dartx
   #https://flutterawesome.com/a-flutter-package-that-provides-a-set-of-material-symbols-icons/
   material_symbol_icons: ^0.0.1       #https://pub.dev/packages/material_symbol_icons

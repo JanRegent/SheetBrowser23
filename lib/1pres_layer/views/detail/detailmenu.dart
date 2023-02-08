@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
@@ -56,7 +57,7 @@ class _DetailMenuState extends State<DetailMenu> {
       starTitle.value = '';
     }
     return [
-      //-----------------------------------------------------file
+      //---------------------------------------------------file
       PlutoMenuItem(
         title: 'File',
         children: [
@@ -77,15 +78,30 @@ class _DetailMenuState extends State<DetailMenu> {
           ),
         ],
       ),
-      //-----------------------------------------------------Edit
+      //---------------------------------------------------Edit
       PlutoMenuItem(
         title: 'Edit',
         children: [
           PlutoMenuItem(
-            title: 'Copy all row',
+            title: 'Copy row',
             icon: Icons.copy_all,
             onTap: () async {
-              message(context, 'Copy all row');
+              String res = const ListToCsvConverter().convert([
+                [',b', 3.1, 42],
+                ['n\n']
+              ]);
+              List<String> row = [
+                'ID?',
+                widget.rowmap['sheetName'],
+                widget.rowmap['ID']
+              ];
+              for (var element in widget.rowmap.entries) {
+                if (element.key == 'ID') continue;
+                row.add('${element.value}');
+              }
+              const conv = ListToCsvConverter(fieldDelimiter: '|');
+              res = conv.convert([row]);
+              FlutterClipboard.copy(res).then((value) => {});
             },
           ),
           PlutoMenuItem(

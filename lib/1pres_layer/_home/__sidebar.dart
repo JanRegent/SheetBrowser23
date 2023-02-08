@@ -173,7 +173,8 @@ class ExampleSidebarX extends StatelessWidget {
             label: 'Starred',
             onTap: () async {
               isloadingPhaseMessage.value = 'Loading starred';
-              await currentSheet.getSheet('starred2022', '');
+              await currentSheet.getSheet(
+                  'starred', '1UoxFyyfzdj8iI7LiVHhORJWuNPFzJFHnw1KooDugs-E');
               isloadingPhaseMessage.value = '';
               // ignore: use_build_context_synchronously
               await Navigator.push(
