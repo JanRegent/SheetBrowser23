@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sheetbrowser/1pres_layer/alib/alib.dart';
+import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../data_layer/isloading/isloading.dart';
 
@@ -13,14 +15,20 @@ class SidebarHome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home page')),
-      body: homeBody(ref),
+      body: homeBody(ref, context),
     );
   }
 
-  Widget homeBody(ref) {
+  // await getAppendStarredManually(
+  //     ['cccc2GET8', 'aaaa28', 'ssss8', 'pb8', '118'], context);
+
+  Widget homeBody(ref, BuildContext context) {
     return Column(
       children: [
         isloadingListTile(),
+        al.linkIconOpenUrlNoDoc(
+            appendUrl4launcher(['cccc2GET88', 'aaaa288', 'ssss88', 'pb', '11']),
+            context)
       ],
     );
   }

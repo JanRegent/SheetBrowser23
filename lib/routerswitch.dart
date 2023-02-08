@@ -37,6 +37,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
       await currentSheet.getSheet('', '');
     }
     configRow['fileUrl'] = currentSheet.fileId;
+
+    // ignore: use_build_context_synchronously
+
     return 'ok';
   }
 

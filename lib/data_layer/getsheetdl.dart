@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
+import '../1pres_layer/alib/alib.dart';
 import '../2business_layer/models/sheetdb/_sheetdb.dart';
 
 ///CORS
@@ -59,6 +61,7 @@ class GoogleSheetsDL {
     String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
 
     if (!dateinsert.endsWith('.')) dateinsert = '$dateinsert.';
+
     String url = '$selectServiceUrl?action=getNews&dateinsert=$dateinsert';
     await http.get(Uri.parse(url));
 
@@ -124,13 +127,22 @@ Future getTagQuote(String sourceSheetName, String id, String fileId) async {
 String appendServiceUrl =
     'https://script.google.com/macros/s/AKfycbzV7T-PJ0_dKed6rDU0M9kqBHhNwkNDbUp6vaJuRYNWJrKMFwVzAQCZqPoWrW8zwhta/exec';
 
+String appendUrl4launcher(List<String> rowArr) {
+  String? url = appendServiceUrl;
+  rowArr[0] = rowArr[0] + DateTime.now().toIso8601String();
+  String rowStr = rowArr.join('__|__');
+  url = '$url?rowArr=$rowStr';
+  return url;
+  // var encoded = Uri.encodeFull(url);
+  // await al.openhUrl(encoded as Uri, context);
+}
+
 Future getAppendStarred(List<String> rowArr) async {
   String? url = appendServiceUrl;
   rowArr[0] = rowArr[0] + DateTime.now().toIso8601String();
   String rowStr = rowArr.join('__|__');
   url = '$url?rowArr=$rowStr';
   var encoded = Uri.encodeFull(url);
-  print(url);
 
   try {
     final response = await http.get(
@@ -147,7 +159,8 @@ Future getAppendStarred(List<String> rowArr) async {
     );
 
     //Response response = await http.get(Uri.parse(encoded));
-    print(response.statusCode);
+    int status = response.statusCode;
+    status = status;
     //   if (response.statusCode != 200) {
     //     throw Exception(
     //         'Error:[DL].getAppendStarred Could not connect to server');
