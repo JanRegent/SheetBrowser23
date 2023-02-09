@@ -181,21 +181,9 @@ class ExampleSidebarX extends StatelessWidget {
             }),
         SidebarXItem(
             icon: Icons.star,
-            label: 'Starred',
+            label: 'Starred all',
             onTap: () async {
-              isloadingPhaseMessage.value = 'Loading starred';
-              currentSheet.rowsMaps =
-                  await sheetDb.rowMap.readRowMapsByStars('');
-              isloadingPhaseMessage.value = '';
-              Map configRow = {};
-              configRow['fileUrl'] = currentSheet.fileId;
-              configRow['title'] = 'Stars';
-              // ignore: use_build_context_synchronously
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (ctx) =>
-                          Carousel(currentSheet.rowsMaps, configRow, 0)));
+              await carouselStars(context, '');
             }),
         SidebarXItem(
             icon: Icons.label,

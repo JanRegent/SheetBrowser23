@@ -10,6 +10,7 @@ import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../data_layer/getsheetdl.dart';
+import '../../data_layer/isloading/isloading.dart';
 import '../alib/alib.dart';
 
 import '../views/detail/carousel.dart';
@@ -46,6 +47,21 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
   return '';
 }
 
+Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
+  isloadingPhaseMessage.value = 'Loading starred';
+  currentSheet.rowsMaps =
+      await sheetDb.rowMap.readRowMapsByStars(sheetNameOrEmpty);
+  isloadingPhaseMessage.value = '';
+  Map configRow = {};
+  configRow['fileUrl'] = currentSheet.fileId;
+  configRow['title'] = 'Stars';
+  // ignore: use_build_context_synchronously
+  await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (ctx) => Carousel(currentSheet.rowsMaps, configRow, 0)));
+}
+
 Card filelistCard(BuildContext context, Map fileListRow, int index) {
   List<Widget> getLements() {
     List<Widget> rowWigs = [];
@@ -60,6 +76,8 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
     //rowWigs.add(bookmarkAutoCheckbox(context, fileListSheetRow));
     rowWigs.add(const Text('  '));
 
+    rowWigs.add(sheetStarredButton(context, fileListRow));
+    rowWigs.add(const Text('  '));
     return rowWigs;
   }
 
@@ -209,5 +227,17 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);
         // await rowDetailPageShow(context, fileListRow, localId!, [], '');
+      });
+}
+
+ElevatedButton sheetStarredButton(BuildContext context, Map fileListRow) {
+  return ElevatedButton.icon(
+      label: const Text(''),
+      icon: const Icon(
+        Icons.star,
+        color: Colors.black,
+      ),
+      onPressed: () async {
+        await carouselStars(context, fileListRow['sheetName']);
       });
 }
