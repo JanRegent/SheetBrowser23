@@ -1,14 +1,13 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
-import '../../../2business_layer/models/sheetdb/rowmap.dart';
+
 import '../../alib/alib.dart';
 
 // ignore: must_be_immutable
@@ -39,6 +38,8 @@ class _DetailMenuState extends State<DetailMenu> {
     whiteTapMenus = _makeMenus(context);
   }
 
+  Future getData() async {}
+
   void message(context, String text) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -49,15 +50,7 @@ class _DetailMenuState extends State<DetailMenu> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  RxString starTitle = ''.obs;
-
   List<PlutoMenuItem> _makeMenus(BuildContext context) {
-    starTitle.value = '';
-    try {
-      starTitle.value = starsMap[int.tryParse(widget.rowmap['ID'])]!;
-    } catch (_) {
-      starTitle.value = '';
-    }
     return [
       //---------------------------------------------------file
       PlutoMenuItem(
@@ -120,20 +113,16 @@ class _DetailMenuState extends State<DetailMenu> {
         title: 'Star',
         icon: Icons.stars,
         children: [
-          PlutoMenuItem(title: starTitle.value),
-          PlutoMenuItemDivider(),
           PlutoMenuItem(
             title: '',
             icon: Icons.add,
             onTap: () async {
               String sheetName = widget.rowmap['sheetName'];
               int? sheetID = int.tryParse(widget.rowmap['ID']);
-              starsMap[sheetID!] =
-                  await sheetDb.starredBL.addStar(sheetName, sheetID);
-              starTitle.value = starsMap[sheetID]!;
               widget.setStateCallback();
               String fileId = blUti.url2fileid(widget.configMap['fileUrl']);
               await appendStarCommunity(sheetName, sheetID.toString(), fileId);
+              sheetDb.starredBL.appendStar(sheetName, sheetID!);
             },
           ),
           PlutoMenuItem(
@@ -142,9 +131,6 @@ class _DetailMenuState extends State<DetailMenu> {
             onTap: () async {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               if (sheetID == null) return;
-              starsMap[sheetID] = await sheetDb.starredBL
-                  .minusStar1(widget.rowmap['sheetName'], sheetID);
-              starTitle.value = starsMap[sheetID]!;
               widget.setStateCallback();
             },
           ),
@@ -155,8 +141,6 @@ class _DetailMenuState extends State<DetailMenu> {
               int? sheetID = int.tryParse(widget.rowmap['ID']);
               await sheetDb.starredBL
                   .clearStars(widget.rowmap['sheetName'], sheetID!);
-              starsMap[sheetID] = '';
-              starTitle.value = starsMap[sheetID]!;
               widget.setStateCallback();
             },
           )
@@ -227,16 +211,25 @@ class _DetailMenuState extends State<DetailMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          PlutoMenuBar(
-            mode: PlutoMenuBarMode.tap,
-            backgroundColor: const Color.fromARGB(255, 193, 218, 230),
-            menus: whiteTapMenus,
-          ),
-        ],
-      ),
+    return FutureBuilder<void>(
+      future: getData(), // async work
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        if (snapshot.hasError) {
+          return Text('DetailPage\n\n Error: ${snapshot.error}');
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                PlutoMenuBar(
+                  mode: PlutoMenuBarMode.tap,
+                  backgroundColor: const Color.fromARGB(255, 193, 218, 230),
+                  menus: whiteTapMenus,
+                ),
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 }

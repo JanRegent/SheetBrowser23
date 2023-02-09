@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
 
+import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
 //ccc
 
@@ -43,7 +44,7 @@ class _DetailPageState extends State<DetailPage> {
         widget.rowsArrRowIx, setStateCallback));
     rowmap = widget.rowmap;
 
-    void key2listWidget(String key, List<Widget> list) {
+    void key2listWidget(String key, List<Widget> list, String keyPostfix) {
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations
@@ -59,41 +60,60 @@ class _DetailPageState extends State<DetailPage> {
         text = '';
       }
 
-      if (text.isNotEmpty) {
-        list.add(ListTile(
-          leading: Text(
-            key,
-            style: const TextStyle(fontStyle: FontStyle.italic),
-          ),
-          // ignore: unnecessary_string_interpolations
-          trailing: rowItemRightPopup(context, value),
-        ));
-        //todo tags-highlightingt
-        list.add(ParsedReadMore(
-          text,
-          urlTextStyle: const TextStyle(
-              color: Colors.green,
-              fontSize: 20,
-              decoration: TextDecoration.underline),
-          trimMode: TrimMode.line,
-          textAlign: TextAlign.left,
-          trimLines: 4,
-          delimiter: '  ...',
-          delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
-          style: const TextStyle(color: Colors.black, fontSize: 20),
-          trimCollapsedText: '-->',
-          trimExpandedText: '<--',
-          moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
-          lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
-        ));
-        //list.add(const Text('  '));
+      if (text.isEmpty) return;
+
+      list.add(ListTile(
+        leading: Text(
+          key + keyPostfix,
+          style: const TextStyle(fontStyle: FontStyle.italic),
+        ),
+        // ignore: unnecessary_string_interpolations
+        trailing: rowItemRightPopup(context, value),
+      ));
+      //todo tags-highlightingt
+      list.add(ParsedReadMore(
+        text,
+        urlTextStyle: const TextStyle(
+            color: Colors.green,
+            fontSize: 20,
+            decoration: TextDecoration.underline),
+        trimMode: TrimMode.line,
+        textAlign: TextAlign.left,
+        trimLines: 4,
+        delimiter: '  ...',
+        delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
+        style: const TextStyle(color: Colors.black, fontSize: 20),
+        trimCollapsedText: '-->',
+        trimExpandedText: '<--',
+        moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
+        lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
+      ));
+      //list.add(const Text('  '));
+    }
+
+    Future<String> starsMark() async {
+      String stars = '';
+      try {
+        int sheetID = int.tryParse(widget.rowmap['ID'])!;
+        stars = await sheetDb.starredBL
+            .starExists(widget.rowmap['sheetName'], sheetID);
+        if (stars.isEmpty) {
+          return '';
+        } else {
+          return ' [$stars]';
+        }
+      } catch (_) {
+        return '';
       }
     }
 
+    String stars = await starsMark();
     for (String key in rowmap.keys) {
       // ignore: unnecessary_null_comparison
       if (key == null) continue;
-      key2listWidget(key, listWidgets);
+      String keyPostfix = '';
+      if (key == rowmap.keys.first) keyPostfix = stars;
+      key2listWidget(key, listWidgets, keyPostfix);
     }
 
     return listWidgets;

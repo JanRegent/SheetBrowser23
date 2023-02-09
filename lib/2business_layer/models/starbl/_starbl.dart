@@ -36,6 +36,44 @@ class StarredBL extends SheetDb {
     }
   }
 
+  Future<String> starExists(String sheetName, int sheetIDin) async {
+    Star? starredVal = await isar.stars
+        .filter()
+        .sheetNameEqualTo(sheetName)
+        .and()
+        .sheetIDEqualTo(sheetIDin)
+        .findFirst();
+    try {
+      // ignore: unnecessary_null_comparison
+      if (starredVal == null) return '';
+      return '*';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  Future appendStar(String sheetName, int sheetIDin) async {
+    String exists = await starExists(sheetName, sheetIDin);
+
+    if (exists.isNotEmpty) return;
+
+    Star? starredVal = await readStarredVal(sheetName, sheetIDin);
+
+    starredVal ??= Star()
+      ..sheetName = sheetName
+      ..sheetID = sheetIDin;
+
+    try {
+      starredVal.stars = '*';
+      await isar.writeTxn((isar) async {
+        await isar.stars.put(starredVal!);
+      });
+    } catch (e, s) {
+      logDb.createErr(
+          'sheetDB.starredValss.starredBL.setStar', e.toString(), s.toString());
+    }
+  }
+
   Future<String> addStar(String sheetName, int sheetIDin) async {
     Star? starredVal = await readStarredVal(sheetName, sheetIDin);
 

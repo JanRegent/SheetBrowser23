@@ -6,7 +6,6 @@ import '../../../data_layer/isloading/isloading.dart';
 import '../starbl/star.dart';
 import '_sheetdb.dart';
 
-RxMap<int, String> starsMap = RxMap();
 RxString rowmapsIsLoading = ''.obs;
 
 class RowMap extends SheetDb {
@@ -26,7 +25,6 @@ class RowMap extends SheetDb {
 
   Future<List<Map>> readRowMapsByIDs(List<int> ids) async {
     List<Map> rowmaps = [];
-    starsMap.clear();
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < ids.length; idIx++) {
       Sheet? sheet = await isar.sheets.get(ids[idIx]);
@@ -40,9 +38,6 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      String stars =
-          await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
-      starsMap.putIfAbsent(sheet.sheetId, () => stars);
       rowmaps.add(rowmap);
     }
     return rowmaps;
@@ -50,7 +45,7 @@ class RowMap extends SheetDb {
 
   Future<List<Map>> readRowMapsBySheets(List<Sheet> sheets) async {
     List<Map> rowmaps = [];
-    starsMap.clear();
+
     await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < sheets.length; idIx++) {
       Sheet? sheet = sheets[idIx];
@@ -64,9 +59,6 @@ class RowMap extends SheetDb {
         } catch (_) {}
       }
       rowmap['sheetName'] = sheet.aSheetName;
-      String stars =
-          await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
-      starsMap.putIfAbsent(sheet.sheetId, () => stars);
 
       rowmaps.add(rowmap);
     }
@@ -74,11 +66,9 @@ class RowMap extends SheetDb {
   }
 
   Future<List<Map>> readRowMapsByStars(String sheetNameOrEmpty) async {
-    //sheetNameFileIdMap
     List<Star> starsList =
         await sheetDb.starredBL.readStarredIDs(sheetNameOrEmpty);
     List<Map> rowmaps = [];
-    starsMap.clear();
 
     void rowmapAdd(List<String> colHeader, Sheet sheet) {
       Map rowmap = {};
@@ -121,6 +111,8 @@ class RowMap extends SheetDb {
         continue;
       }
     } //for
+    isloadingAction.value = '';
+    isloadingPhaseMessage.value = '';
     return rowmaps;
   }
 
