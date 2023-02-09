@@ -178,15 +178,17 @@ class SheetDb {
     return await rowMap.readRowMapsBySheets(sheets);
   }
 
-  Future<Sheet?> readSheetID(String sheetName, int sheetID) async {
-    Sheet? sheet = await isar.sheets
-        .filter()
-        .aSheetNameEqualTo(sheetName)
-        .and()
-        .sheetIdEqualTo(sheetID)
-        .findFirst();
-
-    return sheet;
+  Future<Sheet> readSheetID(String sheetName, int sheetID) async {
+    try {
+      return (await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .sheetIdEqualTo(sheetID)
+          .findFirst())!;
+    } catch (_) {
+      return Sheet()..id = -1;
+    }
   }
   //-------------------------------------------------------------news
 
@@ -223,6 +225,8 @@ class SheetDb {
   }
 
   Future sheeetsClear() async {
-    await isar.sheets.clear();
+    await isar.writeTxn((isar) async {
+      await isar.sheets.clear(); // delete
+    });
   }
 }

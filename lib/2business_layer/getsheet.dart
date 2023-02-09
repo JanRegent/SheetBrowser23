@@ -29,7 +29,7 @@ class GetSheet {
     sheetName = sheetNameNew;
     fileId = fileIdNew;
     if (sheetName.isEmpty) {
-      sheetName = AppDataPrefs.getString('currentSheetName')!;
+      sheetName = AppDataPrefs.getString('starredSheetName')!;
     }
     fileId = fileIdNew;
     if (fileId.isEmpty) {
@@ -107,7 +107,7 @@ class GetSheet {
   Future<List<int>> sheetsDiff(List<dynamic> rowsCloud) async {
     List<int> locIDs = await sheetDb.locIDs(sheetName);
     //------------------------------------------cloudIDs
-    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName))!;
+    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName));
     int sheetIDix = colsHeader.indexOf('ID');
     List<int> cloudIDs = [];
     try {
@@ -129,7 +129,7 @@ class GetSheet {
   }
 
   Future gridPrepare() async {
-    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName))!;
+    colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName));
     plutoCols = await colsMap(colsHeader);
 
     sheets = await sheetDb.readSheetsAll(sheetName);

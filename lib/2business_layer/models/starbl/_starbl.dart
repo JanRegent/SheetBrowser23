@@ -1,6 +1,9 @@
 import 'package:isar/isar.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/starbl/star.dart';
+import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
+import '../../appdata/approotdata.dart';
 import '../sheetdb/_sheetdb.dart';
 
 class StarredBL extends SheetDb {
@@ -87,12 +90,70 @@ class StarredBL extends SheetDb {
     }
   }
 
-  //-----------------------------------------------------starred grid
+  //-----------------------------------------------------4 starred detail
   Future<List<Star>> readStarredIDs(String sheetName) async {
     if (sheetName.isNotEmpty) {
       return await isar.stars.filter().sheetNameEqualTo(sheetName).findAll();
     } else {
       return await isar.stars.where().findAll();
+    }
+  }
+
+  Future starsClear() async {
+    await isar.writeTxn((isar) async {
+      await isar.stars.clear(); // delete
+    });
+  }
+
+  Future starDbFill() async {
+    List<dynamic> rowsArr = [];
+    List<String> colsHeader = [];
+    try {
+      String fileId =
+          blUti.url2fileid(AppDataPrefs.getString('starredFileUrl')!);
+      String sheetName =
+          blUti.url2fileid(AppDataPrefs.getString('starredSheetName')!);
+
+      rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
+          .getSheet();
+
+      if (rowsArr.isEmpty) return;
+      colsHeader = blUti.toListString(rowsArr[0]);
+      if (colsHeader.isEmpty) return;
+
+      rowsArr.removeAt(0);
+
+      if (rowsArr.isEmpty) return;
+    } catch (_) {}
+
+    await starsClear();
+
+    List<Star> stars = [];
+    try {
+      int sheetIDix = colsHeader.indexOf('sheetID');
+      int sheetNameIx = colsHeader.indexOf('sheetName');
+      for (var rowIx = 0; rowIx < rowsArr.length; rowIx++) {
+        int sheetID = -1;
+        try {
+          sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
+        } catch (_) {
+          continue;
+        }
+        stars.add(Star()
+          ..sheetID = sheetID
+          ..sheetName = rowsArr[rowIx][sheetNameIx]);
+      }
+    } catch (_) {}
+
+    if (stars.isEmpty) return;
+
+    try {
+      await isar.writeTxn((isar) async {
+        await sheetDb.isar.stars.putAll(stars); // insert
+      });
+      return 'OK';
+    } catch (_) {
+      return;
     }
   }
 }

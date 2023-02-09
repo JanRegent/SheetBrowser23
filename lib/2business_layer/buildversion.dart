@@ -1,1 +1,1 @@
-const buildVersion = 'carouselStars---09-02-2023 10:13:27,72';     
+const buildVersion = 'readRowMapsByStars---09-02-2023 12:05:05,07';     

@@ -22,7 +22,7 @@ class ColsDb extends SheetDb {
     }
   }
 
-  Future<List<String>?> readColsHeader(String sheetName) async {
+  Future<List<String>> readColsHeader(String sheetName) async {
     late Sheet? row;
     try {
       row = (await isar.sheets
@@ -34,8 +34,9 @@ class ColsDb extends SheetDb {
     } catch (_) {
       return [];
     }
-    if (row?.rowArr == null) return [];
-    return row?.rowArr;
+    // ignore: unnecessary_null_comparison
+    if (row!.rowArr == null) return [];
+    return row.rowArr;
   }
 
   Map<String, List<String>> colsHeadersMap = {};

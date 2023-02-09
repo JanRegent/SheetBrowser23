@@ -10,8 +10,6 @@ import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../tags_search/searchpage.dart';
 import '../tags_search/tagselectpage.dart';
-import '../views/detail/carousel.dart';
-import '../views/plutogrid/_gridpage.dart';
 import '_home.dart';
 
 class SidebarXApp extends StatefulWidget {

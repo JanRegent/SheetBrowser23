@@ -43,6 +43,10 @@ Future backgroundCompleter() async {
     isloadingAction.value = 'Indexing';
     await tagsDb.tagsIndex();
     await tagsDb.tagsMapSave();
+
+    isloadingPhaseMessage.value = 'Starred index';
+    await sheetDb.starredBL.starDbFill();
+
     isloadingAction.value = '';
     isloadingPhaseMessage.value =
         'Up to date ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';

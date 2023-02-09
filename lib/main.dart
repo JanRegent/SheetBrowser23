@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
-
+  await sheetDb.starredBL.starDbFill();
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
