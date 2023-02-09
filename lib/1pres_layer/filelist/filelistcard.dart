@@ -17,16 +17,21 @@ import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
 List<dynamic> filelist = [];
+Map sheetNameFileIdMap = {};
 Future getFilelist() async {
-  String? sheetName = AppDataPrefs.getString('currentFileList');
+  String? filelistSheetName = AppDataPrefs.getString('currentFileList');
   String sheetId = AppDataPrefs.getRootSheetId();
   List<dynamic> fileArr =
-      await GoogleSheetsDL(sheetId: sheetId, sheetName: sheetName!).getSheet();
+      await GoogleSheetsDL(sheetId: sheetId, sheetName: filelistSheetName!)
+          .getSheet();
 
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelist.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
     filelist.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
+    String sheetName = filelist.last['sheetName'];
+    String fileId = blUti.url2fileid(filelist.last['fileUrl']);
+    sheetNameFileIdMap[sheetName] = fileId;
   }
 }
 

@@ -6,7 +6,7 @@ import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
 import '../log.dart';
-import '../starbl/starbl.dart';
+import '../starbl/_starbl.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
 
@@ -178,6 +178,16 @@ class SheetDb {
     return await rowMap.readRowMapsBySheets(sheets);
   }
 
+  Future<Sheet?> readSheetID(String sheetName, int sheetID) async {
+    Sheet? sheet = await isar.sheets
+        .filter()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .sheetIdEqualTo(sheetID)
+        .findFirst();
+
+    return sheet;
+  }
   //-------------------------------------------------------------news
 
   Future<List<Map>> readNews(String yyyyMMdd) async {
@@ -212,15 +222,7 @@ class SheetDb {
     });
   }
 
-  Future deleteAKeyEqualToRow() async {
-    List<int> ids = await isar.sheets
-        .filter()
-        .aKeyEqualTo('row')
-        .sheetIdProperty()
-        .findAll();
-
-    await isar.writeTxn((isar) {
-      return isar.sheets.deleteAll(ids); // delete
-    });
+  Future sheeetsClear() async {
+    await isar.sheets.clear();
   }
 }

@@ -17,7 +17,8 @@ Future backgroundCompleter() async {
     isloadingPhaseMessage.value = '';
     return;
   }
-  await sheetDb.deleteAKeyEqualToRow();
+  await sheetDb.sheeetsClear();
+
   await tagsDb.clear();
 
   await getFilelist();

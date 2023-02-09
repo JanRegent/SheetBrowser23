@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
+import '../starbl/star.dart';
 import '_sheetdb.dart';
 
 RxMap<int, String> starsMap = RxMap();
@@ -65,6 +66,32 @@ class RowMap extends SheetDb {
       String stars =
           await sheetDb.starredBL.readStars(rowmap['sheetName'], sheet.sheetId);
       starsMap.putIfAbsent(sheet.sheetId, () => stars);
+
+      rowmaps.add(rowmap);
+    }
+    return rowmaps;
+  }
+
+  Future<List<Map>> readRowMapsByStars(String sheetNameOrEmpty) async {
+    //sheetNameFileIdMap
+    List<Star> starsList =
+        await sheetDb.starredBL.readStarredIDs(sheetNameOrEmpty);
+    List<Map> rowmaps = [];
+    starsMap.clear();
+    await sheetDb.colsDb.colsHeadersMapBuild();
+    for (int starIx = 0; starIx < starsList.length; starIx++) {
+      Sheet? sheet = await sheetDb.readSheetID(
+          starsList[starIx].sheetName, starsList[starIx].sheetID);
+      rowmapsIsLoading.value = sheet!.aSheetName;
+      List<String> colHeader = sheetDb.colsDb.colsHeadersMap[sheet.aSheetName]!;
+      Map rowmap = {};
+      for (var colIx = 0; colIx < colHeader.length; colIx++) {
+        try {
+          rowmap[colHeader[colIx]] = sheet.rowArr[colIx];
+          //todo: different len of cols and listStr row
+        } catch (_) {}
+      }
+      rowmap['sheetName'] = sheet.aSheetName;
 
       rowmaps.add(rowmap);
     }

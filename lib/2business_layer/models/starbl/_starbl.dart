@@ -86,4 +86,13 @@ class StarredBL extends SheetDb {
       return '';
     }
   }
+
+  //-----------------------------------------------------starred grid
+  Future<List<Star>> readStarredIDs(String sheetName) async {
+    if (sheetName.isNotEmpty) {
+      return await isar.stars.filter().sheetNameEqualTo(sheetName).findAll();
+    } else {
+      return await isar.stars.where().findAll();
+    }
+  }
 }

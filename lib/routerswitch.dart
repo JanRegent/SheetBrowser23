@@ -36,7 +36,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
-    configRow['fileUrl'] = currentSheet.fileId;
+    configRow['fileUrl'] = AppDataPrefs.getRootSheetId();
 
     // ignore: use_build_context_synchronously
 
@@ -81,7 +81,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
             }
 
             if (route2Page == 'homesidebar') {
-              return SidebarXApp();
+              return const SidebarXApp();
             }
             //-----------------------------------------------default detail view
             if (currentSheet.rowsArrFiltered.isEmpty) {

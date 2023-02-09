@@ -10,14 +10,27 @@ import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../tags_search/searchpage.dart';
 import '../tags_search/tagselectpage.dart';
+import '../views/detail/carousel.dart';
 import '../views/plutogrid/_gridpage.dart';
 import '_home.dart';
 
-class SidebarXApp extends StatelessWidget {
-  SidebarXApp({Key? key}) : super(key: key);
+class SidebarXApp extends StatefulWidget {
+  const SidebarXApp({Key? key}) : super(key: key);
 
+  @override
+  State<SidebarXApp> createState() => _SidebarXAppState();
+}
+
+class _SidebarXAppState extends State<SidebarXApp> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
+
   final _key = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    getFilelist();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +163,6 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.list,
             label: 'Inbox',
             onTap: () async {
-              await getFilelist();
-              // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -173,17 +184,18 @@ class ExampleSidebarX extends StatelessWidget {
             label: 'Starred',
             onTap: () async {
               isloadingPhaseMessage.value = 'Loading starred';
-              await currentSheet.getSheet(
-                  'starred', '1UoxFyyfzdj8iI7LiVHhORJWuNPFzJFHnw1KooDugs-E');
+              currentSheet.rowsMaps =
+                  await sheetDb.rowMap.readRowMapsByStars('');
               isloadingPhaseMessage.value = '';
+              Map configRow = {};
+              configRow['fileUrl'] = currentSheet.fileId;
+              configRow['title'] = 'Stars';
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => GridPage(
-                            currentSheet.plutoCols,
-                            currentSheet.gridrows,
-                          )));
+                      builder: (ctx) =>
+                          Carousel(currentSheet.rowsMaps, configRow, 0)));
             }),
         SidebarXItem(
             icon: Icons.label,
