@@ -17,9 +17,9 @@ extension GetStarCollection on Isar {
 const StarSchema = CollectionSchema(
   name: 'Star',
   schema:
-      '{"name":"Star","idName":"id","properties":[{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"},{"name":"stars","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Star","idName":"id","properties":[{"name":"localId","type":"Long"},{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"},{"name":"stars","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
-  propertyIds: {'sheetID': 0, 'sheetName': 1, 'stars': 2},
+  propertyIds: {'localId': 0, 'sheetID': 1, 'sheetName': 2, 'stars': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
@@ -57,13 +57,15 @@ List<IsarLinkBase> _starGetLinks(Star object) {
 void _starSerializeNative(IsarCollection<Star> collection, IsarRawObject rawObj,
     Star object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
   var dynamicSize = 0;
-  final value0 = object.sheetID;
-  final _sheetID = value0;
-  final value1 = object.sheetName;
-  final _sheetName = IsarBinaryWriter.utf8Encoder.convert(value1);
+  final value0 = object.localId;
+  final _localId = value0;
+  final value1 = object.sheetID;
+  final _sheetID = value1;
+  final value2 = object.sheetName;
+  final _sheetName = IsarBinaryWriter.utf8Encoder.convert(value2);
   dynamicSize += (_sheetName.length) as int;
-  final value2 = object.stars;
-  final _stars = IsarBinaryWriter.utf8Encoder.convert(value2);
+  final value3 = object.stars;
+  final _stars = IsarBinaryWriter.utf8Encoder.convert(value3);
   dynamicSize += (_stars.length) as int;
   final size = staticSize + dynamicSize;
 
@@ -71,18 +73,20 @@ void _starSerializeNative(IsarCollection<Star> collection, IsarRawObject rawObj,
   rawObj.buffer_length = size;
   final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _sheetID);
-  writer.writeBytes(offsets[1], _sheetName);
-  writer.writeBytes(offsets[2], _stars);
+  writer.writeLong(offsets[0], _localId);
+  writer.writeLong(offsets[1], _sheetID);
+  writer.writeBytes(offsets[2], _sheetName);
+  writer.writeBytes(offsets[3], _stars);
 }
 
 Star _starDeserializeNative(IsarCollection<Star> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = Star();
   object.id = id;
-  object.sheetID = reader.readLong(offsets[0]);
-  object.sheetName = reader.readString(offsets[1]);
-  object.stars = reader.readString(offsets[2]);
+  object.localId = reader.readLong(offsets[0]);
+  object.sheetID = reader.readLong(offsets[1]);
+  object.sheetName = reader.readString(offsets[2]);
+  object.stars = reader.readString(offsets[3]);
   return object;
 }
 
@@ -94,8 +98,10 @@ P _starDeserializePropNative<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -105,6 +111,7 @@ P _starDeserializePropNative<P>(
 dynamic _starSerializeWeb(IsarCollection<Star> collection, Star object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'localId', object.localId);
   IsarNative.jsObjectSet(jsObj, 'sheetID', object.sheetID);
   IsarNative.jsObjectSet(jsObj, 'sheetName', object.sheetName);
   IsarNative.jsObjectSet(jsObj, 'stars', object.stars);
@@ -114,6 +121,8 @@ dynamic _starSerializeWeb(IsarCollection<Star> collection, Star object) {
 Star _starDeserializeWeb(IsarCollection<Star> collection, dynamic jsObj) {
   final object = Star();
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.localId =
+      IsarNative.jsObjectGet(jsObj, 'localId') ?? double.negativeInfinity;
   object.sheetID =
       IsarNative.jsObjectGet(jsObj, 'sheetID') ?? double.negativeInfinity;
   object.sheetName = IsarNative.jsObjectGet(jsObj, 'sheetName') ?? '';
@@ -126,6 +135,9 @@ P _starDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
           as P;
+    case 'localId':
+      return (IsarNative.jsObjectGet(jsObj, 'localId') ??
+          double.negativeInfinity) as P;
     case 'sheetID':
       return (IsarNative.jsObjectGet(jsObj, 'sheetID') ??
           double.negativeInfinity) as P;
@@ -242,6 +254,53 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
   }) {
     return addFilterConditionInternal(FilterCondition.between(
       property: 'id',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<Star, Star, QAfterFilterCondition> localIdEqualTo(int value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'localId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Star, Star, QAfterFilterCondition> localIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'localId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Star, Star, QAfterFilterCondition> localIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'localId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Star, Star, QAfterFilterCondition> localIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'localId',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -512,6 +571,14 @@ extension StarQueryWhereSortBy on QueryBuilder<Star, Star, QSortBy> {
     return addSortByInternal('id', Sort.desc);
   }
 
+  QueryBuilder<Star, Star, QAfterSortBy> sortByLocalId() {
+    return addSortByInternal('localId', Sort.asc);
+  }
+
+  QueryBuilder<Star, Star, QAfterSortBy> sortByLocalIdDesc() {
+    return addSortByInternal('localId', Sort.desc);
+  }
+
   QueryBuilder<Star, Star, QAfterSortBy> sortBySheetID() {
     return addSortByInternal('sheetID', Sort.asc);
   }
@@ -546,6 +613,14 @@ extension StarQueryWhereSortThenBy on QueryBuilder<Star, Star, QSortThenBy> {
     return addSortByInternal('id', Sort.desc);
   }
 
+  QueryBuilder<Star, Star, QAfterSortBy> thenByLocalId() {
+    return addSortByInternal('localId', Sort.asc);
+  }
+
+  QueryBuilder<Star, Star, QAfterSortBy> thenByLocalIdDesc() {
+    return addSortByInternal('localId', Sort.desc);
+  }
+
   QueryBuilder<Star, Star, QAfterSortBy> thenBySheetID() {
     return addSortByInternal('sheetID', Sort.asc);
   }
@@ -576,6 +651,10 @@ extension StarQueryWhereDistinct on QueryBuilder<Star, Star, QDistinct> {
     return addDistinctByInternal('id');
   }
 
+  QueryBuilder<Star, Star, QDistinct> distinctByLocalId() {
+    return addDistinctByInternal('localId');
+  }
+
   QueryBuilder<Star, Star, QDistinct> distinctBySheetID() {
     return addDistinctByInternal('sheetID');
   }
@@ -594,6 +673,10 @@ extension StarQueryWhereDistinct on QueryBuilder<Star, Star, QDistinct> {
 extension StarQueryProperty on QueryBuilder<Star, Star, QQueryProperty> {
   QueryBuilder<Star, int, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
+  }
+
+  QueryBuilder<Star, int, QQueryOperations> localIdProperty() {
+    return addPropertyNameInternal('localId');
   }
 
   QueryBuilder<Star, int, QQueryOperations> sheetIDProperty() {

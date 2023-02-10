@@ -11,6 +11,7 @@ class Star {
   String sheetName = '';
   int sheetID = -1;
   String stars = '';
+  int localId = -1;
 
   Star();
 }

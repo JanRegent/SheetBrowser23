@@ -77,29 +77,22 @@ class RowMap extends SheetDb {
           rowmap[colHeader[colIx]] = sheet.rowArr[colIx];
           //todo: different len of cols and listStr row
         } catch (e) {
-          return;
+          continue;
         }
       }
       rowmap['sheetName'] = sheet.aSheetName;
-
       rowmaps.add(rowmap);
     }
 
     isloadingAction.value = 'Stared loading from:';
     for (int starIx = 0; starIx < starsList.length; starIx++) {
-      Sheet sheet = await sheetDb.readSheetID(
-          starsList[starIx].sheetName, starsList[starIx].sheetID);
-      if (sheet.id == -1) continue;
+      Sheet? sheet = await sheetDb.readbyLocalId(starsList[starIx].localId);
+      if (sheet!.id == -1) continue;
       isloadingPhaseMessage.value = sheet.aSheetName;
       List<String> colHeader = [];
-      String sheetName = '';
+
       try {
-        sheetName = sheet.aSheetName;
-      } catch (_) {
-        continue;
-      }
-      try {
-        colHeader = await sheetDb.colsDb.readColsHeader(sheetName);
+        colHeader = await sheetDb.colsDb.readColsHeader(sheet.aSheetName);
         //todo: wrong link data
         if (colHeader.isEmpty) continue;
       } catch (_) {

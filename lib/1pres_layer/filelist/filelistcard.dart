@@ -84,7 +84,6 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
   ExpansionTileCard expansionFilelistCard(
       BuildContext context, Map fileListRow) {
     final GlobalKey<ExpansionTileCardState> cardA = GlobalKey();
-
     return ExpansionTileCard(
       baseColor: Colors.cyan[50],
       expandedColor: Colors.red[50],
@@ -238,6 +237,7 @@ ElevatedButton sheetStarredButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
+        al.message(context, 'Starred is loading');
         await carouselStars(context, fileListRow['sheetName']);
       });
 }

@@ -129,7 +129,7 @@ class SheetDb {
         .findAll();
     return rows.length;
   }
-  //----------------------------------------------------------read
+  //--------------------------------------------------------read
 
   Future<List<List<String>?>> readRowsAll(String sheetName) async {
     final rows = await isar.sheets
@@ -186,6 +186,28 @@ class SheetDb {
           .and()
           .sheetIdEqualTo(sheetID)
           .findFirst())!;
+    } catch (_) {
+      return Sheet()..id = -1;
+    }
+  }
+
+  Future<int> readIdBySheetID(String sheetName, int sheetID) async {
+    try {
+      return (await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .sheetIdEqualTo(sheetID)
+          .idProperty()
+          .findFirst())!;
+    } catch (_) {
+      return -1;
+    }
+  }
+
+  Future<Sheet?> readbyLocalId(int localId) async {
+    try {
+      return await isar.sheets.get(localId);
     } catch (_) {
       return Sheet()..id = -1;
     }
