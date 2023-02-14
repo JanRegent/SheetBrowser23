@@ -19,7 +19,7 @@ class Carousel extends StatefulWidget {
 }
 
 class CarouselState extends State<Carousel> {
-  final CarouselController carouselController = CarouselController();
+  final CarouselController _controller = CarouselController();
 
   List<int> tabsList = [];
   late List<Widget> widgets;
@@ -58,24 +58,8 @@ class CarouselState extends State<Carousel> {
         appBar: AppBar(title: Text(widget.configRowFilelistRow['title'])),
         body: Column(
           children: <Widget>[
-            //https://pub.dev/packages/carousel_slider
-            CarouselSlider.builder(
-              itemCount: widget.ids.length,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      Container(
-                margin: const EdgeInsets.all(5.0),
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: Stack(
-                      children: <Widget>[
-                        DetailPage(widget.ids[itemIndex],
-                            widget.configRowFilelistRow, itemIndex),
-                      ],
-                    )),
-              ),
-
-              //Text(itemIndex.toString()),
+            CarouselSlider(
+              items: widgets,
               options: CarouselOptions(
                 initialPage: widget.startRow,
                 enlargeCenterPage: true,
@@ -86,15 +70,14 @@ class CarouselState extends State<Carousel> {
                   });
                 },
               ),
-              carouselController: carouselController,
+              carouselController: _controller,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
                   child: ElevatedButton(
-                    onPressed: () => carouselController.previousPage(),
+                    onPressed: () => _controller.previousPage(),
                     child: const Text('←'),
                   ),
                 ),
@@ -104,14 +87,7 @@ class CarouselState extends State<Carousel> {
                 ),
                 Flexible(
                   child: ElevatedButton(
-                    onPressed: () =>
-                        carouselController.jumpToPage(widget.ids.length ~/ 2),
-                    child: Text((widget.ids.length ~/ 2).toString()),
-                  ),
-                ),
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () => carouselController.nextPage(),
+                    onPressed: () => _controller.nextPage(),
                     child: const Text('→'),
                   ),
                 ),

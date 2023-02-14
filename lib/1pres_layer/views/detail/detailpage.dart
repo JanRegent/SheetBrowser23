@@ -144,10 +144,10 @@ class _DetailPageState extends State<DetailPage> {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Column(
-              children: const [
-                Text('Row detail loading'),
-                Text(' '),
-                CircularProgressIndicator()
+              children: [
+                Text('Row ${widget.rowsArrRowIx} detail loading'),
+                const Text(' '),
+                const CircularProgressIndicator()
               ],
             );
 

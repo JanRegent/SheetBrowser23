@@ -1,1 +1,1 @@
-const buildVersion = 'DetailPage-ids---14-02-2023 11:48:20,34';     
+const buildVersion = 'CarouselController---14-02-2023 13:40:39,36';     

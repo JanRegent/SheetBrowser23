@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
-import '../../../data_layer/isloading/isloading.dart';
-import '../starbl/star.dart';
 import '_sheetdb.dart';
 
 RxString rowmapsIsLoading = ''.obs;
@@ -62,50 +60,6 @@ class RowMap extends SheetDb {
 
       rowmaps.add(rowmap);
     }
-    return rowmaps;
-  }
-
-  Future<List<Map>> readRowMapsByStars(String sheetNameOrEmpty) async {
-    List<Star> starsList =
-        await sheetDb.starredBL.readStarredIDs(sheetNameOrEmpty);
-    List<Map> rowmaps = [];
-
-    void rowmapAdd(List<String> colHeader, Sheet sheet) {
-      Map rowmap = {};
-      for (var colIx = 0; colIx < colHeader.length; colIx++) {
-        try {
-          rowmap[colHeader[colIx]] = sheet.rowArr[colIx];
-          //todo: different len of cols and listStr row
-        } catch (e) {
-          continue;
-        }
-      }
-      rowmap['sheetName'] = sheet.aSheetName;
-      rowmaps.add(rowmap);
-    }
-
-    isloadingAction.value = 'Stared loading from:';
-    for (int starIx = 0; starIx < starsList.length; starIx++) {
-      Sheet? sheet = await sheetDb.readbyLocalId(starsList[starIx].localId);
-      if (sheet!.id == -1) continue;
-      isloadingPhaseMessage.value = sheet.aSheetName;
-      List<String> colHeader = [];
-
-      try {
-        colHeader = await sheetDb.colsDb.readColsHeader(sheet.aSheetName);
-        //todo: wrong link data
-        if (colHeader.isEmpty) continue;
-      } catch (_) {
-        continue;
-      }
-      try {
-        rowmapAdd(colHeader, sheet);
-      } catch (_) {
-        continue;
-      }
-    } //for
-    isloadingAction.value = '';
-    isloadingPhaseMessage.value = '';
     return rowmaps;
   }
 
