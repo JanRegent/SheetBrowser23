@@ -6,14 +6,11 @@ import 'package:parsed_readmore/parsed_readmore.dart';
 
 import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
-//ccc
 
 class DetailPage extends StatefulWidget {
-  final int localId;
+  final Map rowmap;
   final Map configRow;
-  final int rowsArrRowIx;
-  const DetailPage(this.localId, this.configRow, this.rowsArrRowIx, {Key? key})
-      : super(key: key);
+  const DetailPage(this.rowmap, this.configRow, {Key? key}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -39,11 +36,9 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
+    rowmap = widget.rowmap;
 
-    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localId);
-
-    listWidgets.add(DetailMenu(
-        rowmap, widget.configRow, widget.rowsArrRowIx, setStateCallback));
+    listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
 
     void key2listWidget(
         String key, List<Widget> list, String keyPostfix, int rowIx) {
@@ -65,7 +60,6 @@ class _DetailPageState extends State<DetailPage> {
       if (text.isEmpty) return;
 
       list.add(ListTile(
-        tileColor: Colors.yellow[100],
         leading: Text(
           key + keyPostfix,
           style: const TextStyle(fontStyle: FontStyle.italic),
@@ -121,7 +115,6 @@ class _DetailPageState extends State<DetailPage> {
       String keyPostfix = key == rowmap.keys.first ? stars : '';
       key2listWidget(key, listWidgets, keyPostfix, rowIx++);
     }
-
     return listWidgets;
   }
 
@@ -153,10 +146,10 @@ class _DetailPageState extends State<DetailPage> {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Column(
-              children: [
-                Text('Row ${widget.rowsArrRowIx} detail loading'),
-                const Text(' '),
-                const CircularProgressIndicator()
+              children: const [
+                Text('Row detail loading'),
+                Text(' '),
+                CircularProgressIndicator()
               ],
             );
 

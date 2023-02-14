@@ -13,12 +13,10 @@ import '../../alib/alib.dart';
 class DetailMenu extends StatefulWidget {
   final Map rowmap;
   final Map configMap;
-  final int rowsArrRowIx;
   Function setStateCallback;
   DetailMenu(
     this.rowmap,
     this.configMap,
-    this.rowsArrRowIx,
     this.setStateCallback, {
     super.key,
   });
@@ -154,7 +152,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.bookmark_add,
             onTap: () => AppDataPrefs.setString(
                 widget.rowmap['sheetName'] + '__bookmark',
-                widget.rowsArrRowIx.toString()),
+                widget.rowmap['ID'].toString()),
           ),
         ],
       ),
