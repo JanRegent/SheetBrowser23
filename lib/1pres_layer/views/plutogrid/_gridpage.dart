@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2business_layer/getsheet.dart';
+import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../detail/carousel.dart';
 
 //import 'gtidviewopt.dart';
@@ -98,15 +99,19 @@ class _GridPageState extends State<GridPage> {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(currentSheet.rowsMaps,
-                              currentSheet.getFilelistRow(), 0),
+                          builder: (ctx) => Carousel(
+                              const [], currentSheet.getFilelistRow(), 0),
                         ));
                   } else {
+                    List<int> ids = await sheetDb.starredBL
+                        .readLocalIds(currentSheet.sheetName);
+
+                    // ignore: use_build_context_synchronously
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Carousel(currentSheet.rowsMaps,
-                              currentSheet.getFilelistRow(), 0),
+                          builder: (ctx) =>
+                              Carousel(ids, currentSheet.getFilelistRow(), 0),
                         ));
                   }
                 }),

@@ -86,8 +86,8 @@ class _SearchPageState extends State<SearchPage> {
     return IconButton(
         onPressed: () async {
           isDataLoading.value = true;
-          List<Map> rowsMaps =
-              await sheetDb.readNews(textEditingController.text);
+          List<int> ids = await sheetDb.readNews(textEditingController.text);
+
           isDataLoading.value = false;
           Map configRow = {};
           configRow['title'] = textEditingController.text;
@@ -95,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(rowsMaps, configRow, 0),
+                builder: (ctx) => Carousel(ids, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));

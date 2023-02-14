@@ -68,14 +68,13 @@ class _TagSelectPageState extends State<TagSelectPage> {
         onPressed: () async {
           List<int> ids = await tagsDb.readTagIds(textEditingController.text);
 
-          List<Map> rowMaps = await sheetDb.rowMap.readRowMapsByIDs(ids);
           Map configRow = {};
           configRow['title'] = 'Tag: ${textEditingController.text}';
           // ignore: use_build_context_synchronously
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(rowMaps, configRow, 0),
+                builder: (ctx) => Carousel(ids, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));

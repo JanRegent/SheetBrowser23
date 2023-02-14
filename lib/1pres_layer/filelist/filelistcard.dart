@@ -49,17 +49,14 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   isloadingPhaseMessage.value = 'Loading starred';
-  currentSheet.rowsMaps =
-      await sheetDb.rowMap.readRowMapsByStars(sheetNameOrEmpty);
+  List<int> ids = await sheetDb.starredBL.readStarredLocalIds(sheetNameOrEmpty);
   isloadingPhaseMessage.value = '';
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
   configRow['title'] = 'Stars';
   // ignore: use_build_context_synchronously
-  await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (ctx) => Carousel(currentSheet.rowsMaps, configRow, 0)));
+  await Navigator.push(context,
+      MaterialPageRoute(builder: (ctx) => Carousel(ids, configRow, 0)));
 }
 
 Card filelistCard(BuildContext context, Map fileListRow, int index) {
@@ -178,16 +175,15 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       ),
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
+        List<int> ids =
+            await sheetDb.starredBL.readLocalIds(fileListRow['sheetName']);
 
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         fileListRow['title'] = fileListRow['sheetName'];
         // ignore: use_build_context_synchronously
-        await Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) =>
-                    Carousel(currentSheet.rowsMaps, fileListRow, 0)));
+        await Navigator.push(context,
+            MaterialPageRoute(builder: (_) => Carousel(ids, fileListRow, 0)));
       });
 }
 
@@ -211,6 +207,8 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         fileListRow['title'] = fileListRow['sheetName'];
+        List<int> ids =
+            await sheetDb.starredBL.readLocalIds(fileListRow['sheetName']);
 
         String? startRowStr =
             AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');
@@ -220,8 +218,7 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) =>
-                    Carousel(currentSheet.rowsMaps, fileListRow, startRow!)));
+                builder: (_) => Carousel(ids, fileListRow, startRow!)));
         // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);

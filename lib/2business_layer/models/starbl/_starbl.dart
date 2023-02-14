@@ -137,6 +137,18 @@ class StarredBL extends SheetDb {
     }
   }
 
+  Future<List<int>> readStarredLocalIds(String sheetName) async {
+    if (sheetName.isNotEmpty) {
+      return await isar.stars
+          .filter()
+          .sheetNameEqualTo(sheetName)
+          .idProperty()
+          .findAll();
+    } else {
+      return await isar.stars.where().idProperty().findAll();
+    }
+  }
+
   Future starsClear() async {
     await isar.writeTxn((isar) async {
       await isar.stars.clear(); // delete

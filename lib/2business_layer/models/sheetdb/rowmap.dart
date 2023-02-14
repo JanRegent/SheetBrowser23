@@ -110,6 +110,22 @@ class RowMap extends SheetDb {
   }
 
   //----------------------------------------------------------convert
+  Future<Map> row2MapLocalId(int localId) async {
+    await sheetDb.colsDb.colsHeadersMapBuild();
+    Sheet? sheet = await sheetDb.readbyLocalId(localId);
+    List<String> cols = sheetDb.colsDb.colsHeadersMap[sheet!.aSheetName]!;
+
+    Map rowmap = {};
+    for (var i = 0; i < cols.length; i++) {
+      try {
+        rowmap[cols[i]] = sheet.rowArr[i];
+      } catch (_) {
+        rowmap[cols[i]] = '';
+      }
+    }
+    return rowmap;
+  }
+
   Map row2Map(List<dynamic> keys, List<dynamic> datarow) {
     Map rowmap = {};
     for (var i = 0; i < keys.length; i++) {

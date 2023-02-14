@@ -9,10 +9,10 @@ import 'detailmenu.dart';
 //ccc
 
 class DetailPage extends StatefulWidget {
-  final Map rowmap;
+  final int localId;
   final Map configRow;
   final int rowsArrRowIx;
-  const DetailPage(this.rowmap, this.configRow, this.rowsArrRowIx, {Key? key})
+  const DetailPage(this.localId, this.configRow, this.rowsArrRowIx, {Key? key})
       : super(key: key);
 
   @override
@@ -40,9 +40,10 @@ class _DetailPageState extends State<DetailPage> {
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     listWidgets.clear();
 
-    listWidgets.add(DetailMenu(widget.rowmap, widget.configRow,
-        widget.rowsArrRowIx, setStateCallback));
-    rowmap = widget.rowmap;
+    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localId);
+
+    listWidgets.add(DetailMenu(
+        rowmap, widget.configRow, widget.rowsArrRowIx, setStateCallback));
 
     void key2listWidget(String key, List<Widget> list, String keyPostfix) {
       String value = '';
@@ -94,9 +95,9 @@ class _DetailPageState extends State<DetailPage> {
     Future<String> starsMark() async {
       String stars = '';
       try {
-        int sheetID = int.tryParse(widget.rowmap['ID'])!;
-        int id = await sheetDb.starredBL
-            .starExists(widget.rowmap['sheetName'], sheetID);
+        int sheetID = int.tryParse(rowmap['ID'])!;
+        int id =
+            await sheetDb.starredBL.starExists(rowmap['sheetName'], sheetID);
         if (id > -1) {
           stars = '*';
         } else {

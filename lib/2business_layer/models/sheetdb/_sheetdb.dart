@@ -212,17 +212,30 @@ class SheetDb {
       return Sheet()..id = -1;
     }
   }
+
+  Future<List<int>> readLocalIds(String sheetName) async {
+    if (sheetName.isNotEmpty) {
+      return await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .idProperty()
+          .findAll();
+    } else {
+      return await isar.stars.where().idProperty().findAll();
+    }
+  }
   //-------------------------------------------------------------news
 
-  Future<List<Map>> readNews(String yyyyMMdd) async {
-    List<Sheet> sheets = await isar.sheets
+  Future<List<int>> readNews(String yyyyMMdd) async {
+    List<int> ids = await isar.sheets
         .filter()
         .aKeyEqualTo('row')
         .and()
         .rowArrAnyContains(yyyyMMdd)
+        .idProperty()
         .findAll();
 
-    return await rowMap.readRowMapsBySheets(sheets);
+    return ids;
   }
 
   //----------------------------------------------------------delete

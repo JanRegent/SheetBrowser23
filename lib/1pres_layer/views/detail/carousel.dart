@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
-  final List<Map> rowMaps;
+  final List<int> ids;
   final Map configRowFilelistRow;
   final int startRow;
-  const Carousel(this.rowMaps, this.configRowFilelistRow, this.startRow,
+  const Carousel(this.ids, this.configRowFilelistRow, this.startRow,
       {super.key});
 
   @override
@@ -34,7 +34,7 @@ class CarouselState extends State<Carousel> {
       _currentIndex = 0;
     }
 
-    tabsList = List.generate(widget.rowMaps.length, (index) {
+    tabsList = List.generate(widget.ids.length, (index) {
       return index;
     });
     widgets = tabsList
@@ -44,7 +44,7 @@ class CarouselState extends State<Carousel> {
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   child: Stack(
                     children: <Widget>[
-                      DetailPage(widget.rowMaps[rowIndex],
+                      DetailPage(widget.ids[rowIndex],
                           widget.configRowFilelistRow, rowIndex)
                     ],
                   )),
@@ -82,7 +82,7 @@ class CarouselState extends State<Carousel> {
                   ),
                 ),
                 Text(
-                  '$_currentIndex/${widget.rowMaps.length}',
+                  '$_currentIndex/${widget.ids.length}',
                   style: const TextStyle(fontSize: 15),
                 ),
                 Flexible(
