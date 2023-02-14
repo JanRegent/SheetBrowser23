@@ -213,11 +213,13 @@ class SheetDb {
     }
   }
 
-  Future<List<int>> readLocalIds(String sheetName) async {
+  Future<List<int>> readRowsLocalIds(String sheetName) async {
     if (sheetName.isNotEmpty) {
       return await isar.sheets
           .filter()
           .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('row')
           .idProperty()
           .findAll();
     } else {

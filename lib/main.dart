@@ -9,6 +9,11 @@ import '2business_layer/models/sheetdb/_sheetdb.dart';
 
 import 'data_layer/isloading/backgrounscompleter.dart';
 
+//chatGPT
+//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
+//https://platform.openai.com/account/api-keys
+//https://medium.com/@flutterqueen/chatgpt-extension-for-vs-code-12fde2c2ef74
+
 void main() async {
   // Required for async calls in `main`
   WidgetsFlutterBinding.ensureInitialized();

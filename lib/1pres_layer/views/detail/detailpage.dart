@@ -45,7 +45,8 @@ class _DetailPageState extends State<DetailPage> {
     listWidgets.add(DetailMenu(
         rowmap, widget.configRow, widget.rowsArrRowIx, setStateCallback));
 
-    void key2listWidget(String key, List<Widget> list, String keyPostfix) {
+    void key2listWidget(
+        String key, List<Widget> list, String keyPostfix, int rowIx) {
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations
@@ -64,6 +65,7 @@ class _DetailPageState extends State<DetailPage> {
       if (text.isEmpty) return;
 
       list.add(ListTile(
+        tileColor: Colors.yellow[100],
         leading: Text(
           key + keyPostfix,
           style: const TextStyle(fontStyle: FontStyle.italic),
@@ -84,8 +86,8 @@ class _DetailPageState extends State<DetailPage> {
         delimiter: '  ...',
         delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
         style: const TextStyle(color: Colors.black, fontSize: 20),
-        trimCollapsedText: '-->',
-        trimExpandedText: '<--',
+        trimCollapsedText: '↓',
+        trimExpandedText: '↑',
         moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
         lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
       ));
@@ -114,12 +116,10 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     String stars = await starsMark();
+    int rowIx = 0;
     for (String key in rowmap.keys) {
-      // ignore: unnecessary_null_comparison
-      if (key == null) continue;
-      String keyPostfix = '';
-      if (key == rowmap.keys.first) keyPostfix = stars;
-      key2listWidget(key, listWidgets, keyPostfix);
+      String keyPostfix = key == rowmap.keys.first ? stars : '';
+      key2listWidget(key, listWidgets, keyPostfix, rowIx++);
     }
 
     return listWidgets;
@@ -130,10 +130,19 @@ class _DetailPageState extends State<DetailPage> {
         height: double.infinity,
         width: double.infinity,
         color: Colors.blueGrey[50],
-        child: ListView(
-          controller: scrollController,
-          children: listWidgets,
-        ));
+        child: ListView.separated(
+            itemCount: listWidgets.length,
+            controller: scrollController,
+            separatorBuilder: (context, index) {
+              return index.floor().isEven
+                  ? Divider(
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : const Text(' ');
+            },
+            itemBuilder: (context, index) {
+              return listWidgets[index];
+            }));
   }
 
   @override

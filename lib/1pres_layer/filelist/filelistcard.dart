@@ -176,7 +176,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
       onPressed: () async {
         al.message(context, fileListRow['sheetName']);
         List<int> ids =
-            await sheetDb.starredBL.readLocalIds(fileListRow['sheetName']);
+            await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
@@ -208,7 +208,7 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         fileListRow['title'] = fileListRow['sheetName'];
         List<int> ids =
-            await sheetDb.starredBL.readLocalIds(fileListRow['sheetName']);
+            await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 
         String? startRowStr =
             AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');

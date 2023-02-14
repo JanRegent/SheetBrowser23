@@ -104,7 +104,7 @@ class _GridPageState extends State<GridPage> {
                         ));
                   } else {
                     List<int> ids = await sheetDb.starredBL
-                        .readLocalIds(currentSheet.sheetName);
+                        .readRowsLocalIds(currentSheet.sheetName);
 
                     // ignore: use_build_context_synchronously
                     await Navigator.push(
