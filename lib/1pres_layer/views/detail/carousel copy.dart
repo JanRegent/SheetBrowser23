@@ -27,8 +27,6 @@ class CarouselState extends State<Carousel> {
   int _currentIndex = 0;
 
   Map rowmap = {};
-  Map rowmapNext = {};
-  Map rowmapPrev = {};
 
   Future<String> getDataRowMaps() async {
     rowmap = await sheetDb.rowMap.row2MapLocalId(widget.ids[_currentIndex]);

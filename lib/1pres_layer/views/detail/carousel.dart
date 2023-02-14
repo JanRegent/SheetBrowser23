@@ -1,9 +1,6 @@
-// ignore_for_file: file_names
-
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailpage.dart';
 
 class Carousel extends StatefulWidget {
@@ -20,128 +17,156 @@ class Carousel extends StatefulWidget {
 }
 
 class CarouselState extends State<Carousel> {
-  final CarouselController carouselController = CarouselController();
+  final CarouselController _controller = CarouselController();
+  // ignore: unused_field
+  int _current = 0;
 
-  List<int> tabsList = [];
-  late List<Widget> widgets;
-  int _currentIndex = 0;
-
-  Map rowmap = {};
-  Map rowmapNext = {};
-  Map rowmapPrev = {};
-
-  Future<String> getDataRowMaps() async {
-    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.ids[_currentIndex]);
-    return 'ok';
-  }
-
+  late List<Widget> sliders;
   @override
   void initState() {
     super.initState();
 
-    try {
-      _currentIndex = widget.startRow;
-    } catch (_) {
-      _currentIndex = 0;
-    }
-  }
-
-  Column body() {
-    return Column(
-      children: <Widget>[
-        //https://pub.dev/packages/carousel_slider
-
-        //Build item widgets on demand
-        CarouselSlider.builder(
-          itemCount: widget.ids.length,
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    DetailPage(rowmap, widget.configRowFilelistRow),
-                  ],
-                )),
-          ),
-
-          //Text(itemIndex.toString()),
-          options: CarouselOptions(
-            initialPage: widget.startRow,
-            enlargeCenterPage: true,
-            height: MediaQuery.of(context).size.height - 100,
-            onPageChanged: (index, reason) {
-              //print(reason);
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          carouselController: carouselController,
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () => carouselController.previousPage(),
-                child: const Text('←'),
-              ),
-            ),
-            Text(
-              '$_currentIndex/${widget.ids.length}',
-              style: const TextStyle(fontSize: 15),
-            ),
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () {
-                  _currentIndex = widget.ids.length ~/ 2;
-                  carouselController.jumpToPage(_currentIndex);
-                },
-                child: Text((widget.ids.length ~/ 2).toString()),
-              ),
-            ),
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () => carouselController.nextPage(),
-                child: const Text('→'),
-              ),
-            ),
-          ],
-        )
-      ],
+    var slides = List.generate(
+      widget.ids.length,
+      (index) {
+        //return Text(index.toString());
+        Map rowmap = {};
+        rowmap[index] = index.toString();
+        return DetailPage(rowmap, widget.configRowFilelistRow);
+      },
     );
+
+    sliders = slides
+        .map(
+          (item) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+              child: Container(
+                color: Colors.white,
+                width: double.infinity,
+                height: 200,
+                child: Center(
+                  child: item,
+                ),
+              ),
+            ),
+          ),
+        )
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.configRowFilelistRow['title'])),
-        body: FutureBuilder<String>(
-          future: getDataRowMaps(), // async work
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Column(
-                  children: [
-                    Text('Preparing row $_currentIndex',
-                        style: const TextStyle(fontSize: 18)),
-                    const Text(' '),
-                    const CircularProgressIndicator()
-                  ],
-                );
-
-              default:
-                if (snapshot.hasError) {
-                  return Text('DetailPage\n\n Error: ${snapshot.error}');
-                } else {
-                  return body();
-                }
-            }
-          },
-        ));
+      appBar: AppBar(title: const Text('Manually Controlled Slider')),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: FlutterCarousel(
+                items: sliders,
+                options: CarouselOptions(
+                  initialPage: 3,
+                  onPageChanged: (int index, CarouselPageChangedReason reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  },
+                  viewportFraction: 1.0,
+                  autoPlay: false,
+                  floatingIndicator: false,
+                  enableInfiniteScroll: true,
+                  controller: _controller,
+                  slideIndicator: CircularWaveSlideIndicator(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 16.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: _controller.previousPage,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.arrow_back),
+                      ),
+                    ),
+                  ),
+                  Text((_current + 1).toString()),
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: _controller.nextPage,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.arrow_forward),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
+
+// class Slide {
+//   Slide({
+//     required this.title,
+//     required this.height,
+//     required this.color,
+//   });
+
+//   final Color color;
+//   final double height;
+//   final String title;
+// }
+
+// var slides = List.generate(
+//   widget.ids.length,
+//   (index) => Slide(
+//     title: 'Slide ${index + 1}',
+//     height: 100.0 + index * 50,
+//     color: Colors.primaries[index % Colors.primaries.length],
+//   ),
+// );
+
+// final List<Widget> sliders = slides
+//     .map(
+//       (item) => Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 4.0),
+//         child: ClipRRect(
+//           borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+//           child: Container(
+//             color: item.color,
+//             width: double.infinity,
+//             height: item.height,
+//             child: Center(
+//               child: Text(
+//                 item.title,
+//                 style: const TextStyle(
+//                   color: Colors.white,
+//                   fontSize: 24.0,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     )
+//     .toList();
