@@ -5,23 +5,14 @@ function doGet(e) {
   logclear()
   var querystring = JSON.stringify(e);
   logi(querystring);
-  getRootValues() ;
+  appRootDataValuesLoad() ;
 
   var action = e.parameter.action.toString();
 
   try { 
-    // ?action=starredAppend&sheetName=PapajiDailyPedia&sheetID=2&fileId=1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w
+    // ?action=starredAppend&sheetName=PapajiDailyPedia&sheetID=2
     if (action == 'starredAppend') {
-      logi(action)
-      var sheetName = e.parameter.sheetName
-      var sheetID = e.parameter.sheetID
-      var fileId = e.parameter.fileId
-
-      logi(sheetName)
-      logi(sheetID)
-      logi(fileId)
-
-      var result = starredAppendDo(sheetName, sheetID, fileId );
+      var result = starredAppendDoGet(e);
       return result;
     }
 

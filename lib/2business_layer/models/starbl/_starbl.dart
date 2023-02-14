@@ -5,6 +5,7 @@ import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../appdata/approotdata.dart';
 import '../sheetdb/_sheetdb.dart';
+import '../sheetdb/sheet.dart';
 
 class StarredBL extends SheetDb {
   StarredBL(super.isar);
@@ -36,37 +37,36 @@ class StarredBL extends SheetDb {
     }
   }
 
-  Future<String> starExists(String sheetName, int sheetIDin) async {
-    Star? starredVal = await isar.stars
+  Future<int> starExists(String sheetName, int sheetIDin) async {
+    int? id = await isar.stars
         .filter()
         .sheetNameEqualTo(sheetName)
         .and()
         .sheetIDEqualTo(sheetIDin)
+        .idProperty()
         .findFirst();
     try {
       // ignore: unnecessary_null_comparison
-      if (starredVal == null) return '';
-      return '*';
+      if (id == null) return -1;
+      return id;
     } catch (_) {
-      return '';
+      return -1;
     }
   }
 
   Future appendStar(String sheetName, int sheetIDin) async {
-    String exists = await starExists(sheetName, sheetIDin);
-
-    if (exists.isNotEmpty) return;
-
-    Star? starredVal = await readStarredVal(sheetName, sheetIDin);
-
-    starredVal ??= Star()
+    int id = await starExists(sheetName, sheetIDin);
+    if (id > -1) return;
+    Sheet sheet = await readSheetID(sheetName, sheetIDin);
+    Star starredVal = Star()
       ..sheetName = sheetName
-      ..sheetID = sheetIDin;
+      ..sheetID = sheetIDin
+      ..localId = sheet.id;
 
     try {
       starredVal.stars = '*';
       await isar.writeTxn((isar) async {
-        await isar.stars.put(starredVal!);
+        await isar.stars.put(starredVal);
       });
     } catch (e, s) {
       logDb.createErr(

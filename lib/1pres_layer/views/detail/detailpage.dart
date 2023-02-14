@@ -95,8 +95,13 @@ class _DetailPageState extends State<DetailPage> {
       String stars = '';
       try {
         int sheetID = int.tryParse(widget.rowmap['ID'])!;
-        stars = await sheetDb.starredBL
+        int id = await sheetDb.starredBL
             .starExists(widget.rowmap['sheetName'], sheetID);
+        if (id > -1) {
+          stars = '*';
+        } else {
+          stars = '';
+        }
         if (stars.isEmpty) {
           return '';
         } else {

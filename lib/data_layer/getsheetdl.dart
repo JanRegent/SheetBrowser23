@@ -171,12 +171,11 @@ class Failure {
   }
 }
 
-Future appendStarCommunity(
-    String sheetName, String sheetID, String fileId) async {
+Future appendStarCommunity(String sheetName, String sheetID) async {
   String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
 
   String url =
-      '$selectServiceUrl?action=starredAppend&sheetName=$sheetName&sheetID=$sheetID&fileId=$fileId';
+      '$selectServiceUrl?action=starredAppend&sheetName=$sheetName&sheetID=$sheetID';
   await http.get(Uri.parse(url));
 
   return 'OK';
