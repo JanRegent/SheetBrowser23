@@ -8,17 +8,16 @@ import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
 
 class DetailPage extends StatefulWidget {
-  final Map rowmap;
+  final int localIdOfSheetDb;
   final Map configRow;
-  const DetailPage(this.rowmap, this.configRow, {Key? key}) : super(key: key);
+  const DetailPage(this.localIdOfSheetDb, this.configRow, {Key? key})
+      : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  List<Widget> listWidgets = [];
-
   late ScrollController scrollController;
 
   @override
@@ -35,9 +34,8 @@ class _DetailPageState extends State<DetailPage> {
   Map rowmap = {};
 
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
-    listWidgets.clear();
-    rowmap = widget.rowmap;
-
+    List<Widget> listWidgets = [];
+    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localIdOfSheetDb);
     listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
 
     void key2listWidget(
@@ -118,7 +116,7 @@ class _DetailPageState extends State<DetailPage> {
     return listWidgets;
   }
 
-  Widget listViewBody() {
+  Widget listViewBody(List<Widget> listWidgets) {
     return Container(
         height: double.infinity,
         width: double.infinity,
@@ -146,10 +144,10 @@ class _DetailPageState extends State<DetailPage> {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Column(
-              children: const [
-                Text('Row detail loading'),
-                Text(' '),
-                CircularProgressIndicator()
+              children: [
+                Text('Row detail loading for row: ${widget.localIdOfSheetDb}'),
+                const Text(' '),
+                const CircularProgressIndicator()
               ],
             );
 
@@ -157,7 +155,7 @@ class _DetailPageState extends State<DetailPage> {
             if (snapshot.hasError) {
               return Text('DetailPage\n\n Error: ${snapshot.error}');
             } else {
-              return listViewBody();
+              return listViewBody(snapshot.data!);
             }
         }
       },

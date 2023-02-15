@@ -13,7 +13,7 @@ import '../../data_layer/getsheetdl.dart';
 import '../../data_layer/isloading/isloading.dart';
 import '../alib/alib.dart';
 
-import '../views/detail/carousel.dart';
+import '../views/detail/cardswiper.dart';
 import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
@@ -56,7 +56,7 @@ Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   configRow['title'] = 'Stars';
   // ignore: use_build_context_synchronously
   await Navigator.push(context,
-      MaterialPageRoute(builder: (ctx) => Carousel(ids, configRow, 0)));
+      MaterialPageRoute(builder: (ctx) => CardSwiper(ids, configRow, 0)));
 }
 
 Card filelistCard(BuildContext context, Map fileListRow, int index) {
@@ -183,7 +183,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
         fileListRow['title'] = fileListRow['sheetName'];
         // ignore: use_build_context_synchronously
         await Navigator.push(context,
-            MaterialPageRoute(builder: (_) => Carousel(ids, fileListRow, 0)));
+            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow, 0)));
       });
 }
 
@@ -218,7 +218,7 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => Carousel(ids, fileListRow, startRow!)));
+                builder: (_) => CardSwiper(ids, fileListRow, startRow!)));
         // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);

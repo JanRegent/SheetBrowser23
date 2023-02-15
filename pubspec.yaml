@@ -48,7 +48,7 @@ dependencies:
   quickalert: ^1.0.1                  #https://pub.dev/packages/quickalert
   #-----------------------------layout
   carousel_slider: ^4.2.1             #https://pub.dev/packages/carousel_slider
-  flutter_carousel_widget: ^2.0.2  
+  card_swiper: ^2.0.4                 #https://pub.dev/packages/card_swiper
   sidebarx: ^0.14.0                   #https://pub.dev/packages/sidebarx
   #-----------------------------choice
   searchable_listview: ^2.2.1         #https://pub.dev/packages/searchable_listview

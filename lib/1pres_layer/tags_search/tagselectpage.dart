@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
-import '../views/detail/carousel.dart';
+import '../views/detail/cardswiper.dart';
 
 ///
 ///https://pub.dev/packages/multiple_search_selection/example
@@ -74,7 +74,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => Carousel(ids, configRow, 0),
+                builder: (ctx) => CardSwiper(ids, configRow, 0),
               ));
         },
         icon: const Icon(Icons.search));

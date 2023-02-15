@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sheetbrowser/1pres_layer/views/detail/carousel.dart';
+import 'package:sheetbrowser/1pres_layer/views/detail/cardswiper.dart';
 import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
@@ -87,10 +87,10 @@ class _RouterSwitchState extends State<RouterSwitch> {
             if (currentSheet.rowsArrFiltered.isEmpty) {
               configRow['sheetName'] = 'All';
 
-              return Carousel(const [], configRow, 0);
+              return CardSwiper(const [], configRow, 0);
             } else {
               configRow['sheetName'] = 'Filter:';
-              return Carousel(const [], configRow, 0);
+              return CardSwiper(const [], configRow, 0);
             }
           } else if (snapshot.hasError) {
             runApp(
