@@ -1,1 +1,1 @@
-const buildVersion = 'EasyLoading-2---15-02-2023 13:40:31,10';     
+const buildVersion = 'EasyLoading-3---15-02-2023 15:58:56,95';     

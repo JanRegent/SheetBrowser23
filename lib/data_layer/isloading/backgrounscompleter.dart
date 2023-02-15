@@ -8,7 +8,11 @@ import 'package:sheetbrowser/2business_layer/getsheet.dart';
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 
+bool backgroundCompleterIsRunning = false;
+
 Future backgroundCompleter() async {
+  if (backgroundCompleterIsRunning) return;
+
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
 
@@ -16,7 +20,7 @@ Future backgroundCompleter() async {
     await sheetDb.colsDb.colsHeadersMapBuild();
     return;
   }
-
+  backgroundCompleterIsRunning = true;
   //----------------------------------------------------clear
   await sheetDb.sheeetsClear();
 
@@ -46,7 +50,8 @@ Future backgroundCompleter() async {
     await tagsDb.tagsMapSave();
 
     EasyLoading.show(status: 'Indexing stars');
-    await sheetDb.starredBL.starDbFill();
+    await sheetDb.starredBL.createStarDb();
     EasyLoading.dismiss();
   });
+  backgroundCompleterIsRunning = false;
 }

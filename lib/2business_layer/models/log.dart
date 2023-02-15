@@ -82,7 +82,7 @@ class LogDb {
       {String descr = ''}) async {
     try {
       Log log = Log()
-        ..clasFunc = clasFunc
+        ..clasFunc = '[W] $clasFunc'
         ..error = e
         ..descr = descr
         ..stackTrace = s;
@@ -96,6 +96,20 @@ class LogDb {
       // logi('--- LocalStore: ', '-----------------isar');
       // logi('updateSheetView(String ', sheetView.aQuerystringKey);
       // logi('updateSheetView(String ', e.toString());
+      return '';
+    }
+  }
+
+  Future createWarning(String clasFunc, String descr) async {
+    try {
+      Log log = Log()
+        ..clasFunc = '[W] $clasFunc'
+        ..descr = descr;
+      await isar.writeTxn((isar) async {
+        await isar.logs.put(log); // insert
+      });
+      return 'OK';
+    } catch (_) {
       return '';
     }
   }

@@ -155,33 +155,52 @@ class StarredBL extends SheetDb {
     });
   }
 
-  Future starDbFill() async {
+  Future createStarDb() async {
     List<dynamic> rowsArr = [];
     List<String> colsHeader = [];
     try {
-      String fileId =
-          blUti.url2fileid(AppDataPrefs.getString('starredFileUrl')!);
+      String fileId = blUti.url2fileid(AppDataPrefs.getRootSheetId());
       String sheetName =
           blUti.url2fileid(AppDataPrefs.getString('starredSheetName')!);
 
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
 
-      if (rowsArr.isEmpty) return;
+      if (rowsArr.isEmpty) {
+        logDb.createWarning('createStarDb()',
+            'Starred sheet is empty. [setting] StarredSheetName?  or AppDataPrefs.getRootSheetId()?');
+        return;
+      }
       colsHeader = blUti.toListString(rowsArr[0]);
-      if (colsHeader.isEmpty) return;
+      if (colsHeader.isEmpty) {
+        logDb.createWarning(
+            'createStarDb()', 'Starred sheet header is empty. [setting] ');
+        return;
+      }
 
       rowsArr.removeAt(0);
 
-      if (rowsArr.isEmpty) return;
+      if (rowsArr.isEmpty) {
+        logDb.createWarning('createStarDb()',
+            'Starred sheet is empty. [setting] StarredSheetName?  or AppDataPrefs.getRootSheetId()?');
+
+        return;
+      }
     } catch (_) {}
+
+    int sheetIDix = colsHeader.indexOf('sheetID');
+    int sheetNameIx = colsHeader.indexOf('sheetName');
+
+    if (sheetIDix == -1 || sheetNameIx == -1) {
+      logDb.createWarning('createStarDb()',
+          'Starred sheet header: sheetID or sheetName columns is missting. [setting]?');
+      return;
+    }
 
     await starsClear();
 
     List<Star> stars = [];
     try {
-      int sheetIDix = colsHeader.indexOf('sheetID');
-      int sheetNameIx = colsHeader.indexOf('sheetName');
       for (var rowIx = 0; rowIx < rowsArr.length; rowIx++) {
         int sheetID = -1;
         try {
@@ -195,6 +214,7 @@ class StarredBL extends SheetDb {
         stars.add(Star()
           ..sheetID = sheetID
           ..sheetName = sheetName
+          ..stars = '*'
           ..localId = localId);
       }
     } catch (_) {}
