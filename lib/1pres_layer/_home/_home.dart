@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sheetbrowser/1pres_layer/alib/alib.dart';
 import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
-import '../../data_layer/isloading/isloading.dart';
+import '../../data_layer/isloading/lastdate.dart';
 
 /// Providers are declared globally and specify how to create a state
 final counterProvider = StateProvider((ref) => 0);
@@ -48,14 +48,7 @@ class SidebarHome extends ConsumerWidget {
 
   Widget homeBody(ref, BuildContext context) {
     return Column(
-      children: [
-        isloadingListTile(),
-        al.linkIconOpenUrlNoDoc(
-            appendUrl4launcher(
-                ['Brunton Paul', '11', 'cccc2GET88', 'aaaa288', 'ssss88']),
-            context),
-        csvrow2clipboard()
-      ],
+      children: [backgroundCompleterLastDateListTile()],
     );
   }
 }

@@ -4,13 +4,14 @@ import 'dart:core';
 
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../data_layer/getsheetdl.dart';
-import '../../data_layer/isloading/isloading.dart';
+
 import '../alib/alib.dart';
 
 import '../views/detail/cardswiper.dart';
@@ -48,9 +49,9 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 }
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
-  isloadingPhaseMessage.value = 'Loading starred';
+  EasyLoading.show(status: 'Loading starred');
   List<int> ids = await sheetDb.starredBL.readStarredLocalIds(sheetNameOrEmpty);
-  isloadingPhaseMessage.value = '';
+  EasyLoading.dismiss();
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
   configRow['title'] = 'Stars';

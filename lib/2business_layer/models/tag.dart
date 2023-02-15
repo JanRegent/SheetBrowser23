@@ -1,6 +1,6 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:isar/isar.dart';
 
-import '../../data_layer/isloading/isloading.dart';
 import '../../1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
@@ -36,10 +36,11 @@ class TagsDb {
     List<Sheet?> sheetrows = await sheetDb.readAllRows();
 
     for (var rIx = 1; rIx < sheetrows.length; rIx = rIx + 1) {
-      isloadingPhaseMessage.value = sheetrows[rIx]!.aSheetName;
+      EasyLoading.show(status: sheetrows[rIx]!.aSheetName);
       await tagsRowParse(sheetrows[rIx]!.aSheetName, sheetrows[rIx]!.rowArr,
           sheetrows[rIx]!.id);
     }
+    EasyLoading.dismiss();
   }
 
   Future tagsRowParse(String? sheetName, List<String>? row, int id) async {

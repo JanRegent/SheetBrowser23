@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../2business_layer/appdata/appsettingspage.dart';
 
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
-import '../../data_layer/isloading/isloading.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../tags_search/searchpage.dart';
@@ -187,9 +187,9 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
-              isloadingPhaseMessage.value = 'Loading tags';
+              EasyLoading.show(status: 'Loading tags');
               List<String> tags = await tagsDb.readTags();
-              isloadingPhaseMessage.value = '';
+              EasyLoading.dismiss();
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,

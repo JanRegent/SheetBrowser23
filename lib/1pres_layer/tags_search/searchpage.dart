@@ -3,10 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowser/data_layer/isloading/isloading.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
-import '../../2business_layer/models/sheetdb/rowmap.dart';
 import '../alib/uti.dart';
 import '../views/detail/cardswiper.dart';
 
@@ -85,10 +83,8 @@ class _SearchPageState extends State<SearchPage> {
   IconButton searchButton() {
     return IconButton(
         onPressed: () async {
-          isDataLoading.value = true;
           List<int> ids = await sheetDb.readNews(textEditingController.text);
 
-          isDataLoading.value = false;
           Map configRow = {};
           configRow['title'] = textEditingController.text;
           // ignore: use_build_context_synchronously
@@ -106,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: isDataLoading.value
+        title: isLoading
             ? const CircularProgressIndicator()
             : Row(
                 children: [
@@ -119,9 +115,8 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
       ),
-      body: Obx(() => isDataLoading.value
-          ? Text(
-              'Awaiting search results...\n for ${textEditingController.text} \n ${isloadingPhaseMessage.value} \n in ${rowmapsIsLoading.value}')
+      body: Obx(() => isLoading
+          ? const Text('Awaiting search results...')
           : searchableKeyListview()),
 
       //searchableKeyListview()
