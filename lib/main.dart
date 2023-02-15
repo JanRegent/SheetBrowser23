@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sheetbrowser/routerswitch.dart';
 
@@ -76,7 +77,10 @@ class SheetBrowserApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: RouterSwitch());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const RouterSwitch(),
+      builder: EasyLoading.init(),
+    );
   }
 }

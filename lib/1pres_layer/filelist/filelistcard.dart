@@ -174,7 +174,6 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
-        al.message(context, fileListRow['sheetName']);
         List<int> ids =
             await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 

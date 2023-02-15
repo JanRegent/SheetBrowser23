@@ -120,7 +120,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
       ),
       body: Obx(() => isDataLoading.value
-          ? isloadingWidgetColumn(
+          ? Text(
               'Awaiting search results...\n for ${textEditingController.text} \n ${isloadingPhaseMessage.value} \n in ${rowmapsIsLoading.value}')
           : searchableKeyListview()),
 

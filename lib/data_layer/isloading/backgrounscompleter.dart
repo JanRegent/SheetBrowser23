@@ -14,6 +14,7 @@ Future backgroundCompleter() async {
   isloadingPhaseMessage.value = 'Up to date $lastCompleted';
 
   if (lastCompleted == blUti.todayStr()) {
+    await sheetDb.colsDb.colsHeadersMapBuild();
     isloadingPhaseMessage.value = '';
     return;
   }
@@ -41,6 +42,7 @@ Future backgroundCompleter() async {
     isloadingPhaseMessage.value = 'Indexing';
     //-----------------------------------------------index
     isloadingAction.value = 'Indexing';
+    await sheetDb.colsDb.colsHeadersMapBuild();
     await tagsDb.tagsIndex();
     await tagsDb.tagsMapSave();
 

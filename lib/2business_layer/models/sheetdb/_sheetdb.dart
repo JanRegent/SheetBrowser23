@@ -1,5 +1,7 @@
 import 'package:isar/isar.dart';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 import 'package:sheetbrowser/2business_layer/models/starbl/star.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
@@ -214,8 +216,10 @@ class SheetDb {
   }
 
   Future<List<int>> readRowsLocalIds(String sheetName) async {
+    EasyLoading.show(status: '$sheetName loading...');
+    List<int> listInt = [];
     if (sheetName.isNotEmpty) {
-      return await isar.sheets
+      listInt = await isar.sheets
           .filter()
           .aSheetNameEqualTo(sheetName)
           .and()
@@ -223,12 +227,15 @@ class SheetDb {
           .idProperty()
           .findAll();
     } else {
-      return await isar.stars.where().idProperty().findAll();
+      listInt = await isar.stars.where().idProperty().findAll();
     }
+    EasyLoading.dismiss();
+    return listInt;
   }
   //-------------------------------------------------------------news
 
   Future<List<int>> readNews(String yyyyMMdd) async {
+    EasyLoading.show(status: '$yyyyMMdd loading...');
     List<int> ids = await isar.sheets
         .filter()
         .aKeyEqualTo('row')
@@ -236,7 +243,7 @@ class SheetDb {
         .rowArrAnyContains(yyyyMMdd)
         .idProperty()
         .findAll();
-
+    EasyLoading.dismiss();
     return ids;
   }
 

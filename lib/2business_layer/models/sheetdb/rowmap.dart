@@ -65,7 +65,6 @@ class RowMap extends SheetDb {
 
   //----------------------------------------------------------convert
   Future<Map> row2MapLocalId(int localId) async {
-    await sheetDb.colsDb.colsHeadersMapBuild();
     Sheet? sheet = await sheetDb.readbyLocalId(localId);
     List<String> cols = sheetDb.colsDb.colsHeadersMap[sheet!.aSheetName]!;
 
