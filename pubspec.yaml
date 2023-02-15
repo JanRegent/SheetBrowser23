@@ -47,15 +47,15 @@ dependencies:
   loading_animation_widget: ^1.2.0+4  #https://pub.dev/packages/loading_animation_widget
   quickalert: ^1.0.1                  #https://pub.dev/packages/quickalert
   #-----------------------------layout
-  carousel_slider: ^4.2.1             #https://pub.dev/packages/carousel_slider
   card_swiper: ^2.0.4                 #https://pub.dev/packages/card_swiper
   sidebarx: ^0.14.0                   #https://pub.dev/packages/sidebarx
-  #-----------------------------choice
+  #---------------------choice
   searchable_listview: ^2.2.1         #https://pub.dev/packages/searchable_listview
   expansion_tile_card: ^2.0.0         #https://pub.dev/packages/expansion_tile_card
+  dropdown_search: ^5.0.5             #https://pub.dev/packages/dropdown_search
   dropdown_button2: ^1.9.2            #https://pub.dev/packages/dropdown_button2?utm_source=fluttertap
   pluto_menu_bar: ^3.0.1              #https://pub.dev/packages/pluto_menu_bar
-  #-----------------------------text
+  #---------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
   web_scraper: ^0.1.4                 #https://pub.dev/packages/web_scraper
   #==================================================================================BL

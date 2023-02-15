@@ -1,1 +1,1 @@
-const buildVersion = 'CardSwiper---15-02-2023  9:34:24,56';     
+const buildVersion = 'CardSwiper-move2pageDropdown---15-02-2023 10:43:24,57';     
