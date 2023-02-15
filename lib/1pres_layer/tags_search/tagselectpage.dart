@@ -74,7 +74,7 @@ class _TagSelectPageState extends State<TagSelectPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => CardSwiper(ids, configRow, 0),
+                builder: (ctx) => CardSwiper(ids, configRow),
               ));
         },
         icon: const Icon(Icons.search));

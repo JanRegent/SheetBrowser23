@@ -69,7 +69,11 @@ class _DetailPageState extends State<DetailPage> {
           key,
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
-        title: isFirstKey ? starredIcon : null,
+        title: isFirstKey
+            ? Row(
+                children: [starredIcon],
+              )
+            : null,
         trailing: rowItemRightPopup(context, value),
       ));
       //todo tags-highlightingt

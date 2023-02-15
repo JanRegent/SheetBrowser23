@@ -91,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => CardSwiper(ids, configRow, 0),
+                builder: (ctx) => CardSwiper(ids, configRow),
               ));
         },
         icon: const Icon(Icons.search));

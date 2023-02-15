@@ -100,7 +100,7 @@ class _GridPageState extends State<GridPage> {
                         context,
                         MaterialPageRoute(
                           builder: (ctx) => CardSwiper(
-                              const [], currentSheet.getFilelistRow(), 0),
+                              const [], currentSheet.getFilelistRow()),
                         ));
                   } else {
                     List<int> ids = await sheetDb.starredBL
@@ -111,7 +111,7 @@ class _GridPageState extends State<GridPage> {
                         context,
                         MaterialPageRoute(
                           builder: (ctx) =>
-                              CardSwiper(ids, currentSheet.getFilelistRow(), 0),
+                              CardSwiper(ids, currentSheet.getFilelistRow()),
                         ));
                   }
                 }),

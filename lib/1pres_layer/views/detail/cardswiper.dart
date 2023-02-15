@@ -1,15 +1,16 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../2business_layer/appdata/approotdata.dart';
 import 'cardactions.dart';
+
 import 'detailpage.dart';
 
 class CardSwiper extends StatefulWidget {
   final List<int> ids;
-  final Map configRowFilelistRow;
-  final int startRow;
-  const CardSwiper(this.ids, this.configRowFilelistRow, this.startRow,
-      {super.key});
+  final Map configRow;
+
+  const CardSwiper(this.ids, this.configRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,16 +25,21 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
-    startRow = widget.startRow;
+    if (widget.configRow['startRowByBookmark'] != null) startRow = 55;
   }
 
-  void onIndexChanged(int index) {}
+  void onIndexChanged(int index) {
+    String sheetName = widget.configRow['sheetName'];
+    AppDataPrefs.setString('${sheetName}__bookmark', index.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.configRowFilelistRow['title']),
+        title: Row(
+          children: [Text(widget.configRow['title'])],
+        ),
         actions: getActions(widget.ids.length, controller, context),
       ),
       body: ConstrainedBox(
@@ -44,7 +50,7 @@ class _CardSwiperState extends State<CardSwiper> {
             //https://pub.dev/packages/card_swiper
             //https://github.com/TheAnkurPanchani/card_swiper/
             itemBuilder: (BuildContext context, int index) {
-              return DetailPage(widget.ids[index], widget.configRowFilelistRow);
+              return DetailPage(widget.ids[index], widget.configRow);
             },
             itemCount: widget.ids.length,
             onIndexChanged: (index) => onIndexChanged(index),

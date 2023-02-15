@@ -58,8 +58,8 @@ Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   configRow['title'] = 'Stars';
 
   // ignore: use_build_context_synchronously
-  await Navigator.push(context,
-      MaterialPageRoute(builder: (ctx) => CardSwiper(ids, configRow, 0)));
+  await Navigator.push(
+      context, MaterialPageRoute(builder: (ctx) => CardSwiper(ids, configRow)));
 }
 
 Card filelistCard(BuildContext context, Map fileListRow, int index) {
@@ -185,7 +185,7 @@ ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
         fileListRow['title'] = fileListRow['sheetName'];
         // ignore: use_build_context_synchronously
         await Navigator.push(context,
-            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow, 0)));
+            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
       });
 }
 
@@ -209,18 +209,17 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
         fileListRow['title'] = fileListRow['sheetName'];
+        fileListRow['startRowByBookmark'] = 'doIt';
         List<int> ids =
             await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 
-        String? startRowStr =
-            AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');
-        int? startRow = int.tryParse(startRowStr!);
+        // String? startRowStr =
+        //     AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');
+        // int? startRow = int.tryParse(startRowStr!);
 
         // ignore: use_build_context_synchronously
-        await Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => CardSwiper(ids, fileListRow, startRow!)));
+        await Navigator.push(context,
+            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
         // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
         // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
         // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);

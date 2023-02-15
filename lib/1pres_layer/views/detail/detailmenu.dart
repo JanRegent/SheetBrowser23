@@ -5,8 +5,6 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
-import '../../../2business_layer/appdata/approotdata.dart';
-
 import '../../alib/alib.dart';
 
 // ignore: must_be_immutable
@@ -143,19 +141,6 @@ class _DetailMenuState extends State<DetailMenu> {
         ],
       ),
 
-      PlutoMenuItem(
-        title: 'Bookmark',
-        icon: Icons.bookmark,
-        children: [
-          PlutoMenuItem(
-            title: 'Add',
-            icon: Icons.bookmark_add,
-            onTap: () => AppDataPrefs.setString(
-                widget.rowmap['sheetName'] + '__bookmark',
-                widget.rowmap['ID'].toString()),
-          ),
-        ],
-      ),
       PlutoMenuItem(
         title: 'Menu 3',
         icon: Icons.apps_outlined,

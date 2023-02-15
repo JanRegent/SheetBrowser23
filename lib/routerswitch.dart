@@ -86,10 +86,10 @@ class _RouterSwitchState extends State<RouterSwitch> {
             if (currentSheet.rowsArrFiltered.isEmpty) {
               configRow['sheetName'] = 'All';
 
-              return CardSwiper(const [], configRow, 0);
+              return CardSwiper(const [], configRow);
             } else {
               configRow['sheetName'] = 'Filter:';
-              return CardSwiper(const [], configRow, 0);
+              return CardSwiper(const [], configRow);
             }
           } else if (snapshot.hasError) {
             runApp(
