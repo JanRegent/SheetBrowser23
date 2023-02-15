@@ -142,7 +142,7 @@ class StarredBL extends SheetDb {
       return await isar.stars
           .filter()
           .sheetNameEqualTo(sheetName)
-          .idProperty()
+          .localIdProperty()
           .findAll();
     } else {
       return await isar.stars.where().idProperty().findAll();

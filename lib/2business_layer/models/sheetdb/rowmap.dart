@@ -76,6 +76,7 @@ class RowMap extends SheetDb {
         rowmap[cols[i]] = '';
       }
     }
+    rowmap['sheetName'] = sheet.aSheetName;
     return rowmap;
   }
 

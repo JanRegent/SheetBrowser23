@@ -1,7 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'cardactions.dart';
 import 'detailpage.dart';
 
@@ -20,13 +19,7 @@ class CardSwiper extends StatefulWidget {
 
 class _CardSwiperState extends State<CardSwiper> {
   SwiperController controller = SwiperController();
-
-  Map rowmap = {};
   int startRow = 0;
-  Future<String> getDataRowMaps() async {
-    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.ids[0]);
-    return 'ok';
-  }
 
   @override
   void initState() {

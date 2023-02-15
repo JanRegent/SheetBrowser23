@@ -36,10 +36,17 @@ class _DetailPageState extends State<DetailPage> {
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     List<Widget> listWidgets = [];
     rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localIdOfSheetDb);
-    listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
 
-    void key2listWidget(
-        String key, List<Widget> list, String keyPostfix, int rowIx) {
+    listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
+    Icon starredIcon = const Icon(Icons.star_border);
+    try {
+      int idExists = await sheetDb.starredBL
+          .starExists(rowmap['sheetName'], int.tryParse(rowmap['ID'])!);
+      if (idExists > -1) {
+        starredIcon = const Icon(Icons.star);
+      }
+    } catch (_) {}
+    void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations
@@ -59,10 +66,10 @@ class _DetailPageState extends State<DetailPage> {
 
       list.add(ListTile(
         leading: Text(
-          key + keyPostfix,
+          key,
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
-        // ignore: unnecessary_string_interpolations
+        title: isFirstKey ? starredIcon : null,
         trailing: rowItemRightPopup(context, value),
       ));
       //todo tags-highlightingt
@@ -86,32 +93,8 @@ class _DetailPageState extends State<DetailPage> {
       //list.add(const Text('  '));
     }
 
-    Future<String> starsMark() async {
-      String stars = '';
-      try {
-        int sheetID = int.tryParse(rowmap['ID'])!;
-        int id =
-            await sheetDb.starredBL.starExists(rowmap['sheetName'], sheetID);
-        if (id > -1) {
-          stars = '*';
-        } else {
-          stars = '';
-        }
-        if (stars.isEmpty) {
-          return '';
-        } else {
-          return ' [$stars]';
-        }
-      } catch (_) {
-        return '';
-      }
-    }
-
-    String stars = await starsMark();
-    int rowIx = 0;
     for (String key in rowmap.keys) {
-      String keyPostfix = key == rowmap.keys.first ? stars : '';
-      key2listWidget(key, listWidgets, keyPostfix, rowIx++);
+      key2listWidget(key, listWidgets, key == rowmap.keys.first);
     }
     return listWidgets;
   }

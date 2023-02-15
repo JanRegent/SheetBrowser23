@@ -51,10 +51,12 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   EasyLoading.show(status: 'Loading starred');
   List<int> ids = await sheetDb.starredBL.readStarredLocalIds(sheetNameOrEmpty);
+
   EasyLoading.dismiss();
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
   configRow['title'] = 'Stars';
+
   // ignore: use_build_context_synchronously
   await Navigator.push(context,
       MaterialPageRoute(builder: (ctx) => CardSwiper(ids, configRow, 0)));
