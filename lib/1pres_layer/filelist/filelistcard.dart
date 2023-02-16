@@ -69,9 +69,6 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
     rowWigs.add(datagridButton(context, fileListRow));
     rowWigs.add(const Text('  '));
 
-    rowWigs.add(lastRowButton(context, fileListRow));
-    rowWigs.add(const Text('  '));
-
     rowWigs.add(lastBookmarkButton(context, fileListRow));
     //rowWigs.add(bookmarkAutoCheckbox(context, fileListSheetRow));
     rowWigs.add(const Text('  '));
@@ -169,40 +166,11 @@ ElevatedButton datagridButton(BuildContext context, Map fileListRow) {
       });
 }
 
-ElevatedButton lastRowButton(BuildContext context, Map fileListRow) {
-  return ElevatedButton.icon(
-      label: const Text(''),
-      icon: const Icon(
-        Icons.list,
-        color: Colors.black,
-      ),
-      onPressed: () async {
-        List<int> ids =
-            await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
-
-        String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.getSheet(fileListRow['sheetName'], fileId);
-        fileListRow['title'] = fileListRow['sheetName'];
-        // ignore: use_build_context_synchronously
-        await Navigator.push(context,
-            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
-      });
-}
-
-// Obx bookmarkAutoCheckbox(BuildContext context, Map fileListRow) {
-//   return Obx(() => Checkbox(
-//         value: filelistContr.bookmarkAuto.value,
-//         onChanged: (bool? value) {
-//           filelistContr.bookmarkAuto.value = !filelistContr.bookmarkAuto.value;
-//         },
-//       ));
-// }
-
 ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
   return ElevatedButton.icon(
       label: const Text(''),
       icon: const Icon(
-        Icons.bookmark,
+        Icons.list,
         color: Colors.black,
       ),
       onPressed: () async {
@@ -216,10 +184,6 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         // ignore: use_build_context_synchronously
         await Navigator.push(context,
             MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
-        // await sheetRowsDb.readPrepare(fileListRow['sheetName']);
-        // String bookmarkSheetID = await filelistContr.bookmarkSheetIDget();
-        // int? localId = await sheetRowsDb.readSheetRowId(bookmarkSheetID);
-        // await rowDetailPageShow(context, fileListRow, localId!, [], '');
       });
 }
 
