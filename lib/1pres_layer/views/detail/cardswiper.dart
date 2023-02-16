@@ -20,17 +20,32 @@ class CardSwiper extends StatefulWidget {
 
 class _CardSwiperState extends State<CardSwiper> {
   SwiperController controller = SwiperController();
-  int startRow = 0;
 
   @override
   void initState() {
     super.initState();
-    if (widget.configRow['startRowByBookmark'] != null) startRow = 55;
+    startRowSet();
+  }
+
+  //---------------------------------------------------------- int startRow
+  int startRow = 0;
+
+  void startRowSet() {
+    if (widget.configRow['startRowByBookmark'] == null) return;
+
+    String? startRowStr = AppDataPrefs.getString(
+        '${widget.configRow['sheetName']}__bookmarkLastRowVisit');
+    try {
+      startRow = int.tryParse(startRowStr!)!;
+    } catch (_) {
+      startRow = 0;
+    }
   }
 
   void onIndexChanged(int index) {
     String sheetName = widget.configRow['sheetName'];
-    AppDataPrefs.setString('${sheetName}__bookmark', index.toString());
+    AppDataPrefs.setString(
+        '${sheetName}__bookmarkLastRowVisit', index.toString());
   }
 
   @override

@@ -213,10 +213,6 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         List<int> ids =
             await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 
-        // String? startRowStr =
-        //     AppDataPrefs.getString('${fileListRow['sheetName']}__bookmark');
-        // int? startRow = int.tryParse(startRowStr!);
-
         // ignore: use_build_context_synchronously
         await Navigator.push(context,
             MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
