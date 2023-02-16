@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2business_layer/getsheet.dart';
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
+import '../../alib/alib.dart';
+import '../../filelist/filelistcard.dart';
 import '../detail/cardswiper.dart';
 
 //import 'gtidviewopt.dart';
@@ -14,7 +15,9 @@ GetSheet currentSheet = GetSheet();
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
   final List<PlutoRow> rows;
-  const GridPage(this.columns, this.rows, {Key? key}) : super(key: key);
+  final Map fileListRow;
+  const GridPage(this.columns, this.rows, this.fileListRow, {Key? key})
+      : super(key: key);
 
   @override
   State<GridPage> createState() => _GridPageState();
@@ -74,6 +77,8 @@ class _GridPageState extends State<GridPage> {
   }
 
   Map sheetIDsMap = {};
+  List<int> filteredLocalIds = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,36 +87,32 @@ class _GridPageState extends State<GridPage> {
           actions: [
             ElevatedButton(
                 child: const Icon(Icons.add),
-                onPressed: () {
-                  var filteredIDs = stateManager.refRows
+                onPressed: () async {
+                  al.message(context, 'Adding rows');
+                  var filteredIDsVar = stateManager.refRows
                       .map((e) => e.cells['ID']!.value.toString());
 
-                  for (String filteredID in filteredIDs) {
-                    int? rowIx = int.tryParse(filteredID);
-                    currentSheet.rowsArrFiltered
-                        .add(currentSheet.sheets[rowIx!].rowArr);
+                  for (var element in filteredIDsVar) {
+                    try {
+                      int? localId = int.tryParse(element);
+                      filteredLocalIds.add(localId!);
+                    } catch (_) {}
                   }
                 }),
             ElevatedButton(
                 child: const Icon(Icons.list),
                 onPressed: () async {
-                  if (currentSheet.rowsArrFiltered.isEmpty) {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) => CardSwiper(
-                              const [], currentSheet.getFilelistRow()),
-                        ));
+                  if (filteredLocalIds.isEmpty) {
+                    await detailViewAll(context, widget.fileListRow);
                   } else {
-                    List<int> ids = await sheetDb.starredBL
-                        .readRowsLocalIds(currentSheet.sheetName);
-
-                    // ignore: use_build_context_synchronously
+                    Map configRow = {};
+                    configRow['title'] = currentSheet.sheetName;
+                    configRow['sheetName'] = currentSheet.sheetName;
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (ctx) =>
-                              CardSwiper(ids, currentSheet.getFilelistRow()),
+                              CardSwiper(filteredLocalIds, configRow),
                         ));
                   }
                 }),

@@ -76,7 +76,8 @@ class _RouterSwitchState extends State<RouterSwitch> {
               return InboxHomePage(filelist);
             }
             if (route2Page == 'grid') {
-              return GridPage(currentSheet.plutoCols, currentSheet.gridrows);
+              return GridPage(
+                  currentSheet.plutoCols, currentSheet.gridrows, filelist[0]);
             }
 
             if (route2Page == 'homesidebar') {

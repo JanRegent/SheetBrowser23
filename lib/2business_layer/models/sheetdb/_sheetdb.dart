@@ -247,6 +247,23 @@ class SheetDb {
     return ids;
   }
 
+  Future<List<int>> listIDs2locIDs(String sheetName, List<int> listIDs) async {
+    List<int> localIDs = [];
+    for (var rowIx = 0; rowIx < listIDs.length; rowIx++) {
+      int? locId = await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .sheetIdEqualTo(listIDs[rowIx])
+          .idProperty()
+          .findFirst();
+      if (locId == null) continue;
+      localIDs.add(locId);
+    }
+
+    return localIDs;
+  }
+
   //----------------------------------------------------------delete
   Future<List<int>> locIDs(String sheetName) async {
     List<int> ids = await isar.sheets

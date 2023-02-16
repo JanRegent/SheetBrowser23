@@ -18,7 +18,7 @@ Future<List<PlutoRow>> gridRowsMap(
           value = '';
         } else {
           value = row[cols[colIx]];
-          if (cols[colIx] == 'ID') value = rowIx.toString();
+          if (cols[colIx] == 'ID') value = sheets[rowIx].id.toString();
         }
       } catch (_) {
         value = '';
@@ -33,7 +33,6 @@ Future<List<PlutoRow>> gridRowsMap(
   }
 
   List<PlutoRow> gridrows = [];
-
   for (var rowIx = 1; rowIx < sheets.length; rowIx++) {
     gridrows.add(gridRow(sheets[rowIx].rowArr, rowIx));
   }

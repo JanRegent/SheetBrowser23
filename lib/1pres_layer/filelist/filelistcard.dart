@@ -122,11 +122,6 @@ Future plutoGridShow(
   BuildContext context,
   Map fileListRow,
 ) async {
-  // String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-  // String sheetName = fileListRow['sheetName'];
-
-  //viewHelper = ViewHelper();
-  //await viewHelper.load(fileId, sheetName);
   //---------------------------------------------------------------------cols
   /// Columns must be provided at the beginning of a row synchronously.
 
@@ -135,19 +130,20 @@ Future plutoGridShow(
   try {
     fileId = blUti.url2fileid(fileListRow['fileUrl']);
     await currentSheet.getSheet(fileListRow['sheetName'], fileId);
+
     // ignore: use_build_context_synchronously
     await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                GridPage(currentSheet.plutoCols, currentSheet.gridrows)));
+            builder: (context) => GridPage(
+                currentSheet.plutoCols, currentSheet.gridrows, fileListRow)));
   } catch (e, s) {
     logDb.createErr('plutoGridShow(', e.toString(), s.toString(),
         descr: fileListRow['sheetName'] + ' fileId: ' + fileId);
   }
 }
 
-//-------------------------------------------------------------------------all
+//-------------------------------------------------------------------grid
 RxString allRowsButtonlAllRowsLabel = ''.obs;
 
 ElevatedButton datagridButton(BuildContext context, Map fileListRow) {
@@ -158,12 +154,26 @@ ElevatedButton datagridButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
-        al.message(context, fileListRow['sheetName']);
+        al.message(context, 'Preparing grid of ${fileListRow["sheetName"]}');
         String fileId = blUti.url2fileid(fileListRow['fileUrl']);
         await currentSheet.getSheet(fileListRow['sheetName'], fileId);
+        currentSheet.rowsArrFiltered.clear();
         // ignore: use_build_context_synchronously
         await plutoGridShow(context, fileListRow);
       });
+}
+
+Future detailViewAll(BuildContext context, Map fileListRow) async {
+  String fileId = blUti.url2fileid(fileListRow['fileUrl']);
+  await currentSheet.getSheet(fileListRow['sheetName'], fileId);
+  fileListRow['title'] = fileListRow['sheetName'];
+  fileListRow['startRowByBookmark'] = 'doIt';
+  List<int> ids =
+      await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
+
+  // ignore: use_build_context_synchronously
+  await Navigator.push(
+      context, MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
 }
 
 ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
@@ -174,16 +184,7 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
-        String fileId = blUti.url2fileid(fileListRow['fileUrl']);
-        await currentSheet.getSheet(fileListRow['sheetName'], fileId);
-        fileListRow['title'] = fileListRow['sheetName'];
-        fileListRow['startRowByBookmark'] = 'doIt';
-        List<int> ids =
-            await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
-
-        // ignore: use_build_context_synchronously
-        await Navigator.push(context,
-            MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
+        await detailViewAll(context, fileListRow);
       });
 }
 

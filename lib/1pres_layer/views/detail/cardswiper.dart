@@ -8,10 +8,10 @@ import 'cardactions.dart';
 import 'detailpage.dart';
 
 class CardSwiper extends StatefulWidget {
-  final List<int> ids;
+  final List<int> localIds;
   final Map configRow;
 
-  const CardSwiper(this.ids, this.configRow, {super.key});
+  const CardSwiper(this.localIds, this.configRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -61,9 +61,9 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://pub.dev/packages/card_swiper
           //https://github.com/TheAnkurPanchani/card_swiper/
           itemBuilder: (BuildContext context, int rowIndex) {
-            return DetailPage(widget.ids[rowIndex], widget.configRow);
+            return DetailPage(widget.localIds[rowIndex], widget.configRow);
           },
-          itemCount: widget.ids.length,
+          itemCount: widget.localIds.length,
           onIndexChanged: (index) => onIndexChanged(index),
           //pagination: const SwiperPagination(),
           control: const SwiperControl(),
@@ -79,10 +79,11 @@ class _CardSwiperState extends State<CardSwiper> {
           title: Row(
             children: [
               Text(widget.configRow['title']),
-              Obx(() => Text(' ${currentRowIndex.value}/${widget.ids.length}')),
+              Obx(() =>
+                  Text(' ${currentRowIndex.value}/${widget.localIds.length}')),
             ],
           ),
-          actions: getActions(widget.ids.length, controller, context),
+          actions: getActions(widget.localIds.length, controller, context),
         ),
         body: body());
   }
