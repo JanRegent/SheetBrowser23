@@ -4,7 +4,6 @@ import 'dart:core';
 
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
@@ -49,10 +48,9 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 }
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
-  EasyLoading.show(status: 'Loading starred');
+  al.message(context, 'Loading starred');
   List<int> ids = await sheetDb.starredBL.readStarredLocalIds(sheetNameOrEmpty);
 
-  EasyLoading.dismiss();
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
   configRow['title'] = 'Stars';
@@ -167,7 +165,8 @@ Future detailViewAll(BuildContext context, Map fileListRow) async {
   String fileId = blUti.url2fileid(fileListRow['fileUrl']);
   await currentSheet.getSheet(fileListRow['sheetName'], fileId);
   fileListRow['title'] = fileListRow['sheetName'];
-  fileListRow['startRowByBookmark'] = 'doIt';
+  // ignore: use_build_context_synchronously
+  al.message(context, 'Loading all rows of  ${fileListRow['sheetName']}');
   List<int> ids =
       await sheetDb.starredBL.readRowsLocalIds(fileListRow['sheetName']);
 
@@ -176,7 +175,7 @@ Future detailViewAll(BuildContext context, Map fileListRow) async {
       context, MaterialPageRoute(builder: (_) => CardSwiper(ids, fileListRow)));
 }
 
-ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
+ElevatedButton lastBookmarkButton(BuildContext context, Map configRow) {
   return ElevatedButton.icon(
       label: const Text(''),
       icon: const Icon(
@@ -184,7 +183,9 @@ ElevatedButton lastBookmarkButton(BuildContext context, Map fileListRow) {
         color: Colors.black,
       ),
       onPressed: () async {
-        await detailViewAll(context, fileListRow);
+        configRow['__bookmarkLastRowVisitSave__'] =
+            '__bookmarkLastRowVisitSave__';
+        await detailViewAll(context, configRow);
       });
 }
 

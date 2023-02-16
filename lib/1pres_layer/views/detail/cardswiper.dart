@@ -32,24 +32,49 @@ class _CardSwiperState extends State<CardSwiper> {
   int startRow = 0;
 
   void startRowSet() {
-    if (widget.configRow['startRowByBookmark'] == null) return;
-
-    String? startRowStr = AppDataPrefs.getString(
-        '${widget.configRow['sheetName']}__bookmarkLastRowVisit');
+    currentRowTitleValue(startRow);
     try {
+      if (widget.configRow['sheetName'] == null) {
+        widget.configRow['__bookmarkLastRowVisitSave__'] = '';
+      }
+    } catch (_) {
+      widget.configRow['__bookmarkLastRowVisitSave__'] = '';
+      return;
+    }
+    if (widget.configRow['__bookmarkLastRowVisitSave__'] == null) {
+      widget.configRow['__bookmarkLastRowVisitSave__'] = '';
+    }
+    if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
+      return;
+    }
+
+    try {
+      String? startRowStr = AppDataPrefs.getString(
+          '${widget.configRow['sheetName']}__bookmarkLastRowVisit');
+      //filtered localIds like starred has no sheetName
       startRow = int.tryParse(startRowStr!)!;
-      currentRowIndex.value = startRow;
     } catch (_) {
       startRow = 0;
     }
+    currentRowTitleValue(startRow);
   }
 
-  RxInt currentRowIndex = 0.obs;
+  void currentRowTitleValue(int currentIndex) {
+    currentRowTitle.value = ' ${(currentIndex + 1)}/${widget.localIds.length}';
+  }
+
+  RxString currentRowTitle = ''.obs;
   void onIndexChanged(int index) {
-    String sheetName = widget.configRow['sheetName'];
-    currentRowIndex.value = index;
-    AppDataPrefs.setString(
-        '${sheetName}__bookmarkLastRowVisit', index.toString());
+    currentRowTitleValue(index);
+    if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
+      return;
+    }
+    try {
+      //filtered localIds like starred has no sheetName
+      String sheetName = widget.configRow['sheetName'];
+      AppDataPrefs.setString(
+          '${sheetName}__bookmarkLastRowVisit', index.toString());
+    } catch (__) {}
   }
 
   ConstrainedBox body() {
@@ -79,8 +104,7 @@ class _CardSwiperState extends State<CardSwiper> {
           title: Row(
             children: [
               Text(widget.configRow['title']),
-              Obx(() =>
-                  Text(' ${currentRowIndex.value}/${widget.localIds.length}')),
+              Obx(() => Text(currentRowTitle.value)),
             ],
           ),
           actions: getActions(widget.localIds.length, controller, context),

@@ -216,7 +216,6 @@ class SheetDb {
   }
 
   Future<List<int>> readRowsLocalIds(String sheetName) async {
-    EasyLoading.show(status: '$sheetName loading...');
     List<int> listInt = [];
     if (sheetName.isNotEmpty) {
       listInt = await isar.sheets
@@ -229,7 +228,7 @@ class SheetDb {
     } else {
       listInt = await isar.stars.where().idProperty().findAll();
     }
-    EasyLoading.dismiss();
+
     return listInt;
   }
   //-------------------------------------------------------------news

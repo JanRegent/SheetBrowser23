@@ -15,8 +15,8 @@ GetSheet currentSheet = GetSheet();
 class GridPage extends StatefulWidget {
   final List<PlutoColumn> columns;
   final List<PlutoRow> rows;
-  final Map fileListRow;
-  const GridPage(this.columns, this.rows, this.fileListRow, {Key? key})
+  final Map configRow;
+  const GridPage(this.columns, this.rows, this.configRow, {Key? key})
       : super(key: key);
 
   @override
@@ -88,7 +88,7 @@ class _GridPageState extends State<GridPage> {
             ElevatedButton(
                 child: const Icon(Icons.add),
                 onPressed: () async {
-                  al.message(context, 'Adding rows');
+                  al.message(context, 'Adding to filtered rows');
                   var filteredIDsVar = stateManager.refRows
                       .map((e) => e.cells['ID']!.value.toString());
 
@@ -103,9 +103,15 @@ class _GridPageState extends State<GridPage> {
                 child: const Icon(Icons.list),
                 onPressed: () async {
                   if (filteredLocalIds.isEmpty) {
-                    await detailViewAll(context, widget.fileListRow);
+                    widget.configRow['__bookmarkLastRowVisitSave__'] =
+                        '__bookmarkLastRowVisitSave__';
+                    await detailViewAll(context, widget.configRow);
                   } else {
+                    al.message(context,
+                        'Loading filtered rows of  ${currentSheet.sheetName}');
+
                     Map configRow = {};
+                    widget.configRow['__bookmarkLastRowVisitSave__'] = '';
                     configRow['title'] = currentSheet.sheetName;
                     configRow['sheetName'] = currentSheet.sheetName;
                     await Navigator.push(
