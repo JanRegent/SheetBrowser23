@@ -2,8 +2,6 @@ import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
-import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 
 import '../../alib/alib.dart';
 
@@ -100,90 +98,6 @@ class _DetailMenuState extends State<DetailMenu> {
             onTap: () async {
               showExportDialog(context);
             },
-          ),
-        ],
-      ),
-      //------------------------------------------------star
-      PlutoMenuItem(
-        title: 'Star',
-        icon: Icons.stars,
-        children: [
-          PlutoMenuItem(
-            title: '',
-            icon: Icons.add,
-            onTap: () async {
-              String sheetName = widget.rowmap['sheetName'];
-              int? sheetID = int.tryParse(widget.rowmap['ID']);
-              widget.setStateCallback();
-              await appendStarCommunity(sheetName, sheetID.toString());
-              sheetDb.starredBL.appendStar(sheetName, sheetID!);
-            },
-          ),
-          PlutoMenuItem(
-            title: '',
-            icon: Icons.exposure_minus_1,
-            onTap: () async {
-              int? sheetID = int.tryParse(widget.rowmap['ID']);
-              if (sheetID == null) return;
-              widget.setStateCallback();
-            },
-          ),
-          PlutoMenuItem(
-            title: '',
-            icon: Icons.clear,
-            onTap: () async {
-              int? sheetID = int.tryParse(widget.rowmap['ID']);
-              await sheetDb.starredBL
-                  .clearStars(widget.rowmap['sheetName'], sheetID!);
-              widget.setStateCallback();
-            },
-          )
-        ],
-      ),
-
-      PlutoMenuItem(
-        title: 'Menu 3',
-        icon: Icons.apps_outlined,
-        onTap: () => message(context, 'Menu 3 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 4',
-        onTap: () => message(context, 'Menu 4 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 5',
-        onTap: () => message(context, 'Menu 5 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 6',
-        children: [
-          PlutoMenuItem(
-            title: 'Menu 6-1',
-            onTap: () => message(context, 'Menu 6-1 tap'),
-            children: [
-              PlutoMenuItem(
-                title: 'Menu 6-1-1',
-                onTap: () => message(context, 'Menu 6-1-1 tap'),
-                children: [
-                  PlutoMenuItem(
-                    title: 'Menu 6-1-1-1',
-                    onTap: () => message(context, 'Menu 6-1-1-1 tap'),
-                  ),
-                  PlutoMenuItem(
-                    title: 'Menu 6-1-1-2',
-                    onTap: () => message(context, 'Menu 6-1-1-2 tap'),
-                  ),
-                ],
-              ),
-              PlutoMenuItem(
-                title: 'Menu 6-1-2',
-                onTap: () => message(context, 'Menu 6-1-2 tap'),
-              ),
-            ],
-          ),
-          PlutoMenuItem(
-            title: 'Menu 6-2',
-            onTap: () => message(context, 'Menu 6-2 tap'),
           ),
         ],
       ),

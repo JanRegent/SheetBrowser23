@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:parsed_readmore/parsed_readmore.dart';
 
 import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
+import '../../../data_layer/getsheetdl.dart';
+import '../../alib/alib.dart';
 import 'detailmenu.dart';
 
 class DetailPage extends StatefulWidget {
@@ -33,17 +35,33 @@ class _DetailPageState extends State<DetailPage> {
 
   Map rowmap = {};
 
+  IconButton starrAdd() {
+    return IconButton(
+        onPressed: () async {
+          String sheetName = rowmap['sheetName'];
+          int? sheetID = int.tryParse(rowmap['ID']);
+          await appendStarCommunity(sheetName, sheetID.toString());
+          sheetDb.starredBL.appendStar(sheetName, sheetID!);
+          setState(() {});
+          // ignore: use_build_context_synchronously
+          al.message(context, 'Added to starred');
+        },
+        icon: const Icon(Icons.star_border));
+  }
+
   Future<List<Widget>> getDataListviewItems(BuildContext context) async {
     List<Widget> listWidgets = [];
     rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localIdOfSheetDb);
 
     listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
-    Icon starredIcon = const Icon(Icons.star_border);
+    Widget starredWidget = const Icon(Icons.star_border);
     try {
       int idExists = await sheetDb.starredBL
           .starExists(rowmap['sheetName'], int.tryParse(rowmap['ID'])!);
       if (idExists > -1) {
-        starredIcon = const Icon(Icons.star);
+        starredWidget = const Icon(Icons.star);
+      } else {
+        starredWidget = starrAdd();
       }
     } catch (_) {}
     void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
@@ -71,7 +89,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
         title: isFirstKey
             ? Row(
-                children: [starredIcon],
+                children: [starredWidget],
               )
             : null,
         trailing: rowItemRightPopup(context, value),
