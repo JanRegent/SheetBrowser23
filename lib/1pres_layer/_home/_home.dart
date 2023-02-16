@@ -2,26 +2,32 @@ import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
-import '../../data_layer/isloading/lastdate.dart';
+import '../../2business_layer/appdata/approotdata.dart';
+import '../../data_layer/isloading/backgrounscompleter.dart';
+import '../alib/uti.dart';
 
 /// Providers are declared globally and specify how to create a state
 final counterProvider = StateProvider((ref) => 0);
 
-class SidebarHome extends ConsumerWidget {
+class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<SidebarHome> createState() => _SidebarHomeState();
+}
+
+class _SidebarHomeState extends State<SidebarHome> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home page')),
-      body: homeBody(ref, context),
+      body: homeBody(context),
     );
   }
 
   // await getAppendStarredManually(
-  //     ['cccc2GET8', 'aaaa28', 'ssss8', 'pb8', '118'], context);
-
   IconButton csvrow2clipboard() {
     return IconButton(
         onPressed: () {
@@ -44,9 +50,43 @@ class SidebarHome extends ConsumerWidget {
         icon: const Icon(Icons.copy));
   }
 
-  Widget homeBody(ref, BuildContext context) {
+  ListTile backgroundCompleterLastDateListTile() {
+    isloadingAction.value = 'Data:';
+    isloadingPhaseMessage.value =
+        'Up to date ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
+
+    setStateCallback() {
+      setState(() {});
+    }
+
+    return ListTile(
+        leading: Obx(() => Text(' ${isloadingAction.value}',
+            style: const TextStyle(fontSize: 18))),
+        title: Obx(() => Text(' ${isloadingPhaseMessage.value}',
+            style: const TextStyle(fontSize: 18))),
+        trailing: IconButton(
+            onPressed: () async {
+              await AppDataPrefs.setString('backgroundCompleter-lastDate',
+                  'loading for ${blUti.todayStr()}');
+              setState(() {
+                backgroundCompleterIsRunning = true;
+              });
+
+              backgroundCompleter(setStateCallback);
+              setState(() {
+                backgroundCompleterIsRunning = false;
+              });
+            },
+            icon: const Icon(Icons.refresh)));
+  }
+
+  Widget homeBody(BuildContext context) {
     return Column(
-      children: [backgroundCompleterLastDateListTile()],
+      children: [
+        backgroundCompleterIsRunning
+            ? const Text('Updating, please wait a few minutes...')
+            : backgroundCompleterLastDateListTile()
+      ],
     );
   }
 }

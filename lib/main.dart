@@ -67,7 +67,7 @@ Future<bool> mainInit() async {
     return false;
   }
 
-  backgroundCompleter();
+  backgroundCompleter(() {});
 
   return true;
 }

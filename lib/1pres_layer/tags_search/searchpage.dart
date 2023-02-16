@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
@@ -13,7 +12,6 @@ import '../views/detail/cardswiper.dart';
 ///
 ///
 
-// ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -115,9 +113,9 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
       ),
-      body: Obx(() => isLoading
+      body: isLoading
           ? const Text('Awaiting search results...')
-          : searchableKeyListview()),
+          : searchableKeyListview(),
 
       //searchableKeyListview()
     );

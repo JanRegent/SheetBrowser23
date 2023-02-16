@@ -208,7 +208,13 @@ class StarredBL extends SheetDb {
         } catch (_) {
           continue;
         }
-        String sheetName = rowsArr[rowIx][sheetNameIx];
+        String sheetName = '';
+        try {
+          sheetName = rowsArr[rowIx][sheetNameIx];
+        } catch (_) {
+          continue;
+        }
+
         int localId = await sheetDb.readIdBySheetID(sheetName, sheetID);
         if (localId == -1) continue;
         stars.add(Star()
