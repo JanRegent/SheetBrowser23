@@ -156,7 +156,9 @@ class SelsBL extends SheetDb {
     });
   }
 
-  Future createStarDb() async {
+  //----------------------------------------------------*map
+  Map<String, List<int>> starMap = {};
+  Future<Map<String, List<int>>> getStarMap() async {
     List<dynamic> rowsArr = [];
     List<String> colsHeader = [];
     try {
@@ -169,13 +171,13 @@ class SelsBL extends SheetDb {
       if (rowsArr.isEmpty) {
         logDb.createWarning('createStarDb()',
             'Starred sheet is empty. [setting] "*" sheet exists?  or AppDataPrefs.getRootSheetId()?');
-        return;
+        return {};
       }
       colsHeader = blUti.toListString(rowsArr[0]);
       if (colsHeader.isEmpty) {
         logDb.createWarning(
             'createStarDb()', 'Starred sheet header is empty. [setting] ');
-        return;
+        return {};
       }
 
       rowsArr.removeAt(0);
@@ -184,56 +186,38 @@ class SelsBL extends SheetDb {
         logDb.createWarning('createStarDb()',
             'Starred sheet is empty. [setting] sheet "*" is empty?  or AppDataPrefs.getRootSheetId()?');
 
-        return;
+        return {};
       }
     } catch (_) {}
 
-    int sheetIDix = colsHeader.indexOf('sheetID');
-    int sheetNameIx = colsHeader.indexOf('sheetName');
-
-    if (sheetIDix == -1 || sheetNameIx == -1) {
-      logDb.createWarning('createStarDb()',
-          'Starred sheet header: sheetID or sheetName columns is missting. [setting]?');
-      return;
-    }
-
-    await starsClear();
-
-    List<Rel> stars = [];
-    try {
-      for (var rowIx = 0; rowIx < rowsArr.length; rowIx++) {
-        int sheetID = -1;
-        try {
-          sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
-        } catch (_) {
-          continue;
-        }
-        String sheetName = '';
-        try {
-          sheetName = rowsArr[rowIx][sheetNameIx];
-        } catch (_) {
-          continue;
-        }
-
-        int localId = await sheetDb.readIdBySheetID(sheetName, sheetID);
-        if (localId == -1) continue;
-        stars.add(Rel()
-          ..sheetID = sheetID
-          ..sheetName = sheetName
-          ..selName = '*'
-          ..localId = localId);
+    for (var rowIx = 0; rowIx < rowsArr.length; rowIx++) {
+      int sheetID = -1;
+      try {
+        sheetID = int.tryParse(rowsArr[rowIx][1])!;
+      } catch (_) {
+        continue;
       }
-    } catch (_) {}
-
-    if (stars.isEmpty) return;
-
-    try {
-      await isar.writeTxn((isar) async {
-        await sheetDb.isar.rels.putAll(stars); // insert
-      });
-      return 'OK';
-    } catch (_) {
-      return;
+      String sheetName = '';
+      try {
+        sheetName = rowsArr[rowIx][0];
+      } catch (_) {
+        continue;
+      }
+      List<int> sheetIDs = [];
+      try {
+        sheetIDs = starMap[sheetName]!;
+        sheetIDs.add(sheetID);
+      } catch (e) {
+        sheetIDs = [sheetID];
+      }
+      try {
+        Set<int> set = sheetIDs.toSet();
+        starMap[sheetName] = set.toList();
+      } catch (_) {
+        continue;
+      }
     }
+
+    return starMap;
   }
 }

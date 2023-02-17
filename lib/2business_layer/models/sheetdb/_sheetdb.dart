@@ -2,9 +2,9 @@ import 'package:isar/isar.dart';
 
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 import 'package:sheetbrowser/2business_layer/models/relsbl/rels.dart';
-import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
+import '../../appdata/approotdata.dart';
 import '../log.dart';
 import '../relsbl/_relsbl.dart';
 import 'colsdb.dart';
@@ -13,11 +13,10 @@ import 'rowmap.dart';
 late SheetDb sheetDb;
 
 late LogDb logDb;
-late TagsDb tagsDb;
 
 Future dbInit() async {
   final isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema, TagSchema, RelSchema],
+    schemas: [SheetSchema, LogSchema, RelSchema],
     name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
@@ -25,8 +24,6 @@ Future dbInit() async {
   logDb = LogDb(isar);
   sheetDb = SheetDb(isar);
   await sheetDb.init();
-
-  tagsDb = TagsDb(isar);
 }
 
 class SheetDb {
@@ -56,9 +53,13 @@ class SheetDb {
   }
 
   //----------------------------------------------------------------
+  List<String> selectRowContains() {
+    String? str = AppDataPrefs.getString('select row contains');
+    return str!.split(',');
+  }
 
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
-      List<String> colsHeader) async {
+      List<String> colsHeader, Map<String, List<int>> starsmap) async {
     try {
       await sheetDb.colsDb.createColsHeader(sheetName, fileId, colsHeader);
     } catch (e, s) {
@@ -68,7 +69,6 @@ class SheetDb {
     }
 
     List<Sheet> rows = [];
-
     int rowIx = 0;
     try {
       int sheetIDix = colsHeader.indexOf('ID');
@@ -86,6 +86,31 @@ class SheetDb {
           ..aKey = 'row'
           ..sheetId = sheetID
           ..rowArr = blUti.toListString(rowsArr[rowIx]);
+
+        //------------------------------------------selections
+        List<String> rowContains = selectRowContains();
+        for (String word in rowContains) {
+          if (sheet.rowArr
+              .join(',')
+              .toLowerCase()
+              .contains(word.toLowerCase())) {
+            sheet.selections.add(word);
+          }
+        }
+        //------------------------------------------star
+        List<int> sheetIDs = starsmap[sheet.aSheetName]!.toList();
+        if (sheetIDs.contains(sheet.sheetId)) {
+          sheet.tags.add('*');
+        }
+        //------------------------------------------tags
+        int tagIx = colsHeader.indexOf('tags');
+        if (tagIx > -1) {
+          List<String> tags = sheet.rowArr[tagIx].split(',');
+          for (String tag in tags) {
+            sheet.tags.add(tag);
+          }
+        }
+
         rows.add(sheet);
       }
     } catch (e, s) {
@@ -271,6 +296,19 @@ class SheetDb {
     }
 
     return localIDs;
+  }
+
+  //---------------------------------------------------update
+  Future update(Sheet sheet) async {
+    try {
+      await isar.writeTxn((isar) async {
+        sheet.id = await isar.sheets.put(sheet); // insert
+      });
+      return 'OK';
+    } catch (e, s) {
+      logDb.createErr('sheetDB.update', e.toString(), s.toString());
+      return '';
+    }
   }
 
   //----------------------------------------------------------delete

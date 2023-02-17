@@ -17,9 +17,9 @@ extension GetRelCollection on Isar {
 const RelSchema = CollectionSchema(
   name: 'Rel',
   schema:
-      '{"name":"Rel","idName":"id","properties":[{"name":"localId","type":"Long"},{"name":"relName","type":"String"},{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Rel","idName":"id","properties":[{"name":"localId","type":"Long"},{"name":"selName","type":"String"},{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
-  propertyIds: {'localId': 0, 'relName': 1, 'sheetID': 2, 'sheetName': 3},
+  propertyIds: {'localId': 0, 'selName': 1, 'sheetID': 2, 'sheetName': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
@@ -60,8 +60,8 @@ void _relSerializeNative(IsarCollection<Rel> collection, IsarRawObject rawObj,
   final value0 = object.localId;
   final _localId = value0;
   final value1 = object.selName;
-  final _relName = IsarBinaryWriter.utf8Encoder.convert(value1);
-  dynamicSize += (_relName.length) as int;
+  final _selName = IsarBinaryWriter.utf8Encoder.convert(value1);
+  dynamicSize += (_selName.length) as int;
   final value2 = object.sheetID;
   final _sheetID = value2;
   final value3 = object.sheetName;
@@ -74,7 +74,7 @@ void _relSerializeNative(IsarCollection<Rel> collection, IsarRawObject rawObj,
   final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeLong(offsets[0], _localId);
-  writer.writeBytes(offsets[1], _relName);
+  writer.writeBytes(offsets[1], _selName);
   writer.writeLong(offsets[2], _sheetID);
   writer.writeBytes(offsets[3], _sheetName);
 }
@@ -112,7 +112,7 @@ dynamic _relSerializeWeb(IsarCollection<Rel> collection, Rel object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'localId', object.localId);
-  IsarNative.jsObjectSet(jsObj, 'relName', object.selName);
+  IsarNative.jsObjectSet(jsObj, 'selName', object.selName);
   IsarNative.jsObjectSet(jsObj, 'sheetID', object.sheetID);
   IsarNative.jsObjectSet(jsObj, 'sheetName', object.sheetName);
   return jsObj;
@@ -123,7 +123,7 @@ Rel _relDeserializeWeb(IsarCollection<Rel> collection, dynamic jsObj) {
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
   object.localId =
       IsarNative.jsObjectGet(jsObj, 'localId') ?? double.negativeInfinity;
-  object.selName = IsarNative.jsObjectGet(jsObj, 'relName') ?? '';
+  object.selName = IsarNative.jsObjectGet(jsObj, 'selName') ?? '';
   object.sheetID =
       IsarNative.jsObjectGet(jsObj, 'sheetID') ?? double.negativeInfinity;
   object.sheetName = IsarNative.jsObjectGet(jsObj, 'sheetName') ?? '';
@@ -138,8 +138,8 @@ P _relDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'localId':
       return (IsarNative.jsObjectGet(jsObj, 'localId') ??
           double.negativeInfinity) as P;
-    case 'relName':
-      return (IsarNative.jsObjectGet(jsObj, 'relName') ?? '') as P;
+    case 'selName':
+      return (IsarNative.jsObjectGet(jsObj, 'selName') ?? '') as P;
     case 'sheetID':
       return (IsarNative.jsObjectGet(jsObj, 'sheetID') ??
           double.negativeInfinity) as P;
@@ -308,19 +308,19 @@ extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameEqualTo(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameGreaterThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -328,13 +328,13 @@ extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameLessThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -342,13 +342,13 @@ extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameBetween(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -356,7 +356,7 @@ extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'relName',
+      property: 'selName',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -365,45 +365,45 @@ extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameStartsWith(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameEndsWith(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameContains(String value,
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameContains(String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'relName',
+      property: 'selName',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameMatches(String pattern,
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> selNameMatches(String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'relName',
+      property: 'selName',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -577,12 +577,12 @@ extension RelQueryWhereSortBy on QueryBuilder<Rel, Rel, QSortBy> {
     return addSortByInternal('localId', Sort.desc);
   }
 
-  QueryBuilder<Rel, Rel, QAfterSortBy> sortByRelName() {
-    return addSortByInternal('relName', Sort.asc);
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySelName() {
+    return addSortByInternal('selName', Sort.asc);
   }
 
-  QueryBuilder<Rel, Rel, QAfterSortBy> sortByRelNameDesc() {
-    return addSortByInternal('relName', Sort.desc);
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySelNameDesc() {
+    return addSortByInternal('selName', Sort.desc);
   }
 
   QueryBuilder<Rel, Rel, QAfterSortBy> sortBySheetID() {
@@ -619,12 +619,12 @@ extension RelQueryWhereSortThenBy on QueryBuilder<Rel, Rel, QSortThenBy> {
     return addSortByInternal('localId', Sort.desc);
   }
 
-  QueryBuilder<Rel, Rel, QAfterSortBy> thenByRelName() {
-    return addSortByInternal('relName', Sort.asc);
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySelName() {
+    return addSortByInternal('selName', Sort.asc);
   }
 
-  QueryBuilder<Rel, Rel, QAfterSortBy> thenByRelNameDesc() {
-    return addSortByInternal('relName', Sort.desc);
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySelNameDesc() {
+    return addSortByInternal('selName', Sort.desc);
   }
 
   QueryBuilder<Rel, Rel, QAfterSortBy> thenBySheetID() {
@@ -653,9 +653,9 @@ extension RelQueryWhereDistinct on QueryBuilder<Rel, Rel, QDistinct> {
     return addDistinctByInternal('localId');
   }
 
-  QueryBuilder<Rel, Rel, QDistinct> distinctByRelName(
+  QueryBuilder<Rel, Rel, QDistinct> distinctBySelName(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('relName', caseSensitive: caseSensitive);
+    return addDistinctByInternal('selName', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<Rel, Rel, QDistinct> distinctBySheetID() {
@@ -677,8 +677,8 @@ extension RelQueryProperty on QueryBuilder<Rel, Rel, QQueryProperty> {
     return addPropertyNameInternal('localId');
   }
 
-  QueryBuilder<Rel, String, QQueryOperations> relNameProperty() {
-    return addPropertyNameInternal('relName');
+  QueryBuilder<Rel, String, QQueryOperations> selNameProperty() {
+    return addPropertyNameInternal('selName');
   }
 
   QueryBuilder<Rel, int, QQueryOperations> sheetIDProperty() {

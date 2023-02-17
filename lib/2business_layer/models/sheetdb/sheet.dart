@@ -18,6 +18,9 @@ class Sheet {
   List<String> rowArr = [];
 
   @Index(type: IndexType.value)
+  List<String> selections = [];
+  @Index(type: IndexType.value)
+  List<String> tags = [];
   String zfileId = '';
 
   Future toStrings() async {

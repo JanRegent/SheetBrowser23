@@ -37,7 +37,7 @@ class GetSheet {
     }
 
     try {
-      await sheetPrepare(sheetName, fileId);
+      await sheetPrepare(sheetName, fileId, {});
     } catch (e, s) {
       logDb.createErr('GetSheet().sheetPrepare', e.toString(), s.toString());
     }
@@ -50,17 +50,16 @@ class GetSheet {
   }
 
   Future sheetPrepare(
-    String sheetName,
-    String fileId,
-  ) async {
+      String sheetName, String fileId, Map<String, List<int>> starsmap) async {
     int sheetLen = await sheetDb.lengthRows(sheetName);
 
     if (sheetLen > 0) return;
 
-    await sheetPrepare2localDb(sheetName, fileId);
+    await sheetPrepare2localDb(sheetName, fileId, starsmap);
   }
 
-  Future sheetPrepare2localDb(String sheetName, String fileId) async {
+  Future sheetPrepare2localDb(
+      String sheetName, String fileId, Map<String, List<int>> starsmap) async {
     List<dynamic> rowsArr = [];
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
@@ -79,9 +78,9 @@ class GetSheet {
           descr:
               'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
-
     try {
-      await sheetDb.createRows(sheetName, fileId, rowsArr, colsHeader);
+      await sheetDb.createRows(
+          sheetName, fileId, rowsArr, colsHeader, starsmap);
 
       //-----------------------------------------------try update diffs
       // List<int> newRows = await sheetsDiff(rowsArr);

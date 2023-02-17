@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../views/detail/cardswiper.dart';
 
@@ -66,7 +65,8 @@ class _TagSelectPageState extends State<TagSelectPage> {
   IconButton searchButton() {
     return IconButton(
         onPressed: () async {
-          List<int> ids = await tagsDb.readTagIds(textEditingController.text);
+          List<int> ids = [];
+          // await tagsDb.readTagIds(textEditingController.text);
 
           Map configRow = {};
           configRow['title'] = 'Tag: ${textEditingController.text}';
