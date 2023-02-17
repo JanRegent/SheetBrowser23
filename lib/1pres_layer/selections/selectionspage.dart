@@ -4,14 +4,14 @@ import 'package:pluto_layout/pluto_layout.dart';
 
 import '../filelist/filelistcard.dart';
 
-class CollectionsPage extends StatefulWidget {
-  const CollectionsPage({super.key});
+class SelectionsPage extends StatefulWidget {
+  const SelectionsPage({super.key});
 
   @override
-  State<CollectionsPage> createState() => _CollectionsPageState();
+  State<SelectionsPage> createState() => _SelectionsPageState();
 }
 
-class _CollectionsPageState extends State<CollectionsPage> {
+class _SelectionsPageState extends State<SelectionsPage> {
   Widget collCard() {
     return filelistCard(context, getConfigRowSheetName('dailyNotes'));
   }

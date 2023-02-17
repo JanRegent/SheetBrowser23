@@ -1,17 +1,17 @@
 import 'package:isar/isar.dart';
 // flutter pub run build_runner build
 
-part 'star.g.dart';
+part 'rels.g.dart';
 
 @Collection()
-class Star {
+class Rel {
   @Id()
   int id = Isar.autoIncrement;
 
   String sheetName = '';
   int sheetID = -1;
-  String stars = '';
+  String relName = '';
   int localId = -1;
 
-  Star();
+  Rel();
 }

@@ -3,12 +3,12 @@ import 'package:isar/isar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
-import 'package:sheetbrowser/2business_layer/models/starbl/star.dart';
+import 'package:sheetbrowser/2business_layer/models/relsbl/rels.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
 import '../log.dart';
-import '../starbl/_starbl.dart';
+import '../relsbl/_relsbl.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
 
@@ -19,7 +19,7 @@ late TagsDb tagsDb;
 
 Future dbInit() async {
   final isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema, TagSchema, StarSchema],
+    schemas: [SheetSchema, LogSchema, TagSchema, RelSchema],
     name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
@@ -226,7 +226,7 @@ class SheetDb {
           .idProperty()
           .findAll();
     } else {
-      listInt = await isar.stars.where().idProperty().findAll();
+      listInt = await isar.rels.where().idProperty().findAll();
     }
 
     return listInt;

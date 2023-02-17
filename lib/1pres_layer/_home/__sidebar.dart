@@ -8,9 +8,9 @@ import '../../2business_layer/appdata/appsettingspage.dart';
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
-import '../filtercolls/collectionspage.dart';
-import '../filtercolls/searchpage.dart';
-import '../filtercolls/tagselectpage.dart';
+import '../selections/selectionspage.dart';
+import '../selections/searchpage.dart';
+import '../selections/tagselectpage.dart';
 import '_home.dart';
 
 class SidebarXApp extends StatefulWidget {
@@ -185,7 +185,7 @@ class ExampleSidebarX extends StatelessWidget {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => const CollectionsPage(),
+                    builder: (ctx) => const SelectionsPage(),
                   ));
             }),
         SidebarXItem(

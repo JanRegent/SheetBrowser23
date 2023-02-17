@@ -2,7 +2,7 @@
 
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-part of 'star.dart';
+part of 'rels.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -10,35 +10,35 @@ part of 'star.dart';
 
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
-extension GetStarCollection on Isar {
-  IsarCollection<Star> get stars => getCollection();
+extension GetRelCollection on Isar {
+  IsarCollection<Rel> get rels => getCollection();
 }
 
-const StarSchema = CollectionSchema(
-  name: 'Star',
+const RelSchema = CollectionSchema(
+  name: 'Rel',
   schema:
-      '{"name":"Star","idName":"id","properties":[{"name":"localId","type":"Long"},{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"},{"name":"stars","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Rel","idName":"id","properties":[{"name":"localId","type":"Long"},{"name":"relName","type":"String"},{"name":"sheetID","type":"Long"},{"name":"sheetName","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
-  propertyIds: {'localId': 0, 'sheetID': 1, 'sheetName': 2, 'stars': 3},
+  propertyIds: {'localId': 0, 'relName': 1, 'sheetID': 2, 'sheetName': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
   linkIds: {},
   backlinkLinkNames: {},
-  getId: _starGetId,
-  setId: _starSetId,
-  getLinks: _starGetLinks,
-  attachLinks: _starAttachLinks,
-  serializeNative: _starSerializeNative,
-  deserializeNative: _starDeserializeNative,
-  deserializePropNative: _starDeserializePropNative,
-  serializeWeb: _starSerializeWeb,
-  deserializeWeb: _starDeserializeWeb,
-  deserializePropWeb: _starDeserializePropWeb,
+  getId: _relGetId,
+  setId: _relSetId,
+  getLinks: _relGetLinks,
+  attachLinks: _relAttachLinks,
+  serializeNative: _relSerializeNative,
+  deserializeNative: _relDeserializeNative,
+  deserializePropNative: _relDeserializePropNative,
+  serializeWeb: _relSerializeWeb,
+  deserializeWeb: _relDeserializeWeb,
+  deserializePropWeb: _relDeserializePropWeb,
   version: 3,
 );
 
-int? _starGetId(Star object) {
+int? _relGetId(Rel object) {
   if (object.id == Isar.autoIncrement) {
     return null;
   } else {
@@ -46,27 +46,27 @@ int? _starGetId(Star object) {
   }
 }
 
-void _starSetId(Star object, int id) {
+void _relSetId(Rel object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _starGetLinks(Star object) {
+List<IsarLinkBase> _relGetLinks(Rel object) {
   return [];
 }
 
-void _starSerializeNative(IsarCollection<Star> collection, IsarRawObject rawObj,
-    Star object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
+void _relSerializeNative(IsarCollection<Rel> collection, IsarRawObject rawObj,
+    Rel object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
   var dynamicSize = 0;
   final value0 = object.localId;
   final _localId = value0;
-  final value1 = object.sheetID;
-  final _sheetID = value1;
-  final value2 = object.sheetName;
-  final _sheetName = IsarBinaryWriter.utf8Encoder.convert(value2);
+  final value1 = object.relName;
+  final _relName = IsarBinaryWriter.utf8Encoder.convert(value1);
+  dynamicSize += (_relName.length) as int;
+  final value2 = object.sheetID;
+  final _sheetID = value2;
+  final value3 = object.sheetName;
+  final _sheetName = IsarBinaryWriter.utf8Encoder.convert(value3);
   dynamicSize += (_sheetName.length) as int;
-  final value3 = object.stars;
-  final _stars = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_stars.length) as int;
   final size = staticSize + dynamicSize;
 
   rawObj.buffer = alloc(size);
@@ -74,23 +74,23 @@ void _starSerializeNative(IsarCollection<Star> collection, IsarRawObject rawObj,
   final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeLong(offsets[0], _localId);
-  writer.writeLong(offsets[1], _sheetID);
-  writer.writeBytes(offsets[2], _sheetName);
-  writer.writeBytes(offsets[3], _stars);
+  writer.writeBytes(offsets[1], _relName);
+  writer.writeLong(offsets[2], _sheetID);
+  writer.writeBytes(offsets[3], _sheetName);
 }
 
-Star _starDeserializeNative(IsarCollection<Star> collection, int id,
+Rel _relDeserializeNative(IsarCollection<Rel> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
-  final object = Star();
+  final object = Rel();
   object.id = id;
   object.localId = reader.readLong(offsets[0]);
-  object.sheetID = reader.readLong(offsets[1]);
-  object.sheetName = reader.readString(offsets[2]);
-  object.stars = reader.readString(offsets[3]);
+  object.relName = reader.readString(offsets[1]);
+  object.sheetID = reader.readLong(offsets[2]);
+  object.sheetName = reader.readString(offsets[3]);
   return object;
 }
 
-P _starDeserializePropNative<P>(
+P _relDeserializePropNative<P>(
     int id, IsarBinaryReader reader, int propertyIndex, int offset) {
   switch (propertyIndex) {
     case -1:
@@ -98,9 +98,9 @@ P _starDeserializePropNative<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
-    case 2:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
     default:
@@ -108,29 +108,29 @@ P _starDeserializePropNative<P>(
   }
 }
 
-dynamic _starSerializeWeb(IsarCollection<Star> collection, Star object) {
+dynamic _relSerializeWeb(IsarCollection<Rel> collection, Rel object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'localId', object.localId);
+  IsarNative.jsObjectSet(jsObj, 'relName', object.relName);
   IsarNative.jsObjectSet(jsObj, 'sheetID', object.sheetID);
   IsarNative.jsObjectSet(jsObj, 'sheetName', object.sheetName);
-  IsarNative.jsObjectSet(jsObj, 'stars', object.stars);
   return jsObj;
 }
 
-Star _starDeserializeWeb(IsarCollection<Star> collection, dynamic jsObj) {
-  final object = Star();
+Rel _relDeserializeWeb(IsarCollection<Rel> collection, dynamic jsObj) {
+  final object = Rel();
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
   object.localId =
       IsarNative.jsObjectGet(jsObj, 'localId') ?? double.negativeInfinity;
+  object.relName = IsarNative.jsObjectGet(jsObj, 'relName') ?? '';
   object.sheetID =
       IsarNative.jsObjectGet(jsObj, 'sheetID') ?? double.negativeInfinity;
   object.sheetName = IsarNative.jsObjectGet(jsObj, 'sheetName') ?? '';
-  object.stars = IsarNative.jsObjectGet(jsObj, 'stars') ?? '';
   return object;
 }
 
-P _starDeserializePropWeb<P>(Object jsObj, String propertyName) {
+P _relDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
@@ -138,28 +138,28 @@ P _starDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'localId':
       return (IsarNative.jsObjectGet(jsObj, 'localId') ??
           double.negativeInfinity) as P;
+    case 'relName':
+      return (IsarNative.jsObjectGet(jsObj, 'relName') ?? '') as P;
     case 'sheetID':
       return (IsarNative.jsObjectGet(jsObj, 'sheetID') ??
           double.negativeInfinity) as P;
     case 'sheetName':
       return (IsarNative.jsObjectGet(jsObj, 'sheetName') ?? '') as P;
-    case 'stars':
-      return (IsarNative.jsObjectGet(jsObj, 'stars') ?? '') as P;
     default:
       throw 'Illegal propertyName';
   }
 }
 
-void _starAttachLinks(IsarCollection col, int id, Star object) {}
+void _relAttachLinks(IsarCollection col, int id, Rel object) {}
 
-extension StarQueryWhereSort on QueryBuilder<Star, Star, QWhere> {
-  QueryBuilder<Star, Star, QAfterWhere> anyId() {
+extension RelQueryWhereSort on QueryBuilder<Rel, Rel, QWhere> {
+  QueryBuilder<Rel, Rel, QAfterWhere> anyId() {
     return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
-extension StarQueryWhere on QueryBuilder<Star, Star, QWhereClause> {
-  QueryBuilder<Star, Star, QAfterWhereClause> idEqualTo(int id) {
+extension RelQueryWhere on QueryBuilder<Rel, Rel, QWhereClause> {
+  QueryBuilder<Rel, Rel, QAfterWhereClause> idEqualTo(int id) {
     return addWhereClauseInternal(IdWhereClause.between(
       lower: id,
       includeLower: true,
@@ -168,7 +168,7 @@ extension StarQueryWhere on QueryBuilder<Star, Star, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterWhereClause> idNotEqualTo(int id) {
+  QueryBuilder<Rel, Rel, QAfterWhereClause> idNotEqualTo(int id) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(
         IdWhereClause.lessThan(upper: id, includeUpper: false),
@@ -184,21 +184,21 @@ extension StarQueryWhere on QueryBuilder<Star, Star, QWhereClause> {
     }
   }
 
-  QueryBuilder<Star, Star, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<Rel, Rel, QAfterWhereClause> idGreaterThan(int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.greaterThan(lower: id, includeLower: include),
     );
   }
 
-  QueryBuilder<Star, Star, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<Rel, Rel, QAfterWhereClause> idLessThan(int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.lessThan(upper: id, includeUpper: include),
     );
   }
 
-  QueryBuilder<Star, Star, QAfterWhereClause> idBetween(
+  QueryBuilder<Rel, Rel, QAfterWhereClause> idBetween(
     int lowerId,
     int upperId, {
     bool includeLower = true,
@@ -213,8 +213,8 @@ extension StarQueryWhere on QueryBuilder<Star, Star, QWhereClause> {
   }
 }
 
-extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
-  QueryBuilder<Star, Star, QAfterFilterCondition> idEqualTo(int value) {
+extension RelQueryFilter on QueryBuilder<Rel, Rel, QFilterCondition> {
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> idEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'id',
@@ -222,7 +222,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> idGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -234,7 +234,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> idLessThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
@@ -246,7 +246,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> idBetween(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> idBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -261,7 +261,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> localIdEqualTo(int value) {
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> localIdEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'localId',
@@ -269,7 +269,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> localIdGreaterThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> localIdGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -281,7 +281,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> localIdLessThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> localIdLessThan(
     int value, {
     bool include = false,
   }) {
@@ -293,7 +293,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> localIdBetween(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> localIdBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -308,7 +308,108 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetIDEqualTo(int value) {
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'relName',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameContains(String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'relName',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> relNameMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'relName',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetIDEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'sheetID',
@@ -316,7 +417,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetIDGreaterThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetIDGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -328,7 +429,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetIDLessThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetIDLessThan(
     int value, {
     bool include = false,
   }) {
@@ -340,7 +441,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetIDBetween(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetIDBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -355,7 +456,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameEqualTo(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -367,7 +468,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameGreaterThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -381,7 +482,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameLessThan(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -395,7 +496,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameBetween(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -412,7 +513,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameStartsWith(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -424,7 +525,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameEndsWith(
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -436,8 +537,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameContains(
-      String value,
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameContains(String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
@@ -447,8 +547,7 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Star, Star, QAfterFilterCondition> sheetNameMatches(
-      String pattern,
+  QueryBuilder<Rel, Rel, QAfterFilterCondition> sheetNameMatches(String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
@@ -457,237 +556,136 @@ extension StarQueryFilter on QueryBuilder<Star, Star, QFilterCondition> {
       caseSensitive: caseSensitive,
     ));
   }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'stars',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsContains(String value,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'stars',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Star, Star, QAfterFilterCondition> starsMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'stars',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
-  }
 }
 
-extension StarQueryLinks on QueryBuilder<Star, Star, QFilterCondition> {}
+extension RelQueryLinks on QueryBuilder<Rel, Rel, QFilterCondition> {}
 
-extension StarQueryWhereSortBy on QueryBuilder<Star, Star, QSortBy> {
-  QueryBuilder<Star, Star, QAfterSortBy> sortById() {
+extension RelQueryWhereSortBy on QueryBuilder<Rel, Rel, QSortBy> {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortByLocalId() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortByLocalId() {
     return addSortByInternal('localId', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortByLocalIdDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortByLocalIdDesc() {
     return addSortByInternal('localId', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortBySheetID() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortByRelName() {
+    return addSortByInternal('relName', Sort.asc);
+  }
+
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortByRelNameDesc() {
+    return addSortByInternal('relName', Sort.desc);
+  }
+
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySheetID() {
     return addSortByInternal('sheetID', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortBySheetIDDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySheetIDDesc() {
     return addSortByInternal('sheetID', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortBySheetName() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySheetName() {
     return addSortByInternal('sheetName', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> sortBySheetNameDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> sortBySheetNameDesc() {
     return addSortByInternal('sheetName', Sort.desc);
-  }
-
-  QueryBuilder<Star, Star, QAfterSortBy> sortByStars() {
-    return addSortByInternal('stars', Sort.asc);
-  }
-
-  QueryBuilder<Star, Star, QAfterSortBy> sortByStarsDesc() {
-    return addSortByInternal('stars', Sort.desc);
   }
 }
 
-extension StarQueryWhereSortThenBy on QueryBuilder<Star, Star, QSortThenBy> {
-  QueryBuilder<Star, Star, QAfterSortBy> thenById() {
+extension RelQueryWhereSortThenBy on QueryBuilder<Rel, Rel, QSortThenBy> {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenByLocalId() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenByLocalId() {
     return addSortByInternal('localId', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenByLocalIdDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenByLocalIdDesc() {
     return addSortByInternal('localId', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenBySheetID() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenByRelName() {
+    return addSortByInternal('relName', Sort.asc);
+  }
+
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenByRelNameDesc() {
+    return addSortByInternal('relName', Sort.desc);
+  }
+
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySheetID() {
     return addSortByInternal('sheetID', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenBySheetIDDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySheetIDDesc() {
     return addSortByInternal('sheetID', Sort.desc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenBySheetName() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySheetName() {
     return addSortByInternal('sheetName', Sort.asc);
   }
 
-  QueryBuilder<Star, Star, QAfterSortBy> thenBySheetNameDesc() {
+  QueryBuilder<Rel, Rel, QAfterSortBy> thenBySheetNameDesc() {
     return addSortByInternal('sheetName', Sort.desc);
-  }
-
-  QueryBuilder<Star, Star, QAfterSortBy> thenByStars() {
-    return addSortByInternal('stars', Sort.asc);
-  }
-
-  QueryBuilder<Star, Star, QAfterSortBy> thenByStarsDesc() {
-    return addSortByInternal('stars', Sort.desc);
   }
 }
 
-extension StarQueryWhereDistinct on QueryBuilder<Star, Star, QDistinct> {
-  QueryBuilder<Star, Star, QDistinct> distinctById() {
+extension RelQueryWhereDistinct on QueryBuilder<Rel, Rel, QDistinct> {
+  QueryBuilder<Rel, Rel, QDistinct> distinctById() {
     return addDistinctByInternal('id');
   }
 
-  QueryBuilder<Star, Star, QDistinct> distinctByLocalId() {
+  QueryBuilder<Rel, Rel, QDistinct> distinctByLocalId() {
     return addDistinctByInternal('localId');
   }
 
-  QueryBuilder<Star, Star, QDistinct> distinctBySheetID() {
+  QueryBuilder<Rel, Rel, QDistinct> distinctByRelName(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('relName', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Rel, Rel, QDistinct> distinctBySheetID() {
     return addDistinctByInternal('sheetID');
   }
 
-  QueryBuilder<Star, Star, QDistinct> distinctBySheetName(
+  QueryBuilder<Rel, Rel, QDistinct> distinctBySheetName(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('sheetName', caseSensitive: caseSensitive);
   }
-
-  QueryBuilder<Star, Star, QDistinct> distinctByStars(
-      {bool caseSensitive = true}) {
-    return addDistinctByInternal('stars', caseSensitive: caseSensitive);
-  }
 }
 
-extension StarQueryProperty on QueryBuilder<Star, Star, QQueryProperty> {
-  QueryBuilder<Star, int, QQueryOperations> idProperty() {
+extension RelQueryProperty on QueryBuilder<Rel, Rel, QQueryProperty> {
+  QueryBuilder<Rel, int, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<Star, int, QQueryOperations> localIdProperty() {
+  QueryBuilder<Rel, int, QQueryOperations> localIdProperty() {
     return addPropertyNameInternal('localId');
   }
 
-  QueryBuilder<Star, int, QQueryOperations> sheetIDProperty() {
+  QueryBuilder<Rel, String, QQueryOperations> relNameProperty() {
+    return addPropertyNameInternal('relName');
+  }
+
+  QueryBuilder<Rel, int, QQueryOperations> sheetIDProperty() {
     return addPropertyNameInternal('sheetID');
   }
 
-  QueryBuilder<Star, String, QQueryOperations> sheetNameProperty() {
+  QueryBuilder<Rel, String, QQueryOperations> sheetNameProperty() {
     return addPropertyNameInternal('sheetName');
-  }
-
-  QueryBuilder<Star, String, QQueryOperations> starsProperty() {
-    return addPropertyNameInternal('stars');
   }
 }
