@@ -36,13 +36,13 @@ class SheetDb {
   SheetDb(this.isar);
 
   late ColsDb colsDb;
-  late StarredBL starredBL;
+  late SelsBL selsBL;
   late RowMap rowMap;
 
   Future init() async {
     colsDb = ColsDb(isar);
     rowMap = RowMap(isar);
-    starredBL = StarredBL(isar);
+    selsBL = SelsBL(isar);
   }
 
   Future create(Sheet newSheet) async {

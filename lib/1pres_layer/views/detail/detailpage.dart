@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
           String sheetName = rowmap['sheetName'];
           int? sheetID = int.tryParse(rowmap['ID']);
           await appendStarCommunity(sheetName, sheetID.toString());
-          sheetDb.starredBL.appendStar(sheetName, sheetID!);
+          sheetDb.selsBL.appendStar(sheetName, sheetID!);
           setState(() {});
           // ignore: use_build_context_synchronously
           al.message(context, 'Added to starred');
@@ -56,7 +56,7 @@ class _DetailPageState extends State<DetailPage> {
     listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
     Widget starredWidget = const Icon(Icons.star_border);
     try {
-      int idExists = await sheetDb.starredBL
+      int idExists = await sheetDb.selsBL
           .starExists(rowmap['sheetName'], int.tryParse(rowmap['ID'])!);
       if (idExists > -1) {
         starredWidget = const Icon(Icons.star);

@@ -10,7 +10,7 @@ class Rel {
 
   String sheetName = '';
   int sheetID = -1;
-  String relName = '';
+  String selName = '';
   int localId = -1;
 
   Rel();

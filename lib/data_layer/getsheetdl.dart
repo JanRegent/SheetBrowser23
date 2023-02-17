@@ -79,7 +79,7 @@ class GoogleSheetsDL {
 } //class
 
 Future getTagQuote(String sourceSheetName, String id, String fileId) async {
-  String? url = AppDataPrefs.getString('selectServiceUrl');
+  String? url = AppDataPrefs.getString('communityServiceUrl');
   url =
       '$url?action=getTagQuote&sourceSheetName=$sourceSheetName&ID=$id&fileId=$fileId';
 
@@ -172,10 +172,11 @@ class Failure {
 }
 
 Future appendStarCommunity(String sheetName, String sheetID) async {
-  String? selectServiceUrl = AppDataPrefs.getString('selectServiceUrl');
+  String? communityServiceUrl = AppDataPrefs.getString('communityServiceUrl');
 
   String url =
-      '$selectServiceUrl?action=starredAppend&sheetName=$sheetName&sheetID=$sheetID';
+      '$communityServiceUrl?action=relAppend&sheetName=$sheetName&sheetID=$sheetID&selName=*';
+
   await http.get(Uri.parse(url));
 
   return 'OK';

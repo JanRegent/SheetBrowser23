@@ -51,7 +51,7 @@ Future backgroundCompleter(Function setStateCallback) async {
     await tagsDb.tagsMapSave();
 
     EasyLoading.show(status: 'Indexing stars');
-    await sheetDb.starredBL.createStarDb();
+    await sheetDb.selsBL.createStarDb();
     EasyLoading.dismiss();
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });

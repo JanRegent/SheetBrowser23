@@ -59,7 +59,7 @@ void _relSerializeNative(IsarCollection<Rel> collection, IsarRawObject rawObj,
   var dynamicSize = 0;
   final value0 = object.localId;
   final _localId = value0;
-  final value1 = object.relName;
+  final value1 = object.selName;
   final _relName = IsarBinaryWriter.utf8Encoder.convert(value1);
   dynamicSize += (_relName.length) as int;
   final value2 = object.sheetID;
@@ -84,7 +84,7 @@ Rel _relDeserializeNative(IsarCollection<Rel> collection, int id,
   final object = Rel();
   object.id = id;
   object.localId = reader.readLong(offsets[0]);
-  object.relName = reader.readString(offsets[1]);
+  object.selName = reader.readString(offsets[1]);
   object.sheetID = reader.readLong(offsets[2]);
   object.sheetName = reader.readString(offsets[3]);
   return object;
@@ -112,7 +112,7 @@ dynamic _relSerializeWeb(IsarCollection<Rel> collection, Rel object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'localId', object.localId);
-  IsarNative.jsObjectSet(jsObj, 'relName', object.relName);
+  IsarNative.jsObjectSet(jsObj, 'relName', object.selName);
   IsarNative.jsObjectSet(jsObj, 'sheetID', object.sheetID);
   IsarNative.jsObjectSet(jsObj, 'sheetName', object.sheetName);
   return jsObj;
@@ -123,7 +123,7 @@ Rel _relDeserializeWeb(IsarCollection<Rel> collection, dynamic jsObj) {
   object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
   object.localId =
       IsarNative.jsObjectGet(jsObj, 'localId') ?? double.negativeInfinity;
-  object.relName = IsarNative.jsObjectGet(jsObj, 'relName') ?? '';
+  object.selName = IsarNative.jsObjectGet(jsObj, 'relName') ?? '';
   object.sheetID =
       IsarNative.jsObjectGet(jsObj, 'sheetID') ?? double.negativeInfinity;
   object.sheetName = IsarNative.jsObjectGet(jsObj, 'sheetName') ?? '';

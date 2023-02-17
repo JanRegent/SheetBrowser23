@@ -7,8 +7,8 @@ import '../../appdata/approotdata.dart';
 import '../sheetdb/_sheetdb.dart';
 import '../sheetdb/sheet.dart';
 
-class StarredBL extends SheetDb {
-  StarredBL(super.isar);
+class SelsBL extends SheetDb {
+  SelsBL(super.isar);
 
   Future<Rel?> readStarredVal(String sheetName, int sheetIDin) async {
     Rel? starredVal = await isar.rels
@@ -30,8 +30,8 @@ class StarredBL extends SheetDb {
         .findFirst();
     try {
       // ignore: unnecessary_null_comparison
-      if (starredVal!.relName == null) return '';
-      return starredVal.relName;
+      if (starredVal!.selName == null) return '';
+      return starredVal.selName;
     } catch (_) {
       return '';
     }
@@ -61,10 +61,11 @@ class StarredBL extends SheetDb {
     Rel starredVal = Rel()
       ..sheetName = sheetName
       ..sheetID = sheetIDin
+      ..selName = '*'
       ..localId = sheet.id;
 
     try {
-      starredVal.relName = '*';
+      starredVal.selName = '*';
       await isar.writeTxn((isar) async {
         await isar.rels.put(starredVal);
       });
@@ -82,11 +83,11 @@ class StarredBL extends SheetDb {
       ..sheetID = sheetIDin;
 
     try {
-      starredVal.relName += '*';
+      starredVal.selName += '*';
       await isar.writeTxn((isar) async {
         await isar.rels.put(starredVal!);
       });
-      return starredVal.relName;
+      return starredVal.selName;
     } catch (e, s) {
       logDb.createErr('sheetDB.starredValss.starredBL.addStarr', e.toString(),
           s.toString());
@@ -98,17 +99,17 @@ class StarredBL extends SheetDb {
     Rel? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     try {
-      if (starredVal!.relName.isEmpty) return starredVal.relName;
-      starredVal.relName =
-          starredVal.relName.substring(0, starredVal.relName.length - 1);
+      if (starredVal!.selName.isEmpty) return starredVal.selName;
+      starredVal.selName =
+          starredVal.selName.substring(0, starredVal.selName.length - 1);
       await isar.writeTxn((isar) async {
         await isar.rels.put(starredVal);
       });
-      return starredVal.relName;
+      return starredVal.selName;
     } catch (e, s) {
       logDb.createErr(
           'sheetDB.starredBL.minusStar1', e.toString(), s.toString());
-      return starredVal!.relName;
+      return starredVal!.selName;
     }
   }
 
@@ -116,8 +117,8 @@ class StarredBL extends SheetDb {
     Rel? starredVal = await readStarredVal(sheetName, sheetIDin);
 
     try {
-      if (starredVal!.relName.isEmpty) return;
-      starredVal.relName = '';
+      if (starredVal!.selName.isEmpty) return;
+      starredVal.selName = '';
       await isar.writeTxn((isar) async {
         await isar.rels.put(starredVal);
       });
@@ -220,7 +221,7 @@ class StarredBL extends SheetDb {
         stars.add(Rel()
           ..sheetID = sheetID
           ..sheetName = sheetName
-          ..relName = '*'
+          ..selName = '*'
           ..localId = localId);
       }
     } catch (_) {}

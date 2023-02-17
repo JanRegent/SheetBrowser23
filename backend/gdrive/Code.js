@@ -10,9 +10,9 @@ function doGet(e) {
   var action = e.parameter.action.toString();
 
   try { 
-    // ?action=starredAppend&sheetName=PapajiDailyPedia&sheetID=2
-    if (action == 'starredAppend') {
-      var result = starredAppendDoGet(e);
+    // ?action=relAppend&sheetName=PapajiDailyPedia&sheetID=21&selName=*
+    if (action == 'relAppend') {
+      var result = relAppendDoGet(e);
       return result;
     }
 
