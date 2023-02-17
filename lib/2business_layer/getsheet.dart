@@ -29,7 +29,7 @@ class GetSheet {
     sheetName = sheetNameNew;
     fileId = fileIdNew;
     if (sheetName.isEmpty) {
-      sheetName = AppDataPrefs.getString('starredSheetName')!;
+      sheetName = '*';
     }
     fileId = fileIdNew;
     if (fileId.isEmpty) {

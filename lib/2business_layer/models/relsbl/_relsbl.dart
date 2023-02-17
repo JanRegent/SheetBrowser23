@@ -161,15 +161,14 @@ class SelsBL extends SheetDb {
     List<String> colsHeader = [];
     try {
       String fileId = blUti.url2fileid(AppDataPrefs.getRootSheetId());
-      String sheetName =
-          blUti.url2fileid(AppDataPrefs.getString('starredSheetName')!);
+      String sheetName = '*';
 
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)
           .getSheet();
 
       if (rowsArr.isEmpty) {
         logDb.createWarning('createStarDb()',
-            'Starred sheet is empty. [setting] StarredSheetName?  or AppDataPrefs.getRootSheetId()?');
+            'Starred sheet is empty. [setting] "*" sheet exists?  or AppDataPrefs.getRootSheetId()?');
         return;
       }
       colsHeader = blUti.toListString(rowsArr[0]);
@@ -183,7 +182,7 @@ class SelsBL extends SheetDb {
 
       if (rowsArr.isEmpty) {
         logDb.createWarning('createStarDb()',
-            'Starred sheet is empty. [setting] StarredSheetName?  or AppDataPrefs.getRootSheetId()?');
+            'Starred sheet is empty. [setting] sheet "*" is empty?  or AppDataPrefs.getRootSheetId()?');
 
         return;
       }
