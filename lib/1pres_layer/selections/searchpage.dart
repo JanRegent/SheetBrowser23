@@ -1,9 +1,11 @@
 // ignore_for_file: file_names
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
+import '../alib/alib.dart';
 import '../alib/uti.dart';
 import '../views/detail/cardswiper.dart';
 
@@ -81,7 +83,8 @@ class _SearchPageState extends State<SearchPage> {
   IconButton searchButton() {
     return IconButton(
         onPressed: () async {
-          List<int> ids = await sheetDb.readNews(textEditingController.text);
+          List<int> localIds =
+              await sheetDb.readSearch(textEditingController.text);
 
           Map configRow = {};
           configRow['title'] = textEditingController.text;
@@ -89,10 +92,27 @@ class _SearchPageState extends State<SearchPage> {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => CardSwiper(ids, configRow),
+                builder: (ctx) => CardSwiper(localIds, configRow),
               ));
         },
         icon: const Icon(Icons.search));
+  }
+
+  IconButton searchRels2clipboard() {
+    return IconButton(
+        onPressed: () async {
+          if (textEditingController.text.trim().isEmpty) {
+            al.message(context, 'Text is empty');
+            return;
+          }
+          String csv =
+              await sheetDb.readSearch2selSheet(textEditingController.text);
+          FlutterClipboard.copy(csv).then((value) => {});
+          // ignore: use_build_context_synchronously
+          al.message(context,
+              'Data in clipboard. Use "Paste special" at empty sheet: ${textEditingController.text}');
+        },
+        icon: const Icon(Icons.search_sharp));
   }
 
   bool isLoading = false;
@@ -112,6 +132,7 @@ class _SearchPageState extends State<SearchPage> {
                       : searchButton()
                 ],
               ),
+        actions: [searchRels2clipboard()],
       ),
       body: isLoading
           ? const Text('Awaiting search results...')

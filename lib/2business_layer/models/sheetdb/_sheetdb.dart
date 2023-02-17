@@ -1,7 +1,5 @@
 import 'package:isar/isar.dart';
 
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 import 'package:sheetbrowser/2business_layer/models/relsbl/rels.dart';
 import 'package:sheetbrowser/2business_layer/models/tag.dart';
@@ -233,17 +231,29 @@ class SheetDb {
   }
   //-------------------------------------------------------------news
 
-  Future<List<int>> readNews(String yyyyMMdd) async {
-    EasyLoading.show(status: '$yyyyMMdd loading...');
+  Future<List<int>> readSearch(String yyyyMMddORword) async {
     List<int> ids = await isar.sheets
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .rowArrAnyContains(yyyyMMdd)
+        .rowArrAnyContains(yyyyMMddORword)
         .idProperty()
         .findAll();
-    EasyLoading.dismiss();
     return ids;
+  }
+
+  Future<String> readSearch2selSheet(String yyyyMMddORword) async {
+    List<Sheet> sheets = await isar.sheets
+        .filter()
+        .aKeyEqualTo('row')
+        .and()
+        .rowArrAnyContains(yyyyMMddORword)
+        .findAll();
+    String csv = 'sheetName,sheetID\n';
+    for (var i = 0; i < sheets.length; i++) {
+      csv += '${sheets[i].aSheetName}, ${sheets[i].sheetId}\n';
+    }
+    return csv;
   }
 
   Future<List<int>> listIDs2locIDs(String sheetName, List<int> listIDs) async {
