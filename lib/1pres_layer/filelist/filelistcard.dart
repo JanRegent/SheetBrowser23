@@ -60,18 +60,34 @@ Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
       context, MaterialPageRoute(builder: (ctx) => CardSwiper(ids, configRow)));
 }
 
-Card filelistCard(BuildContext context, Map fileListRow, int index) {
+Map getConfigRow(Map configRow) {
+  if (configRow['fileTitle'] == null) {
+    configRow['fileTitle'] = configRow['sheetName'];
+  }
+  if (configRow['fileUrl'] == null) {
+    configRow['fileUrl'] = AppDataPrefs.getRootSheetId();
+  }
+  return configRow;
+}
+
+Map getConfigRowSheetName(String sheetName) {
+  return getConfigRow({'sheetName': sheetName});
+}
+
+Card filelistCard(BuildContext context, Map configRow) {
+  configRow = getConfigRow(configRow);
+
   List<Widget> getLements() {
     List<Widget> rowWigs = [];
     rowWigs.add(const Text('    '));
-    rowWigs.add(datagridButton(context, fileListRow));
+    rowWigs.add(datagridButton(context, configRow));
     rowWigs.add(const Text('  '));
 
-    rowWigs.add(lastBookmarkButton(context, fileListRow));
+    rowWigs.add(lastBookmarkButton(context, configRow));
     //rowWigs.add(bookmarkAutoCheckbox(context, fileListSheetRow));
     rowWigs.add(const Text('  '));
 
-    rowWigs.add(sheetStarredButton(context, fileListRow));
+    rowWigs.add(sheetStarredButton(context, configRow));
     rowWigs.add(const Text('  '));
     return rowWigs;
   }
@@ -83,7 +99,7 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
       baseColor: Colors.cyan[50],
       expandedColor: Colors.red[50],
       key: cardA,
-      initiallyExpanded: index == 0 ? true : false,
+      initiallyExpanded: false,
       title: Text(fileListRow['fileTitle'],
           style: const TextStyle(fontSize: 20, color: Colors.black)),
       subtitle:
@@ -111,7 +127,7 @@ Card filelistCard(BuildContext context, Map fileListRow, int index) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [expansionFilelistCard(context, fileListRow)],
+      children: [expansionFilelistCard(context, configRow)],
     ),
   );
 }

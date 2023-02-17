@@ -37,7 +37,7 @@ class _InboxHomePageState extends State<InboxHomePage>
             itemCount: widget.filelist.length,
             itemBuilder: (context, index) {
               return Center(
-                  child: filelistCard(context, widget.filelist[index], index));
+                  child: filelistCard(context, widget.filelist[index]));
             }));
   }
 

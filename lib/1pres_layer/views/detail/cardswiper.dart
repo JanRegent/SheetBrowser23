@@ -25,13 +25,13 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
-    startRowSet();
+    startRowBookmarksSet();
   }
 
   //---------------------------------------------------------- int startRow
   int startRow = 0;
 
-  void startRowSet() {
+  void startRowBookmarksSet() {
     currentRowTitleValue(startRow);
     try {
       if (widget.configRow['sheetName'] == null) {

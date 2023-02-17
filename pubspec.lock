@@ -632,6 +632,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.9"
+  pluto_layout:
+    dependency: "direct main"
+    description:
+      name: pluto_layout
+      sha256: "972713446652d62e1eadc0a3c4d59877c2494d5fa23c0bf72b7530bdbd4394f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   pluto_menu_bar:
     dependency: "direct main"
     description:
