@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:isar/isar.dart';
 
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
@@ -276,6 +277,31 @@ class SheetDb {
     }
 
     return listInt;
+  }
+
+  Future<List<int>> readRowsTag(String tag) async {
+    if (tag.isEmpty) return [];
+    List<int> listInt = [];
+
+    listInt = await isar.sheets
+        .filter()
+        .aKeyEqualTo('row')
+        .and()
+        .tagsAnyContains(tag)
+        .idProperty()
+        .findAll();
+
+    return listInt;
+  }
+
+  Future<List<String>> readTags() async {
+    List<List<String>> tagsArr =
+        await isar.sheets.filter().aKeyEqualTo('row').tagsProperty().findAll();
+    Set<String> set = {};
+    for (var i = 0; i < tagsArr.length; i++) {
+      set.addAll(tagsArr[i]);
+    }
+    return set.sorted().toList();
   }
   //-------------------------------------------------------------news
 

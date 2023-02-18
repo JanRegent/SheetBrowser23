@@ -1,1 +1,1 @@
-const buildVersion = '__isStar__2---18-02-2023 17:34:33,32';     
+const buildVersion = 'tags---18-02-2023 17:56:23,51';     

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sheetbrowser/1pres_layer/selections/tagselectpage.dart';
 
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../2business_layer/appdata/appsettingspage.dart';
 
+import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../selections/selectionspage.dart';
@@ -195,15 +198,15 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
-              //EasyLoading.show(status: 'Loading tags');
-              // List<String> tags = await tagsDb.readTags();
-              // EasyLoading.dismiss();
-              // // ignore: use_build_context_synchronously
-              // await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (ctx) => TagSelectPage(tags),
-              //     ));
+              EasyLoading.show(status: 'Loading tags');
+              List<String> tags = await sheetDb.readTags();
+              EasyLoading.dismiss();
+              // ignore: use_build_context_synchronously
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => TagSelectPage(tags),
+                  ));
             }),
         SidebarXItem(
             icon: Icons.settings,
