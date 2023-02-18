@@ -104,6 +104,7 @@ class SheetDb {
         if (tagIx > -1) {
           List<String> tags = sheet.rowArr[tagIx].split(',');
           for (String tag in tags) {
+            if (tag.isEmpty) continue;
             sheet.tags.add(tag);
           }
         }
@@ -247,6 +248,31 @@ class SheetDb {
           .findAll();
     } else {
       //listInt = await isar.rels.where().idProperty().findAll();
+    }
+
+    return listInt;
+  }
+
+  Future<List<int>> readRowsStar(String sheetName) async {
+    List<int> listInt = [];
+    if (sheetName.isNotEmpty) {
+      listInt = await isar.sheets
+          .filter()
+          .aSheetNameEqualTo(sheetName)
+          .and()
+          .aKeyEqualTo('row')
+          .and()
+          .tagsAnyContains('*')
+          .idProperty()
+          .findAll();
+    } else {
+      listInt = await isar.sheets
+          .filter()
+          .aKeyEqualTo('row')
+          .and()
+          .tagsAnyContains('*')
+          .idProperty()
+          .findAll();
     }
 
     return listInt;

@@ -49,8 +49,7 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   al.message(context, 'Loading starred');
-  List<int> ids = [];
-  // await sheetDb.selsBL.readStarredLocalIds(sheetNameOrEmpty);
+  List<int> ids = await sheetDb.readRowsStar(sheetNameOrEmpty);
 
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
