@@ -254,12 +254,12 @@ class SheetDb {
     return listInt;
   }
 
-  Future<List<int>> readRowsStar(String sheetName) async {
+  Future<List<int>> readRowsStar(String sheetNameORempty) async {
     List<int> listInt = [];
-    if (sheetName.isNotEmpty) {
+    if (sheetNameORempty.isNotEmpty) {
       listInt = await isar.sheets
           .filter()
-          .aSheetNameEqualTo(sheetName)
+          .aSheetNameEqualTo(sheetNameORempty)
           .and()
           .aKeyEqualTo('row')
           .and()
