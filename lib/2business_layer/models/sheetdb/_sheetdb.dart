@@ -1,12 +1,10 @@
 import 'package:isar/isar.dart';
 
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
-import 'package:sheetbrowser/2business_layer/models/relsbl/rels.dart';
 
 import '../../../1pres_layer/alib/uti.dart';
 import '../../appdata/approotdata.dart';
 import '../log.dart';
-import '../relsbl/_relsbl.dart';
 import 'colsdb.dart';
 import 'rowmap.dart';
 
@@ -16,7 +14,7 @@ late LogDb logDb;
 
 Future dbInit() async {
   final isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema, RelSchema],
+    schemas: [SheetSchema, LogSchema],
     name: 'pbFielistDB',
     relaxedDurability: true,
     inspector: false,
@@ -31,13 +29,12 @@ class SheetDb {
   SheetDb(this.isar);
 
   late ColsDb colsDb;
-  late SelsBL selsBL;
+
   late RowMap rowMap;
 
   Future init() async {
     colsDb = ColsDb(isar);
     rowMap = RowMap(isar);
-    selsBL = SelsBL(isar);
   }
 
   Future create(Sheet newSheet) async {
@@ -249,7 +246,7 @@ class SheetDb {
           .idProperty()
           .findAll();
     } else {
-      listInt = await isar.rels.where().idProperty().findAll();
+      //listInt = await isar.rels.where().idProperty().findAll();
     }
 
     return listInt;

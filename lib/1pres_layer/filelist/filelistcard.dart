@@ -49,7 +49,8 @@ Future<String> getFileIdFromFilelist(String sheetName) async {
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   al.message(context, 'Loading starred');
-  List<int> ids = await sheetDb.selsBL.readStarredLocalIds(sheetNameOrEmpty);
+  List<int> ids = [];
+  // await sheetDb.selsBL.readStarredLocalIds(sheetNameOrEmpty);
 
   Map configRow = {};
   configRow['fileUrl'] = currentSheet.fileId;
@@ -183,8 +184,7 @@ Future detailViewAll(BuildContext context, Map fileListRow) async {
   fileListRow['title'] = fileListRow['sheetName'];
   // ignore: use_build_context_synchronously
   al.message(context, 'Loading all rows of  ${fileListRow['sheetName']}');
-  List<int> ids =
-      await sheetDb.selsBL.readRowsLocalIds(fileListRow['sheetName']);
+  List<int> ids = await sheetDb.readRowsLocalIds(fileListRow['sheetName']);
 
   // ignore: use_build_context_synchronously
   await Navigator.push(

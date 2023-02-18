@@ -1,1 +1,1 @@
-const buildVersion = 'getStarMap---17-02-2023 18:34:54,98';     
+const buildVersion = '__isStar__---18-02-2023 17:20:40,02';     

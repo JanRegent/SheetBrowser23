@@ -77,6 +77,7 @@ class RowMap extends SheetDb {
       }
     }
     rowmap['sheetName'] = sheet.aSheetName;
+    rowmap['__isStar__'] = sheet.tags.contains('*') ? true : false;
     return rowmap;
   }
 
