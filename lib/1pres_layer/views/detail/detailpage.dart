@@ -62,7 +62,10 @@ class _DetailPageState extends State<DetailPage> {
         starredWidget = starrAdd();
       }
     } catch (_) {}
+
     void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
+      if (key == '__isStar__') return;
+
       String value = '';
       try {
         // ignore: unnecessary_string_interpolations

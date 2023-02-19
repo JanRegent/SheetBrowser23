@@ -104,7 +104,7 @@ class _CardSwiperState extends State<CardSwiper> {
           title: Row(
             children: [
               Text(widget.configRow['title']),
-              Obx(() => Text(currentRowTitle.value)),
+              Obx(() => Text('\n${currentRowTitle.value}')),
             ],
           ),
           actions: getActions(widget.localIds.length, controller, context),

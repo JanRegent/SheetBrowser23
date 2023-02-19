@@ -1,1 +1,1 @@
-const buildVersion = 'tags-2---18-02-2023 17:57:45,83';     
+const buildVersion = 'CardSwiper-appBar---19-02-2023 11:29:32,92';     
