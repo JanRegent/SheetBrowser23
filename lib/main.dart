@@ -20,7 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
-  //await sheetDb.starredBL.starDbFill();
+  
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
@@ -34,14 +34,15 @@ void main() async {
 }
 
 Future<bool> mainInit() async {
+  EasyLoading.init();
+
   try {
     await dbInit();
   } catch (e, s) {
     logDb.createErr('main().dbInit()', e.toString(), s.toString());
 
-    runApp(
-      const ErrorPage2('main().dbInit()'),
-    );
+    EasyLoading.showError(e.toString());
+
     return false;
   }
   try {

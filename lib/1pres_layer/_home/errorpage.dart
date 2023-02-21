@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../2business_layer/appdata/approotdata.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ErrorPage extends StatelessWidget {
   final String errorPageMess;
@@ -30,26 +29,35 @@ class _ErrorPage2State extends State<ErrorPage2> {
   @override
   void initState() {
     super.initState();
-    errMess = AppDataPrefs.getString('errorLastDL')!;
+   
   }
 
-  String helpMess(String errMess) {
-    if (errMess == 'Error:[DL] Could not connect to server') {
-      return 'Has Sheet public access rights: \n "Anyone with the link"?'
-          '\n\n'
-          'Error:[DL] Could not connect to server';
-    }
-    return errMess;
-  }
+  // String helpMess(String errMess) {
+  //   if (errMess == 'Error:[DL] Could not connect to server') {
+  //     return 'Has Sheet public access rights: \n "Anyone with the link"?'
+  //         '\n\n'
+  //         'Error:[DL] Could not connect to server';
+  //   }
+  //   return errMess;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+        return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
         appBar: AppBar(
           title: const Text('Error Page'),
           backgroundColor: Colors.lime,
         ),
         body: Center(
-            child: Text(helpMess('$errMess\n\n${widget.errorPageMess2}'))));
+            child: Text(widget.errorPageMess2))),
+      builder: EasyLoading.init(),
+    );
+
+  
+            
+            //Text(helpMess('$errMess\n\n${widget.errorPageMess2}'))));
   }
 }

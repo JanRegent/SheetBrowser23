@@ -1,3 +1,5 @@
+
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,11 +17,13 @@ class AppDataPrefs {
     try {
       await GlobalConfiguration().loadFromAsset("apikey");
     } catch (e, s) {
+
       logDb.createErr(
         'GlobalConfiguration().loadFromAsset("apikey")',
         e.toString(),
         s.toString(),
       );
+      EasyLoading.showError(e.toString());
     }
     try {
       await GlobalConfiguration().loadFromAsset("rootSheetId");

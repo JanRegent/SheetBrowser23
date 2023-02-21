@@ -23,6 +23,7 @@ Future dbInit() async {
   logDb = LogDb(isar);
   sheetDb = SheetDb(isar);
   await sheetDb.init();
+
 }
 
 class SheetDb {
