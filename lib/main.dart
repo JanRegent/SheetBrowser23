@@ -63,7 +63,7 @@ Future<bool> mainInit() async {
         'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());
 
     runApp(
-      const ErrorPage2('main().AppDataPrefs.appRootConfigLoad()'),
+       ErrorPage2(appDataPrefsApdataLoadingError),
     );
     return false;
   }

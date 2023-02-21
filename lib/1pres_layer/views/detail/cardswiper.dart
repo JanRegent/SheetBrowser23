@@ -101,12 +101,12 @@ class _CardSwiperState extends State<CardSwiper> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Row(
-            children: [
-              Text(widget.configRow['title']),
-              Obx(() => Text('\n${currentRowTitle.value}')),
-            ],
+          title: ListTile(
+title: Text(widget.configRow['title']),
+subtitle: Obx(() => Text('\n${currentRowTitle.value}', style: const TextStyle(fontSize: 18))),
+
           ),
+  
           actions: getActions(widget.localIds.length, controller, context),
         ),
         body: body());
