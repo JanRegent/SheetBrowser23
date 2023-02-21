@@ -3,10 +3,12 @@ import 'package:global_configuration/global_configuration.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 import '../../data_layer/getsheetdl.dart';
 import '../models/sheetdb/_sheetdb.dart';
 
 String appDataPrefsApdataLoadingError = '';
+
 class AppDataPrefs {
   static late final SharedPreferences _instance;
 
@@ -16,15 +18,10 @@ class AppDataPrefs {
   static Future apikeyRootSheetIdLoad() async {
     try {
       await GlobalConfiguration().loadFromAsset("apikey");
-    } catch (e, s) {
+    } catch (e) {
       appDataPrefsApdataLoadingError = e.toString();
 
-      logDb.createErr(
-        'GlobalConfiguration().loadFromAsset("apikey")',
-        e.toString(),
-        s.toString(),
-      );
-     
+   
     }
     try {
       await GlobalConfiguration().loadFromAsset("rootSheetId");
@@ -35,7 +32,8 @@ class AppDataPrefs {
         e.toString(),
         s.toString(),
       );
-     appDataPrefsApdataLoadingError = e.toString();
+      appDataPrefsApdataLoadingError = e.toString();
+    
     }
 
     await rootSheet2localStorage();

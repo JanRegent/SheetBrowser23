@@ -20,7 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!await mainInit()) return;
-  
+
   try {
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
@@ -28,7 +28,7 @@ void main() async {
   } catch (e, s) {
     logDb.createErr('main().RouterSwitch()', e.toString(), s.toString());
     runApp(
-      const ErrorPage2('main().RouterSwitch()'),
+      const ErrorPage2('main().RouterSwitch()', ''),
     );
   }
 }
@@ -38,20 +38,21 @@ Future<bool> mainInit() async {
 
   try {
     await dbInit();
-  } catch (e, s) {
-    logDb.createErr('main().dbInit()', e.toString(), s.toString());
-
-    EasyLoading.showError(e.toString());
+  } catch (e) {
+    runApp(
+      ErrorPage2('Error.dbInit:$e', ''),
+    );
 
     return false;
   }
+
   try {
     await AppDataPrefs.init();
   } catch (e, s) {
     logDb.createErr('main().AppDataPrefs.init()', e.toString(), s.toString());
 
     runApp(
-      const ErrorPage2('main().AppDataPrefs.init()'),
+      const ErrorPage2('main().AppDataPrefs.init()', ''),
     );
     return false;
   }
@@ -62,9 +63,18 @@ Future<bool> mainInit() async {
     logDb.createErr(
         'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());
 
-    runApp(
-       ErrorPage2(appDataPrefsApdataLoadingError),
-    );
+    if (appDataPrefsApdataLoadingError.contains('apikey')) {
+      runApp(
+        ErrorPage2(
+            appDataPrefsApdataLoadingError, const {"apikey": "My  apikey"}),
+      );
+    } else {
+      runApp(
+        ErrorPage2(appDataPrefsApdataLoadingError,
+            const {"rootSheetId": "My root sheet Id"}),
+      );
+    }
+
     return false;
   }
 
