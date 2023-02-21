@@ -1,11 +1,8 @@
 
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../1pres_layer/_home/errorpage.dart';
 import '../../data_layer/getsheetdl.dart';
 import '../models/sheetdb/_sheetdb.dart';
 
