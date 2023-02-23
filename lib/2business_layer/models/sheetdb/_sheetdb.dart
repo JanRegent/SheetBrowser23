@@ -23,7 +23,6 @@ Future dbInit() async {
   logDb = LogDb(isar);
   sheetDb = SheetDb(isar);
   await sheetDb.init();
-
 }
 
 class SheetDb {
@@ -63,60 +62,46 @@ class SheetDb {
       await sheetDb.colsDb.createColsHeader(sheetName, fileId, colsHeader);
     } catch (e, s) {
       logDb.createErr(
-          'sheetDB.createRows.createColsHeader', e.toString(), s.toString());
-      return;
+          'sheetDB.createRows.createColsHeader', e.toString(), s.toString(),
+          descr:
+              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
 
     List<Sheet> rows = [];
+
     int rowIx = 0;
-    try {
-      int sheetIDix = colsHeader.indexOf('ID');
-      for (rowIx = 0; rowIx < rowsArr.length; rowIx++) {
-        int sheetID = -1;
-        try {
-          sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
-        } catch (e) {
-          //rint('$sheetName $e');
-          continue;
-        }
-        Sheet sheet = Sheet()
+
+    int sheetIDix = colsHeader.indexOf('ID');
+    for (rowIx = 0; rowIx < rowsArr.length; rowIx++) {
+      int sheetID = -1;
+      try {
+        sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
+      } catch (e) {
+        logDb.createWarning('sheetDB.createRows.sheetID',
+            '$e  \n\n sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+
+        continue;
+      }
+
+      Sheet sheet = Sheet();
+
+      try {
+        sheet
           ..zfileId = fileId
           ..aSheetName = sheetName
           ..aKey = 'row'
           ..sheetId = sheetID
           ..rowArr = blUti.toListString(rowsArr[rowIx]);
-
-        //------------------------------------------selections
-        List<String> rowContains = selectRowContains();
-        for (String word in rowContains) {
-          if (sheet.rowArr
-              .join(',')
-              .toLowerCase()
-              .contains(word.toLowerCase())) {
-            sheet.selections.add(word);
-          }
-        }
-        //------------------------------------------star
-        List<int> sheetIDs = starsmap[sheet.aSheetName]!.toList();
-        if (sheetIDs.contains(sheet.sheetId)) {
-          sheet.tags.add('*');
-        }
-        //------------------------------------------tags
-        int tagIx = colsHeader.indexOf('tags');
-        if (tagIx > -1) {
-          List<String> tags = sheet.rowArr[tagIx].split(',');
-          for (String tag in tags) {
-            if (tag.isEmpty) continue;
-            sheet.tags.add(tag);
-          }
-        }
-
-        rows.add(sheet);
+      } catch (_) {
+        continue;
       }
-    } catch (e, s) {
-      logDb.createErr(
-          'sheetDB.createRows.for rows.add', e.toString(), s.toString(),
-          descr: 'rowIx $rowIx of rowsArr.length ${rowsArr.length}');
+      try {
+        sheet = sheetTags(sheet, colsHeader, rowsArr[rowIx], starsmap);
+      } catch (_) {
+        continue;
+      }
+
+      rows.add(sheet);
     }
 
     if (rows.isEmpty) {
@@ -133,6 +118,43 @@ class SheetDb {
       logDb.createErr('sheetDB.createRows.putAll', e.toString(), s.toString());
       return;
     }
+  }
+
+  Sheet sheetTags(Sheet sheet, List<String> colsHeader, List<dynamic> rowDyn,
+      Map<String, List<int>> starsmap) {
+    try {
+      List<int> sheetIDs = starsmap[sheet.aSheetName]!.toList();
+      if (sheetIDs.contains(sheet.sheetId)) {
+        sheet.tags.add('*');
+      }
+    } catch (_) {
+      //todo:
+      //unexpected null value on sheetIDs = starsmap
+      return sheet;
+    }
+    //------------------------------------------tags
+    List<String> row = [];
+    try {
+      row = blUti.toListString(rowDyn);
+    } catch (_) {
+      return sheet;
+    }
+    int tagIx = colsHeader.indexOf('tags');
+    if (tagIx == -1) return sheet;
+
+    List<String> tags = [];
+    try {
+      tags = row[tagIx].split(',');
+    } catch (_) {
+      return sheet;
+    }
+    for (String tag in tags) {
+      // ignore: unnecessary_null_comparison
+      if (tag == null) continue;
+      if (tag.isEmpty) continue;
+      sheet.tags.add(tag);
+    }
+    return sheet;
   }
 
   Future cleanDb() async {
