@@ -5,11 +5,12 @@ import 'package:parsed_readmore/parsed_readmore.dart';
 import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
+import 'addtags.dart';
 import 'detailmenu.dart';
 
 Map rowmap = {};
 
-IconButton starrAdd(BuildContext context) {
+IconButton addStarIcon(BuildContext context) {
   return IconButton(
       onPressed: () async {
         String sheetName = rowmap['sheetName'];
@@ -23,19 +24,26 @@ IconButton starrAdd(BuildContext context) {
       icon: const Icon(Icons.star_border));
 }
 
+IconButton addTagsIcon(BuildContext context) {
+  return IconButton(
+      onPressed: () => addTagsDialog(context, rowmap),
+      icon: const Icon(Icons.tag));
+}
+
 Future<List<Widget>> getDataListviewItems(
     BuildContext context, int localIdOfSheetDb, Map configRow) async {
   List<Widget> listWidgets = [];
   rowmap = await sheetDb.rowMap.row2MapLocalId(localIdOfSheetDb);
 
   listWidgets.add(DetailMenu(rowmap, configRow));
+
   Widget starredWidget = const Icon(Icons.star_border);
   try {
     if (rowmap['__isStar__'] as bool) {
       starredWidget = const Icon(Icons.star);
     } else {
       // ignore: use_build_context_synchronously
-      starredWidget = starrAdd(context);
+      starredWidget = addStarIcon(context);
     }
   } catch (_) {}
 
@@ -86,7 +94,7 @@ Future<List<Widget>> getDataListviewItems(
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         title: Row(
-          children: [starredWidget],
+          children: [starredWidget, addTagsIcon(context)],
         ),
         trailing: rowItemRightPopup(context, value),
       );

@@ -10,12 +10,16 @@ function doGet(e) {
   var action = e.parameter.action.toString();
 
   try { 
-    // ?action=relAppend&sheetName=PapajiDailyPedia&sheetID=21&selName=*
-    if (action == 'relAppend') {
-      var result = relAppendDoGet(e);
+    // ?action=appendStar&sheetName=PapajiDailyPedia&sheetID=21
+    if (action == 'appendStar') {
+      var result = appendStarDo(e);
       return result;
     }
-
+    // ?action=appendTags&sheetName=PapajiDailyPedia&sheetID=8&tags=ss,ff
+    if (action == 'appendTags') {
+      var result = appendTagsDo(e);
+      return result;
+    }
     if (e.parameter.action=='selectWhere') return selectWhere(e);
 
   }catch(e) {

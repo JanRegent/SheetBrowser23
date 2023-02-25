@@ -1,1 +1,1 @@
-const buildVersion = 'detail--listviewbuild---25-02-2023 11:35:54,79';     
+const buildVersion = 'detail--addTagsDialog---25-02-2023 19:00:13,78';     

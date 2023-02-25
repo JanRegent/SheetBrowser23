@@ -152,7 +152,19 @@ Future appendStarCommunity(String sheetName, String sheetID) async {
   String? communityServiceUrl = AppDataPrefs.getString('communityServiceUrl');
 
   String url =
-      '$communityServiceUrl?action=relAppend&sheetName=$sheetName&sheetID=$sheetID&selName=*';
+      '$communityServiceUrl?action=appendStar&sheetName=$sheetName&sheetID=$sheetID';
+
+  await http.get(Uri.parse(url));
+
+  return 'OK';
+}
+
+Future appendTagsCommunity(
+    String sheetName, String sheetID, String tags) async {
+  String? communityServiceUrl = AppDataPrefs.getString('communityServiceUrl');
+
+  String url =
+      '$communityServiceUrl?action=appendTags&sheetName=$sheetName&sheetID=$sheetID&tags=$tags';
 
   await http.get(Uri.parse(url));
 

@@ -14,7 +14,14 @@ function appRootDataValuesLoad() {
 
 function getAgent(fileId, sheetName) {
   if (fileId == null || fileId == undefined || fileId == '') fileId = appRootFileID
-  Tamotsu.initialize(fileId);
+
+  var sheet;
+  if (fileId.substring(0,4) == 'http')
+    sheet = SpreadsheetApp.openByUrl(fileId);
+  else  
+    sheet = SpreadsheetApp.openById(fileId);
+    
+  Tamotsu.initialize(sheet);
   var agent = Tamotsu.Table.define({ sheetName: sheetName, idColumn: 'ID' }, {
     rowId: function() {
       return this['ID'];
