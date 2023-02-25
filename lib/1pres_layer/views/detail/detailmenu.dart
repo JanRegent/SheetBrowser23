@@ -5,15 +5,13 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
 import '../../alib/alib.dart';
 
-// ignore: must_be_immutable
 class DetailMenu extends StatefulWidget {
   final Map rowmap;
   final Map configMap;
-  Function setStateCallback;
-  DetailMenu(
+
+  const DetailMenu(
     this.rowmap,
-    this.configMap,
-    this.setStateCallback, {
+    this.configMap, {
     super.key,
   });
 

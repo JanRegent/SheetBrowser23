@@ -78,29 +78,6 @@ class GoogleSheetsDL {
   }
 } //class
 
-Future getTagQuote(String sourceSheetName, String id, String fileId) async {
-  String? url = AppDataPrefs.getString('communityServiceUrl');
-  url =
-      '$url?action=getTagQuote&sourceSheetName=$sourceSheetName&ID=$id&fileId=$fileId';
-
-  try {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode != 200) {
-      throw Exception('Error:[DL] Could not connect to server');
-    }
-    return jsonDecode(response.body);
-  } on SocketException {
-    throw Failure(message: "Error: No Internet Connection. [getTagQuote]");
-  } on HttpException {
-    throw Failure(message: "Error: Internal Issue Occured. [getTagQuote]");
-  } on FormatException {
-    throw Failure(message: "Error: Bad Response. [getTagQuote]");
-  } catch (e) {
-    return [];
-    // you can show any error widgets for your users here.
-  }
-}
-
 String appendServiceUrl =
     'https://script.google.com/macros/s/AKfycbzV7T-PJ0_dKed6rDU0M9kqBHhNwkNDbUp6vaJuRYNWJrKMFwVzAQCZqPoWrW8zwhta/exec';
 

@@ -178,11 +178,12 @@ ElevatedButton datagridButton(BuildContext context, Map fileListRow) {
 }
 
 Future detailViewAll(BuildContext context, Map fileListRow) async {
+  al.message(context, 'Loading all rows of  ${fileListRow['sheetName']}');
   String fileId = blUti.url2fileid(fileListRow['fileUrl']);
   await currentSheet.getSheet(fileListRow['sheetName'], fileId);
   fileListRow['title'] = fileListRow['sheetName'];
   // ignore: use_build_context_synchronously
-  al.message(context, 'Loading all rows of  ${fileListRow['sheetName']}');
+
   List<int> ids = await sheetDb.readRowsLocalIds(fileListRow['sheetName']);
 
   // ignore: use_build_context_synchronously

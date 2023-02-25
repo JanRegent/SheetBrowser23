@@ -2,12 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:parsed_readmore/parsed_readmore.dart';
-
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
-import '../../../data_layer/getsheetdl.dart';
-import '../../alib/alib.dart';
-import 'detailmenu.dart';
+import 'listviewbuild.dart';
 
 class DetailPage extends StatefulWidget {
   final int localIdOfSheetDb;
@@ -33,95 +28,6 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {});
   }
 
-  Map rowmap = {};
-
-  IconButton starrAdd() {
-    return IconButton(
-        onPressed: () async {
-          String sheetName = rowmap['sheetName'];
-          int? sheetID = int.tryParse(rowmap['ID']);
-          await appendStarCommunity(sheetName, sheetID.toString());
-          //sheetDb.selsBL.appendStar(sheetName, sheetID!);
-          setState(() {});
-          // ignore: use_build_context_synchronously
-          al.message(context, 'Added to starred');
-        },
-        icon: const Icon(Icons.star_border));
-  }
-
-  Future<List<Widget>> getDataListviewItems(BuildContext context) async {
-    List<Widget> listWidgets = [];
-    rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localIdOfSheetDb);
-
-    listWidgets.add(DetailMenu(rowmap, widget.configRow, setStateCallback));
-    Widget starredWidget = const Icon(Icons.star_border);
-    try {
-      if (rowmap['__isStar__'] as bool) {
-        starredWidget = const Icon(Icons.star);
-      } else {
-        starredWidget = starrAdd();
-      }
-    } catch (_) {}
-
-    void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
-      if (key == '__isStar__') return;
-
-      String value = '';
-      try {
-        // ignore: unnecessary_string_interpolations
-        value = rowmap['$key'];
-      } catch (_) {
-        value = '';
-      }
-
-      String text = '';
-      try {
-        text = rowmap[key].toString().trim();
-      } catch (_) {
-        text = '';
-      }
-
-      if (text.isEmpty) return;
-
-      list.add(ListTile(
-        leading: Text(
-          key,
-          style: const TextStyle(fontStyle: FontStyle.italic),
-        ),
-        title: isFirstKey
-            ? Row(
-                children: [starredWidget],
-              )
-            : null,
-        trailing: rowItemRightPopup(context, value),
-      ));
-      //todo tags-highlightingt
-      list.add(ParsedReadMore(
-        text,
-        urlTextStyle: const TextStyle(
-            color: Colors.green,
-            fontSize: 20,
-            decoration: TextDecoration.underline),
-        trimMode: TrimMode.line,
-        textAlign: TextAlign.left,
-        trimLines: 4,
-        delimiter: '  ...',
-        delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
-        style: const TextStyle(color: Colors.black, fontSize: 20),
-        trimCollapsedText: '↓',
-        trimExpandedText: '↑',
-        moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
-        lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
-      ));
-      //list.add(const Text('  '));
-    }
-
-    for (String key in rowmap.keys) {
-      key2listWidget(key, listWidgets, key == rowmap.keys.first);
-    }
-    return listWidgets;
-  }
-
   Widget listViewBody(List<Widget> listWidgets) {
     return Container(
         height: double.infinity,
@@ -131,7 +37,7 @@ class _DetailPageState extends State<DetailPage> {
             itemCount: listWidgets.length,
             controller: scrollController,
             separatorBuilder: (context, index) {
-              return index.floor().isEven
+              return index > 1
                   ? Divider(
                       color: Theme.of(context).primaryColor,
                     )
@@ -145,7 +51,8 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: getDataListviewItems(context), // async work
+      future: getDataListviewItems(
+          context, widget.localIdOfSheetDb, widget.configRow), // async work
       builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
