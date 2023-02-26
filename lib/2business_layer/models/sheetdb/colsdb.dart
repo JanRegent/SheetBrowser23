@@ -18,8 +18,6 @@ class ColsDb extends SheetDb {
         ..aKey = 'colsHeader'
         ..rowArr = blUti.toListString(colsHeader));
     } catch (e, s) {
-      print(colsHeader);
-      print(e.toString());
       logDb.createErr('sheetDB.create', e.toString(), s.toString());
       return '';
     }
@@ -48,7 +46,7 @@ class ColsDb extends SheetDb {
     final colRows =
         await isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
     colsHeadersMap = {};
-    for (var sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
+    for (int sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
       colsHeadersMap[colRows[sheetNameIx].aSheetName] =
           colRows[sheetNameIx].rowArr;
     }

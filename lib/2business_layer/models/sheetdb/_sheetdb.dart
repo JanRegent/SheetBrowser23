@@ -106,6 +106,12 @@ class SheetDb {
     });
   }
 
+  Future deleteRow(Sheet sheet) async {
+    await isar.writeTxn((isar) {
+      return isar.sheets.delete(sheet.id); // delete
+    });
+  }
+
   Future sheeetsClear() async {
     await isar.writeTxn((isar) async {
       await isar.sheets.clear(); // delete

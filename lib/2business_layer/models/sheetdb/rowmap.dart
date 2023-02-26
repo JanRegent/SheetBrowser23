@@ -65,15 +65,16 @@ class RowMap extends SheetDb {
     Sheet? sheet = await sheetDb.readOps.readbyLocalId(localId);
     List<String> cols = sheetDb.colsDb.colsHeadersMap[sheet!.aSheetName]!;
     Map rowmap = {};
+
     for (int i = 0; i < cols.length; i++) {
       try {
         rowmap[cols[i]] = sheet.rowArr[i];
-      } catch (_) {
-        rowmap[cols[i]] = '';
-      }
+      } catch (_) {}
     }
+    rowmap['tags'] = sheet.tags;
     rowmap['sheetName'] = sheet.aSheetName;
     rowmap['__isStar__'] = sheet.tags.contains('*') ? true : false;
+
     return rowmap;
   }
 

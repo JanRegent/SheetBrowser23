@@ -1,3 +1,4 @@
+import '../../../1pres_layer/alib/uti.dart';
 import '_sheetdb.dart';
 import 'sheet.dart';
 
@@ -17,8 +18,15 @@ class UpdateOps {
   Future updateTags(int localId, String newTags) async {
     try {
       Sheet? sheet = await sheetDb.readOps.readbyLocalId(localId);
-      sheet!.tags.addAll(newTags.split(','));
-      await update(sheet);
+      List<String> rowArr = blUti.toListString(
+          sheet!.rowArr); //todo://workarround--List<String> owewrited
+      sheet.tags = newTags.split(',');
+      sheet.selections = [];
+      sheet.rowArr = [];
+      sheet.rowArr = rowArr;
+      await isar.writeTxn((isar) async {
+        sheet.id = await isar.sheets.put(sheet); //update
+      });
     } catch (_) {}
   }
 }
