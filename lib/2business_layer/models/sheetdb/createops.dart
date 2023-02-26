@@ -1,14 +1,10 @@
 import 'dart:async';
 
-import 'package:isar/isar.dart';
-
 import '../../../1pres_layer/alib/uti.dart';
 import '_sheetdb.dart';
 import 'sheet.dart';
 
 class CreateOps {
-  late Isar isar;
-
   Future create(Sheet newSheet) async {
     try {
       await isar.writeTxn((isar) async {
@@ -22,21 +18,33 @@ class CreateOps {
   }
 
   Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
-      List<String> colsHeader, Map<String, List<int>> starsmap) async {
-    try {
-      await sheetDb.colsDb.createColsHeader(sheetName, fileId, colsHeader);
-    } catch (e, s) {
-      logDb.createErr(
-          'sheetDB.createRows.createColsHeader', e.toString(), s.toString(),
-          descr:
-              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+      Map<String, List<int>> starsmap) async {
+    Future<List<String>> colsHeaderGet() async {
+      List<String> colsHeader = [];
+      try {
+        colsHeader = blUti.toListString(rowsArr[0]);
+
+        if (colsHeader.isEmpty) return [];
+        if (!colsHeader.contains('ID')) return [];
+        rowsArr.removeAt(0);
+
+        await sheetDb.colsDb.createColsHeader(sheetName, fileId, colsHeader);
+      } catch (e, s) {
+        logDb.createErr(
+            'sheetDB.createRows.createColsHeader', e.toString(), s.toString(),
+            descr:
+                'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} ');
+      }
+      return colsHeader;
     }
 
-    List<Sheet> rows = [];
+    List<String> colsHeader = await colsHeaderGet();
+    int sheetIDix = colsHeader.indexOf('ID');
+    if (sheetIDix == -1) return;
 
+    List<Sheet> rows = [];
     int rowIx = 0;
 
-    int sheetIDix = colsHeader.indexOf('ID');
     for (rowIx = 0; rowIx < rowsArr.length; rowIx++) {
       int sheetID = -1;
       try {

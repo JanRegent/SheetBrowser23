@@ -7,8 +7,6 @@ import '_sheetdb.dart';
 RxString rowmapsIsLoading = ''.obs;
 
 class RowMap extends SheetDb {
-  RowMap(super.isar);
-
   Future<List<Map>> readRowMapsSheet(String sheetName) async {
     List<int> ids = await isar.sheets
         .filter()
@@ -23,7 +21,7 @@ class RowMap extends SheetDb {
 
   Future<List<Map>> readRowMapsByIDs(List<int> ids) async {
     List<Map> rowmaps = [];
-    await sheetDb.colsDb.colsHeadersMapBuild();
+
     for (var idIx = 0; idIx < ids.length; idIx++) {
       Sheet? sheet = await isar.sheets.get(ids[idIx]);
       List<String> colHeader =
@@ -44,7 +42,6 @@ class RowMap extends SheetDb {
   Future<List<Map>> readRowMapsBySheets(List<Sheet> sheets) async {
     List<Map> rowmaps = [];
 
-    await sheetDb.colsDb.colsHeadersMapBuild();
     for (var idIx = 0; idIx < sheets.length; idIx++) {
       Sheet? sheet = sheets[idIx];
       rowmapsIsLoading.value = sheet.aSheetName;
@@ -67,9 +64,8 @@ class RowMap extends SheetDb {
   Future<Map> row2MapLocalId(int localId) async {
     Sheet? sheet = await sheetDb.readOps.readbyLocalId(localId);
     List<String> cols = sheetDb.colsDb.colsHeadersMap[sheet!.aSheetName]!;
-
     Map rowmap = {};
-    for (var i = 0; i < cols.length; i++) {
+    for (int i = 0; i < cols.length; i++) {
       try {
         rowmap[cols[i]] = sheet.rowArr[i];
       } catch (_) {

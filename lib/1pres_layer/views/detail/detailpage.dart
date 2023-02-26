@@ -51,8 +51,8 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: getDataListviewItems(
-          context, widget.localIdOfSheetDb, widget.configRow), // async work
+      future: getDataListviewItems(context, widget.localIdOfSheetDb,
+          widget.configRow, widget.localIdOfSheetDb), // async work
       builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

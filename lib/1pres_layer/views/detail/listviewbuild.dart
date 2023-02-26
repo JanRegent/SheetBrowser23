@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parsed_readmore/parsed_readmore.dart';
 
 import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
+
 import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
 import 'addtags.dart';
@@ -24,17 +25,16 @@ IconButton addStarIcon(BuildContext context) {
       icon: const Icon(Icons.star_border));
 }
 
-IconButton addTagsIcon(BuildContext context) {
+IconButton addTagsIcon(BuildContext context, int id) {
   return IconButton(
-      onPressed: () => addTagsDialog(context, rowmap),
+      onPressed: () => addTagsDialog(context, rowmap, id),
       icon: const Icon(Icons.tag));
 }
 
-Future<List<Widget>> getDataListviewItems(
-    BuildContext context, int localIdOfSheetDb, Map configRow) async {
+Future<List<Widget>> getDataListviewItems(BuildContext context,
+    int localIdOfSheetDb, Map configRow, int localId) async {
   List<Widget> listWidgets = [];
   rowmap = await sheetDb.rowMap.row2MapLocalId(localIdOfSheetDb);
-
   listWidgets.add(DetailMenu(rowmap, configRow));
 
   Widget starredWidget = const Icon(Icons.star_border);
@@ -94,7 +94,7 @@ Future<List<Widget>> getDataListviewItems(
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         title: Row(
-          children: [starredWidget, addTagsIcon(context)],
+          children: [starredWidget, addTagsIcon(context, localId)],
         ),
         trailing: rowItemRightPopup(context, value),
       );

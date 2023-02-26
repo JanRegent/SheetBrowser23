@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:isar/isar.dart';
 
+import 'sheetdb/_sheetdb.dart';
+
 part 'log.g.dart'; // flutter pub run build_runner build
 
 /*
@@ -60,9 +62,6 @@ class Log {
 }
 
 class LogDb {
-  final Isar isar;
-  LogDb(this.isar);
-
   Future create(Log log) async {
     try {
       await isar.writeTxn((isar) async {

@@ -66,12 +66,6 @@ class GetSheet {
           .getSheet();
 
       if (rowsArr.isEmpty) return;
-      colsHeader = blUti.toListString(rowsArr[0]);
-      if (colsHeader.isEmpty) return;
-      if (!colsHeader.contains('ID')) return;
-
-      rowsArr.removeAt(0);
-      if (rowsArr.isEmpty) return;
     } catch (e, s) {
       logDb.createErr('GetSheet().sheetPrepare2localDb.GoogleSheetsDL',
           e.toString(), s.toString(),
@@ -79,8 +73,7 @@ class GetSheet {
               'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
     try {
-      await sheetDb.createOps
-          .createRows(sheetName, fileId, rowsArr, colsHeader, starsmap);
+      await sheetDb.createOps.createRows(sheetName, fileId, rowsArr, starsmap);
 
       //-----------------------------------------------try update diffs
       // List<int> newRows = await sheetsDiff(rowsArr);

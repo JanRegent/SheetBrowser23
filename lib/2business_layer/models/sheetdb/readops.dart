@@ -1,11 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:isar/isar.dart';
+
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
 class ReadOps {
-  late Isar isar;
-
   Future<List<List<String>?>> readRowsAll(String sheetName) async {
     final rows = await isar.sheets
         .filter()

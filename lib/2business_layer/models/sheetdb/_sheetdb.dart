@@ -8,40 +8,37 @@ import 'colsdb.dart';
 import 'createops.dart';
 import 'readops.dart';
 import 'rowmap.dart';
+import 'updateops.dart';
 
 late SheetDb sheetDb;
 
 late LogDb logDb;
+late final Isar isar;
 
 Future dbInit() async {
-  final isar = await Isar.open(
+  isar = await Isar.open(
     schemas: [SheetSchema, LogSchema],
-    name: 'pbFielistDB',
+    name: 'SheetBrowser',
     relaxedDurability: true,
     inspector: false,
   );
 
-  logDb = LogDb(isar);
-  sheetDb = SheetDb(isar);
+  logDb = LogDb();
+  sheetDb = SheetDb();
   await sheetDb.init();
 }
 
 class SheetDb {
-  final Isar isar;
   CreateOps createOps = CreateOps();
   ReadOps readOps = ReadOps();
+  UpdateOps updateOps = UpdateOps();
 
-  SheetDb(this.isar);
+  late ColsDb colsDb = ColsDb();
 
-  late ColsDb colsDb;
-
-  late RowMap rowMap;
+  late RowMap rowMap = RowMap();
 
   Future init() async {
-    createOps.isar = isar;
-    readOps.isar = isar;
-    colsDb = ColsDb(isar);
-    rowMap = RowMap(isar);
+    await sheetDb.colsDb.colsHeadersMapBuild();
   }
 
   //----------------------------------------------------------------
@@ -86,19 +83,6 @@ class SheetDb {
     }
 
     return localIDs;
-  }
-
-  //---------------------------------------------------update
-  Future update(Sheet sheet) async {
-    try {
-      await isar.writeTxn((isar) async {
-        sheet.id = await isar.sheets.put(sheet); // insert
-      });
-      return 'OK';
-    } catch (e, s) {
-      logDb.createErr('sheetDB.update', e.toString(), s.toString());
-      return '';
-    }
   }
 
   //----------------------------------------------------------delete

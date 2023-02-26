@@ -16,13 +16,15 @@ RxString isloadingAction = ''.obs;
 RxString isloadingPhaseMessage = ''.obs;
 
 Future backgroundCompleter(Function setStateCallback) async {
+  if (!isar.isOpen) {
+    await Future.delayed(const Duration(seconds: 3));
+  }
+
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
 
-  if (lastCompleted == blUti.todayStr()) {
-    await sheetDb.colsDb.colsHeadersMapBuild();
-    return;
-  }
+  if (lastCompleted == blUti.todayStr()) return;
+
   backgroundCompleterIsRunning = true;
   //----------------------------------------------------clear
   await sheetDb.sheeetsClear();
