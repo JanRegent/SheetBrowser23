@@ -79,8 +79,8 @@ class GetSheet {
               'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
     }
     try {
-      await sheetDb.createRows(
-          sheetName, fileId, rowsArr, colsHeader, starsmap);
+      await sheetDb.createOps
+          .createRows(sheetName, fileId, rowsArr, colsHeader, starsmap);
 
       //-----------------------------------------------try update diffs
       // List<int> newRows = await sheetsDiff(rowsArr);
@@ -131,7 +131,7 @@ class GetSheet {
     colsHeader = (await sheetDb.colsDb.readColsHeader(sheetName));
     plutoCols = await colsMap(colsHeader);
 
-    sheets = await sheetDb.readSheetsAll(sheetName);
+    sheets = await sheetDb.readOps.readSheetsAll(sheetName);
     rowsMaps = await sheetDb.rowMap.readRowMapsSheet(sheetName);
     gridrows = await gridRowsMap(sheets, colsHeader);
   }

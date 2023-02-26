@@ -84,7 +84,7 @@ class _SearchPageState extends State<SearchPage> {
     return IconButton(
         onPressed: () async {
           List<int> localIds =
-              await sheetDb.readSearch(textEditingController.text);
+              await sheetDb.readOps.readSearch(textEditingController.text);
 
           Map configRow = {};
           configRow['title'] = textEditingController.text;
@@ -105,8 +105,8 @@ class _SearchPageState extends State<SearchPage> {
             al.message(context, 'Text is empty');
             return;
           }
-          String csv =
-              await sheetDb.readSearch2selSheet(textEditingController.text);
+          String csv = await sheetDb.readOps
+              .readSearch2selSheet(textEditingController.text);
           FlutterClipboard.copy(csv).then((value) => {});
           // ignore: use_build_context_synchronously
           al.message(context,

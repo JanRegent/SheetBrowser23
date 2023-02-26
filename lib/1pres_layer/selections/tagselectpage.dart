@@ -66,7 +66,8 @@ class _TagSelectPageState extends State<TagSelectPage> {
   IconButton searchButton() {
     return IconButton(
         onPressed: () async {
-          List<int> ids = await sheetDb.readRowsTag(textEditingController.text);
+          List<int> ids =
+              await sheetDb.readOps.readRowsTag(textEditingController.text);
 
           Map configRow = {};
           configRow['title'] = 'Tag: ${textEditingController.text}';

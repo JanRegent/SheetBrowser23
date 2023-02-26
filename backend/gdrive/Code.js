@@ -15,7 +15,10 @@ function doGet(e) {
       var result = appendStarDo(e);
       return result;
     }
-    // ?action=appendTags&sheetName=PapajiDailyPedia&sheetID=8&tags=ss,ff
+    // ?action=appendTags&sheetName=NissargadattaDailyPedia&sheetID=211&tags=112
+    //Exception: The number of columns in the data does not match the number of columns in the range.
+    
+    // ?action=appendTags&sheetName=PapajiDailyPedia&sheetID=211&tags=112
     if (action == 'appendTags') {
       var result = appendTagsDo(e);
       return result;

@@ -1,1 +1,1 @@
-const buildVersion = 'detail--addTagsDialog---25-02-2023 19:00:13,78';     
+const buildVersion = 'BL-ReadOps---26-02-2023 11:08:33,77';     

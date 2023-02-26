@@ -199,7 +199,7 @@ class ExampleSidebarX extends StatelessWidget {
             label: 'Tags',
             onTap: () async {
               EasyLoading.show(status: 'Loading tags');
-              List<String> tags = await sheetDb.readTags();
+              List<String> tags = await sheetDb.readOps.readTags();
               EasyLoading.dismiss();
               // ignore: use_build_context_synchronously
               await Navigator.push(

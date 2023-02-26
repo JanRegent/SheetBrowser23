@@ -24,8 +24,10 @@ function appendTags2(sheetName, sheetID, tags) {
     if (row == undefined) 
       return ContentService.createTextOutput(JSON.stringify({action: "appendTags", result: "Err-row by ID not found"}));
 
+    logi('tags before:' + row['tags'])
     row['tags'] = row['tags'] +','+ tags;
     if (row['tags'].substring(0,1) == ',') row['tags'] = row['tags'].substring(1);
+    logi('tags after:' + row['tags'])
     row.save()
 
     

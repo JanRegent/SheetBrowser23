@@ -11,7 +11,7 @@ class ColsDb extends SheetDb {
       String sheetName, String fileId, List<String> colsHeader) async {
     await deleteColsHeader(sheetName, fileId);
     try {
-      await create(Sheet()
+      await createOps.create(Sheet()
         ..zfileId = fileId
         ..aSheetName = sheetName
         ..aKey = 'colsHeader'
