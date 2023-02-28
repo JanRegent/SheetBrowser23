@@ -57,7 +57,6 @@ dependencies:
   dropdown_search: ^5.0.5             #https://pub.dev/packages/dropdown_search
   dropdown_button2: ^1.9.2            #https://pub.dev/packages/dropdown_button2?utm_source=fluttertap
   multi_select_flutter: ^4.1.3        #https://pub.dev/packages/multi_select_flutter
-  search_choices: ^2.2.5              #https://pub.dev/packages/search_choices
   pluto_menu_bar: ^3.0.1              #https://pub.dev/packages/pluto_menu_bar
   #---------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore

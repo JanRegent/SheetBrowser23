@@ -75,10 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
       .toList();
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedAnimals2 = [];
-  List<Animal> _selectedAnimals3 = [];
   //List<Animal> _selectedAnimals4 = [];
   List<Animal> _selectedAnimals5 = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
