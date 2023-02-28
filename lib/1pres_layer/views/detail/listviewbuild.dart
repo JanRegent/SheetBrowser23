@@ -31,15 +31,15 @@ IconButton addTagsIcon(BuildContext context, int id) {
       icon: const Icon(Icons.tag));
 }
 
-Future<List<Widget>> getDataListviewItems(BuildContext context,
-    int localIdOfSheetDb, Map configRow, int localId) async {
+Future<List<Widget>> getDataListviewItems(
+    BuildContext context, Map configRow, int localId) async {
   List<Widget> listWidgets = [];
-  rowmap = await sheetDb.rowMap.row2MapLocalId(localIdOfSheetDb);
+  rowmap = await sheetDb.rowMap.row2MapLocalId(localId);
   listWidgets.add(DetailMenu(rowmap, configRow));
 
   Widget starredWidget = const Icon(Icons.star_border);
   try {
-    if (rowmap['__isStar__'] as bool) {
+    if (rowmap['tags'].contains('*')) {
       starredWidget = const Icon(Icons.star);
     } else {
       // ignore: use_build_context_synchronously
@@ -48,8 +48,6 @@ Future<List<Widget>> getDataListviewItems(BuildContext context,
   } catch (_) {}
 
   void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
-    if (key == '__isStar__') return;
-
     String value = '';
     try {
       // ignore: unnecessary_string_interpolations

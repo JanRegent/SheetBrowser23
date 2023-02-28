@@ -1,1 +1,1 @@
-const buildVersion = 'SlidingSwitchPage---28-02-2023 17:24:16,84';     
+const buildVersion = 'detailPage---28-02-2023 18:49:22,37';     
