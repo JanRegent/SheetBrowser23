@@ -1,1 +1,1 @@
-const buildVersion = 'detailPage---28-02-2023 18:49:22,37';     
+const buildVersion = 'detailPage-ID_row---28-02-2023 19:08:43,94';     

@@ -133,7 +133,15 @@ Future<List<Widget>> getDataListviewItems(
   }
 
   for (String key in rowmap.keys) {
+    if (key == 'sheetName') continue;
+    if (key == 'ID') continue;
+    if (key == 'dateinsert') continue;
+
     key2listWidget(key, listWidgets, key == rowmap.keys.first);
   }
+  listWidgets.add(ListTile(
+      leading: const Text('ID_row'),
+      title: Text(
+          "${rowmap['sheetName']},${rowmap['ID']},${rowmap['dateinsert']}")));
   return listWidgets;
 }
