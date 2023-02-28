@@ -1,1 +1,1 @@
-const buildVersion = 'isar-ListStringDynamic-workarround---26-02-2023 14:02:54,25';     
+const buildVersion = 'multi_select_flutter---28-02-2023 15:06:07,55';     

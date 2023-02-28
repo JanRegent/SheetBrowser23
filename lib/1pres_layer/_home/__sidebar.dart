@@ -7,6 +7,7 @@ import 'package:sidebarx/sidebarx.dart';
 import '../../2business_layer/appdata/appsettingspage.dart';
 
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
+import '../alib/multiselectdropdown.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../selections/selectionspage.dart';
@@ -216,6 +217,16 @@ class ExampleSidebarX extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (ctx) => const AppSettingsPage(),
+                  ));
+            }),
+        SidebarXItem(
+            icon: Icons.settings,
+            label: 'MultiselectApp',
+            onTap: () async {
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => const MultiselectApp(),
                   ));
             }),
       ],
