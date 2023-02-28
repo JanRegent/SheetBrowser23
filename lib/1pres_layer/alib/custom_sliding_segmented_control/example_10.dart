@@ -43,7 +43,7 @@ class _Example10State extends State<Example10> {
         ],
       ),
       onValueChanged: (int value) {
-        print(value);
+        debugPrint(value.toString());
       },
     );
   }

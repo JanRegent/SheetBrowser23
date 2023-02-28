@@ -39,7 +39,7 @@ class _Example2State extends State<Example2> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInToLinear,
       onValueChanged: (v) {
-        print(v);
+        debugPrint(v.toString());
       },
     );
   }

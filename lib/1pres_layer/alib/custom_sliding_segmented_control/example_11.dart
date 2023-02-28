@@ -29,7 +29,7 @@ class _Example11State extends State<Example11> {
       },
       onValueChanged: (value) {},
       onHoverSegment: (value, isHover) {
-        print('$value | $isHover');
+        debugPrint('$value | $isHover');
       },
       customSegmentSettings: CustomSegmentSettings(
         borderRadius: BorderRadius.circular(25),

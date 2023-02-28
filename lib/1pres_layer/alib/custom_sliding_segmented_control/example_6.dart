@@ -23,7 +23,7 @@ class _Example6State extends State<Example6> {
         ),
       },
       onValueChanged: (int value) {
-        print(value);
+        debugPrint(value.toString());
       },
     );
   }
