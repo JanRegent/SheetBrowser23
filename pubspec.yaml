@@ -43,11 +43,11 @@ dependencies:
 
   #====================================================PresL
   get: ^4.6.5                         #https://pub.dev/packages/get
-  #-----------------------------info
+  #-----------------------info
   loading_animation_widget: ^1.2.0+4  #https://pub.dev/packages/loading_animation_widget
   quickalert: ^1.0.1                  #https://pub.dev/packages/quickalert
   flutter_easyloading: ^3.0.5         #https://pub.dev/packages/flutter_easyloading
-  #-----------------------------layout
+  #---------------------layout
   card_swiper: ^2.0.4                 #https://pub.dev/packages/card_swiper
   sidebarx: ^0.14.0                   #https://pub.dev/packages/sidebarx
   pluto_layout: ^1.0.0                #https://pub.dev/packages/pluto_layout
@@ -58,7 +58,8 @@ dependencies:
   dropdown_button2: ^1.9.2            #https://pub.dev/packages/dropdown_button2?utm_source=fluttertap
   multi_select_flutter: ^4.1.3        #https://pub.dev/packages/multi_select_flutter
   pluto_menu_bar: ^3.0.1              #https://pub.dev/packages/pluto_menu_bar
-  #---------------------text
+  custom_sliding_segmented_control: ^1.7.4 #https://pub.dev/packages/custom_sliding_segmented_control
+  #----------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
   web_scraper: ^0.1.4                 #https://pub.dev/packages/web_scraper
   #==================================================================================BL
@@ -82,6 +83,7 @@ dependencies:
   clipboard: ^0.1.3                   #https://pub.dev/packages/clipboard
   csv: ^5.0.1                         #https://pub.dev/packages/csv
 
+  printing: ^5.10.1
   dartx: ^1.1.0                       #https://pub.dev/packages/dartx
   #https://flutterawesome.com/a-flutter-package-that-provides-a-set-of-material-symbols-icons/
   material_symbol_icons: ^0.0.1       #https://pub.dev/packages/material_symbol_icons
