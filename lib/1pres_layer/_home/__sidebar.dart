@@ -7,7 +7,8 @@ import 'package:sidebarx/sidebarx.dart';
 import '../../2business_layer/appdata/appsettingspage.dart';
 
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
-import '../../data_layer/getconnect.dart';
+
+import '../alib/stepperinrow.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/inboxhome.dart';
 import '../selections/selectionspage.dart';
@@ -221,12 +222,12 @@ class ExampleSidebarX extends StatelessWidget {
             }),
         SidebarXItem(
             icon: Icons.settings,
-            label: 'GetConnectView',
+            label: 'StepperInRowPage',
             onTap: () async {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => GetConnectView(),
+                    builder: (ctx) => const StepperInRowPage(),
                   ));
             }),
       ],

@@ -60,6 +60,7 @@ dependencies:
   pluto_menu_bar: ^3.0.1              #https://pub.dev/packages/pluto_menu_bar
   custom_sliding_segmented_control: ^1.7.4 #https://pub.dev/packages/custom_sliding_segmented_control
   stepper_list_view: ^0.0.1           #https://pub.dev/packages/stepper_list_view
+  easy_stepper: ^0.3.2                #https://pub.dev/packages/easy_stepper?utm_source=canopas-stack-weekly
   #----------------------text
   parsed_readmore: ^0.0.4             #https://pub.dev/packages/parsed_readmore
   web_scraper: ^0.1.4                 #https://pub.dev/packages/web_scraper

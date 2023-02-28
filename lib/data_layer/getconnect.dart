@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect.dart';
 
+//https://medium.com/@info.vikaasyadav/what-is-getconnect-getx-in-flutter-d2e51ed56807
+
 class GetConnectView extends StatelessWidget {
   final MyApiClient apiClient = MyApiClient();
 
@@ -18,7 +20,7 @@ class GetConnectView extends StatelessWidget {
             if (!response.status.hasError) {
               final data = response.body;
               // Handle the response data
-              print(data);
+              debugPrint(data);
             } else {
               throw Exception('Failed to load data');
             }
