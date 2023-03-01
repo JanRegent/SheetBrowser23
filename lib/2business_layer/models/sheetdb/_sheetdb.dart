@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
+import '../../appdata/appdata.dart';
 import '../../appdata/approotdata.dart';
 import '../log.dart';
 import 'colsdb.dart';
@@ -10,23 +11,21 @@ import 'readops.dart';
 import 'rowmap.dart';
 import 'updateops.dart';
 
-late SheetDb sheetDb;
-
-late LogDb logDb;
 late final Isar isar;
 
 Future dbInit() async {
   isar = await Isar.open(
-    schemas: [SheetSchema, LogSchema],
+    schemas: [SheetSchema, LogSchema, AppdataSchema],
     name: 'SheetBrowser',
     relaxedDurability: true,
     inspector: false,
   );
-
-  logDb = LogDb();
-  sheetDb = SheetDb();
   await sheetDb.init();
 }
+
+LogDb logDb = LogDb();
+Appdata appdata = Appdata();
+SheetDb sheetDb = SheetDb();
 
 class SheetDb {
   CreateOps createOps = CreateOps();

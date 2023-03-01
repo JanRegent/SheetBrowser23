@@ -1,11 +1,10 @@
-
 import 'package:global_configuration/global_configuration.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import '../../data_layer/getsheetdl.dart';
 import '../models/sheetdb/_sheetdb.dart';
+import './appdata.dart';
 
 String appDataPrefsApdataLoadingError = '';
 
@@ -20,8 +19,6 @@ class AppDataPrefs {
       await GlobalConfiguration().loadFromAsset("apikey");
     } catch (e) {
       appDataPrefsApdataLoadingError = e.toString();
-
-   
     }
     try {
       await GlobalConfiguration().loadFromAsset("rootSheetId");
@@ -33,7 +30,6 @@ class AppDataPrefs {
         s.toString(),
       );
       appDataPrefsApdataLoadingError = e.toString();
-    
     }
 
     await rootSheet2localStorage();
@@ -63,9 +59,27 @@ class AppDataPrefs {
     for (var rowIx = 1; rowIx < arr.length; rowIx++) {
       if (arr[rowIx].length == 0) continue;
       await AppDataPrefs.setString(arr[rowIx][keyIx], arr[rowIx][valIx]);
+      await appDataCreate(arr[rowIx][keyIx], arr[rowIx][valIx], '');
     }
   }
 
+  static Future appDataCreate(
+      String key, String value, String sheetNameOrEmptyGlobal) async {
+    Appdata appdataRow = Appdata()
+      ..key = key
+      ..value = value
+      ..sheetName = sheetNameOrEmptyGlobal;
+
+    try {
+      await isar.writeTxn((isar) async {
+        await isar.appdatas.put(appdataRow); // insert
+      });
+      return 'OK';
+    } catch (e, s) {
+      logDb.createErr('sheetDB.create', e.toString(), s.toString());
+      return '';
+    }
+  }
 // ----------------------------------------------------root vars
 
   static String? getApikey() => GlobalConfiguration().getValue("apikey");
