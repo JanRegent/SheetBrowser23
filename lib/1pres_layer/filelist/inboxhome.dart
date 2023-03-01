@@ -29,11 +29,7 @@ class _InboxHomePageState extends State<InboxHomePage>
         height: double.infinity,
         width: double.infinity,
         color: Colors.blueGrey[50],
-        child: ListView.separated(
-            separatorBuilder: (context, index) => const Divider(
-                  color: Colors.red,
-                  height: 4.0,
-                ),
+        child: ListView.builder(
             itemCount: widget.filelist.length,
             itemBuilder: (context, index) {
               return Center(

@@ -29,7 +29,7 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
   }
 
-  Future<List<Widget>> getDataListviewItems(BuildContext context) async {
+  Future<List<Widget>> getDataListWidgets(BuildContext context) async {
     List<Widget> listWidgets = [];
     Map rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localId);
     listWidgets.add(DetailMenu(rowmap, widget.configRow));
@@ -107,7 +107,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: getDataListviewItems(context), // async work
+      future: getDataListWidgets(context), // async work
       builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
