@@ -2,50 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
 
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
-
-import '../../../data_layer/getsheetdl.dart';
-import '../../alib/alib.dart';
-import 'addtags.dart';
 import 'detailmenu.dart';
 
-Map rowmap = {};
-
-IconButton addStarIcon(BuildContext context) {
-  return IconButton(
-      onPressed: () async {
-        String sheetName = rowmap['sheetName'];
-        int? sheetID = int.tryParse(rowmap['ID']);
-        await appendStarCommunity(sheetName, sheetID.toString());
-        //sheetDb.selsBL.appendStar(sheetName, sheetID!);
-
-        // ignore: use_build_context_synchronously
-        al.message(context, 'Added to starred');
-      },
-      icon: const Icon(Icons.star_border));
-}
-
-IconButton addTagsIcon(BuildContext context, int id) {
-  return IconButton(
-      onPressed: () => addTagsDialog(context, rowmap, id),
-      icon: const Icon(Icons.tag));
-}
-
-Future<List<Widget>> getDataListviewItems(
-    BuildContext context, Map configRow, int localId) async {
-  List<Widget> listWidgets = [];
-  rowmap = await sheetDb.rowMap.row2MapLocalId(localId);
-  listWidgets.add(DetailMenu(rowmap, configRow));
-
-  Widget starredWidget = const Icon(Icons.star_border);
-  try {
-    if (rowmap['tags'].contains('*')) {
-      starredWidget = const Icon(Icons.star);
-    } else {
-      // ignore: use_build_context_synchronously
-      starredWidget = addStarIcon(context);
-    }
-  } catch (_) {}
+Future<List<Widget>> rowmapWidgetsGet(
+    BuildContext context, Map rowmap, Map configRow, int localId) async {
+  List<Widget> rowmapWidgets = [];
 
   void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
     String value = '';
@@ -91,9 +52,6 @@ Future<List<Widget>> getDataListviewItems(
           key,
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
-        title: Row(
-          children: [starredWidget, addTagsIcon(context, localId)],
-        ),
         trailing: rowItemRightPopup(context, value),
       );
     }
@@ -137,11 +95,11 @@ Future<List<Widget>> getDataListviewItems(
     if (key == 'ID') continue;
     if (key == 'dateinsert') continue;
 
-    key2listWidget(key, listWidgets, key == rowmap.keys.first);
+    key2listWidget(key, rowmapWidgets, key == rowmap.keys.first);
   }
-  listWidgets.add(ListTile(
+  rowmapWidgets.add(ListTile(
       leading: const Text('ID_row'),
       title: Text(
           "${rowmap['sheetName']},${rowmap['ID']},${rowmap['dateinsert']}")));
-  return listWidgets;
+  return rowmapWidgets;
 }

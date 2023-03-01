@@ -52,7 +52,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.open_in_browser,
             onTap: () async {
               await al.openDoc(
-                  widget.rowmap['fileUrl'], context, 'Open data source');
+                  widget.configMap['fileUrl'], context, 'Open data source');
             },
           ),
           PlutoMenuItem(

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../2business_layer/appdata/approotdata.dart';
 import 'cardactions.dart';
 
-import 'detailpage.dart';
+import 'detailapage.dart';
 
 class CardSwiper extends StatefulWidget {
   final List<int> localIds;
