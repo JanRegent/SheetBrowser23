@@ -6,7 +6,7 @@ import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
 import '../../../data_layer/getsheetdl.dart';
 import '../../alib/alib.dart';
-import 'detailstartags.dart';
+import 'detailtags.dart';
 
 import 'detailrowsmapwidgets.dart';
 
@@ -55,7 +55,11 @@ class _DetailPageState extends State<DetailPage> {
       }
     } catch (_) {}
     return Row(
-      children: [starredWidget, addTagsIcon(context, localId, rowmap)],
+      children: [
+        Text(rowmap.keys.first),
+        starredWidget,
+        addTagsIcon(context, localId, rowmap)
+      ],
     );
   }
 

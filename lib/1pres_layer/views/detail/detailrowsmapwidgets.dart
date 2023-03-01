@@ -46,16 +46,6 @@ Future<List<Widget>> rowmapWidgetsGet(
       );
     }
 
-    ListTile firstRow(String text) {
-      return ListTile(
-        leading: Text(
-          key,
-          style: const TextStyle(fontStyle: FontStyle.italic),
-        ),
-        trailing: rowItemRightPopup(context, value),
-      );
-    }
-
     ListTile rowAddTo50(String text) {
       return ListTile(
         leading: Text(
@@ -79,7 +69,6 @@ Future<List<Widget>> rowmapWidgetsGet(
     }
 
     if (isFirstKey) {
-      list.add(firstRow(text));
       list.add(valueText(text));
       return;
     }
