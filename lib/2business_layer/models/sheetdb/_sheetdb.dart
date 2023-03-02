@@ -36,9 +36,7 @@ class SheetDb {
 
   late RowMap rowMap = RowMap();
 
-  Future init() async {
-    await sheetDb.colsDb.colsHeadersMapBuild();
-  }
+  Future init() async {}
 
   //----------------------------------------------------------------
   List<String> selectRowContains() {

@@ -42,13 +42,18 @@ class ColsDb extends SheetDb {
 
   Map<String, List<String>> colsHeadersMap = {};
 
-  Future colsHeadersMapBuild() async {
-    final colRows =
-        await isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
-    colsHeadersMap = {};
-    for (int sheetNameIx = 0; sheetNameIx < colRows.length; sheetNameIx++) {
-      colsHeadersMap[colRows[sheetNameIx].aSheetName] =
-          colRows[sheetNameIx].rowArr;
+  Future<List<String>> colsHeadersGet(String sheetName) async {
+    try {
+      Sheet? sheet = await isar.sheets
+          .filter()
+          .aKeyEqualTo('colsHeader')
+          .and()
+          .aSheetNameEqualTo(sheetName)
+          .findFirst();
+
+      return blUti.toListString(sheet!.rowArr);
+    } catch (_) {
+      return [];
     }
   }
 

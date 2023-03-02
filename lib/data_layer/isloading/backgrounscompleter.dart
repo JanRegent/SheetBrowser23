@@ -23,7 +23,7 @@ Future backgroundCompleter(Function setStateCallback) async {
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
 
-  //if (lastCompleted == blUti.todayStr()) return;
+  if (lastCompleted == blUti.todayStr()) return;
 
   backgroundCompleterIsRunning = true;
   //----------------------------------------------------clear
