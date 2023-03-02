@@ -68,7 +68,7 @@ class _DetailPageState extends State<DetailPage> {
         onPressed: () async {
           String sheetName = rowmap['sheetName'];
           int? sheetID = int.tryParse(rowmap['ID']);
-          await appendStarCommunity(sheetName, sheetID.toString());
+          await appendTagsCommunity(sheetName, sheetID.toString(), '*');
           await sheetDb.updateOps.updateTags(localId, '*');
           setState(() {});
           // ignore: use_build_context_synchronously

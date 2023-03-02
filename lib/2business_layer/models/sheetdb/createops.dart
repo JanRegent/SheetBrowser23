@@ -17,8 +17,8 @@ class CreateOps {
     }
   }
 
-  Future createRows(String sheetName, String fileId, List<dynamic> rowsArr,
-      Map<String, List<int>> starsmap) async {
+  Future createRows(
+      String sheetName, String fileId, List<dynamic> rowsArr) async {
     Future<List<String>> colsHeaderGet() async {
       List<String> colsHeader = [];
       try {
@@ -42,6 +42,7 @@ class CreateOps {
     int sheetIDix = colsHeader.indexOf('ID');
     if (sheetIDix == -1) return;
 
+    int tagIx = colsHeader.indexOf('tags');
     List<Sheet> rows = [];
     int rowIx = 0;
 
@@ -65,13 +66,12 @@ class CreateOps {
           ..aKey = 'row'
           ..sheetId = sheetID
           ..rowArr = blUti.toListString(rowsArr[rowIx]);
+
+        if (tagIx > -1) {
+          sheet.tags.addAll(rowsArr[rowIx][tagIx].split(','));
+        }
       } catch (_) {
-        continue;
-      }
-      try {
-        sheet = sheetTags(sheet, colsHeader, rowsArr[rowIx], starsmap);
-      } catch (_) {
-        continue;
+        //todo RangeError (index): Index out of range: index should be less than 10: 10
       }
 
       rows.add(sheet);
@@ -91,42 +91,5 @@ class CreateOps {
       logDb.createErr('sheetDB.createRows.putAll', e.toString(), s.toString());
       return;
     }
-  }
-
-  Sheet sheetTags(Sheet sheet, List<String> colsHeader, List<dynamic> rowDyn,
-      Map<String, List<int>> starsmap) {
-    try {
-      List<int> sheetIDs = starsmap[sheet.aSheetName]!.toList();
-      if (sheetIDs.contains(sheet.sheetId)) {
-        sheet.tags.add('*');
-      }
-    } catch (_) {
-      //todo:
-      //unexpected null value on sheetIDs = starsmap
-      return sheet;
-    }
-    //------------------------------------------tags
-    List<String> row = [];
-    try {
-      row = blUti.toListString(rowDyn);
-    } catch (_) {
-      return sheet;
-    }
-    int tagIx = colsHeader.indexOf('tags');
-    if (tagIx == -1) return sheet;
-
-    List<String> tags = [];
-    try {
-      tags = row[tagIx].split(',');
-    } catch (_) {
-      return sheet;
-    }
-    for (String tag in tags) {
-      // ignore: unnecessary_null_comparison
-      if (tag == null) continue;
-      if (tag.isEmpty) continue;
-      sheet.tags.add(tag);
-    }
-    return sheet;
   }
 }

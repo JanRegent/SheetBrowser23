@@ -27,7 +27,6 @@ class _SidebarHomeState extends State<SidebarHome> {
     );
   }
 
-  // await getAppendStarredManually(
   IconButton csvrow2clipboard() {
     return IconButton(
         onPressed: () {

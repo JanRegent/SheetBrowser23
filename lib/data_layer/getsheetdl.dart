@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
-import '../2business_layer/models/sheetdb/_sheetdb.dart';
-
 ///CORS
 ///https://pub.dev/packages/flutter_cors
 ///
@@ -91,54 +89,6 @@ String appendUrl4launcher(List<String> rowArr) {
   // await al.openhUrl(encoded as Uri, context);
 }
 
-Future getAppendStarred(List<String> rowArr) async {
-  String? url = appendServiceUrl;
-  rowArr[0] = rowArr[0] + DateTime.now().toIso8601String();
-  String rowStr = rowArr.join('__|__');
-  url = '$url?rowArr=$rowStr';
-  var encoded = Uri.encodeFull(url);
-
-  try {
-    final response = await http.get(
-      Uri.parse(encoded),
-      // Send authorization headers to the backend.
-      headers: {
-        HttpHeaders.accessControlAllowOriginHeader: "*",
-        HttpHeaders.accessControlAllowMethodsHeader:
-            "GET,PUT,PATCH,POST,DELETE",
-        HttpHeaders.accessControlAllowHeadersHeader:
-            "Origin, X-Requested-With, Content-Type, Accept",
-        HttpHeaders.accessControlAllowCredentialsHeader: 'false'
-      },
-    );
-
-    //Response response = await http.get(Uri.parse(encoded));
-    int status = response.statusCode;
-    status = status;
-    //   if (response.statusCode != 200) {
-    //     throw Exception(
-    //         'Error:[DL].getAppendStarred Could not connect to server');
-    //   }
-    //   return jsonDecode(response.body);
-    // } on SocketException {
-    //   throw Failure(
-    //       message:
-    //           "Error: [DL].getAppendStarred No Internet Connection. [getTagQuote]");
-    // } on HttpException {
-    //   throw Failure(
-    //       message:
-    //           "Error: [DL].getAppendStarred Internal Issue Occured. [getTagQuote]");
-    // } on FormatException {
-    //   throw Failure(
-    //       message: "Error: [DL].getAppendStarred Bad Response. [getTagQuote]");
-  } catch (e, s) {
-    logDb.createErr('[DL].getAppendStarred', e.toString(), s.toString(),
-        descr: 'statusCode: ');
-  }
-  return [];
-  // you can show any error widgets for your users here.
-}
-
 class Failure {
   final String message;
   Failure({required this.message});
@@ -146,17 +96,6 @@ class Failure {
   String toString() {
     return message;
   }
-}
-
-Future appendStarCommunity(String sheetName, String sheetID) async {
-  String? communityServiceUrl = AppDataPrefs.getString('communityServiceUrl');
-
-  String url =
-      '$communityServiceUrl?action=appendStar&sheetName=$sheetName&sheetID=$sheetID';
-
-  await http.get(Uri.parse(url));
-
-  return 'OK';
 }
 
 Future appendTagsCommunity(

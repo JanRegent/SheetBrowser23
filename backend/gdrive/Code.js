@@ -10,11 +10,7 @@ function doGet(e) {
   var action = e.parameter.action.toString();
 
   try { 
-    // ?action=appendStar&sheetName=PapajiDailyPedia&sheetID=21
-    if (action == 'appendStar') {
-      var result = appendStarDo(e);
-      return result;
-    }
+
     // ?action=appendTags&sheetName=NissargadattaDailyPedia&sheetID=211&tags=112
     //Exception: The number of columns in the data does not match the number of columns in the range.
     

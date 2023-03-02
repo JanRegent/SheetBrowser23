@@ -23,33 +23,31 @@ Future backgroundCompleter(Function setStateCallback) async {
   String? lastCompleted =
       AppDataPrefs.getString('backgroundCompleter-lastDate');
 
-  if (lastCompleted == blUti.todayStr()) return;
+  //if (lastCompleted == blUti.todayStr()) return;
 
   backgroundCompleterIsRunning = true;
   //----------------------------------------------------clear
   await sheetDb.sheeetsClear();
 
   await getFilelist();
-  Map<String, List<int>> starsmap = await getStarMap();
 
   //--------------------------------------------------------load
   Future.delayed(const Duration(seconds: 1), () async {
-    for (int fileIx = 0; fileIx < filelist.length; fileIx++) {
+    // ignore: dead_code
+    for (var fileIx = 0; fileIx < filelist.length; fileIx++) {
       String sheetName = filelist[fileIx]['sheetName'];
 
       EasyLoading.show(
           status: 'Loading $sheetName\n ${(fileIx + 1)}/${filelist.length}');
       String fileId = blUti.url2fileid(filelist[fileIx]['fileUrl']);
-      await GetSheet().sheetPrepare(sheetName, fileId, starsmap);
+      await GetSheet().sheetPrepare(sheetName, fileId);
+
+      break;
     }
   }).then((value) {}).catchError((e, s) {
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());
     EasyLoading.showError(e);
   }).whenComplete(() async {
-    //-----------------------------------------------index
-    EasyLoading.show(status: 'Getting cols');
-    await sheetDb.colsDb.colsHeadersMapBuild();
-
     EasyLoading.dismiss();
     AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
