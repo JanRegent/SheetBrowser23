@@ -45,7 +45,8 @@ class GetSheet {
     try {
       await gridPrepare();
     } catch (e, s) {
-      logDb.createErr('GetSheet().gridPrepare', e.toString(), s.toString());
+      logDb.createErr('GetSheet().gridPrepare $sheetName, $fileId',
+          e.toString(), s.toString());
     }
   }
 

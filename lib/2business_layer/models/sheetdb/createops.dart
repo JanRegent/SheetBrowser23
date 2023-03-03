@@ -52,7 +52,7 @@ class CreateOps {
         sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
       } catch (e) {
         logDb.createWarning('sheetDB.createRows.sheetID',
-            '$e  \n\n sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+            '$e  \n\n sheetName: $sheetName $sheetID fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
 
         continue;
       }

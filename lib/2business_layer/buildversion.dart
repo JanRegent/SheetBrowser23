@@ -1,1 +1,1 @@
-const buildVersion = 'colsHeadersGet---02-03-2023 16:37:55,08';     
+const buildVersion = 'detailpage-separator---03-03-2023 20:58:18,51';     

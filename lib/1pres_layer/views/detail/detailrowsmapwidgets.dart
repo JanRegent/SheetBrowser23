@@ -26,6 +26,8 @@ Future<List<Widget>> rowmapWidgetsGet(
 
     if (text.isEmpty) return;
 
+    Function(bool val)? expand;
+
     Widget valueText(String text) {
       return ParsedReadMore(
         text,
@@ -35,7 +37,7 @@ Future<List<Widget>> rowmapWidgetsGet(
             decoration: TextDecoration.underline),
         trimMode: TrimMode.line,
         textAlign: TextAlign.left,
-        trimLines: 4,
+        trimLines: 10,
         delimiter: '  ...',
         delimiterStyle: const TextStyle(color: Colors.black, fontSize: 20),
         style: const TextStyle(color: Colors.black, fontSize: 20),
@@ -43,6 +45,7 @@ Future<List<Widget>> rowmapWidgetsGet(
         trimExpandedText: '↑',
         moreStyle: const TextStyle(color: Colors.red, fontSize: 20),
         lessStyle: const TextStyle(color: Colors.blue, fontSize: 20),
+        callback: expand,
       );
     }
 

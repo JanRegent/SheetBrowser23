@@ -15,6 +15,12 @@
         "userSymbol": "Tamotsu",
         "version": "32",
         "libraryId": "1OiJIgWlrg_DFHFYX_SoaEzhFJPCmwbbfEHEqYEfLEEhKRloTNVJ-3U4s"
+      },
+      {
+        "userSymbol": "jreLib",
+        "version": "0",
+        "libraryId": "18GmmSyst6FM9C6TIX77Tj5Zsgc_mqTub6lS1iNO9PkR0woUQ4XCjxNz_",
+        "developmentMode": true
       }
     ]
   },

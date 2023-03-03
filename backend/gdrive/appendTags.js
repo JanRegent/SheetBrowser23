@@ -51,3 +51,20 @@ function appendTagsDo__test() {
   appendTags2('PapajiDailyPedia', '6', 'aa,bb')
   
 }
+
+function loopStars() {
+  var starAgent = getAgentActive('*');
+  logclear();
+
+  var rows = starAgent.all();
+
+   for (var rowIx = 1; rowIx < rows.length; rowIx = rowIx + 1) {
+    var row = rows[rowIx];
+    Logger.log(row['sheetName'] +' '+row['sheetID'] )
+    appendTags2(row['sheetName'] , row['sheetID'], '*')
+  }
+
+
+  
+}
+

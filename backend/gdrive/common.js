@@ -31,6 +31,20 @@ function getAgent(fileId, sheetName) {
   return agent;
 }
 
+function getAgentActive(sheetName) {
+ 
+  var sheet = SpreadsheetApp.getActiveSpreadsheet()
+    
+  Tamotsu.initialize(sheet);
+  var agent = Tamotsu.Table.define({ sheetName: sheetName, idColumn: 'ID' }, {
+    rowId: function() {
+      return this['ID'];
+    },
+  });
+  
+  return agent;
+}
+
 
 function logi(e) {
   var logsheet = SpreadsheetApp.getActive().getSheetByName('log')

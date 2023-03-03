@@ -84,7 +84,9 @@ class _DetailPageState extends State<DetailPage> {
         icon: const Icon(Icons.tag));
   }
 
+  //------------------------------------------------------------
   Widget listViewBody(List<Widget> listWidgets) {
+    List<int> sepIndexes = [1, 2, listWidgets.length - 2];
     return Container(
         height: double.infinity,
         width: double.infinity,
@@ -93,7 +95,7 @@ class _DetailPageState extends State<DetailPage> {
             itemCount: listWidgets.length,
             controller: scrollController,
             separatorBuilder: (context, index) {
-              return index.floor().isEven
+              return sepIndexes.contains(index)
                   ? Divider(
                       color: Theme.of(context).primaryColor,
                     )
