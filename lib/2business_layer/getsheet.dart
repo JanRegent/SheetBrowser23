@@ -27,11 +27,12 @@ class GetSheet {
   ) async {
     //-----------------------------------new sheet
     sheetName = sheetNameNew;
+    if (sheetName.isEmpty) return;
     fileId = fileIdNew;
-    if (sheetName.isEmpty) {
-      sheetName = '*';
-    }
+
     fileId = fileIdNew;
+    if (fileId.isEmpty) return;
+
     if (fileId.isEmpty) {
       fileId = AppDataPrefs.getRootSheetId();
     }
@@ -69,7 +70,7 @@ class GetSheet {
       logDb.createErr('GetSheet().sheetPrepare2localDb.GoogleSheetsDL',
           e.toString(), s.toString(),
           descr:
-              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length}');
     }
     try {
       await sheetDb.createOps.createRows(sheetName, fileId, rowsArr);
@@ -84,7 +85,7 @@ class GetSheet {
       logDb.createErr('GetSheet().sheetPrepare2localDb.createRows',
           e.toString(), s.toString(),
           descr:
-              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+              'sheetName: $sheetName fileId: $fileId rowsArrLen: ${rowsArr.length} ');
     }
   }
 

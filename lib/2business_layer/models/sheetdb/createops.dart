@@ -51,8 +51,10 @@ class CreateOps {
       try {
         sheetID = int.tryParse(rowsArr[rowIx][sheetIDix])!;
       } catch (e) {
+        //todo
+        if (sheetID == -1) continue;
         logDb.createWarning('sheetDB.createRows.sheetID',
-            '$e  \n\n sheetName: $sheetName $sheetID fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
+            '$e  \n\n sheetName: $sheetName $sheetID=${rowsArr[rowIx][sheetIDix]} fileId: $fileId rowsArrLen: ${rowsArr.length} colsHeader: $colsHeader');
 
         continue;
       }
@@ -68,7 +70,7 @@ class CreateOps {
           ..rowArr = blUti.toListString(rowsArr[rowIx]);
 
         if (tagIx > -1) {
-          sheet.tags.addAll(rowsArr[rowIx][tagIx].split(','));
+          sheet.tags.addAll(rowsArr[rowIx][tagIx].trim().split(','));
         }
       } catch (_) {
         //todo RangeError (index): Index out of range: index should be less than 10: 10
@@ -78,8 +80,9 @@ class CreateOps {
     }
 
     if (rows.isEmpty) {
-      logDb.createErr('sheetDB.createRows.putAll',
-          'Error: wrong data sheet $sheetName', 'empty rows[]');
+      //todo tgMilos tomas is empty
+      // logDb.createErr('sheetDB.createRows.putAll',
+      //     'Error: wrong data sheet $sheetName', 'empty rows[]');
       return;
     }
     try {
