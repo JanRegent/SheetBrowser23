@@ -70,7 +70,7 @@ class CreateOps {
           ..rowArr = blUti.toListString(rowsArr[rowIx]);
 
         if (tagIx > -1) {
-          sheet.tags.addAll(rowsArr[rowIx][tagIx].trim().split(','));
+          sheet.tagsList.addAll(rowsArr[rowIx][tagIx].trim().split(','));
         }
       } catch (_) {
         //todo RangeError (index): Index out of range: index should be less than 10: 10

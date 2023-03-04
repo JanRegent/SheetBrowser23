@@ -18,7 +18,7 @@ class Sheet {
   List<String> rowArr = [];
 
   @Index(type: IndexType.value)
-  List<String> tags = [];
+  List<String> tagsList = [];
   String zfileId = '';
 
   Future toStrings() async {

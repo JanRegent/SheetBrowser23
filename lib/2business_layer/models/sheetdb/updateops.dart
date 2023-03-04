@@ -20,7 +20,7 @@ class UpdateOps {
       Sheet? sheet = await sheetDb.readOps.readbyLocalId(localId);
       List<String> rowArr = blUti.toListString(
           sheet!.rowArr); //todo://workarround--List<String> owewrited
-      sheet.tags = newTags.split(',');
+      sheet.tagsList = newTags.split(',');
       sheet.rowArr = [];
       sheet.rowArr = rowArr;
       await isar.writeTxn((isar) async {

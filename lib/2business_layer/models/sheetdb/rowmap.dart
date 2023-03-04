@@ -71,7 +71,7 @@ class RowMap extends SheetDb {
         rowmap[cols[i]] = sheet.rowArr[i];
       } catch (_) {}
     }
-    rowmap['tags'] = sheet.tags;
+    rowmap['tags'] = sheet.tagsList;
     rowmap['sheetName'] = sheet.aSheetName;
     return rowmap;
   }

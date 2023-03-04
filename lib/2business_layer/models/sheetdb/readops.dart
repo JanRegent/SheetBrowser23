@@ -113,7 +113,7 @@ class ReadOps {
           .and()
           .aKeyEqualTo('row')
           .and()
-          .tagsAnyContains('*')
+          .tagsListAnyEqualTo('*')
           .idProperty()
           .findAll();
     } else {
@@ -121,7 +121,7 @@ class ReadOps {
           .filter()
           .aKeyEqualTo('row')
           .and()
-          .tagsAnyContains('*')
+          .tagsListAnyContains('*')
           .idProperty()
           .findAll();
     }
@@ -137,7 +137,7 @@ class ReadOps {
         .filter()
         .aKeyEqualTo('row')
         .and()
-        .tagsAnyContains(tag)
+        .tagsListAnyContains(tag)
         .idProperty()
         .findAll();
 
@@ -145,8 +145,11 @@ class ReadOps {
   }
 
   Future<List<String>> readTags() async {
-    List<List<String>> tagsArr =
-        await isar.sheets.filter().aKeyEqualTo('row').tagsProperty().findAll();
+    List<List<String>> tagsArr = await isar.sheets
+        .filter()
+        .aKeyEqualTo('row')
+        .tagsListProperty()
+        .findAll();
     Set<String> set = {};
     for (var i = 0; i < tagsArr.length; i++) {
       set.addAll(tagsArr[i]);

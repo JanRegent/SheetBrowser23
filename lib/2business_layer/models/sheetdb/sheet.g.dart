@@ -17,18 +17,18 @@ extension GetSheetCollection on Isar {
 const SheetSchema = CollectionSchema(
   name: 'Sheet',
   schema:
-      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"rowArr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"tags","type":"StringList"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"tags","unique":false,"properties":[{"name":"tags","type":"Value","caseSensitive":true}]}],"links":[]}',
+      '{"name":"Sheet","idName":"id","properties":[{"name":"aKey","type":"String"},{"name":"aSheetName","type":"String"},{"name":"rowArr","type":"StringList"},{"name":"sheetId","type":"Long"},{"name":"tagsList","type":"StringList"},{"name":"zfileId","type":"String"}],"indexes":[{"name":"aKey","unique":false,"properties":[{"name":"aKey","type":"Value","caseSensitive":true}]},{"name":"aSheetName","unique":false,"properties":[{"name":"aSheetName","type":"Value","caseSensitive":true}]},{"name":"tagsList","unique":false,"properties":[{"name":"tagsList","type":"Value","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'aKey': 0,
     'aSheetName': 1,
     'rowArr': 2,
     'sheetId': 3,
-    'tags': 4,
+    'tagsList': 4,
     'zfileId': 5
   },
-  listProperties: {'rowArr', 'tags'},
-  indexIds: {'aKey': 0, 'aSheetName': 1, 'tags': 2},
+  listProperties: {'rowArr', 'tagsList'},
+  indexIds: {'aKey': 0, 'aSheetName': 1, 'tagsList': 2},
   indexValueTypes: {
     'aKey': [
       IndexValueType.string,
@@ -36,7 +36,7 @@ const SheetSchema = CollectionSchema(
     'aSheetName': [
       IndexValueType.string,
     ],
-    'tags': [
+    'tagsList': [
       IndexValueType.string,
     ]
   },
@@ -96,7 +96,7 @@ void _sheetSerializeNative(
   final _rowArr = bytesList2;
   final value3 = object.sheetId;
   final _sheetId = value3;
-  final value4 = object.tags;
+  final value4 = object.tagsList;
   dynamicSize += (value4.length) * 8;
   final bytesList4 = <IsarUint8List>[];
   for (var str in value4) {
@@ -104,7 +104,7 @@ void _sheetSerializeNative(
     bytesList4.add(bytes);
     dynamicSize += bytes.length as int;
   }
-  final _tags = bytesList4;
+  final _tagsList = bytesList4;
   final value5 = object.zfileId;
   final _zfileId = IsarBinaryWriter.utf8Encoder.convert(value5);
   dynamicSize += (_zfileId.length) as int;
@@ -118,7 +118,7 @@ void _sheetSerializeNative(
   writer.writeBytes(offsets[1], _aSheetName);
   writer.writeStringList(offsets[2], _rowArr);
   writer.writeLong(offsets[3], _sheetId);
-  writer.writeStringList(offsets[4], _tags);
+  writer.writeStringList(offsets[4], _tagsList);
   writer.writeBytes(offsets[5], _zfileId);
 }
 
@@ -130,7 +130,7 @@ Sheet _sheetDeserializeNative(IsarCollection<Sheet> collection, int id,
   object.id = id;
   object.rowArr = reader.readStringList(offsets[2]) ?? [];
   object.sheetId = reader.readLong(offsets[3]);
-  object.tags = reader.readStringList(offsets[4]) ?? [];
+  object.tagsList = reader.readStringList(offsets[4]) ?? [];
   object.zfileId = reader.readString(offsets[5]);
   return object;
 }
@@ -164,7 +164,7 @@ dynamic _sheetSerializeWeb(IsarCollection<Sheet> collection, Sheet object) {
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'rowArr', object.rowArr);
   IsarNative.jsObjectSet(jsObj, 'sheetId', object.sheetId);
-  IsarNative.jsObjectSet(jsObj, 'tags', object.tags);
+  IsarNative.jsObjectSet(jsObj, 'tagsList', object.tagsList);
   IsarNative.jsObjectSet(jsObj, 'zfileId', object.zfileId);
   return jsObj;
 }
@@ -181,7 +181,7 @@ Sheet _sheetDeserializeWeb(IsarCollection<Sheet> collection, dynamic jsObj) {
       [];
   object.sheetId =
       IsarNative.jsObjectGet(jsObj, 'sheetId') ?? double.negativeInfinity;
-  object.tags = (IsarNative.jsObjectGet(jsObj, 'tags') as List?)
+  object.tagsList = (IsarNative.jsObjectGet(jsObj, 'tagsList') as List?)
           ?.map((e) => e ?? '')
           .toList()
           .cast<String>() ??
@@ -208,8 +208,8 @@ P _sheetDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'sheetId':
       return (IsarNative.jsObjectGet(jsObj, 'sheetId') ??
           double.negativeInfinity) as P;
-    case 'tags':
-      return ((IsarNative.jsObjectGet(jsObj, 'tags') as List?)
+    case 'tagsList':
+      return ((IsarNative.jsObjectGet(jsObj, 'tagsList') as List?)
               ?.map((e) => e ?? '')
               .toList()
               .cast<String>() ??
@@ -238,9 +238,9 @@ extension SheetQueryWhereSort on QueryBuilder<Sheet, Sheet, QWhere> {
         const IndexWhereClause.any(indexName: 'aSheetName'));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhere> anyTagsAny() {
+  QueryBuilder<Sheet, Sheet, QAfterWhere> anyTagsListAny() {
     return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'tags'));
+        const IndexWhereClause.any(indexName: 'tagsList'));
   }
 }
 
@@ -458,83 +458,83 @@ extension SheetQueryWhere on QueryBuilder<Sheet, Sheet, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyEqualTo(
-      String tagsElement) {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyEqualTo(
+      String tagsListElement) {
     return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'tags',
-      value: [tagsElement],
+      indexName: 'tagsList',
+      value: [tagsListElement],
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyNotEqualTo(
-      String tagsElement) {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyNotEqualTo(
+      String tagsListElement) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tags',
-        upper: [tagsElement],
+        indexName: 'tagsList',
+        upper: [tagsListElement],
         includeUpper: false,
       )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tags',
-        lower: [tagsElement],
+        indexName: 'tagsList',
+        lower: [tagsListElement],
         includeLower: false,
       ));
     } else {
       return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tags',
-        lower: [tagsElement],
+        indexName: 'tagsList',
+        lower: [tagsListElement],
         includeLower: false,
       )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tags',
-        upper: [tagsElement],
+        indexName: 'tagsList',
+        upper: [tagsListElement],
         includeUpper: false,
       ));
     }
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyGreaterThan(
-    String tagsElement, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyGreaterThan(
+    String tagsListElement, {
     bool include = false,
   }) {
     return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'tags',
-      lower: [tagsElement],
+      indexName: 'tagsList',
+      lower: [tagsListElement],
       includeLower: include,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyLessThan(
-    String tagsElement, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyLessThan(
+    String tagsListElement, {
     bool include = false,
   }) {
     return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'tags',
-      upper: [tagsElement],
+      indexName: 'tagsList',
+      upper: [tagsListElement],
       includeUpper: include,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyBetween(
-    String lowerTagsElement,
-    String upperTagsElement, {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyBetween(
+    String lowerTagsListElement,
+    String upperTagsListElement, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'tags',
-      lower: [lowerTagsElement],
+      indexName: 'tagsList',
+      lower: [lowerTagsListElement],
       includeLower: includeLower,
-      upper: [upperTagsElement],
+      upper: [upperTagsListElement],
       includeUpper: includeUpper,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsAnyStartsWith(
-      String TagsElementPrefix) {
+  QueryBuilder<Sheet, Sheet, QAfterWhereClause> tagsListAnyStartsWith(
+      String TagsListElementPrefix) {
     return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'tags',
-      lower: [TagsElementPrefix],
+      indexName: 'tagsList',
+      lower: [TagsListElementPrefix],
       includeLower: true,
-      upper: ['$TagsElementPrefix\u{FFFFF}'],
+      upper: ['$TagsListElementPrefix\u{FFFFF}'],
       includeUpper: true,
     ));
   }
@@ -942,19 +942,19 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyEqualTo(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyGreaterThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -962,13 +962,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyLessThan(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -976,13 +976,13 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyBetween(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -990,7 +990,7 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'tags',
+      property: 'tagsList',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -999,47 +999,47 @@ extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyStartsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyEndsWith(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyContains(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyContains(
       String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'tags',
+      property: 'tagsList',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsAnyMatches(
+  QueryBuilder<Sheet, Sheet, QAfterFilterCondition> tagsListAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'tags',
+      property: 'tagsList',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -1281,8 +1281,8 @@ extension SheetQueryProperty on QueryBuilder<Sheet, Sheet, QQueryProperty> {
     return addPropertyNameInternal('sheetId');
   }
 
-  QueryBuilder<Sheet, List<String>, QQueryOperations> tagsProperty() {
-    return addPropertyNameInternal('tags');
+  QueryBuilder<Sheet, List<String>, QQueryOperations> tagsListProperty() {
+    return addPropertyNameInternal('tagsList');
   }
 
   QueryBuilder<Sheet, String, QQueryOperations> zfileIdProperty() {

@@ -19,6 +19,7 @@ import 'filelistcardmenu.dart';
 
 List<dynamic> filelistMap = [];
 String filelistName = 'hledaniList';
+
 Future getFilelist() async {
   //String? filelistSheetName = await appData.appDataGetString('currentFileList');
 
