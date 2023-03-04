@@ -18,13 +18,14 @@ import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
 List<dynamic> filelistMap = [];
-
+String filelistName = 'hledaniList';
 Future getFilelist() async {
-  String? filelistSheetName =
-      await appDataPrefs.appDataReadGetString('currentFileList');
-  String? sheetId = await appDataPrefs.getRootSheetId();
+  //String? filelistSheetName = await appData.appDataGetString('currentFileList');
+
+  String? sheetId = await appData.appDataGetString('rootSheetId');
+
   List<dynamic> fileArr =
-      await GoogleSheetsDL(sheetId: sheetId!, sheetName: filelistSheetName!)
+      await GoogleSheetsDL(sheetId: sheetId!, sheetName: filelistName)
           .getSheet();
 
   List<String> fileHeader = blUti.toListString(fileArr[0]);
@@ -63,7 +64,7 @@ Map getConfigRow(Map configRow) {
     configRow['fileTitle'] = configRow['sheetName'];
   }
   if (configRow['fileUrl'] == null) {
-    configRow['fileUrl'] = appDataPrefs.getRootSheetId();
+    configRow['fileUrl'] = appData.getRootSheetId();
   }
   return configRow;
 }

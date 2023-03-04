@@ -5,7 +5,6 @@ import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
-import '1pres_layer/_home/help/errorpage.dart';
 import '1pres_layer/filelist/filelistcard.dart';
 import '1pres_layer/filelist/inboxhome.dart';
 import '1pres_layer/_home/__sidebar.dart';
@@ -17,14 +16,13 @@ class RouterSwitch extends StatefulWidget {
   State<RouterSwitch> createState() => _RouterSwitchState();
 }
 
+String route2Page = 'homesidebar';
+
 class _RouterSwitchState extends State<RouterSwitch> {
-  String route2Page = 'detail';
   String action = ''; // 'getNews';
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
-    print('----');
-    route2Page = (await appDataPrefs.appDataReadGetString('route2Page'))!;
-    print(route2Page);
+    route2Page = (await appData.appDataGetString('route2Page'))!;
     List<dynamic> rowsArr = [];
     if (route2Page == 'filelist') {
       await getFilelist();
@@ -36,7 +34,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
-    configRow['fileUrl'] = appDataPrefs.getRootSheetId();
+    configRow['fileUrl'] = appData.getRootSheetId();
 
     // ignore: use_build_context_synchronously
 
@@ -71,54 +69,26 @@ class _RouterSwitchState extends State<RouterSwitch> {
       child: FutureBuilder<String>(
         future: getData(context),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            if (route2Page == 'filelist') {
-              return InboxHomePage(filelistMap);
-            }
-            if (route2Page == 'grid') {
-              return GridPage(currentSheet.plutoCols, currentSheet.gridrows,
-                  filelistMap[0]);
-            }
-
-            if (route2Page == 'homesidebar') {
-              return const SidebarXApp();
-            }
-            //-----------------------------------------------default detail view
-            if (currentSheet.rowsArrFiltered.isEmpty) {
-              configRow['sheetName'] = 'All';
-
-              return CardSwiper(const [], configRow);
-            } else {
-              configRow['sheetName'] = 'Filter:';
-              return CardSwiper(const [], configRow);
-            }
-          } else if (snapshot.hasError) {
-            runApp(
-              ErrorPage2(
-                  '[RouterSwitch] snapshot.error \n${snapshot.error}', ''),
-            );
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text(
-                    'Error: [RouterSwitch]\n ${snapshot.error}\n\n${currentSheet.colsHeader.join(',')}'),
-              ),
-            ];
-          } else {
-            children = const [Text('Awaiting result...')];
+          if (route2Page == 'filelist') {
+            return InboxHomePage(filelistMap);
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
-            ),
-          );
+          if (route2Page == 'grid') {
+            return GridPage(
+                currentSheet.plutoCols, currentSheet.gridrows, filelistMap[0]);
+          }
+
+          if (route2Page == 'homesidebar') {
+            return const SidebarXApp();
+          }
+          //-----------------------------------------------default detail view
+          if (currentSheet.rowsArrFiltered.isEmpty) {
+            configRow['sheetName'] = 'All';
+
+            return CardSwiper(const [], configRow);
+          } else {
+            configRow['sheetName'] = 'Filter:';
+            return CardSwiper(const [], configRow);
+          }
         },
       ),
     ));

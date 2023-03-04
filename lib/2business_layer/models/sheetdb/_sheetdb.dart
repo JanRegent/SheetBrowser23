@@ -40,7 +40,7 @@ class SheetDb {
 
   //----------------------------------------------------------------
   List<String> selectRowContains() {
-    String? str = appDataPrefs.getString('select row contains');
+    String? str = appData.getString('select row contains');
     return str!.split(',');
   }
 

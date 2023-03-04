@@ -19,8 +19,7 @@ Future backgroundCompleter() async {
     await Future.delayed(const Duration(seconds: 3));
   }
 
-  String? lastCompleted =
-      appDataPrefs.getString('backgroundCompleter-lastDate');
+  String? lastCompleted = appData.getString('backgroundCompleter-lastDate');
 
   if (lastCompleted == blUti.todayStr()) return;
 
@@ -45,7 +44,7 @@ Future backgroundCompleter() async {
     EasyLoading.showError(e);
   }).whenComplete(() async {
     EasyLoading.dismiss();
-    appDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
+    appData.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
   backgroundCompleterIsRunning = false;
   try {} catch (_) {}

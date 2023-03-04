@@ -13,7 +13,7 @@ class GappsAdapter {
   bool isReady = false;
   Future init() async {
     try {
-      gappsExecUrl = (appDataPrefs.getString('userAppendUrl'))!;
+      gappsExecUrl = (appData.getString('userAppendUrl'))!;
       if (gappsExecUrl.isNotEmpty) isReady = true;
     } catch (_) {
       isReady = false;

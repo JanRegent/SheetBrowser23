@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
 import 'inboxrightpopmenu.dart';
 import 'filelistcard.dart';
@@ -21,7 +20,6 @@ class _InboxHomePageState extends State<InboxHomePage>
   @override
   void initState() {
     super.initState();
-    filelistName = appDataPrefs.getString('currentFileList')!;
   }
 
   Widget filelistBody() {

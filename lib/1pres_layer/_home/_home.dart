@@ -57,7 +57,7 @@ class _SidebarHomeState extends State<SidebarHome> {
             style: const TextStyle(fontSize: 18))),
         trailing: IconButton(
             onPressed: () async {
-              await appDataPrefs.setString('backgroundCompleter-lastDate',
+              await appData.setString('backgroundCompleter-lastDate',
                   'loading for ${blUti.todayStr()}');
               setState(() {
                 backgroundCompleterIsRunning = true;

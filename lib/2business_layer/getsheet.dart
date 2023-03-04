@@ -34,7 +34,7 @@ class GetSheet {
     if (fileId.isEmpty) return;
 
     if (fileId.isEmpty) {
-      fileId = (await appDataPrefs.getRootSheetId())!;
+      fileId = (await appData.getRootSheetId())!;
     }
 
     try {

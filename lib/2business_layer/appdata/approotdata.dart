@@ -7,7 +7,7 @@ import '../models/sheetdb/_sheetdb.dart';
 import './appdata.dart';
 
 String appDataPrefsApdataLoadingError = '';
-AppDataPrefs appDataPrefs = AppDataPrefs();
+AppDataPrefs appData = AppDataPrefs();
 
 class AppDataPrefs {
   static late final SharedPreferences _instance;
@@ -15,18 +15,18 @@ class AppDataPrefs {
   static Future<SharedPreferences> init() async =>
       _instance = await SharedPreferences.getInstance();
   Future apikeyRootSheetIdLoad() async {
-    await appDataPrefs.appDataClear();
+    await appData.appDataClear();
     try {
       await GlobalConfiguration().loadFromAsset("apikey");
       String apikey = GlobalConfiguration().getValue("apikey");
-      await appDataPrefs.appDataCreate('apikey', apikey, '');
+      await appData.appDataCreate('apikey', apikey, '');
     } catch (e) {
       appDataPrefsApdataLoadingError = e.toString();
     }
     try {
       await GlobalConfiguration().loadFromAsset("rootSheetId");
       String rootSheetId = GlobalConfiguration().getValue("rootSheetId");
-      await appDataPrefs.appDataCreate('rootSheetId', rootSheetId, '');
+      await appData.appDataCreate('rootSheetId', rootSheetId, '');
     } catch (e, s) {
       logDb.createErr(
         'GlobalConfiguration().loadFromAsset("rootSheetId")',
@@ -98,15 +98,16 @@ class AppDataPrefs {
     }
   }
 
-  Future<String?> appDataReadGetString(String key) async {
+  Future<String?> appDataGetString(String key) async {
     if (key.isEmpty) return '';
 
     String? value = await isar.appdatas
         .filter()
         .keyEqualTo(key)
+        .and()
+        .sheetNameEqualTo('')
         .valueProperty()
         .findFirst();
-    print('$key value $value');
     return value;
   }
 // ----------------------------------------------------root vars
@@ -114,7 +115,7 @@ class AppDataPrefs {
   String? getApikey() => GlobalConfiguration().getValue("apikey");
 
   Future<String?> getRootSheetId() async {
-    return await appDataReadGetString('rootSheetId');
+    return await appDataGetString('rootSheetId');
   }
 
   //-------------------------------------------------------string

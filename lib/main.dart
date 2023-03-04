@@ -58,7 +58,7 @@ Future<bool> mainInit() async {
   }
 
   try {
-    await appDataPrefs.apikeyRootSheetIdLoad();
+    await appData.apikeyRootSheetIdLoad();
   } catch (e, s) {
     logDb.createErr(
         'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());
