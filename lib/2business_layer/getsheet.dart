@@ -56,10 +56,10 @@ class GetSheet {
 
     if (sheetLen > 0) return;
 
-    await sheetPrepare2localDb(sheetName, fileId);
+    await sheetFill2localDb(sheetName, fileId);
   }
 
-  Future sheetPrepare2localDb(String sheetName, String fileId) async {
+  Future sheetFill2localDb(String sheetName, String fileId) async {
     List<dynamic> rowsArr = [];
     try {
       rowsArr = await GoogleSheetsDL(sheetId: fileId, sheetName: sheetName)

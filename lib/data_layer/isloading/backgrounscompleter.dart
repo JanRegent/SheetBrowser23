@@ -32,13 +32,13 @@ Future backgroundCompleter(Function setStateCallback) async {
 
   //--------------------------------------------------------load
   Future.delayed(const Duration(seconds: 1), () async {
-    for (int fileIx = 0; fileIx < filelist.length; fileIx++) {
-      String sheetName = filelist[fileIx]['sheetName'];
+    for (int fileIx = 0; fileIx < filelistMap.length; fileIx++) {
+      String sheetName = filelistMap[fileIx]['sheetName'];
 
       EasyLoading.show(
-          status: 'Loading $sheetName\n ${(fileIx + 1)}/${filelist.length}');
-      String fileId = blUti.url2fileid(filelist[fileIx]['fileUrl']);
-      await GetSheet().sheetPrepare(sheetName, fileId);
+          status: '${(fileIx + 1)}/${filelistMap.length} \n $sheetName');
+      String fileId = blUti.url2fileid(filelistMap[fileIx]['fileUrl']);
+      await GetSheet().sheetFill2localDb(sheetName, fileId);
     }
   }).then((value) {}).catchError((e, s) {
     logDb.createErr('backgroundCompleter', e.toString(), s.toString());

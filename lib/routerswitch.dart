@@ -73,11 +73,11 @@ class _RouterSwitchState extends State<RouterSwitch> {
           List<Widget> children;
           if (snapshot.hasData) {
             if (route2Page == 'filelist') {
-              return InboxHomePage(filelist);
+              return InboxHomePage(filelistMap);
             }
             if (route2Page == 'grid') {
-              return GridPage(
-                  currentSheet.plutoCols, currentSheet.gridrows, filelist[0]);
+              return GridPage(currentSheet.plutoCols, currentSheet.gridrows,
+                  filelistMap[0]);
             }
 
             if (route2Page == 'homesidebar') {

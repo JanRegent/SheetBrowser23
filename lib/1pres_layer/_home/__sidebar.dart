@@ -168,7 +168,7 @@ class ExampleSidebarX extends StatelessWidget {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => InboxHomePage(filelist),
+                    builder: (ctx) => InboxHomePage(filelistMap),
                   ));
             }),
         SidebarXItem(

@@ -17,7 +17,7 @@ import '../views/detail/cardswiper.dart';
 import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
-List<dynamic> filelist = [];
+List<dynamic> filelistMap = [];
 Map sheetNameFileIdMap = {};
 Future getFilelist() async {
   String? filelistSheetName = AppDataPrefs.getString('currentFileList');
@@ -27,20 +27,20 @@ Future getFilelist() async {
           .getSheet();
 
   List<String> fileHeader = blUti.toListString(fileArr[0]);
-  filelist.clear();
+  filelistMap.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
-    filelist.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
-    String sheetName = filelist.last['sheetName'];
-    String fileId = blUti.url2fileid(filelist.last['fileUrl']);
+    filelistMap.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
+    String sheetName = filelistMap.last['sheetName'];
+    String fileId = blUti.url2fileid(filelistMap.last['fileUrl']);
     sheetNameFileIdMap[sheetName] = fileId;
   }
 }
 
 Future<String> getFileIdFromFilelist(String sheetName) async {
-  filelist.clear();
-  for (var rowIx = 0; rowIx < filelist.length; rowIx++) {
-    if (filelist[rowIx]['sheetName'] == sheetName) {
-      String fileId = blUti.url2fileid(filelist[rowIx]['fileUrl']);
+  filelistMap.clear();
+  for (var rowIx = 0; rowIx < filelistMap.length; rowIx++) {
+    if (filelistMap[rowIx]['sheetName'] == sheetName) {
+      String fileId = blUti.url2fileid(filelistMap[rowIx]['fileUrl']);
       return fileId;
     }
   }
