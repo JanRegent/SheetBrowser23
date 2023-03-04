@@ -9,44 +9,12 @@ import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../../2business_layer/appdata/0approot.dart';
-import '../../2business_layer/appdata/approotdata.dart';
-import '../../data_layer/getsheetdl.dart';
 
 import '../alib/alib.dart';
 
-import '../views/detail/cardswiper.dart';
-import '../views/plutogrid/_gridpage.dart';
+import '../_home/views/detail/cardswiper.dart';
+import '../_home/views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
-
-List<dynamic> filelistMap = [];
-String filelistName = '';
-
-Future getFilelist() async {
-  String? filelistName = await appData.appDataGetString('currentFileList');
-
-  String? sheetId = getRootSheetId();
-
-  List<dynamic> fileArr =
-      await GoogleSheetsDL(sheetId: sheetId, sheetName: filelistName)
-          .getSheet();
-
-  List<String> fileHeader = blUti.toListString(fileArr[0]); //--
-  filelistMap.clear();
-  for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
-    filelistMap.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
-  }
-}
-
-Future<String> getFileIdFromFilelist(String sheetName) async {
-  filelistMap.clear();
-  for (var rowIx = 0; rowIx < filelistMap.length; rowIx++) {
-    if (filelistMap[rowIx]['sheetName'] == sheetName) {
-      String fileId = blUti.url2fileid(filelistMap[rowIx]['fileUrl']);
-      return fileId;
-    }
-  }
-  return '';
-}
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {
   al.message(context, 'Loading starred');

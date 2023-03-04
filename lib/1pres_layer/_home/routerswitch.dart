@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:sheetbrowser/1pres_layer/views/detail/cardswiper.dart';
-import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
+import 'package:sheetbrowser/1pres_layer/_home/views/detail/cardswiper.dart';
+import 'package:sheetbrowser/1pres_layer/_home/views/plutogrid/_gridpage.dart';
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
-import '1pres_layer/filelist/filelistcard.dart';
-import '1pres_layer/filelist/inboxhome.dart';
-import '1pres_layer/_home/__sidebar.dart';
-import '2business_layer/appdata/0approot.dart';
+import '../filelist/filelistmap.dart';
+import '../filelist/inboxhome.dart';
+import '__sidebar.dart';
+import '../../2business_layer/appdata/0approot.dart';
 
 class RouterSwitch extends StatefulWidget {
   const RouterSwitch({super.key});
@@ -23,7 +23,7 @@ class _RouterSwitchState extends State<RouterSwitch> {
   String action = ''; // 'getNews';
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
-    route2Page = (await appData.appDataGetString('route2Page'))!;
+    route2Page = (await appData.appDataGetString('route2Page'));
     List<dynamic> rowsArr = [];
     if (route2Page == 'filelist') {
       await getFilelist();

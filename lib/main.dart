@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sheetbrowser/routerswitch.dart';
+import 'package:sheetbrowser/1pres_layer/_home/routerswitch.dart';
 
 import '1pres_layer/_home/help/errorpage.dart';
 import '2business_layer/appdata/0approot.dart';
@@ -10,6 +10,7 @@ import '2business_layer/appdata/approotdata.dart';
 import '2business_layer/models/sheetdb/_sheetdb.dart';
 
 import 'data_layer/isloading/backgrounscompleter.dart';
+import './1pres_layer/filelist/filelistmap.dart';
 
 //chatGPT
 //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
@@ -78,6 +79,8 @@ Future<bool> mainInit() async {
 
     return false;
   }
+
+  await getFilelistTry();
 
   backgroundCompleter();
 

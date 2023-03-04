@@ -2,7 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../2business_layer/appdata/approotdata.dart';
+import '../../../../2business_layer/appdata/approotdata.dart';
 import 'cardactions.dart';
 
 import 'detailapage.dart';

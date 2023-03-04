@@ -3,7 +3,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
-import '../../alib/alib.dart';
+import '../../../alib/alib.dart';
 
 class DetailMenu extends StatefulWidget {
   final Map rowmap;

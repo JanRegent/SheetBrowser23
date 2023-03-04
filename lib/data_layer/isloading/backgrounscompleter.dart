@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
-import 'package:sheetbrowser/1pres_layer/filelist/filelistcard.dart';
 import 'package:sheetbrowser/2business_layer/getsheet.dart';
 
+import '../../1pres_layer/filelist/filelistmap.dart';
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
 
@@ -18,7 +18,6 @@ Future backgroundCompleter() async {
   if (!isar.isOpen) {
     await Future.delayed(const Duration(seconds: 3));
   }
-  await getFilelist();
 
   String? lastCompleted = appData.getString('backgroundCompleter-lastDate');
 

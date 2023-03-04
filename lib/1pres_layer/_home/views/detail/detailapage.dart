@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
+import '../../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
-import '../../../data_layer/getsheetdl.dart';
-import '../../alib/alib.dart';
+import '../../../../data_layer/getsheetdl.dart';
+import '../../../alib/alib.dart';
 import 'detailtags.dart';
 
 import 'detailrowsmapwidgets.dart';

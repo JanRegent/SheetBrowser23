@@ -45,7 +45,7 @@ class AppDataPrefs {
     }
   }
 
-  Future<String?> appDataGetString(String key) async {
+  Future<String> appDataGetString(String key) async {
     if (key.isEmpty) return '';
 
     String? value = await isar.appdatas
@@ -55,7 +55,11 @@ class AppDataPrefs {
         .sheetNameEqualTo('')
         .valueProperty()
         .findFirst();
-    return value;
+    try {
+      return value ?? '';
+    } catch (_) {
+      return '';
+    }
   }
 
   //-------------------------------------------------------string
