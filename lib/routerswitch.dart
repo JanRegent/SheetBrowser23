@@ -22,8 +22,9 @@ class _RouterSwitchState extends State<RouterSwitch> {
   String action = ''; // 'getNews';
   Map configRow = {};
   Future<String> getData(BuildContext context) async {
-    route2Page = AppDataPrefs.getString('route2Page')!;
-
+    print('----');
+    route2Page = (await appDataPrefs.appDataReadGetString('route2Page'))!;
+    print(route2Page);
     List<dynamic> rowsArr = [];
     if (route2Page == 'filelist') {
       await getFilelist();
@@ -35,11 +36,11 @@ class _RouterSwitchState extends State<RouterSwitch> {
     if (rowsArr.isEmpty) {
       await currentSheet.getSheet('', '');
     }
-    configRow['fileUrl'] = AppDataPrefs.getRootSheetId();
+    configRow['fileUrl'] = appDataPrefs.getRootSheetId();
 
     // ignore: use_build_context_synchronously
 
-    return 'ok';
+    return route2Page;
   }
 
   Row titleSwitch() {

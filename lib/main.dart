@@ -58,7 +58,7 @@ Future<bool> mainInit() async {
   }
 
   try {
-    await AppDataPrefs.apikeyRootSheetIdLoad();
+    await appDataPrefs.apikeyRootSheetIdLoad();
   } catch (e, s) {
     logDb.createErr(
         'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());
@@ -78,7 +78,7 @@ Future<bool> mainInit() async {
     return false;
   }
 
-  backgroundCompleter(() {});
+  backgroundCompleter();
 
   return true;
 }

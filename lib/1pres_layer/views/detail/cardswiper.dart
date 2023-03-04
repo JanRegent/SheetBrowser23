@@ -49,8 +49,8 @@ class _CardSwiperState extends State<CardSwiper> {
     }
 
     try {
-      String? startRowStr = AppDataPrefs.getString(
-          '${widget.configRow['sheetName']}__bookmarkLastRowVisit');
+      String? startRowStr = appDataPrefs
+          .getString('${widget.configRow['sheetName']}__bookmarkLastRowVisit');
       //filtered localIds like starred has no sheetName
       startRow = int.tryParse(startRowStr!)!;
     } catch (_) {
@@ -72,7 +72,7 @@ class _CardSwiperState extends State<CardSwiper> {
     try {
       //filtered localIds like starred has no sheetName
       String sheetName = widget.configRow['sheetName'];
-      AppDataPrefs.setString(
+      appDataPrefs.setString(
           '${sheetName}__bookmarkLastRowVisit', index.toString());
     } catch (__) {}
   }

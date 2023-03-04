@@ -1,7 +1,6 @@
 import 'package:cupertino_setting_control/cupertino_setting_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 import 'package:sheetbrowser/2business_layer/appdata/appversion.dart';
 import 'package:sheetbrowser/2business_layer/buildversion.dart';
 
@@ -144,10 +143,10 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
             ]));
     Column version() {
       return Column(
-        children: [
-          const Text('appVersion:   $appVersion'),
-          const Text('buildVersion: $buildVersion'),
-          Text('at domain: ${AppDataPrefs.getString('domain')}')
+        children: const [
+          Text('appVersion:   $appVersion'),
+          Text('buildVersion: $buildVersion'),
+          //Text('at domain: ${AppDataPrefs.getString('domain')}')
         ],
       );
     }

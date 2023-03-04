@@ -18,21 +18,19 @@ import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
 List<dynamic> filelistMap = [];
-Map sheetNameFileIdMap = {};
+
 Future getFilelist() async {
-  String? filelistSheetName = AppDataPrefs.getString('currentFileList');
-  String sheetId = AppDataPrefs.getRootSheetId();
+  String? filelistSheetName =
+      await appDataPrefs.appDataReadGetString('currentFileList');
+  String? sheetId = await appDataPrefs.getRootSheetId();
   List<dynamic> fileArr =
-      await GoogleSheetsDL(sheetId: sheetId, sheetName: filelistSheetName!)
+      await GoogleSheetsDL(sheetId: sheetId!, sheetName: filelistSheetName!)
           .getSheet();
 
   List<String> fileHeader = blUti.toListString(fileArr[0]);
   filelistMap.clear();
   for (var rowIx = 1; rowIx < fileArr.length; rowIx++) {
     filelistMap.add(sheetDb.rowMap.row2Map(fileHeader, fileArr[rowIx]));
-    String sheetName = filelistMap.last['sheetName'];
-    String fileId = blUti.url2fileid(filelistMap.last['fileUrl']);
-    sheetNameFileIdMap[sheetName] = fileId;
   }
 }
 
@@ -65,7 +63,7 @@ Map getConfigRow(Map configRow) {
     configRow['fileTitle'] = configRow['sheetName'];
   }
   if (configRow['fileUrl'] == null) {
-    configRow['fileUrl'] = AppDataPrefs.getRootSheetId();
+    configRow['fileUrl'] = appDataPrefs.getRootSheetId();
   }
   return configRow;
 }

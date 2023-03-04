@@ -29,14 +29,14 @@ class GoogleSheetsDL {
   });
 
   Future<List> getSheet() async {
-    String? apiKey = AppDataPrefs.getApikey();
+    String? apiKey = appDataPrefs.getApikey();
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) {
         String errMess = 'Error:[DL] Could not connect to server';
-        AppDataPrefs.setString('errorLastDL', errMess);
+        appDataPrefs.setString('errorLastDL', errMess);
         throw Exception(errMess);
       }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -100,7 +100,7 @@ class Failure {
 
 Future appendTagsCommunity(
     String sheetName, String sheetID, String tags) async {
-  String? communityServiceUrl = AppDataPrefs.getString('communityServiceUrl');
+  String? communityServiceUrl = appDataPrefs.getString('communityServiceUrl');
 
   String url =
       '$communityServiceUrl?action=appendTags&sheetName=$sheetName&sheetID=$sheetID&tags=$tags';

@@ -50,14 +50,6 @@ class _SidebarHomeState extends State<SidebarHome> {
   }
 
   ListTile backgroundCompleterLastDateListTile() {
-    isloadingAction.value = 'Data:';
-    isloadingPhaseMessage.value =
-        'Up to date ${AppDataPrefs.getString('backgroundCompleter-lastDate')}';
-
-    setStateCallback() {
-      setState(() {});
-    }
-
     return ListTile(
         leading: Obx(() => Text(' ${isloadingAction.value}',
             style: const TextStyle(fontSize: 18))),
@@ -65,13 +57,13 @@ class _SidebarHomeState extends State<SidebarHome> {
             style: const TextStyle(fontSize: 18))),
         trailing: IconButton(
             onPressed: () async {
-              await AppDataPrefs.setString('backgroundCompleter-lastDate',
+              await appDataPrefs.setString('backgroundCompleter-lastDate',
                   'loading for ${blUti.todayStr()}');
               setState(() {
                 backgroundCompleterIsRunning = true;
               });
 
-              backgroundCompleter(setStateCallback);
+              backgroundCompleter();
               setState(() {
                 backgroundCompleterIsRunning = false;
               });

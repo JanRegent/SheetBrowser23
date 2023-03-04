@@ -14,13 +14,13 @@ RxBool isDataLoading = false.obs;
 RxString isloadingAction = ''.obs;
 RxString isloadingPhaseMessage = ''.obs;
 
-Future backgroundCompleter(Function setStateCallback) async {
+Future backgroundCompleter() async {
   if (!isar.isOpen) {
     await Future.delayed(const Duration(seconds: 3));
   }
 
   String? lastCompleted =
-      AppDataPrefs.getString('backgroundCompleter-lastDate');
+      appDataPrefs.getString('backgroundCompleter-lastDate');
 
   if (lastCompleted == blUti.todayStr()) return;
 
@@ -45,10 +45,8 @@ Future backgroundCompleter(Function setStateCallback) async {
     EasyLoading.showError(e);
   }).whenComplete(() async {
     EasyLoading.dismiss();
-    AppDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
+    appDataPrefs.setString('backgroundCompleter-lastDate', blUti.todayStr());
   });
   backgroundCompleterIsRunning = false;
-  try {
-    setStateCallback;
-  } catch (_) {}
+  try {} catch (_) {}
 }
