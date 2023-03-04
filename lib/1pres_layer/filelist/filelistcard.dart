@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
+import '../../2business_layer/appdata/0approot.dart';
 import '../../2business_layer/appdata/approotdata.dart';
 import '../../data_layer/getsheetdl.dart';
 
@@ -65,7 +66,7 @@ Map getConfigRow(Map configRow) {
     configRow['fileTitle'] = configRow['sheetName'];
   }
   if (configRow['fileUrl'] == null) {
-    configRow['fileUrl'] = appData.getRootSheetId();
+    configRow['fileUrl'] = getRootSheetId();
   }
   return configRow;
 }

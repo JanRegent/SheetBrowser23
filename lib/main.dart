@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sheetbrowser/routerswitch.dart';
 
 import '1pres_layer/_home/help/errorpage.dart';
+import '2business_layer/appdata/0approot.dart';
 import '2business_layer/appdata/approotdata.dart';
 
 import '2business_layer/models/sheetdb/_sheetdb.dart';
@@ -58,7 +59,7 @@ Future<bool> mainInit() async {
   }
 
   try {
-    await appData.apikeyRootSheetIdLoad();
+    await apikeyRootSheetIdLoad();
   } catch (e, s) {
     logDb.createErr(
         'main().AppDataPrefs.appRootConfigLoad()', e.toString(), s.toString());

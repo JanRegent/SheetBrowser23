@@ -4,7 +4,7 @@ import '../1pres_layer/alib/uti.dart';
 import '../1pres_layer/views/plutogrid/cols.dart';
 import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
-import 'appdata/approotdata.dart';
+import 'appdata/0approot.dart';
 
 import 'models/sheetdb/sheet.dart';
 import 'models/sheetdb/_sheetdb.dart';
@@ -34,7 +34,7 @@ class GetSheet {
     if (fileId.isEmpty) return;
 
     if (fileId.isEmpty) {
-      fileId = (await appData.getRootSheetId())!;
+      fileId = getRootSheetId();
     }
 
     try {

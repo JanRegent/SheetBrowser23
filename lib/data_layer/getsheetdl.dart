@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
+import '../2business_layer/appdata/0approot.dart';
+
 ///CORS
 ///https://pub.dev/packages/flutter_cors
 ///
@@ -29,7 +31,7 @@ class GoogleSheetsDL {
   });
 
   Future<List> getSheet() async {
-    String? apiKey = appData.getApikey();
+    String? apiKey = getApikey();
     final url =
         'https://sheets.googleapis.com/v4/spreadsheets/$sheetId/values/$sheetName?key=$apiKey';
     try {
