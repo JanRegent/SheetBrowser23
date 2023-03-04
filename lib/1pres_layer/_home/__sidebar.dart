@@ -31,7 +31,6 @@ class _SidebarXAppState extends State<SidebarXApp> {
   @override
   void initState() {
     super.initState();
-    getFilelist();
   }
 
   @override

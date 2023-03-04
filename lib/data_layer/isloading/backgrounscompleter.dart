@@ -18,6 +18,7 @@ Future backgroundCompleter() async {
   if (!isar.isOpen) {
     await Future.delayed(const Duration(seconds: 3));
   }
+  await getFilelist();
 
   String? lastCompleted = appData.getString('backgroundCompleter-lastDate');
 
@@ -26,8 +27,6 @@ Future backgroundCompleter() async {
   backgroundCompleterIsRunning = true;
   //----------------------------------------------------clear
   await sheetDb.sheeetsClear();
-
-  await getFilelist();
 
   //--------------------------------------------------------load
   Future.delayed(const Duration(seconds: 1), () async {

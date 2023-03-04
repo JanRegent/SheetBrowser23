@@ -1,5 +1,3 @@
-// ----------------------------------------------------root vars
-
 // ignore_for_file: file_names
 
 import 'package:global_configuration/global_configuration.dart';
@@ -8,10 +6,11 @@ import 'package:sheetbrowser/data_layer/getsheetdl.dart';
 import '../models/sheetdb/_sheetdb.dart';
 import 'approotdata.dart';
 
-String? getApikey() => GlobalConfiguration().getValue("apikey");
+String? getApikey() => GlobalConfiguration().getValue('apikey');
 
-String getRootSheetId() => GlobalConfiguration().getValue("rootSheetId");
+String getRootSheetId() => GlobalConfiguration().getValue('rootSheetId');
 
+//-------------------------------------------------------------load/save
 Future apikeyRootSheetIdLoad() async {
   await appData.appDataClear();
   try {
