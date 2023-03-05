@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'detailmenu.dart';
-import '../../../data_layer/getsheetdl.dart';
-import '../../alib/alib.dart';
+
 import 'detailtags.dart';
 
 import 'detailrowsmapwidgets.dart';
@@ -35,7 +34,7 @@ class _DetailPageState extends State<DetailPage> {
     listWidgets.add(DetailMenu(rowmap, widget.configRow));
 
     // ignore: use_build_context_synchronously
-    listWidgets.add(starRow(context, widget.localId, rowmap));
+    listWidgets.add(starTagsRow(context, widget.localId, rowmap));
     // ignore: use_build_context_synchronously
     List<Widget> rowmapWidgets = await rowmapWidgetsGet(
         context, rowmap, widget.configRow, widget.localId);
@@ -44,37 +43,18 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   //-------------------------------------------------------star
-  Row starRow(BuildContext context, localId, Map rowmap) {
-    Widget starredWidget = const Icon(Icons.star_border);
-    try {
-      if (rowmap['tags'].contains('*')) {
-        starredWidget = const Icon(Icons.star);
-      } else {
-        // ignore: use_build_context_synchronously
-        starredWidget = addStarIcon(context, rowmap, localId);
-      }
-    } catch (_) {}
+  Row starTagsRow(BuildContext context, localId, Map rowmap) {
     return Row(
       children: [
         Text(rowmap.keys.first),
-        starredWidget,
+        const Text('  '),
+        rowmap['tags'].contains('*')
+            ? const Icon(Icons.star)
+            : const Icon(Icons.star_border),
+        const Text('  '),
         addTagsIcon(context, localId, rowmap)
       ],
     );
-  }
-
-  IconButton addStarIcon(BuildContext context, Map rowmap, int localId) {
-    return IconButton(
-        onPressed: () async {
-          String sheetName = rowmap['sheetName'];
-          int? sheetID = int.tryParse(rowmap['ID']);
-          await appendTagsCommunity(sheetName, sheetID.toString(), '*');
-          await sheetDb.updateOps.updateTags(localId, '*');
-          setState(() {});
-          // ignore: use_build_context_synchronously
-          al.message(context, 'Added to starred');
-        },
-        icon: const Icon(Icons.star_border));
   }
 
   //-------------------------------------------------------tags
