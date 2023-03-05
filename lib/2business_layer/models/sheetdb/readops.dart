@@ -151,8 +151,12 @@ class ReadOps {
         .tagsListProperty()
         .findAll();
     Set<String> set = {};
-    for (var i = 0; i < tagsArr.length; i++) {
-      set.addAll(tagsArr[i]);
+    for (var rowtagIx = 0; rowtagIx < tagsArr.length; rowtagIx++) {
+      for (var i = 0; i < tagsArr[rowtagIx].length; i++) {
+        if (tagsArr[rowtagIx][i].trim().isEmpty) continue;
+        set.add(tagsArr[rowtagIx][i].trim());
+      }
+      //set.addAll(tagsArr[rowtagIx]);
     }
     return set.sorted().toList();
   }

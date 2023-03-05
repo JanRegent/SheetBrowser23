@@ -6,10 +6,6 @@ import 'package:sidebarx/sidebarx.dart';
 
 import '../../2business_layer/appdata/appsettingspage.dart';
 
-import '../../2business_layer/models/sheetdb/_sheetdb.dart';
-
-import '../alib/customslidingswitch.dart';
-
 import '../filelist/filelistcard.dart';
 import '../filelist/filelistmap.dart';
 import '../filelist/inboxhome.dart';
@@ -202,13 +198,13 @@ class ExampleSidebarX extends StatelessWidget {
             label: 'Tags',
             onTap: () async {
               EasyLoading.show(status: 'Loading tags');
-              List<String> tags = await sheetDb.readOps.readTags();
+
               EasyLoading.dismiss();
               // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => TagSelectPage(tags),
+                    builder: (ctx) => const TagSelectPage(),
                   ));
             }),
         SidebarXItem(
@@ -219,16 +215,6 @@ class ExampleSidebarX extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (ctx) => const AppSettingsPage(),
-                  ));
-            }),
-        SidebarXItem(
-            icon: Icons.settings,
-            label: 'StepperInRowPage',
-            onTap: () async {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (ctx) => const SlidingSwitchPage(),
                   ));
             }),
       ],

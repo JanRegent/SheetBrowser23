@@ -13,8 +13,7 @@ import '../views/detail/cardswiper.dart';
 
 // ignore: must_be_immutable
 class TagSelectPage extends StatefulWidget {
-  final List<String> tags;
-  const TagSelectPage(this.tags, {Key? key}) : super(key: key);
+  const TagSelectPage({Key? key}) : super(key: key);
 
   @override
   State<TagSelectPage> createState() => _TagSelectPageState();
@@ -26,24 +25,29 @@ class _TagSelectPageState extends State<TagSelectPage> {
     super.initState();
   }
 
+  List<String> tags = [];
+  Future<String> getDataTags() async {
+    tags = await sheetDb.readOps.readTags();
+    return 'OK';
+  }
+
   TextEditingController textEditingController = TextEditingController();
 
   SearchableList searchableKeyListview() {
     return SearchableList<String>(
-      initialList: widget.tags,
+      initialList: tags,
       builder: (String keyName) => ListTile(
           title: Row(
         children: [
           ElevatedButton(
               onPressed: () async {
-                setState(() {
-                  textEditingController.text = keyName;
-                });
+                textEditingController.text = keyName;
+                await showTags();
               },
               child: Text(keyName)),
         ],
       )),
-      filter: (value) => widget.tags
+      filter: (value) => tags
           .where(
             (element) => element.toLowerCase().contains(value),
           )
@@ -63,32 +67,52 @@ class _TagSelectPageState extends State<TagSelectPage> {
     );
   }
 
-  IconButton searchButton() {
-    return IconButton(
-        onPressed: () async {
-          List<int> ids =
-              await sheetDb.readOps.readRowsTag(textEditingController.text);
+  Future showTags() async {
+    List<int> ids =
+        await sheetDb.readOps.readRowsTag(textEditingController.text);
 
-          Map configRow = {};
-          configRow['title'] = 'Tag: ${textEditingController.text}';
-          // ignore: use_build_context_synchronously
-          await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => CardSwiper(ids, configRow),
-              ));
-        },
-        icon: const Icon(Icons.search));
+    Map configRow = {};
+    configRow['title'] = 'Tag: ${textEditingController.text}';
+    // ignore: use_build_context_synchronously
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => CardSwiper(ids, configRow),
+        ));
   }
+
+  // IconButton searchButton() {
+  //   return IconButton(
+  //       onPressed: () async {
+  //         await showTags();
+  //       },
+  //       icon: const Icon(Icons.search));
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: textEditingController.text.isEmpty
-              ? const Text('Select tag')
-              : searchButton(),
-        ),
-        body: searchableKeyListview());
+        appBar: AppBar(title: const Text('Select tag')),
+        body: FutureBuilder<String>(
+            future: getDataTags(), // async work
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Column(
+                    children: const [
+                      Text('Tags loading'),
+                      Text(' '),
+                      CircularProgressIndicator()
+                    ],
+                  );
+
+                default:
+                  if (snapshot.hasError) {
+                    return Text('DetailPage\n\n Error: ${snapshot.error}');
+                  } else {
+                    return searchableKeyListview();
+                  }
+              }
+            }));
   }
 }

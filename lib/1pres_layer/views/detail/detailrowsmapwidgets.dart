@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:parsed_readmore/parsed_readmore.dart';
+import 'package:sheetbrowser/1pres_layer/alib/uti.dart';
 
 import 'detailmenu.dart';
 
@@ -9,17 +10,14 @@ Future<List<Widget>> rowmapWidgetsGet(
   List<Widget> rowmapWidgets = [];
 
   void key2listWidget(String key, List<Widget> list, bool isFirstKey) {
-    String value = '';
-    try {
-      // ignore: unnecessary_string_interpolations
-      value = rowmap['$key'];
-    } catch (_) {
-      value = '';
-    }
-
     String text = '';
     try {
-      text = rowmap[key].toString().trim();
+      if (key == 'tags') {
+        List<String> tags = blUti.toListString(rowmap[key]);
+        text = tags.join(',');
+      } else {
+        text = rowmap[key].toString().trim();
+      }
     } catch (_) {
       text = '';
     }
@@ -56,7 +54,7 @@ Future<List<Widget>> rowmapWidgetsGet(
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         title: valueText(text),
-        trailing: rowItemRightPopup(context, value),
+        trailing: rowItemRightPopup(context, text),
       );
     }
 
@@ -67,7 +65,7 @@ Future<List<Widget>> rowmapWidgetsGet(
           style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         title: valueText(text),
-        trailing: rowItemRightPopup(context, value),
+        trailing: rowItemRightPopup(context, text),
       );
     }
 
