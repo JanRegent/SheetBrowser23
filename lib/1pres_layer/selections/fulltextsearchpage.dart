@@ -53,9 +53,7 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           ElevatedButton(
               onPressed: () async {
-                setState(() {
-                  textEditingController.text = keyName;
-                });
+                await fulltextSearch(keyName);
               },
               child: Text(keyName)),
         ],
@@ -80,20 +78,23 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  Future fulltextSearch(String fulltextValue) async {
+    List<int> localIds = await sheetDb.readOps.readSearch(fulltextValue);
+
+    Map configRow = {};
+    configRow['title'] = fulltextValue;
+    // ignore: use_build_context_synchronously
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => CardSwiper(localIds, configRow),
+        ));
+  }
+
   IconButton searchButton() {
     return IconButton(
         onPressed: () async {
-          List<int> localIds =
-              await sheetDb.readOps.readSearch(textEditingController.text);
-
-          Map configRow = {};
-          configRow['title'] = textEditingController.text;
-          // ignore: use_build_context_synchronously
-          await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => CardSwiper(localIds, configRow),
-              ));
+          await fulltextSearch(textEditingController.text);
         },
         icon: const Icon(Icons.search));
   }

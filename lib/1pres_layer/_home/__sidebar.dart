@@ -10,7 +10,7 @@ import '../filelist/filelistcard.dart';
 import '../filelist/filelistmap.dart';
 import '../filelist/inboxhome.dart';
 import '../selections/selectionspage.dart';
-import '../selections/searchpage.dart';
+import '../selections/fulltextsearchpage.dart';
 import '_home.dart';
 
 class SidebarXApp extends StatefulWidget {
