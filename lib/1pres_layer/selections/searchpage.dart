@@ -118,27 +118,55 @@ class _SearchPageState extends State<SearchPage> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: isLoading
-            ? const CircularProgressIndicator()
-            : Row(
-                children: [
-                  textEditingController.text.length > 1
-                      ? const Text('')
-                      : const Text('Day or word?  '),
-                  textEditingController.text.length < 2
-                      ? const Text('')
-                      : searchButton()
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            const SliverAppBar(
+              title: Text('Fulltext search'),
+              pinned: true,
+              floating: true,
+              bottom: TabBar(
+                isScrollable: true,
+                tabs: [
+                  Tab(child: Icon(Icons.calendar_month)),
+                  Tab(child: Icon(Icons.wordpress)),
                 ],
               ),
-        actions: [searchRels2clipboard()],
-      ),
-      body: isLoading
-          ? const Text('Awaiting search results...')
-          : searchableKeyListview(),
-
-      //searchableKeyListview()
+            ),
+          ];
+        },
+        body: TabBarView(
+          children: <Widget>[
+            searchableKeyListview(),
+            const Icon(Icons.directions_transit, size: 350),
+          ],
+        ),
+      )),
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: isLoading
+    //         ? const CircularProgressIndicator()
+    //         : Row(
+    //             children: [
+    //               textEditingController.text.length > 1
+    //                   ? const Text('')
+    //                   : const Text('Day or word?  '),
+    //               textEditingController.text.length < 2
+    //                   ? const Text('')
+    //                   : searchButton()
+    //             ],
+    //           ),
+    //     actions: [searchRels2clipboard()],
+    //   ),
+    //   body: isLoading
+    //       ? const Text('Awaiting search results...')
+    //       : searchableKeyListview(),
+
+    //   //searchableKeyListview()
+    // );
   }
 }

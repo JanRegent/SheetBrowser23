@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:sheetbrowser/1pres_layer/selections/tagselectpage.dart';
 
 import 'package:sidebarx/sidebarx.dart';
@@ -178,8 +178,8 @@ class ExampleSidebarX extends StatelessWidget {
                   ));
             }),
         SidebarXItem(
-            icon: Icons.search,
-            label: 'Collections',
+            icon: Icons.select_all,
+            label: 'Selects',
             onTap: () async {
               await Navigator.push(
                   context,
@@ -189,7 +189,7 @@ class ExampleSidebarX extends StatelessWidget {
             }),
         SidebarXItem(
             icon: Icons.star,
-            label: 'Starred all',
+            label: 'Starred',
             onTap: () async {
               await carouselStars(context, '');
             }),
@@ -197,10 +197,6 @@ class ExampleSidebarX extends StatelessWidget {
             icon: Icons.label,
             label: 'Tags',
             onTap: () async {
-              EasyLoading.show(status: 'Loading tags');
-
-              EasyLoading.dismiss();
-              // ignore: use_build_context_synchronously
               await Navigator.push(
                   context,
                   MaterialPageRoute(
