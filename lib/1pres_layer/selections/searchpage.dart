@@ -7,7 +7,7 @@ import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
 import '../alib/alib.dart';
 import '../alib/uti.dart';
-import '../_home/views/detail/cardswiper.dart';
+import '../views/detail/cardswiper.dart';
 
 ///
 ///https://pub.dev/packages/multiple_search_selection/example

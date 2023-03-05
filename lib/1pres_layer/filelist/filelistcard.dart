@@ -12,8 +12,8 @@ import '../../2business_layer/appdata/0approot.dart';
 
 import '../alib/alib.dart';
 
-import '../_home/views/detail/cardswiper.dart';
-import '../_home/views/plutogrid/_gridpage.dart';
+import '../views/detail/cardswiper.dart';
+import '../views/plutogrid/_gridpage.dart';
 import 'filelistcardmenu.dart';
 
 Future carouselStars(BuildContext context, String sheetNameOrEmpty) async {

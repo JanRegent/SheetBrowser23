@@ -1,8 +1,8 @@
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../1pres_layer/alib/uti.dart';
-import '../1pres_layer/_home/views/plutogrid/cols.dart';
-import '../1pres_layer/_home/views/plutogrid/rows.dart';
+import '../1pres_layer/views/plutogrid/cols.dart';
+import '../1pres_layer/views/plutogrid/rows.dart';
 import '../data_layer/getsheetdl.dart';
 import 'appdata/0approot.dart';
 

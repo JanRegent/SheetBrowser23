@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../../2business_layer/getsheet.dart';
-import '../../../alib/alib.dart';
-import '../../../filelist/filelistcard.dart';
+import '../../../2business_layer/getsheet.dart';
+import '../../alib/alib.dart';
+import '../../filelist/filelistcard.dart';
 import '../detail/cardswiper.dart';
 
 //import 'gtidviewopt.dart';

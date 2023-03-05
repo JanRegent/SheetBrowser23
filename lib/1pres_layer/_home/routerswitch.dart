@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sheetbrowser/1pres_layer/_home/views/detail/cardswiper.dart';
-import 'package:sheetbrowser/1pres_layer/_home/views/plutogrid/_gridpage.dart';
+import 'package:sheetbrowser/1pres_layer/views/detail/cardswiper.dart';
+import 'package:sheetbrowser/1pres_layer/views/plutogrid/_gridpage.dart';
 
 import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 

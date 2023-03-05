@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
-import '../../../../data_layer/getsheetdl.dart';
-import '../../../alib/alib.dart';
+import '../../../data_layer/getsheetdl.dart';
+import '../../alib/alib.dart';
 
 //------------------------------------------------------tags
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import '../../../../2business_layer/models/sheetdb/sheet.dart';
-import '../../../../2business_layer/models/sheetdb/_sheetdb.dart';
+import '../../../2business_layer/models/sheetdb/sheet.dart';
+import '../../../2business_layer/models/sheetdb/_sheetdb.dart';
 
 Future<List<PlutoRow>> gridRowsMap(
     List<Sheet> sheets, List<String> cols) async {

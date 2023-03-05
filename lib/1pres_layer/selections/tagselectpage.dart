@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../2business_layer/models/sheetdb/_sheetdb.dart';
-import '../_home/views/detail/cardswiper.dart';
+import '../views/detail/cardswiper.dart';
 
 ///
 ///https://pub.dev/packages/multiple_search_selection/example
