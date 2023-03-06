@@ -9,8 +9,9 @@ import '../../2business_layer/appdata/appsettingspage.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/filelistmap.dart';
 import '../filelist/inboxhome.dart';
+import '../selections/fulltextchoice.dart';
 import '../selections/selectionspage.dart';
-import '../selections/fulltextsearchpage.dart';
+
 import '_home.dart';
 
 class SidebarXApp extends StatefulWidget {
@@ -174,7 +175,7 @@ class ExampleSidebarX extends StatelessWidget {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (ctx) => const SearchPage(),
+                    builder: (ctx) => const FulltextChoicePage(),
                   ));
             }),
         SidebarXItem(

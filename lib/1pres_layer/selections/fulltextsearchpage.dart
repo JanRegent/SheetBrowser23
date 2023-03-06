@@ -13,7 +13,8 @@ import '../views/detail/cardswiper.dart';
 ///
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final String byDateWords;
+  const SearchPage(this.byDateWords, {Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -110,11 +111,11 @@ class _SearchPageState extends State<SearchPage> {
           body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            const SliverAppBar(
-              title: Text('Fulltext search'),
+            SliverAppBar(
+              title: Text('Fulltext search ${widget.byDateWords}'),
               pinned: true,
               floating: true,
-              bottom: TabBar(
+              bottom: const TabBar(
                 isScrollable: true,
                 tabs: [
                   Tab(child: Icon(Icons.calendar_month)),
