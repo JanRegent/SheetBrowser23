@@ -1,1 +1,1 @@
-const buildVersion = 'fulltextSearch---05-03-2023 22:03:30,11';     
+const buildVersion = 'fulltextSearch-2---06-03-2023  9:59:32,65';     

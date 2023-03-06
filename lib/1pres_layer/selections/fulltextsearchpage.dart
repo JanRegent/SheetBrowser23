@@ -1,11 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
-import '../alib/alib.dart';
 import '../alib/uti.dart';
 import '../views/detail/cardswiper.dart';
 
@@ -27,8 +25,11 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
+
     keysNames = blUti.lastNdays(5);
+    keysNames.insert(0, '__search__');
     textEditingController.addListener(searchTextChanged);
+    textEditingController.text = blUti.todayStr();
   }
 
   @override
@@ -51,11 +52,13 @@ class _SearchPageState extends State<SearchPage> {
       builder: (String keyName) => ListTile(
           title: Row(
         children: [
-          ElevatedButton(
-              onPressed: () async {
-                await fulltextSearch(keyName);
-              },
-              child: Text(keyName)),
+          keyName == '__search__'
+              ? searchButton()
+              : ElevatedButton(
+                  onPressed: () async {
+                    await fulltextSearch(keyName);
+                  },
+                  child: Text(keyName)),
         ],
       )),
       filter: (value) => keysNames
@@ -65,7 +68,7 @@ class _SearchPageState extends State<SearchPage> {
           .toList(),
       searchTextController: textEditingController,
       inputDecoration: InputDecoration(
-        labelText: "Search key or click",
+        labelText: "Write date or click date buttons",
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
@@ -99,24 +102,6 @@ class _SearchPageState extends State<SearchPage> {
         icon: const Icon(Icons.search));
   }
 
-  IconButton searchRels2clipboard() {
-    return IconButton(
-        onPressed: () async {
-          if (textEditingController.text.trim().isEmpty) {
-            al.message(context, 'Text is empty');
-            return;
-          }
-          String csv = await sheetDb.readOps
-              .readSearch2selSheet(textEditingController.text);
-          FlutterClipboard.copy(csv).then((value) => {});
-          // ignore: use_build_context_synchronously
-          al.message(context,
-              'Data in clipboard. Use "Paste special" at empty sheet: ${textEditingController.text}');
-        },
-        icon: const Icon(Icons.search_sharp));
-  }
-
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -147,27 +132,5 @@ class _SearchPageState extends State<SearchPage> {
         ),
       )),
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: isLoading
-    //         ? const CircularProgressIndicator()
-    //         : Row(
-    //             children: [
-    //               textEditingController.text.length > 1
-    //                   ? const Text('')
-    //                   : const Text('Day or word?  '),
-    //               textEditingController.text.length < 2
-    //                   ? const Text('')
-    //                   : searchButton()
-    //             ],
-    //           ),
-    //     actions: [searchRels2clipboard()],
-    //   ),
-    //   body: isLoading
-    //       ? const Text('Awaiting search results...')
-    //       : searchableKeyListview(),
-
-    //   //searchableKeyListview()
-    // );
   }
 }
