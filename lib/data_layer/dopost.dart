@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:sheetbrowser/2business_layer/appdata/approotdata.dart';
 
 import '../2business_layer/models/sheetdb/_sheetdb.dart';
 import 'getsheetdl.dart';
@@ -11,14 +10,7 @@ import 'getsheetdl.dart';
 class GappsAdapter {
   String gappsExecUrl = '';
   bool isReady = false;
-  Future init() async {
-    try {
-      gappsExecUrl = (appData.getString('userAppendUrl'))!;
-      if (gappsExecUrl.isNotEmpty) isReady = true;
-    } catch (_) {
-      isReady = false;
-    }
-  }
+  Future init() async {}
 
   Future getRowsAllDynamic(String fileId, String sheetName) async {
     Dio dio = Dio();

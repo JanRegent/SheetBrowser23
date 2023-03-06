@@ -144,9 +144,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
     Column version() {
       return Column(
         children: const [
-          Text('appVersion:   $appVersion'),
           Text('buildVersion: $buildVersion'),
-          //Text('at domain: ${AppDataPrefs.getString('domain')}')
+          Text('appVersion:   $appVersion'),
         ],
       );
     }

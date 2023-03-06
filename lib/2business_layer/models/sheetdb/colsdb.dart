@@ -57,6 +57,14 @@ class ColsDb extends SheetDb {
     }
   }
 
+  Future<List<Sheet>?> colsHeadersGetAll() async {
+    try {
+      return isar.sheets.filter().aKeyEqualTo('colsHeader').findAll();
+    } catch (_) {
+      return [];
+    }
+  }
+
   Future deleteColsHeader(String sheetName, String fileId) async {
     try {
       List<int> ids = await isar.sheets

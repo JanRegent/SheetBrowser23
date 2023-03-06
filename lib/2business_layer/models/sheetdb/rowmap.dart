@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
+import '../../../1pres_layer/alib/uti.dart';
 import '_sheetdb.dart';
 
 RxString rowmapsIsLoading = ''.obs;
@@ -61,9 +62,18 @@ class RowMap extends SheetDb {
   }
 
   //----------------------------------------------------------convert
+  Map<String, List<String>> colsHeaders = {};
+  Future colsHeadersBuild() async {
+    colsHeaders.clear();
+    List<Sheet>? sheets = await sheetDb.colsDb.colsHeadersGetAll();
+    for (var i = 0; i < sheets!.length; i++) {
+      colsHeaders[sheets[i].aSheetName] = blUti.toListString(sheets[i].rowArr);
+    }
+  }
+
   Future<Map> row2MapLocalId(int localId) async {
     Sheet? sheet = await sheetDb.readOps.readbyLocalId(localId);
-    List<String> cols = await sheetDb.colsDb.colsHeadersGet(sheet!.aSheetName);
+    List<String> cols = colsHeaders[sheet!.aSheetName]!;
     Map rowmap = {};
 
     for (int i = 0; i < cols.length; i++) {

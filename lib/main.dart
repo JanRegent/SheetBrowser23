@@ -84,6 +84,8 @@ Future<bool> mainInit() async {
 
   backgroundCompleter();
 
+  await sheetDb.rowMap.colsHeadersBuild();
+
   return true;
 }
 

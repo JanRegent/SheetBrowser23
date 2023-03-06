@@ -1,1 +1,1 @@
-const buildVersion = 'addTagsDialog---06-03-2023 14:55:23,78';     
+const buildVersion = 'colsHeadersBuild---06-03-2023 17:17:57,91';     

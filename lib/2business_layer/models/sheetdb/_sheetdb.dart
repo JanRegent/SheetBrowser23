@@ -3,7 +3,7 @@ import 'package:isar/isar.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/sheet.dart';
 
 import '../../appdata/appdata.dart';
-import '../../appdata/approotdata.dart';
+
 import '../log.dart';
 import 'colsdb.dart';
 import 'createops.dart';
@@ -39,10 +39,6 @@ class SheetDb {
   Future init() async {}
 
   //----------------------------------------------------------------
-  List<String> selectRowContains() {
-    String? str = appData.getString('select row contains');
-    return str!.split(',');
-  }
 
   Future cleanDb() async {
     try {
