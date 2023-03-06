@@ -9,7 +9,7 @@ import '../../2business_layer/appdata/appsettingspage.dart';
 import '../filelist/filelistcard.dart';
 import '../filelist/filelistmap.dart';
 import '../filelist/inboxhome.dart';
-import '../selections/fulltextchoice.dart';
+import '../selections/fulltextsearchpage.dart';
 import '../selections/selectionspage.dart';
 
 import '_home.dart';
@@ -171,13 +171,7 @@ class ExampleSidebarX extends StatelessWidget {
         SidebarXItem(
             icon: Icons.search,
             label: 'Search',
-            onTap: () async {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (ctx) => const FulltextChoicePage(),
-                  ));
-            }),
+            onTap: () => fulltextDialog(context)),
         SidebarXItem(
             icon: Icons.select_all,
             label: 'Selects',

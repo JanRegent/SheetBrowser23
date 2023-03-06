@@ -1,1 +1,1 @@
-const buildVersion = 'FulltextChoicePage-2---06-03-2023 11:24:09,62';     
+const buildVersion = 'fulltextDialog---06-03-2023 14:13:59,54';     

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:sheetbrowser/2business_layer/models/sheetdb/_sheetdb.dart';
 
+import '../../2business_layer/appdata/approotdata.dart';
 import '../alib/uti.dart';
 import '../views/detail/cardswiper.dart';
 
@@ -11,6 +12,52 @@ import '../views/detail/cardswiper.dart';
 ///https://pub.dev/packages/multiple_search_selection/example
 ///
 ///
+
+void fulltextDialog(BuildContext context) async {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Search by'),
+          content: const Text(''),
+          actions: [
+            ElevatedButton(
+                child: const Text('cancel'),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                }),
+            ElevatedButton(
+              child: const Text('date'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                List<String> keysNames = blUti.lastNdays(5);
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => SearchPage('date', keysNames),
+                    ));
+              },
+            ),
+            ElevatedButton(
+              child: const Text('word'),
+              onPressed: () async {
+                String keyNamesStr =
+                    await appData.appDataGetString('fulltextHintWords');
+                List<String> keysNames = keyNamesStr.split(',');
+                // ignore: use_build_context_synchronously
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => SearchPage('word', keysNames),
+                    ));
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      });
+}
 
 class SearchPage extends StatefulWidget {
   final String byDateWords;
@@ -110,7 +157,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fulltext search ${widget.byDateWords}'),
+        title: Text('Fulltext search by ${widget.byDateWords}'),
       ),
       body: searchableKeyListview(),
 
