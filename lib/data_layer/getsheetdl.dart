@@ -102,11 +102,11 @@ class Failure {
 
 Future appendTagsCommunity(
     String sheetName, String sheetID, String tags) async {
-  String? communityServiceUrl = appData.getString('communityServiceUrl');
+  String? communityServiceUrl =
+      await appData.appDataGetString('communityServiceUrl');
 
   String url =
       '$communityServiceUrl?action=appendTags&sheetName=$sheetName&sheetID=$sheetID&tags=$tags';
-
   await http.get(Uri.parse(url));
 
   return 'OK';
