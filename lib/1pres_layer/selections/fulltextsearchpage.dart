@@ -14,23 +14,26 @@ import '../views/detail/cardswiper.dart';
 
 class SearchPage extends StatefulWidget {
   final String byDateWords;
-  const SearchPage(this.byDateWords, {Key? key}) : super(key: key);
+  final List<String> keysNames;
+  const SearchPage(this.byDateWords, this.keysNames, {Key? key})
+      : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<String> keysNames = [];
-
   @override
   void initState() {
     super.initState();
 
-    keysNames = blUti.lastNdays(5);
-    keysNames.insert(0, '__search__');
+    widget.keysNames.insert(0, '__search__');
     textEditingController.addListener(searchTextChanged);
-    textEditingController.text = blUti.todayStr();
+    try {
+      textEditingController.text = widget.keysNames[1];
+    } catch (_) {
+      textEditingController.text = '';
+    }
   }
 
   @override
@@ -49,7 +52,7 @@ class _SearchPageState extends State<SearchPage> {
 
   SearchableList searchableKeyListview() {
     return SearchableList<String>(
-      initialList: keysNames,
+      initialList: widget.keysNames,
       builder: (String keyName) => ListTile(
           title: Row(
         children: [
@@ -62,7 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Text(keyName)),
         ],
       )),
-      filter: (value) => keysNames
+      filter: (value) => widget.keysNames
           .where(
             (element) => element.toLowerCase().contains(value),
           )
@@ -105,33 +108,13 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              title: Text('Fulltext search ${widget.byDateWords}'),
-              pinned: true,
-              floating: true,
-              bottom: const TabBar(
-                isScrollable: true,
-                tabs: [
-                  Tab(child: Icon(Icons.calendar_month)),
-                  Tab(child: Icon(Icons.wordpress)),
-                ],
-              ),
-            ),
-          ];
-        },
-        body: TabBarView(
-          children: <Widget>[
-            searchableKeyListview(),
-            const Icon(Icons.directions_transit, size: 350),
-          ],
-        ),
-      )),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Fulltext search ${widget.byDateWords}'),
+      ),
+      body: searchableKeyListview(),
+
+      //searchableKeyListview()
     );
   }
 }
