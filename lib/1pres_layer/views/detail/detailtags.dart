@@ -8,7 +8,8 @@ import '../../alib/alib.dart';
 
 final TextEditingController addTagsController = TextEditingController();
 
-addTagsDialog(BuildContext context, Map rowmap, int localId) async {
+addTagsDialog(BuildContext context, Map rowmap, int localId,
+    VoidCallback setstateCallback) async {
   List<String> tags = rowmap['tags'];
   addTagsController.text = tags.join(',');
   return showDialog(
@@ -47,6 +48,7 @@ addTagsDialog(BuildContext context, Map rowmap, int localId) async {
                 await sheetDb.updateOps
                     .updateTags(localId, addTagsController.text);
                 rowmap['tags'] = addTagsController.text;
+                setstateCallback();
               },
             )
           ],

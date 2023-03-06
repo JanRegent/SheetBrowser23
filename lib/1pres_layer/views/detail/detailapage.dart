@@ -58,9 +58,13 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   //-------------------------------------------------------tags
+  void setStateCallback() {
+    setState(() {});
+  }
+
   IconButton addTagsIcon(BuildContext context, int id, Map rowmap) {
     return IconButton(
-        onPressed: () => addTagsDialog(context, rowmap, id),
+        onPressed: () => addTagsDialog(context, rowmap, id, setStateCallback),
         icon: const Icon(Icons.tag));
   }
 
