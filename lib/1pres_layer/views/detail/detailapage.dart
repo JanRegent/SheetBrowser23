@@ -12,7 +12,10 @@ import 'detailrowsmapwidgets.dart';
 class DetailPage extends StatefulWidget {
   final int localId;
   final Map configRow;
-  const DetailPage(this.localId, this.configRow, {Key? key}) : super(key: key);
+  final VoidCallback swiperSetstate;
+  const DetailPage(this.localId, this.configRow, this.swiperSetstate,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -31,7 +34,8 @@ class _DetailPageState extends State<DetailPage> {
   Future<List<Widget>> getDataListWidgets(BuildContext context) async {
     List<Widget> listWidgets = [];
     Map rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localId);
-    listWidgets.add(DetailMenu(rowmap, widget.configRow));
+    listWidgets
+        .add(DetailMenu(rowmap, widget.configRow, widget.swiperSetstate));
 
     // ignore: use_build_context_synchronously
     listWidgets.add(starTagsRow(context, widget.localId, rowmap));

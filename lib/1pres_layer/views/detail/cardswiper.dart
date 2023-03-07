@@ -1,11 +1,11 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../2business_layer/appdata/approotdata.dart';
 import 'cardactions.dart';
 
 import 'detailapage.dart';
+import 'detailmenu.dart';
 
 class CardSwiper extends StatefulWidget {
   final List<int> localIds;
@@ -29,10 +29,8 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   //---------------------------------------------------------- int startRow
-  int startRow = 0;
 
   void startRowBookmarksSet() {
-    currentRowTitleValue(startRow);
     try {
       if (widget.configRow['sheetName'] == null) {
         widget.configRow['__bookmarkLastRowVisitSave__'] = '';
@@ -52,20 +50,13 @@ class _CardSwiperState extends State<CardSwiper> {
       String? startRowStr = appData
           .getString('${widget.configRow['sheetName']}__bookmarkLastRowVisit');
       //filtered localIds like starred has no sheetName
-      startRow = int.tryParse(startRowStr!)!;
+      startRowCardswiper = int.tryParse(startRowStr!)!;
     } catch (_) {
-      startRow = 0;
+      startRowCardswiper = 0;
     }
-    currentRowTitleValue(startRow);
   }
 
-  void currentRowTitleValue(int currentIndex) {
-    currentRowTitle.value = ' ${(currentIndex + 1)}/${widget.localIds.length}';
-  }
-
-  RxString currentRowTitle = ''.obs;
   void onIndexChanged(int index) {
-    currentRowTitleValue(index);
     if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
       return;
     }
@@ -74,6 +65,12 @@ class _CardSwiperState extends State<CardSwiper> {
       String sheetName = widget.configRow['sheetName'];
       appData.setString('${sheetName}__bookmarkLastRowVisit', index.toString());
     } catch (__) {}
+  }
+
+  void swiperSetstate() {
+    setState(() {
+      //startRow changed
+    });
   }
 
   ConstrainedBox body() {
@@ -85,13 +82,16 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://pub.dev/packages/card_swiper
           //https://github.com/TheAnkurPanchani/card_swiper/
           itemBuilder: (BuildContext context, int rowIndex) {
-            return DetailPage(widget.localIds[rowIndex], widget.configRow);
+            widget.configRow['localIds.length'] = widget.localIds.length;
+            return DetailPage(
+                widget.localIds[rowIndex], widget.configRow, swiperSetstate);
           },
           itemCount: widget.localIds.length,
           onIndexChanged: (index) => onIndexChanged(index),
-          //pagination: const SwiperPagination(),
+          pagination:
+              const SwiperPagination(builder: SwiperPagination.fraction),
           control: const SwiperControl(),
-          index: startRow,
+          index: startRowCardswiper,
           controller: controller,
         ));
   }
@@ -102,8 +102,6 @@ class _CardSwiperState extends State<CardSwiper> {
         appBar: AppBar(
           title: ListTile(
             title: Text(widget.configRow['title']),
-            subtitle: Obx(() => Text('\n${currentRowTitle.value}',
-                style: const TextStyle(fontSize: 18))),
           ),
           actions: getActions(widget.localIds.length, controller, context),
         ),

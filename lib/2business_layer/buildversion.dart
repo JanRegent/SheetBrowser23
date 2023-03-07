@@ -1,1 +1,1 @@
-const buildVersion = 'setStateCallback---06-03-2023 17:34:34,10';     
+const buildVersion = 'swiperSetstate---07-03-2023 10:49:08,04';     

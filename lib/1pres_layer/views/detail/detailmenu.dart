@@ -5,13 +5,17 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
 import '../../alib/alib.dart';
 
+int startRowCardswiper = 0;
+
 class DetailMenu extends StatefulWidget {
   final Map rowmap;
-  final Map configMap;
+  final Map configRow;
+  final VoidCallback swiperSetstate;
 
   const DetailMenu(
     this.rowmap,
-    this.configMap, {
+    this.configRow,
+    this.swiperSetstate, {
     super.key,
   });
 
@@ -22,10 +26,24 @@ class DetailMenu extends StatefulWidget {
 class _DetailMenuState extends State<DetailMenu> {
   late final List<PlutoMenuItem> whiteTapMenus;
 
+  List<PlutoMenuItem> gotoItems = [];
+  void gotoItemsBuild() {
+    int localIdsLength = widget.configRow['localIds.length'];
+    for (int i = 0; i < localIdsLength; i = i + 10) {
+      gotoItems.add(PlutoMenuItem(
+        title: i.toString(),
+        onTap: () async {
+          startRowCardswiper = i;
+          widget.swiperSetstate();
+        },
+      ));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-
+    gotoItemsBuild();
     whiteTapMenus = _makeMenus(context);
   }
 
@@ -52,7 +70,7 @@ class _DetailMenuState extends State<DetailMenu> {
             icon: Icons.open_in_browser,
             onTap: () async {
               await al.openDoc(
-                  widget.configMap['fileUrl'], context, 'Open data source');
+                  widget.configRow['fileUrl'], context, 'Open data source');
             },
           ),
           PlutoMenuItem(
@@ -98,6 +116,11 @@ class _DetailMenuState extends State<DetailMenu> {
             },
           ),
         ],
+      ),
+
+      PlutoMenuItem(
+        title: 'GoTo',
+        children: gotoItems,
       ),
     ];
   }
