@@ -1,7 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-//import 'package:sheetviewer/AL/views/plutogrid/drawergrid.dart';
+import 'filters.dart';
 
+late final PlutoGridStateManager stateManager;
+
+//import 'package:sheetviewer/AL/views/plutogrid/drawergrid.dart';
+List<PlutoColumn> gridCols = [];
 Future<List<PlutoColumn>> colsMap(List<dynamic> colsHeader) async {
   // String? freezeStart =
   //     await viewSetting.valueGet(sheetName + '__|__freezeStart');
@@ -15,7 +20,14 @@ Future<List<PlutoColumn>> colsMap(List<dynamic> colsHeader) async {
   //   freezeEnd = freezeEnd.substring(1, freezeEnd.length - 1);
   // }
   //List<String> endList = freezeEnd.split(',');
-  List<PlutoColumn> gridCols = [];
+  gridCols = [
+    PlutoColumn(
+        title: 'ID',
+        field: '__',
+        type: PlutoColumnType.text(),
+        readOnly: true,
+        width: 50)
+  ];
   for (var colIx = 0; colIx < colsHeader.length; colIx++) {
     String columnName = colsHeader[colIx].toString();
     PlutoColumn col = PlutoColumn(
@@ -49,4 +61,93 @@ PlutoColumnFrozen setFreeze(
     return PlutoColumnFrozen.none;
   }
   return PlutoColumnFrozen.none;
+}
+
+class UserColumnMenu implements PlutoColumnMenuDelegate<UserColumnMenuItem> {
+  @override
+  List<PopupMenuEntry<UserColumnMenuItem>> buildMenuItems({
+    required PlutoGridStateManager stateManager,
+    required PlutoColumn column,
+  }) {
+    return [
+      if (column.key != stateManager.columns.first.key)
+        const PopupMenuItem<UserColumnMenuItem>(
+          value: UserColumnMenuItem.saveFilter,
+          height: 36,
+          enabled: true,
+          child: Text('Save filter', style: TextStyle(fontSize: 13)),
+        ),
+      if (column.key != stateManager.columns.last.key)
+        const PopupMenuItem<UserColumnMenuItem>(
+          value: UserColumnMenuItem.moveNext,
+          height: 36,
+          enabled: true,
+          child: Text('Move next', style: TextStyle(fontSize: 13)),
+        ),
+      if (column.key != stateManager.columns.first.key)
+        const PopupMenuItem<UserColumnMenuItem>(
+          value: UserColumnMenuItem.movePrevious,
+          height: 36,
+          enabled: true,
+          child: Text('Move previous', style: TextStyle(fontSize: 13)),
+        ),
+    ];
+  }
+
+  @override
+  void onSelected({
+    required BuildContext context,
+    required PlutoGridStateManager stateManager,
+    required PlutoColumn column,
+    required bool mounted,
+    required UserColumnMenuItem? selected,
+  }) {
+    switch (selected) {
+      case UserColumnMenuItem.saveFilter:
+        try {
+          List<Map> filters = getFilteredList();
+          Map filt = filters[0];
+          String filtKey =
+              '${filt["columnName"]} ${filt["operator"]} ${filt["value"]}';
+          print(filtKey);
+        } catch (e) {
+          print(e);
+        }
+        break;
+      case UserColumnMenuItem.moveNext:
+        final targetColumn = stateManager.columns
+            .skipWhile((value) => value.key != column.key)
+            .skip(1)
+            .first;
+
+        stateManager.moveColumn(column: column, targetColumn: targetColumn);
+        break;
+      case UserColumnMenuItem.movePrevious:
+        final targetColumn = stateManager.columns.reversed
+            .skipWhile((value) => value.key != column.key)
+            .skip(1)
+            .first;
+
+        stateManager.moveColumn(column: column, targetColumn: targetColumn);
+        break;
+      case null:
+        break;
+    }
+  }
+}
+
+enum UserColumnMenuItem { moveNext, movePrevious, saveFilter }
+
+List<Map> getFilteredList() {
+  List<Map> filtersList = [];
+  for (var index = 0; index < gridCols.length; index++) {
+    String value = filteredColumnGetValue(stateManager, gridCols[index].title);
+    if (value.isEmpty) continue;
+    Map expr = {};
+    expr['columnName'] = gridCols[index].title;
+    expr['operator'] = 'contains';
+    expr['value'] = value;
+    filtersList.add(expr);
+  }
+  return filtersList;
 }

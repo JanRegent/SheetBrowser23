@@ -8,6 +8,7 @@ Future<List<PlutoRow>> gridRowsMap(
   PlutoRow gridRow(List<dynamic> dynRow, int rowIx) {
     PlutoRow plutoRow = PlutoRow(cells: {});
     Map row = sheetDb.rowMap.row2MapSheet(cols, sheets[rowIx]);
+    plutoRow.cells['__'] = PlutoCell(value: row['ID']);
 
     for (var colIx = 0; colIx < cols.length; colIx++) {
       // ignore: unused_local_variable

@@ -62,7 +62,6 @@ class _CardSwiperState extends State<CardSwiper> {
       return;
     }
     try {
-      //filtered localIds like starred has no sheetName
       String sheetName = widget.configRow['sheetName'];
       appData.setString(
           '${sheetName}__bookmarkLastRowVisit', currentRowIndex.toString());

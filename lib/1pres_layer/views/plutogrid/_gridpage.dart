@@ -6,10 +6,10 @@ import '../../../2business_layer/getsheet.dart';
 import '../../alib/alib.dart';
 import '../../filelist/filelistcard.dart';
 import '../detail/cardswiper.dart';
+import 'cols.dart';
 
 //import 'gtidviewopt.dart';
 
-late final PlutoGridStateManager stateManager;
 GetSheet currentSheet = GetSheet();
 
 class GridPage extends StatefulWidget {
@@ -129,6 +129,7 @@ class _GridPageState extends State<GridPage> {
             padding: const EdgeInsets.all(15),
             child: PlutoGrid(
               columns: widget.columns,
+              columnMenuDelegate: UserColumnMenu(),
               rows: widget.rows,
               //columnGroups: columnGroups,
               createFooter: (stateManager) {
