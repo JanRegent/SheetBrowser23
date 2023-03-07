@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import 'filters.dart';
@@ -62,81 +61,6 @@ PlutoColumnFrozen setFreeze(
   }
   return PlutoColumnFrozen.none;
 }
-
-class UserColumnMenu implements PlutoColumnMenuDelegate<UserColumnMenuItem> {
-  @override
-  List<PopupMenuEntry<UserColumnMenuItem>> buildMenuItems({
-    required PlutoGridStateManager stateManager,
-    required PlutoColumn column,
-  }) {
-    return [
-      if (column.key != stateManager.columns.first.key)
-        const PopupMenuItem<UserColumnMenuItem>(
-          value: UserColumnMenuItem.saveFilter,
-          height: 36,
-          enabled: true,
-          child: Text('Save filter', style: TextStyle(fontSize: 13)),
-        ),
-      if (column.key != stateManager.columns.last.key)
-        const PopupMenuItem<UserColumnMenuItem>(
-          value: UserColumnMenuItem.moveNext,
-          height: 36,
-          enabled: true,
-          child: Text('Move next', style: TextStyle(fontSize: 13)),
-        ),
-      if (column.key != stateManager.columns.first.key)
-        const PopupMenuItem<UserColumnMenuItem>(
-          value: UserColumnMenuItem.movePrevious,
-          height: 36,
-          enabled: true,
-          child: Text('Move previous', style: TextStyle(fontSize: 13)),
-        ),
-    ];
-  }
-
-  @override
-  void onSelected({
-    required BuildContext context,
-    required PlutoGridStateManager stateManager,
-    required PlutoColumn column,
-    required bool mounted,
-    required UserColumnMenuItem? selected,
-  }) {
-    switch (selected) {
-      case UserColumnMenuItem.saveFilter:
-        try {
-          List<Map> filters = getFilteredList();
-          Map filt = filters[0];
-          String filtKey =
-              '${filt["columnName"]} ${filt["operator"]} ${filt["value"]}';
-          print(filtKey);
-        } catch (e) {
-          print(e);
-        }
-        break;
-      case UserColumnMenuItem.moveNext:
-        final targetColumn = stateManager.columns
-            .skipWhile((value) => value.key != column.key)
-            .skip(1)
-            .first;
-
-        stateManager.moveColumn(column: column, targetColumn: targetColumn);
-        break;
-      case UserColumnMenuItem.movePrevious:
-        final targetColumn = stateManager.columns.reversed
-            .skipWhile((value) => value.key != column.key)
-            .skip(1)
-            .first;
-
-        stateManager.moveColumn(column: column, targetColumn: targetColumn);
-        break;
-      case null:
-        break;
-    }
-  }
-}
-
-enum UserColumnMenuItem { moveNext, movePrevious, saveFilter }
 
 List<Map> getFilteredList() {
   List<Map> filtersList = [];

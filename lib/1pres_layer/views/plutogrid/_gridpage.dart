@@ -7,6 +7,7 @@ import '../../alib/alib.dart';
 import '../../filelist/filelistcard.dart';
 import '../detail/cardswiper.dart';
 import 'cols.dart';
+import 'menugridpage.dart';
 
 //import 'gtidviewopt.dart';
 
@@ -79,6 +80,36 @@ class _GridPageState extends State<GridPage> {
   Map sheetIDsMap = {};
   List<int> filteredLocalIds = [];
 
+  PlutoGrid plutogrid() {
+    return PlutoGrid(
+      columns: widget.columns,
+      rows: widget.rows,
+      //columnGroups: columnGroups,
+      createFooter: (stateManager) {
+        stateManager.setPageSize(50, notify: false); // default 40
+        return PlutoPagination(stateManager);
+      },
+      onLoaded: (PlutoGridOnLoadedEvent event) {
+        try {
+          stateManager = event.stateManager;
+        } catch (_) {}
+        // gridViewOpt = GridViewOpt(
+        //     widget.fileListRow['fileUrl'],
+        //     widget.fileListRow['sheetName'],
+        //     stateManager,
+        //     widget.columns);
+
+        //gridViewOpt.load();
+        stateManager.setShowColumnFilter(true);
+      },
+      onChanged: (PlutoGridOnChangedEvent event) {
+        if (kDebugMode) {}
+      },
+      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {},
+      //configuration: configuration,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,36 +156,35 @@ class _GridPageState extends State<GridPage> {
             appbarRightPopup()
           ],
         ),
-        body: Container(
-            padding: const EdgeInsets.all(15),
-            child: PlutoGrid(
-              columns: widget.columns,
-              columnMenuDelegate: UserColumnMenu(),
-              rows: widget.rows,
-              //columnGroups: columnGroups,
-              createFooter: (stateManager) {
-                stateManager.setPageSize(50, notify: false); // default 40
-                return PlutoPagination(stateManager);
-              },
-              onLoaded: (PlutoGridOnLoadedEvent event) {
-                try {
-                  stateManager = event.stateManager;
-                } catch (_) {}
-                // gridViewOpt = GridViewOpt(
-                //     widget.fileListRow['fileUrl'],
-                //     widget.fileListRow['sheetName'],
-                //     stateManager,
-                //     widget.columns);
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            //Header Container
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.blue,
+              alignment: Alignment.center,
+              child: const MenuGridPage(),
+            ),
 
-                //gridViewOpt.load();
-                stateManager.setShowColumnFilter(true);
-              },
-              onChanged: (PlutoGridOnChangedEvent event) {
-                if (kDebugMode) {}
-              },
-              onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event) async {},
-              //configuration: configuration,
-            )));
+            //Body Container  ,
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.blue,
+              alignment: Alignment.center,
+              height: 530.0,
+              child: plutogrid(),
+            ),
+          ],
+        )
+
+        // Container(
+        //     padding: const EdgeInsets.all(15),
+        //     child: Column(
+        //       children: [const PlutoMenuBarDemo(), plutogrid()],
+        //     ))
+
+        );
   }
 
   List<int> getFilteredIds(PlutoGridStateManager stateManager) {
