@@ -1,1 +1,1 @@
-const buildVersion = 'MenuGridPage---07-03-2023 16:37:35,65';     
+const buildVersion = 'MenuGridPage-2---07-03-2023 18:17:00,23';     

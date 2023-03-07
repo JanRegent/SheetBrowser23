@@ -176,15 +176,7 @@ class _GridPageState extends State<GridPage> {
               child: plutogrid(),
             ),
           ],
-        )
-
-        // Container(
-        //     padding: const EdgeInsets.all(15),
-        //     child: Column(
-        //       children: [const PlutoMenuBarDemo(), plutogrid()],
-        //     ))
-
-        );
+        ));
   }
 
   List<int> getFilteredIds(PlutoGridStateManager stateManager) {

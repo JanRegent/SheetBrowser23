@@ -36,145 +36,103 @@ class _MenuGridPageState extends State<MenuGridPage> {
 
   List<PlutoMenuItem> _makeMenus(BuildContext context) {
     return [
+      //---------------------------------------------------------Detail
       PlutoMenuItem(
-        title: 'Menu 1',
-        icon: Icons.home,
+        title: 'Detail',
+        icon: Icons.list,
         children: [
           PlutoMenuItem(
-            title: 'Menu 1-1',
+            icon: Icons.add,
+            title: 'Add filtered to detail view',
+            onTap: () {},
+          ),
+          PlutoMenuItem(
+            icon: Icons.list,
+            title: 'Detail view',
+            onTap: () {},
+          ),
+        ],
+      ),
+
+      //---------------------------------------------------------filters
+      PlutoMenuItem(
+        title: 'Filters',
+        icon: Icons.filter,
+        children: [
+          PlutoMenuItem(
+            title: 'Save current filter',
+            onTap: () {
+              try {
+                List<Map> filters = getFilteredList();
+                Map filt = filters[0];
+                String filtKey =
+                    '${filt["columnName"]} ${filt["operator"]} ${filt["value"]}';
+                print(filtKey);
+              } catch (_) {}
+            },
+          ),
+          PlutoMenuItem(
+            title: 'Saved filters',
             icon: Icons.group,
-            onTap: () => message(context, 'Menu 1-1 tap'),
+            onTap: () {},
             children: [
-              PlutoMenuItem(
-                title: 'Menu 1-1-1',
-                onTap: () => message(context, 'Menu 1-1-1 tap'),
-                children: [
-                  PlutoMenuItem(
-                    title: 'Menu 1-1-1-1',
-                    onTap: () => message(context, 'Menu 1-1-1-1 tap'),
-                  ),
-                  PlutoMenuItem(
-                    title: 'Menu 1-1-1-2',
-                    onTap: () => message(context, 'Menu 1-1-1-2 tap'),
-                  ),
-                ],
-              ),
               PlutoMenuItem(
                 title: 'Menu 1-1-2',
                 onTap: () => message(context, 'Menu 1-1-2 tap'),
               ),
             ],
           ),
+        ],
+      ),
+
+      //---------------------------------------------------------views
+      PlutoMenuItem(
+        title: 'Views',
+        icon: Icons.view_agenda,
+        children: [
           PlutoMenuItem(
-            title: 'Menu 1-2',
-            onTap: () => message(context, 'Menu 1-2 tap'),
-          ),
-          PlutoMenuItem.divider(height: 10),
-          PlutoMenuItem.checkbox(
-            title: 'Menu 1-3',
-            initialCheckValue: true,
-            // onTap: () => message(context, 'Menu 1-3 tap'),
-            onChanged: (flag) => print(flag),
-          ),
-          PlutoMenuItem.divider(height: 10),
-          PlutoMenuItem.radio(
-            title: 'Menu 1-3',
-            initialRadioValue: _RadioItems.one,
-            radioItems: _RadioItems.values,
-            // onTap: () => message(context, 'Menu 1-3 tap'),
-            onChanged: (item) => print(item),
-            getTitle: (item) {
-              switch (item as _RadioItems) {
-                case _RadioItems.one:
-                  return 'One';
-                case _RadioItems.two:
-                  return 'Two';
-                case _RadioItems.three:
-                  return 'Three';
-              }
-            },
+            title: 'Save current view',
+            onTap: () {},
           ),
           PlutoMenuItem(
-            title: 'Menu 1-4',
+            title: 'Saved views',
             icon: Icons.group,
-            onTap: () => message(context, 'Menu 1-4 tap'),
+            onTap: () {},
             children: [
               PlutoMenuItem(
-                title: 'Menu 1-4-1',
-                onTap: () => message(context, 'Menu 1-4-1 tap'),
-                children: [
-                  PlutoMenuItem(
-                    title: 'Menu 1-4-1-1',
-                    onTap: () => message(context, 'Menu 1-4-1-1 tap'),
-                  ),
-                  PlutoMenuItem(
-                    title: 'Menu 1-4-1-2',
-                    onTap: () => message(context, 'Menu 1-4-1-2 tap'),
-                  ),
-                ],
-              ),
-              PlutoMenuItem(
-                title: 'Menu 1-4-2',
-                onTap: () => message(context, 'Menu 1-4-2 tap'),
+                title: 'view 1-1-2',
+                onTap: () => message(context, 'view 1-1-2 tap'),
               ),
             ],
-          ),
+          )
         ],
       ),
+
+      //---------------------------------------------------------export
       PlutoMenuItem(
-        title: 'Menu 2',
-        icon: Icons.add_circle,
+        title: 'Export',
+        icon: Icons.import_export,
         children: [
           PlutoMenuItem(
-            title: 'Menu 2-1',
-            onTap: () => message(context, 'Menu 2-1 tap'),
-          ),
-        ],
-      ),
-      PlutoMenuItem(
-        title: 'Menu 3',
-        icon: Icons.apps_outlined,
-        onTap: () => message(context, 'Menu 3 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 4',
-        onTap: () => message(context, 'Menu 4 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 5',
-        onTap: () => message(context, 'Menu 5 tap'),
-      ),
-      PlutoMenuItem(
-        title: 'Menu 6',
-        children: [
-          PlutoMenuItem(
-            title: 'Menu 6-1',
-            onTap: () => message(context, 'Menu 6-1 tap'),
-            children: [
-              PlutoMenuItem(
-                title: 'Menu 6-1-1',
-                onTap: () => message(context, 'Menu 6-1-1 tap'),
-                children: [
-                  PlutoMenuItem(
-                    title: 'Menu 6-1-1-1',
-                    onTap: () => message(context, 'Menu 6-1-1-1 tap'),
-                  ),
-                  PlutoMenuItem(
-                    title: 'Menu 6-1-1-2',
-                    onTap: () => message(context, 'Menu 6-1-1-2 tap'),
-                  ),
-                ],
-              ),
-              PlutoMenuItem(
-                title: 'Menu 6-1-2',
-                onTap: () => message(context, 'Menu 6-1-2 tap'),
-              ),
-            ],
+            icon: Icons.picture_as_pdf,
+            title: 'PDF',
+            onTap: () {},
           ),
           PlutoMenuItem(
-            title: 'Menu 6-2',
-            onTap: () => message(context, 'Menu 6-2 tap'),
+            icon: Icons.cleaning_services,
+            title: 'CSV comma,',
+            onTap: () {},
           ),
+          PlutoMenuItem(
+            icon: Icons.self_improvement,
+            title: 'CSV semicolon;',
+            onTap: () {},
+          ),
+          PlutoMenuItem(
+            icon: Icons.explicit,
+            title: 'Excel',
+            onTap: () {},
+          )
         ],
       ),
     ];
@@ -190,50 +148,10 @@ class _MenuGridPageState extends State<MenuGridPage> {
             itemStyle: const PlutoMenuItemStyle(
               enableSelectedTopMenu: true,
             ),
-            menus: [
-              PlutoMenuItem(
-                title: '▼ Filter',
-                id: 'SaveFilter',
-                onTap: () async {
-                  try {
-                    List<Map> filters = getFilteredList();
-                    Map filt = filters[0];
-                    String filtKey =
-                        '${filt["columnName"]} ${filt["operator"]} ${filt["value"]}';
-                    print(filtKey);
-                  } catch (_) {}
-                },
-              ),
-              PlutoMenuItem(
-                title: 'Select2',
-                id: 'Select2',
-                onTap: () => message(context, 'Select2'),
-              ),
-              PlutoMenuItem(
-                title: 'Select3',
-                id: 'Select3',
-                onTap: () => message(context, 'Select3'),
-              ),
-              PlutoMenuItem(
-                title: 'Select4',
-                id: 'Select4',
-                onTap: () => message(context, 'Select4'),
-              ),
-              PlutoMenuItem(
-                title: 'Select5',
-                id: 'Select5',
-                onTap: () => message(context, 'Select5'),
-              ),
-            ],
+            menus: whiteTapMenus,
           ),
         ],
       ),
     );
   }
-}
-
-enum _RadioItems {
-  one,
-  two,
-  three,
 }
