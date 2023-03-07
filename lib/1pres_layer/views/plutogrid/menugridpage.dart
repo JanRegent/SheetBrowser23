@@ -3,10 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
+import '../../alib/alib.dart';
+import '../../filelist/filelistcard.dart';
+import '../detail/cardswiper.dart';
 import 'cols.dart';
 
+List<int> filteredLocalIds = [];
+
 class MenuGridPage extends StatefulWidget {
-  const MenuGridPage({
+  final Map configRow;
+  final String sheetName;
+  const MenuGridPage(
+    this.configRow,
+    this.sheetName, {
     super.key,
   });
 
@@ -44,12 +53,42 @@ class _MenuGridPageState extends State<MenuGridPage> {
           PlutoMenuItem(
             icon: Icons.add,
             title: 'Add filtered to detail view',
-            onTap: () {},
+            onTap: () {
+              al.message(context, 'Adding to filtered rows');
+              var filteredIDsVar = stateManager.refRows
+                  .map((e) => e.cells['ID']!.value.toString());
+
+              for (var element in filteredIDsVar) {
+                try {
+                  int? localId = int.tryParse(element);
+                  filteredLocalIds.add(localId!);
+                } catch (_) {}
+              }
+            },
           ),
           PlutoMenuItem(
             icon: Icons.list,
             title: 'Detail view',
-            onTap: () {},
+            onTap: () async {
+              if (filteredLocalIds.isEmpty) {
+                widget.configRow['__bookmarkLastRowVisitSave__'] =
+                    '__bookmarkLastRowVisitSave__';
+                await detailViewAll(context, widget.configRow);
+              } else {
+                al.message(
+                    context, 'Loading filtered rows of  ${widget.sheetName}');
+
+                Map configRow = {};
+                widget.configRow['__bookmarkLastRowVisitSave__'] = '';
+                configRow['title'] = widget.sheetName;
+                configRow['sheetName'] = widget.sheetName;
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => CardSwiper(filteredLocalIds, configRow),
+                    ));
+              }
+            },
           ),
         ],
       ),

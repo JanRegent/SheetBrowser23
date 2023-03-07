@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../2business_layer/getsheet.dart';
-import '../../alib/alib.dart';
-import '../../filelist/filelistcard.dart';
-import '../detail/cardswiper.dart';
 import 'cols.dart';
 import 'menugridpage.dart';
 
@@ -78,7 +75,6 @@ class _GridPageState extends State<GridPage> {
   }
 
   Map sheetIDsMap = {};
-  List<int> filteredLocalIds = [];
 
   PlutoGrid plutogrid() {
     return PlutoGrid(
@@ -117,42 +113,7 @@ class _GridPageState extends State<GridPage> {
           title: Text(currentSheet.sheetName),
           actions: [
             ElevatedButton(
-                child: const Icon(Icons.add),
-                onPressed: () async {
-                  al.message(context, 'Adding to filtered rows');
-                  var filteredIDsVar = stateManager.refRows
-                      .map((e) => e.cells['ID']!.value.toString());
-
-                  for (var element in filteredIDsVar) {
-                    try {
-                      int? localId = int.tryParse(element);
-                      filteredLocalIds.add(localId!);
-                    } catch (_) {}
-                  }
-                }),
-            ElevatedButton(
-                child: const Icon(Icons.list),
-                onPressed: () async {
-                  if (filteredLocalIds.isEmpty) {
-                    widget.configRow['__bookmarkLastRowVisitSave__'] =
-                        '__bookmarkLastRowVisitSave__';
-                    await detailViewAll(context, widget.configRow);
-                  } else {
-                    al.message(context,
-                        'Loading filtered rows of  ${currentSheet.sheetName}');
-
-                    Map configRow = {};
-                    widget.configRow['__bookmarkLastRowVisitSave__'] = '';
-                    configRow['title'] = currentSheet.sheetName;
-                    configRow['sheetName'] = currentSheet.sheetName;
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) =>
-                              CardSwiper(filteredLocalIds, configRow),
-                        ));
-                  }
-                }),
+                child: const Icon(Icons.list), onPressed: () async {}),
             appbarRightPopup()
           ],
         ),
@@ -164,7 +125,7 @@ class _GridPageState extends State<GridPage> {
               padding: const EdgeInsets.all(8.0),
               color: Colors.blue,
               alignment: Alignment.center,
-              child: const MenuGridPage(),
+              child: MenuGridPage(widget.configRow, currentSheet.sheetName),
             ),
 
             //Body Container  ,
