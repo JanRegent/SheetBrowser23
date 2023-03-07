@@ -10,11 +10,9 @@ import 'detailtags.dart';
 import 'detailrowsmapwidgets.dart';
 
 class DetailPage extends StatefulWidget {
-  final int localId;
   final Map configRow;
   final VoidCallback swiperSetstate;
-  const DetailPage(this.localId, this.configRow, this.swiperSetstate,
-      {Key? key})
+  const DetailPage(this.configRow, this.swiperSetstate, {Key? key})
       : super(key: key);
 
   @override
@@ -33,15 +31,17 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getDataListWidgets(BuildContext context) async {
     List<Widget> listWidgets = [];
-    Map rowmap = await sheetDb.rowMap.row2MapLocalId(widget.localId);
+    int localID = swiperLocalIds[startRowCardswiper];
+    Map rowmap = await sheetDb.rowMap.row2MapLocalId(localID);
     listWidgets
         .add(DetailMenu(rowmap, widget.configRow, widget.swiperSetstate));
 
     // ignore: use_build_context_synchronously
-    listWidgets.add(starTagsRow(context, widget.localId, rowmap));
+    listWidgets.add(starTagsRow(context, localID, rowmap));
     // ignore: use_build_context_synchronously
-    List<Widget> rowmapWidgets = await rowmapWidgetsGet(
-        context, rowmap, widget.configRow, widget.localId);
+    List<Widget> rowmapWidgets =
+        // ignore: use_build_context_synchronously
+        await rowmapWidgetsGet(context, rowmap, widget.configRow, localID);
     listWidgets.addAll(rowmapWidgets);
     return listWidgets;
   }
@@ -103,7 +103,7 @@ class _DetailPageState extends State<DetailPage> {
           case ConnectionState.waiting:
             return Column(
               children: [
-                Text('Row detail loading for row: ${widget.localId}'),
+                Text('Row detail loading for row: $startRowCardswiper'),
                 const Text(' '),
                 const CircularProgressIndicator()
               ],

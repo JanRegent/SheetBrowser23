@@ -25,6 +25,7 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
+    swiperLocalIds = widget.localIds;
     startRowBookmarksSet();
   }
 
@@ -57,13 +58,15 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   void onIndexChanged(int index) {
+    startRowCardswiper = index;
     if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
       return;
     }
     try {
       //filtered localIds like starred has no sheetName
       String sheetName = widget.configRow['sheetName'];
-      appData.setString('${sheetName}__bookmarkLastRowVisit', index.toString());
+      appData.setString(
+          '${sheetName}__bookmarkLastRowVisit', startRowCardswiper.toString());
     } catch (__) {}
   }
 
@@ -74,6 +77,7 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   ConstrainedBox body() {
+    widget.configRow['localIds.length'] = widget.localIds.length;
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,
@@ -82,9 +86,7 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://pub.dev/packages/card_swiper
           //https://github.com/TheAnkurPanchani/card_swiper/
           itemBuilder: (BuildContext context, int rowIndex) {
-            widget.configRow['localIds.length'] = widget.localIds.length;
-            return DetailPage(
-                widget.localIds[rowIndex], widget.configRow, swiperSetstate);
+            return DetailPage(widget.configRow, swiperSetstate);
           },
           itemCount: widget.localIds.length,
           onIndexChanged: (index) => onIndexChanged(index),
