@@ -31,7 +31,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<List<Widget>> getDataListWidgets(BuildContext context) async {
     List<Widget> listWidgets = [];
-    int localID = swiperLocalIds[startRowCardswiper];
+    int localID = swiperLocalIds[currentRowIndex];
     Map rowmap = await sheetDb.rowMap.row2MapLocalId(localID);
     listWidgets
         .add(DetailMenu(rowmap, widget.configRow, widget.swiperSetstate));
@@ -103,7 +103,7 @@ class _DetailPageState extends State<DetailPage> {
           case ConnectionState.waiting:
             return Column(
               children: [
-                Text('Row detail loading for row: $startRowCardswiper'),
+                Text('Row detail loading for row: $currentRowIndex'),
                 const Text(' '),
                 const CircularProgressIndicator()
               ],

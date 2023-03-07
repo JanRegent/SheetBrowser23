@@ -26,12 +26,12 @@ class _CardSwiperState extends State<CardSwiper> {
   void initState() {
     super.initState();
     swiperLocalIds = widget.localIds;
-    startRowBookmarksSet();
+    currentRowIndexFromBookmarksGet();
   }
 
   //---------------------------------------------------------- int startRow
 
-  void startRowBookmarksSet() {
+  void currentRowIndexFromBookmarksGet() {
     try {
       if (widget.configRow['sheetName'] == null) {
         widget.configRow['__bookmarkLastRowVisitSave__'] = '';
@@ -50,15 +50,14 @@ class _CardSwiperState extends State<CardSwiper> {
     try {
       String? startRowStr = appData
           .getString('${widget.configRow['sheetName']}__bookmarkLastRowVisit');
-      //filtered localIds like starred has no sheetName
-      startRowCardswiper = int.tryParse(startRowStr!)!;
+      currentRowIndex = int.tryParse(startRowStr!)!;
     } catch (_) {
-      startRowCardswiper = 0;
+      currentRowIndex = 0;
     }
   }
 
-  void onIndexChanged(int index) {
-    startRowCardswiper = index;
+  void onIndexChanged(int rowIndex) {
+    currentRowIndex = rowIndex;
     if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
       return;
     }
@@ -66,7 +65,7 @@ class _CardSwiperState extends State<CardSwiper> {
       //filtered localIds like starred has no sheetName
       String sheetName = widget.configRow['sheetName'];
       appData.setString(
-          '${sheetName}__bookmarkLastRowVisit', startRowCardswiper.toString());
+          '${sheetName}__bookmarkLastRowVisit', currentRowIndex.toString());
     } catch (__) {}
   }
 
@@ -89,11 +88,11 @@ class _CardSwiperState extends State<CardSwiper> {
             return DetailPage(widget.configRow, swiperSetstate);
           },
           itemCount: widget.localIds.length,
-          onIndexChanged: (index) => onIndexChanged(index),
+          onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),
           control: const SwiperControl(),
-          index: startRowCardswiper,
+          index: currentRowIndex,
           controller: controller,
         ));
   }

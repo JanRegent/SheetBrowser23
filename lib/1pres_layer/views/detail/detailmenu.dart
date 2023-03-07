@@ -5,7 +5,7 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
 import '../../alib/alib.dart';
 
-int startRowCardswiper = 0;
+int currentRowIndex = 0;
 List<int> swiperLocalIds = [];
 
 class DetailMenu extends StatefulWidget {
@@ -34,7 +34,7 @@ class _DetailMenuState extends State<DetailMenu> {
       gotoItems.add(PlutoMenuItem(
         title: i.toString(),
         onTap: () async {
-          startRowCardswiper = i;
+          currentRowIndex = i;
           widget.swiperSetstate();
         },
       ));
