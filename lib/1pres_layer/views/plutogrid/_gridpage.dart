@@ -111,11 +111,7 @@ class _GridPageState extends State<GridPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(currentSheet.sheetName),
-          actions: [
-            ElevatedButton(
-                child: const Icon(Icons.list), onPressed: () async {}),
-            appbarRightPopup()
-          ],
+          actions: [appbarRightPopup()],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

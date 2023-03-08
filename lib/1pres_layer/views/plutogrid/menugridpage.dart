@@ -7,6 +7,7 @@ import '../../alib/alib.dart';
 import '../../filelist/filelistcard.dart';
 import '../detail/cardswiper.dart';
 import 'cols.dart';
+import 'gridfilters.dart';
 
 List<int> filteredLocalIds = [];
 
@@ -41,6 +42,19 @@ class _MenuGridPageState extends State<MenuGridPage> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  List<PlutoMenuItem> gridFilters2menu(String sheetName) {
+    List<PlutoMenuItem> list = [];
+
+    List<String> filterNames = gridFiltersLoadNames(sheetName);
+    for (var filterName in filterNames) {
+      list.add(PlutoMenuItem(
+        title: filterName,
+        onTap: () => message(context, 'Menu 1-1-2 tap'),
+      ));
+    }
+    return list;
   }
 
   List<PlutoMenuItem> _makeMenus(BuildContext context) {
@@ -93,7 +107,8 @@ class _MenuGridPageState extends State<MenuGridPage> {
         ],
       ),
 
-      //---------------------------------------------------------filters
+      //---------------------------------------------------------gridfilters
+
       PlutoMenuItem(
         title: 'Filters',
         icon: Icons.filter,
@@ -102,24 +117,17 @@ class _MenuGridPageState extends State<MenuGridPage> {
             title: 'Save current filter',
             onTap: () {
               try {
-                List<Map> filters = getFilteredList();
-                Map filt = filters[0];
-                String filtKey =
-                    '${filt["columnName"]} ${filt["operator"]} ${filt["value"]}';
-                print(filtKey);
+                List<Map> filters = currentGridFilterGet(widget.sheetName);
+                if (filters.isEmpty) return;
+                currentGridFilterSave(filters, widget.sheetName);
               } catch (_) {}
             },
           ),
           PlutoMenuItem(
-            title: 'Saved filters',
+            title: 'Grid filters',
             icon: Icons.group,
             onTap: () {},
-            children: [
-              PlutoMenuItem(
-                title: 'Menu 1-1-2',
-                onTap: () => message(context, 'Menu 1-1-2 tap'),
-              ),
-            ],
+            children: gridFilters2menu(widget.sheetName),
           ),
         ],
       ),

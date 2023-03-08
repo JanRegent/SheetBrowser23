@@ -24,6 +24,8 @@ void main() async {
   if (!await mainInit()) return;
 
   try {
+    await sheetDb.rowMap.colsHeadersBuild();
+
     runApp(
       const ProviderScope(child: SheetBrowserApp()),
     );
@@ -83,8 +85,6 @@ Future<bool> mainInit() async {
   await getFilelistTry();
 
   backgroundCompleter();
-
-  await sheetDb.rowMap.colsHeadersBuild();
 
   return true;
 }

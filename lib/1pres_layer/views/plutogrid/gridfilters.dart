@@ -1,9 +1,73 @@
 //------------------------------------------------------------- filterRows
 
-//import 'package:flutter/material.dart';
-import 'package:pluto_grid/pluto_grid.dart';
-//import 'package:sheetviewer/AL/views/plutogrid/drawergrid.dart';
+import 'dart:convert';
 
+import 'package:dartx/dartx.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+
+import '../../../2business_layer/appdata/approotdata.dart';
+import 'cols.dart';
+
+class PlutoFilterTypeExt extends PlutoFilterType {}
+
+PlutoColumnFrozen setFreeze(
+    String columnName, List<String> startList, List<String> endList) {
+  try {
+    if (startList.contains(columnName)) return PlutoColumnFrozen.start;
+    if (endList.contains(columnName)) return PlutoColumnFrozen.end;
+  } catch (e) {
+    return PlutoColumnFrozen.none;
+  }
+  return PlutoColumnFrozen.none;
+}
+
+List<Map> currentGridFilterGet(String sheetName) {
+  List<Map> filtersList = [];
+  for (var index = 0; index < gridCols.length; index++) {
+    String value = filteredColumnGetValue(stateManager, gridCols[index].title);
+    if (value.isEmpty) continue;
+    Map filter = {};
+    filter['columnName'] = gridCols[index].title;
+    filter['operator'] = 'contains';
+    filter['value'] = value;
+    filter['title'] =
+        '${filter["columnName"]} ${filter["operator"]} ${filter["value"]}';
+    filter['sheetName'] = sheetName;
+
+    filtersList.add(filter);
+  }
+  return filtersList;
+}
+
+void currentGridFilterSave(List<Map> filters, String sheetName) {
+  String gridFilter = '$sheetName __|__gridfilter';
+  String filterName = '$sheetName __|__gridfilter';
+  for (var element in filters) {
+    if (gridFilter.isEmpty) {
+      gridFilter = jsonEncode(element);
+    } else {
+      gridFilter = '__|__${jsonEncode(element)}';
+    }
+    filterName += '__|__${element['title']}';
+  }
+  appData.setString('$sheetName __|__gridfilter__last', gridFilter);
+  appData.setString(filterName, gridFilter);
+}
+
+List<String> gridFiltersLoadNames(String sheetName) {
+  List<String> filterNames = [];
+  for (String key in appData.getKeys()) {
+    if (!key.contains('__|__gridfilter')) continue;
+    filterNames.add(key
+        .replaceAll('__|__gridfilter', '')
+        .replaceAll(sheetName, '')
+        .replaceAll('__|__', '')
+        .trim());
+  }
+  return filterNames.sorted();
+}
+
+//---------------------------------------------------------------------old
 void filtersInit(List<String> colsFilter) {
   if (colsFilter.isEmpty) return;
 

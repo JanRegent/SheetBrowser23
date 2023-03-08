@@ -1,7 +1,5 @@
 import 'package:pluto_grid/pluto_grid.dart';
 
-import 'filters.dart';
-
 late final PlutoGridStateManager stateManager;
 
 //import 'package:sheetviewer/AL/views/plutogrid/drawergrid.dart';
@@ -47,31 +45,4 @@ Future<List<PlutoColumn>> colsMap(List<dynamic> colsHeader) async {
   // gridCols.add(col);
 
   return gridCols;
-}
-
-class PlutoFilterTypeExt extends PlutoFilterType {}
-
-PlutoColumnFrozen setFreeze(
-    String columnName, List<String> startList, List<String> endList) {
-  try {
-    if (startList.contains(columnName)) return PlutoColumnFrozen.start;
-    if (endList.contains(columnName)) return PlutoColumnFrozen.end;
-  } catch (e) {
-    return PlutoColumnFrozen.none;
-  }
-  return PlutoColumnFrozen.none;
-}
-
-List<Map> getFilteredList() {
-  List<Map> filtersList = [];
-  for (var index = 0; index < gridCols.length; index++) {
-    String value = filteredColumnGetValue(stateManager, gridCols[index].title);
-    if (value.isEmpty) continue;
-    Map expr = {};
-    expr['columnName'] = gridCols[index].title;
-    expr['operator'] = 'contains';
-    expr['value'] = value;
-    filtersList.add(expr);
-  }
-  return filtersList;
 }

@@ -67,6 +67,10 @@ class AppDataPrefs {
     return _instance.getString(key);
   }
 
+  List<String> getKeys() {
+    return _instance.getKeys().toList();
+  }
+
   Future<bool> setString(String key, String value) async {
     return _instance.setString(key, value);
   }
